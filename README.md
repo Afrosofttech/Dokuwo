@@ -1,5 +1,7 @@
 <h2>Career portal</h2>
 
+This is a simple software that makes job applications easy and and brings together companies and potential employees.
+
 <h3>PLEASE attend to this. Its urgent</h3>
 
 create a router to easily navigate around. DO lemme know if you are having issues with it. I have once created a router. I just believe it needs to be improved for perfomance reasons
