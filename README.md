@@ -16,5 +16,4 @@ create a database named 'career' and import the database in the database folder
 Once a company signs up, they are sent a link to their email so that they can activate their account. I will implemented that because i have done it before. But for clarity, just know that to sign up, all you have to enter is the email and password and then once you activate your account, you will then have to fill your profile.
 
 <h3>Task<h3>
-
 you guys have to work on the company part for now.
