@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2019 at 10:55 PM
+-- Generation Time: Jan 01, 2020 at 04:13 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -42,6 +42,9 @@ CREATE TABLE `admin` (
 
 CREATE TABLE `application` (
   `app_id` int(11) NOT NULL,
+  `job_id` int(11) NOT NULL,
+  `jobseeker_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
   `app_date` date NOT NULL,
   `app_status` varchar(15) NOT NULL,
   `decision_date` date DEFAULT NULL
@@ -63,6 +66,7 @@ CREATE TABLE `company` (
   `password` varchar(15) NOT NULL,
   `postal_code` int(5) DEFAULT NULL,
   `country` varchar(25) DEFAULT NULL,
+  `currency` varchar(10) DEFAULT NULL,
   `logo` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -74,6 +78,7 @@ CREATE TABLE `company` (
 
 CREATE TABLE `job` (
   `job_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
   `job_name` varchar(25) NOT NULL,
   `job_desc` text NOT NULL,
   `job_type` varchar(15) NOT NULL,
@@ -82,7 +87,8 @@ CREATE TABLE `job` (
   `date_posted` date NOT NULL,
   `job_contact_email` varchar(50) DEFAULT NULL,
   `job_contact_phone` varchar(30) DEFAULT NULL,
-  `salary` double DEFAULT NULL
+  `salary` float DEFAULT NULL,
+  `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -119,6 +125,7 @@ CREATE TABLE `login` (
   `email` varchar(50) NOT NULL,
   `password` varchar(15) NOT NULL,
   `user_type` varchar(15) NOT NULL,
+  `hash` varchar(30) NOT NULL,
   `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -130,6 +137,9 @@ CREATE TABLE `login` (
 
 CREATE TABLE `messages` (
   `message_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `jobseeker_id` int(11) NOT NULL,
+  `subject` varchar(30) NOT NULL,
   `message_body` text NOT NULL,
   `date_send` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -148,7 +158,10 @@ ALTER TABLE `admin`
 -- Indexes for table `application`
 --
 ALTER TABLE `application`
-  ADD PRIMARY KEY (`app_id`);
+  ADD PRIMARY KEY (`app_id`),
+  ADD KEY `job_id` (`job_id`),
+  ADD KEY `joobseeker_id` (`jobseeker_id`),
+  ADD KEY `company_id` (`company_id`);
 
 --
 -- Indexes for table `company`
@@ -161,7 +174,8 @@ ALTER TABLE `company`
 -- Indexes for table `job`
 --
 ALTER TABLE `job`
-  ADD PRIMARY KEY (`job_id`);
+  ADD PRIMARY KEY (`job_id`),
+  ADD KEY `company_id` (`company_id`);
 
 --
 -- Indexes for table `job_seeker`
@@ -180,7 +194,9 @@ ALTER TABLE `login`
 -- Indexes for table `messages`
 --
 ALTER TABLE `messages`
-  ADD PRIMARY KEY (`message_id`);
+  ADD PRIMARY KEY (`message_id`),
+  ADD KEY `company_id` (`company_id`),
+  ADD KEY `jobseeker_id` (`jobseeker_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -208,19 +224,19 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `job_seeker`
 --
 ALTER TABLE `job_seeker`
-  MODIFY `jobseeker_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `jobseeker_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -233,16 +249,37 @@ ALTER TABLE `messages`
 --
 
 --
+-- Constraints for table `application`
+--
+ALTER TABLE `application`
+  ADD CONSTRAINT `app_company_fk` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `app_job_fk` FOREIGN KEY (`job_id`) REFERENCES `job` (`job_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `app_jobseeker_fk` FOREIGN KEY (`jobseeker_id`) REFERENCES `job_seeker` (`jobseeker_id`) ON UPDATE CASCADE;
+
+--
 -- Constraints for table `company`
 --
 ALTER TABLE `company`
   ADD CONSTRAINT `company_fk_1` FOREIGN KEY (`login_id`) REFERENCES `login` (`login_id`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `job`
+--
+ALTER TABLE `job`
+  ADD CONSTRAINT `job_fk` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON UPDATE CASCADE;
+
+--
 -- Constraints for table `job_seeker`
 --
 ALTER TABLE `job_seeker`
   ADD CONSTRAINT `jobseeker_fk` FOREIGN KEY (`login_id`) REFERENCES `login` (`login_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `mes_com_fk` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `mes_js_fk` FOREIGN KEY (`jobseeker_id`) REFERENCES `job_seeker` (`jobseeker_id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
