@@ -19,3 +19,6 @@ Once a company signs up, they are sent a link to their email so that they can ac
 
 <h3>Task<h3>
 you guys have to work on the company part for now.
+  
+<h3>Always create a new branch</h3>
+Once you complete solving an issue or task, checkout and create a new branch and push to that branch. Never push to the master branch.
