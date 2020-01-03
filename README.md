@@ -22,3 +22,12 @@ You guys have to work on the company part for now.
   
 <h3>Always create a new branch</h3>
 Once you complete solving an issue or task, checkout and create a new branch and push to that branch. Never push to the master branch.
+
+<h3>Tables</h3>
+for any tables, we will be using datatables. check out datatables.net
+
+<h3>WYSIWYG Editor</h3>
+for any textarea, we will be using CKEDITOR. Check out ckeditor.com
+
+<h3>Validations</h3>
+for all validations,we will be gump. check out https://github.com/Wixel/GUMP
