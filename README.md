@@ -31,3 +31,6 @@ for any textarea, we will be using CKEDITOR. Check out ckeditor.com
 
 <h3>Validations</h3>
 for all validations,we will be gump. check out https://github.com/Wixel/GUMP
+
+<h3>CSS and JS</h3>
+There is a custom.css and a custom.js files included in the css and js folders respectively. Dont edit the bootstrap css and js files. Never touch them. Incase we ever want to updagrade to a later version of bootstrap, we won't have issues
