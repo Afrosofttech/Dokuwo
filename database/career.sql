@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2020 at 04:13 PM
+-- Generation Time: Jan 03, 2020 at 10:36 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -129,19 +129,39 @@ CREATE TABLE `login` (
   `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `login`
+--
+
+INSERT INTO `login` (`login_id`, `email`, `password`, `user_type`, `hash`, `status`) VALUES
+(1, 'jdoe@gmail.com', '123@asj', 'jobseeker', 'rfegd4756rgfrtf', 0);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messages`
+-- Table structure for table `message`
 --
 
-CREATE TABLE `messages` (
+CREATE TABLE `message` (
   `message_id` int(11) NOT NULL,
-  `company_id` int(11) NOT NULL,
-  `jobseeker_id` int(11) NOT NULL,
-  `subject` varchar(30) NOT NULL,
+  `creator_id` int(11) NOT NULL,
+  `subject` varchar(100) NOT NULL,
   `message_body` text NOT NULL,
-  `date_send` datetime(6) NOT NULL
+  `create_date` date NOT NULL,
+  `parent_message_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message_recipient`
+--
+
+CREATE TABLE `message_recipient` (
+  `mess_rec_id` int(11) NOT NULL,
+  `recipient_id` int(11) DEFAULT NULL,
+  `message_id` int(11) NOT NULL,
+  `is_read` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -191,12 +211,20 @@ ALTER TABLE `login`
   ADD PRIMARY KEY (`login_id`);
 
 --
--- Indexes for table `messages`
+-- Indexes for table `message`
 --
-ALTER TABLE `messages`
+ALTER TABLE `message`
   ADD PRIMARY KEY (`message_id`),
-  ADD KEY `company_id` (`company_id`),
-  ADD KEY `jobseeker_id` (`jobseeker_id`);
+  ADD KEY `parent_message_id` (`parent_message_id`),
+  ADD KEY `creator_id` (`creator_id`);
+
+--
+-- Indexes for table `message_recipient`
+--
+ALTER TABLE `message_recipient`
+  ADD PRIMARY KEY (`mess_rec_id`),
+  ADD KEY `recipient_id` (`recipient_id`),
+  ADD KEY `message_id` (`message_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -218,13 +246,13 @@ ALTER TABLE `application`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `job_seeker`
@@ -236,13 +264,19 @@ ALTER TABLE `job_seeker`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `messages`
+-- AUTO_INCREMENT for table `message`
 --
-ALTER TABLE `messages`
+ALTER TABLE `message`
   MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `message_recipient`
+--
+ALTER TABLE `message_recipient`
+  MODIFY `mess_rec_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -275,11 +309,18 @@ ALTER TABLE `job_seeker`
   ADD CONSTRAINT `jobseeker_fk` FOREIGN KEY (`login_id`) REFERENCES `login` (`login_id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `messages`
+-- Constraints for table `message`
 --
-ALTER TABLE `messages`
-  ADD CONSTRAINT `mes_com_fk` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `mes_js_fk` FOREIGN KEY (`jobseeker_id`) REFERENCES `job_seeker` (`jobseeker_id`) ON UPDATE CASCADE;
+ALTER TABLE `message`
+  ADD CONSTRAINT `creator_fk` FOREIGN KEY (`creator_id`) REFERENCES `login` (`login_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `parent_message_fk` FOREIGN KEY (`parent_message_id`) REFERENCES `message` (`message_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `message_recipient`
+--
+ALTER TABLE `message_recipient`
+  ADD CONSTRAINT `message_fk` FOREIGN KEY (`message_id`) REFERENCES `message` (`message_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `recipient_fk` FOREIGN KEY (`recipient_id`) REFERENCES `login` (`login_id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
