@@ -1,5 +1,5 @@
 <?php
-include 'includes/all.inc.php';
+include 'includes/autoloader.inc.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +20,13 @@ include 'includes/all.inc.php';
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+ <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+ <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+
 
 </head>
 
@@ -79,7 +86,7 @@ include 'includes/all.inc.php';
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
+  <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
@@ -90,4 +97,9 @@ include 'includes/all.inc.php';
 
 </body>
 
+<script>
+$(document).ready(function(){
+      $('#myt').dataTable();
+  });
+</script>
 </html>

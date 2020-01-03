@@ -1,10 +1,10 @@
-<!-- <?php
+<?php
 if(!isset($_SESSION['usertype']) || $_SESSION['usertype'] == ''){
-  console.log($_SESSION['u_email']);
-  console.log('AMS');
+  // console.log($_SESSION['u_email']);
+  // console.log('AMS');
     header("Location: login.php");
 }
-?> -->
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,9 +16,13 @@ if(!isset($_SESSION['usertype']) || $_SESSION['usertype'] == ''){
   <meta name="description" content="This is an accounting Software that aims to automate and make your accounting work simple.">
   <meta name="author" content="Afrika Software Technologies">
 
+  <!-- jquery CDN-->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+  <!-- Datatables CDN-->
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+  <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
 
   <title>Book</title>
 
@@ -47,21 +51,10 @@ if(!isset($_SESSION['usertype']) || $_SESSION['usertype'] == ''){
   </a>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
  
   <!--Custom scripts-->
   <script src="js/admin.js"></script>
