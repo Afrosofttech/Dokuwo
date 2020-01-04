@@ -34,3 +34,6 @@ for all validations,we will be gump. check out https://github.com/Wixel/GUMP
 
 <h3>CSS and JS</h3>
 There is a custom.css and a custom.js files included in the css and js folders respectively. Dont edit the bootstrap css and js files. Never touch them. Incase we ever want to updagrade to a later version of bootstrap, we won't have issues
+
+<h3>why using get.php and post.php</h3>
+For all post methods or queries that involve inserting, creating, updating and deleting something on the database, direct all the URL's to the post.php and then reroute them to the correct controller and method. For all get methods or queries that involve retrieving something from the database, direct all the URL's to the get.php and then reroute them to the correct view and method. I know that all this is not neccessary if we were only interacting with the controllers and never with the views. But if we are to use the first MVC model, then there will be no need for views here since Jquery will handle everything involving viewing
