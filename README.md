@@ -2,12 +2,11 @@
 
 This is a simple software that makes job applications easy and and brings together companies and potential employees.
 
-<h3>PLEASE attend to this. Its urgent</h3>
-
-Create a router to easily navigate around. DO lemme know if you are having issues with it. I have once created a router. I just believe it needs to be improved for perfomance reasons
-
 <h3>GUMP</h3>
 I have included gump for validation. Just check gump on github to know how to use it for for all validations.
+
+<h3>Notifyjs</h3>
+I have included the notifyjs plugin for all our notifications.
 
 <h3>Database</h3>
 
@@ -23,7 +22,7 @@ You guys have to work on the company part for now.
 <h3>Always create a new branch</h3>
 Once you complete solving an issue or task, checkout and create a new branch and push to that branch. Never push to the master branch.
 
-<h3>Tables</h3>
+<h3>Datatables</h3>
 for any tables, we will be using datatables. check out datatables.net
 
 <h3>WYSIWYG Editor</h3>
