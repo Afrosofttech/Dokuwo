@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    //loadJobseekerDashboard();
+//
 })
 
 function jobseekerSideBar(){
@@ -24,6 +24,12 @@ function jobseekerSideBar(){
       '<a class="nav-link " href="">'+
         '<i class="fas fa-fw fa-briefcase"></i>'+
         '<span>Jobs</span></a>'+
+    '</li>'+
+
+    '<li class="nav-item">'+
+    '<a class="nav-link " href="">'+
+      '<i class="fas fa-fw fa-briefcase"></i>'+
+      '<span>Job providers</span></a>'+
     '</li>'+
   
     '<li class="nav-item">'+
