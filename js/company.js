@@ -639,19 +639,17 @@ function contentMessage(){
               $.each(data, function( i, val ) {
                 //console.log(val);
                 let checkId = val[0].message_id+"checkbox";
-
-                conMessage+= '<tr id="'+val[0].message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');">'+
+                // onclick="viewMessage(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');"
+                conMessage+= '<tr id="'+val[0].message_id+'" class="test" style="cursor: pointer;" >'+
                             '<td>'+
                               '<div class="icheck-primary">'+
                                 '<input type="checkbox" value="" id="'+checkId+'">'+
                                 '<label for="check1"></label>'+
                               '</div>'+
                             '</td>'+
-                            // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
                             '<td class="mailbox-name">'+val[0].creator_name+'</td>'+
                             '<td class="mailbox-subject"><b>'+val[0].subject+'</b> -'+val[0].message_body.substring(0, 50)+''+
                             '</td>'+
-                            // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
                             '<td class="mailbox-date">'+val[0].create_date+'</td>'+
                           '</tr>';
               });
@@ -662,9 +660,7 @@ function contentMessage(){
                           '<!-- /.mail-box-messages -->'+
                         '</div>'+
                         '<!-- /.card-body -->'+
-                        // '<div class="card-footer p-0">'+
 
-                        // '</div>'+
                         '</div>'+
 
                       '</div>';
@@ -682,6 +678,19 @@ function contentMessage(){
             $("#myTable thead").remove();
           }
         });
+
+        $("#myTable").on("click", ".test", function(e){
+          var id = $(this).attr('id');
+          //console.log(data);
+          $.each(data, function( i, val ) {
+           if(val[0].message_id === id){
+            viewMessage(val[0].message_id,val[0].creator_id,val[0].creator_name,val[0].subject,val[0].message_body,val[0].create_date,val[0].parent_message_id);
+           }
+          });
+          //return false;
+        });
+
+
         });
 
        geyOutReadMessages();
@@ -1181,6 +1190,7 @@ function geyOutReadMessages(){
         //console.log(data);
         $.each(data, function(i,val){
         $('tr#'+val.mess_rec_id).css({'background-color': 'gainsboro'});
+        //not greying out rows in a different pagination. needs fixing
         });
        
       }
