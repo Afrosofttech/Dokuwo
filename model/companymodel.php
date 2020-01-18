@@ -41,7 +41,7 @@ class Company extends Dbh{
     }
 
     public function get_reference_of_all_inbox_messages($recipient_id){
-        $sql = " Select message_id from message_recipient where recipient_id = ? AND delete_request != ?";
+        $sql = " Select message_id from message_recipient where recipient_id = ? AND delete_request != ? ORDER BY mess_rec_id DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$recipient_id,1]);
         $result = $stmt->fetchAll();
@@ -95,7 +95,7 @@ class Company extends Dbh{
     }
 
     public function get_all_sent_messages($recipient_id){
-        $sql = " Select * from message where creator_id = ?";
+        $sql = " Select * from message where creator_id = ? order by create_date desc";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$recipient_id]);
         $result = $stmt->fetchAll();
@@ -145,6 +145,46 @@ class Company extends Dbh{
         return  $result ;
         $stmt = null;
     }
+
+    }
+
+    public function send_msg_to_a_jobseeker($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody){
+
+    $date = date('Y-m-d');
+    if($parent_msg_id =='' || $parent_msg_id == null){
+        $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,create_date) VALUES (?, ?, ?, ?, ?)");
+        $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,$date]);
+    }else{//change this
+        $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,$date,$parent_msg_id]);
+    }
+        //AMS: this query is not efficient although it is working. I should be using lastInsertId()
+        //but due to some unknown reasons, it is not working. so i will revise it later
+        $stmt2 = $this->connect()->prepare("SELECT message_id FROM message WHERE creator_id = ? AND creator_name = ? AND subject = ? AND create_date = ?");
+        $stmt2->execute([$creator_id,$creator_name,$Subject,$date]);
+        $res = $stmt2->fetch();
+
+        $stmt3 = $this->connect()->prepare("INSERT INTO message_recipient (recipient_id, message_id, is_read,delete_request) VALUES (?, ?, ?, ?)");
+        $stmt3->execute([$recipient_id,$res['message_id'],0,0]);
+
+         return 200;
+        
+        // try {
+        //     // $pdo->beginTransaction();
+        //     $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,create_date) VALUES (?, ?, ?, ?, ?)");
+        //     $stmt2 = $this->connect()->prepare("INSERT INTO message_recipient (recipient_id, creator_name, subject,message_body,create_date) VALUES (?, ?, ?, ?, ?)");
+        //     if(!$stmt1->execute(['Rick', 'NY'])) throw new Exception('Stmt 1 Failed');
+        //     else if(!$stmt2->execute([27, 139])) throw new Exception('Stmt 2 Failed');
+        //     $stmt1 = null;
+        //     $stmt2 = null;
+        //     $pdo->commit();
+        //   } catch(Exception $e) {
+        //     $pdo->rollback();
+        //     throw $e;
+        //   }
+    }
+    public function reply_to_jobseeker($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$subject,$msg_body){
+        //same as the above function . so they should be one
     }
     //    if(!$result ){
     //             return 0;

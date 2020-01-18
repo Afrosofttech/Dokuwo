@@ -11,6 +11,7 @@ $_SESSION['email'] = 'contact@afrosofttech.com';
 $_SESSION['password'] = '123@ast';
 $_SESSION['usertype'] = 'company';
 $_SESSION['status'] = 0;
+$_SESSION['company_name'] = 'Afrika Software Technologies'; //This should come from the company table
 
 ?>
 <!DOCTYPE html>
@@ -58,6 +59,7 @@ $_SESSION['status'] = 0;
   let session_pwd = '<?php echo $_SESSION['password']; ?>';
   let session_usertype = '<?php echo  $_SESSION['usertype']; ?>';
   let session_status = '<?php echo $_SESSION['status']; ?>';
+  let session_fullname ='<?php echo $_SESSION['company_name']; ?>'
 </script>
 
   <div id="wrapper">

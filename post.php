@@ -31,6 +31,15 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
          $res = $result->message_is_read($_POST['message_id']);
          echo $res;
            break;
+       case "send_msg_to_jobseeker":
+         $result = new CompanyController();
+         $res = $result->send_msg_to_jobseeker($_POST['creator_id'],$_POST['fullname'],$_POST['jobseeker_login_id'],$_POST['Name'],$_POST['parent_msg_id'],$_POST['Subject'],$_POST['messageBody']);
+         echo $res;
+           break;
+       case "reply_jobseeker":
+         $result = new CompanyController();
+         $res = $result->send_msg_to_jobseeker($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']);
+         echo $res;
         default:
            break;
     }

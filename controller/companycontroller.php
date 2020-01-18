@@ -11,4 +11,9 @@ class CompanyController extends Company{
         $res = $this->set_message_is_read($message_id);
         return $res;
     }
+    public function send_msg_to_jobseeker($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody){
+        $res =$this->send_msg_to_a_jobseeker($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody);
+        return $res;
+    }
+
 }
