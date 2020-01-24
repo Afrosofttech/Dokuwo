@@ -1,17 +1,9 @@
 <?php
-session_start();
-
-// if(!isset($_SESSION['password']) || $_SESSION['usertype'] == ''){
-//     header("Location: login.php");
-// }
-//these are default values. They will will be totally removed once sign up is complete
-
-$_SESSION['login_id'] = 2;
-$_SESSION['email'] = 'contact@afrosofttech.com';
-$_SESSION['password'] = '123@ast';
-$_SESSION['usertype'] = 'company';
-$_SESSION['status'] = 0;
-
+if(!isset($_SESSION['email']) || $_SESSION['user_type'] == ''){
+  // console.log($_SESSION['u_email']);
+  // console.log('AMS');
+    header("Location: login.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,15 +17,14 @@ $_SESSION['status'] = 0;
   <meta name="author" content="Afrika Software Technologies">
 
   <!-- jquery CDN-->
-<!--  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>-->
-<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
-    <script src="js/jquery.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
   <!-- Datatables CDN-->
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
   <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
 
-  <title>Career</title>
+  <title>Book</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,15 +37,6 @@ $_SESSION['status'] = 0;
 
 <body id="page-top">
 
-<script type="text/javascript">
-//these are default values. they will be replaced with sessions coming from when someone logs in
-
-  let session_id = '<?php echo $_SESSION['login_id']; ?>';
-  let session_email = '<?php echo $_SESSION['email']; ?>';
-  let session_pwd = '<?php echo $_SESSION['password']; ?>';
-  let session_usertype = '<?php echo  $_SESSION['usertype']; ?>';
-  let session_status = '<?php echo $_SESSION['status']; ?>';
-</script>
 
   <div id="wrapper">
     <div id="content-wrapper" class="d-flex flex-column">
@@ -75,10 +57,8 @@ $_SESSION['status'] = 0;
   <script src="js/sb-admin-2.min.js"></script>
  
   <!--Custom scripts-->
-  <script src="js/career.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/company.js"></script>
   <script src="js/jobseeker.js"></script>
-  <script src="js/notify.min.js"></script>
 </body>
 </html>

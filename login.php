@@ -12,7 +12,7 @@ include 'includes/autoloader.inc.php';
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Login</title>
+  <title>Login</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -49,29 +49,26 @@ include 'includes/autoloader.inc.php';
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                   </div>
-                  <form class="user"> -->
+                  <div class="text-center">
+                    <p class="status"></p>
+                  </div>
+                  <form class="user" action="post.php/authentication/company_login" method="POST" id="login">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
                     </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
-                      </div>
-                    </div>
-                    <a href="index.php" class="btn btn-primary btn-user btn-block">
+                    <button class="btn btn-primary btn-user btn-block" id="submit">
                       Login
-                    </a>
+                    </button>
                     <hr>
                   </form>
                   <div class="text-center">
                     <a class="small" href="">Forgot Password?</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="register.php">Create an Account!</a>
+                    <a class="small" href="companyregister.php">Create an Account!</a>
                   </div>
                 </div>
               </div>
@@ -94,12 +91,10 @@ include 'includes/autoloader.inc.php';
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+  <script src="js/login.js"></script>
+
 
 </body>
 
-<script>
-$(document).ready(function(){
-      $('#myt').dataTable();
-  });
-</script>
+
 </html>

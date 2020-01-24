@@ -1,1 +1,12 @@
 /* Put all your custom css codes here. do not tousch the bootstrap stylesheet */
+
+/* error message styling */
+
+.error {
+    color: red;
+    margin-left: 5px;
+    display: inline;
+    font-size: 20px;
+  }
+
+/* end of error message styling */
