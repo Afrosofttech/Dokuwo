@@ -53,7 +53,7 @@ $(document).ready(()=>{
             if(data == "true"){
               window.location.replace('login.php');
             }
-            if(date == "false"){
+            if(data == "false"){
               $('#message').html("INVALID INPUT FIELDS. PLEASE ENTER VALID DETAILS");
               window.location.replace('jobseekerdetail.php');
             }

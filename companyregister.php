@@ -39,7 +39,7 @@ include 'includes/autoloader.inc.php';
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
               </div>
-              <form class="user" action="post.php/authentication/create_company_account" method="POST" id="register">
+              <form class="user" action="post.php/authentication/create_company_account" method="POST" id="register" autocomplete="off">
                 
                 <div class="form-group">
                   <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email Address">

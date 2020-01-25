@@ -73,7 +73,7 @@ else{
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">JOB SEEKER DETAILS</h1>
               </div>
-              <form class="user" action="post.php/details/fill_jobseeker_account" method="POST" id="jobseeker" enctype="multipart/form-data">
+              <form class="user" action="post.php/details/fill_jobseeker_account" method="POST" id="jobseeker" enctype="multipart/form-data" autocomplete="off">
                 
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -115,17 +115,30 @@ else{
                 <input type="text" class="form-control form-control-user" id="skills" name="skills" value="java,python" placeholder="Enter your skills here">
                 </div> 
                 <div class="form-group">
-                <input type="text" class="form-control form-control-user" name="educationlevel" id="educationlevel" placeholder="Education Level">
-                </div> 
+                <select class="form-control" id="educationlevel" name="educationlevel">
+                  <option value="">Select your most recent education level</option>
+                  <option value="High school diploma or equivalent">High school diploma or equivalent</option>
+                  <option value="Associate degree or equivalent">Associate degree or equivalent</option>
+                  <option value="Bachelors degree or equivalent">Bachelor's degree or equivalent</option>
+                  <option value="Masters degree or equivalent">Master's degree or equivalent</option>
+                  <option value="Doctoral degree or equivalent">Doctoral degree or equivalent</option>
+                </select>
+              </div>
                 <div class="form-group">
                 <input type="hidden" class="form-control form-control-user" name="id" id="id" value="<?php echo $id; ?>" >
                 </div>
                 
                 <div class="form-group">
-                <input type="file" class="form-control form-control-user" name="image" id="image" placeholder="image">
-                </div> 
+                  <div class="custom-file">
+                  <input type="file" class="form-control form-control-user custom-file-input" name="image" id="image" placeholder="image">
+                  <label class="custom-file-label" for="image">upload image</label>
+                  </div>
+                </div>
                 <div class="form-group">
-                <input type="file" class="form-control form-control-user" name="CV" id="CV" placeholder="CV">
+                <div class="custom-file">
+                <input type="file" class="form-control form-control-user custom-file-input" name="CV" id="CV" placeholder="CV">
+                <label class="custom-file-label" for="image">upload CV</label>
+                </div>
                 </div> 
                 <div class="text-center">
                 <button class="btn btn-primary btn-user btn-block" id="submit">Submit</button>
@@ -181,7 +194,16 @@ else{
     delay: 100
   },
   showAutocompleteOnFocus: true
-})
+});
+
+$('#skills').on('tokenfield:createtoken', function (event) {
+    var existingTokens = $(this).tokenfield('getTokens');
+    $.each(existingTokens, function(index, token) {
+        if (token.value === event.attrs.value)
+            event.preventDefault();
+    });
+});
+
 </script>
 
 

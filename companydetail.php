@@ -67,7 +67,7 @@ else{
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">COMPANY DETAILS</h1>
               </div>
-              <form class="user" action="post.php/details/fill_company_account" method="POST" id="companydetail" enctype="multipart/form-data">
+              <form class="user" action="post.php/details/fill_company_account" method="POST" id="companydetail" enctype="multipart/form-data" autocomplete="off">
                 
                 <div class="form-group">
                   <input type="text" class="form-control form-control-user" name="name" id="name" placeholder="Company name">

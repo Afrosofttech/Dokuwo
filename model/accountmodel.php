@@ -26,13 +26,5 @@ class Account extends Dbh{
         $stmt = null; 
     }
 
-    public function get_education(){
-        $sql = " SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='job_seeker' AND COLUMN_NAME='education_level'";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$email,$hash]);
-        $data = $stmt->fetch();
-        return $data;
-        $stmt = null; 
-    }
 
 }

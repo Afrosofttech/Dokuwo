@@ -216,7 +216,7 @@ function validate_company(){
         
          }
          else{
-            echo "Invalid image extension";
+            echo "Invalid file extension";
          }
          $validated_data = validate_jobseeker();
          $fname = $validated_data['firstname'];
@@ -234,12 +234,7 @@ function validate_company(){
          $fullname = $fname.''.$lname;
          $passwd = password_hash($validated_data['password'], PASSWORD_DEFAULT);
          $account = $account->jobseeker_account($login_id,$fname,$lname,$fullname,$email,$passwd,$phone,$skills,$edulevel,$addr,$dateofbirth,$country,$final_image,$final_cv);
-            if($account){
-               echo "true";
-            }
-            else
-               echo "false";
-          
+           
           break;
       case "fill_company_account":
 
