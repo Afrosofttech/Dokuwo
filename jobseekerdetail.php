@@ -179,10 +179,13 @@ else{
   <script src="js/bootstrap-tokenfield.min.js"></script>
   
   <script>
-  $("#country").countrySelect();
+  $("#country").countrySelect({
+    defaultCountry: "gm"
+  });
   $(function() { 
                 $( "#dateofbirth" ).datepicker({
                   dateFormat: "yy-mm-dd",
+                  yearRange: "c-100:c+0",
                   changeMonth: true,
                   changeYear: true
                 }); 
