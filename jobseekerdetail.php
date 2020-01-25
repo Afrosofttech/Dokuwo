@@ -116,7 +116,7 @@ else{
                 </div> 
                 <div class="form-group">
                 <select class="form-control" id="educationlevel" name="educationlevel">
-                  <option value="">Select your most recent education level</option>
+                  <option value="" selected hidden>Select your most recent education level</option>
                   <option value="High school diploma or equivalent">High school diploma or equivalent</option>
                   <option value="Associate degree or equivalent">Associate degree or equivalent</option>
                   <option value="Bachelors degree or equivalent">Bachelor's degree or equivalent</option>
@@ -154,6 +154,11 @@ else{
 
   </div>
 
+<script>
+ function checkam(){
+  alert('AMADOU SARJO');
+ }
+</script>
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -201,9 +206,14 @@ else{
 
 $('#skills').on('tokenfield:createtoken', function (event) {
     var existingTokens = $(this).tokenfield('getTokens');
+    console.log('=======================TOKEN======================');
+    console.log(existingTokens);
+    console.log(event.attrs.value);
     $.each(existingTokens, function(index, token) {
-        if (token.value === event.attrs.value)
-            event.preventDefault();
+        if (token.value === event.attrs.value){
+          event.preventDefault();
+          $.notify('Skill cannot be repeated','error');
+        }
     });
 });
 
