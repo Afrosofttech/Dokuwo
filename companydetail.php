@@ -1,27 +1,6 @@
 <?php
 include 'includes/autoloader.inc.php';
 
-$uri = $_SERVER['REQUEST_URI'];
-$url_components = parse_url($uri);
-parse_str($url_components['query'], $params);
-
-if($params['email'] == '' && $params['hash'] == ''){
-  header('Location: companyregister.php');
-}
-else{
-  require_once 'model/accountmodel.php';
-
-  $acc = new Account();
-  $email = $params['email'];
-  $hash =  $params['hash'];
-  $get_id = $acc->get_login_id($email,$hash);
-  if($get_id){
-    $id = $get_id['login_id'];
-  }
-  else{
-    header('Location: companyregister.php');
-  }
-}
 ?>
 
 <!DOCTYPE html>
@@ -76,9 +55,6 @@ else{
                 <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Company email">
                 </div>
                 <div class="form-group">
-                <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password">
-                </div> 
-                <div class="form-group">
                 <input type="text" class="form-control form-control-user" name="phone" id="phone" placeholder="Phone number...">
                 </div> 
                 <div class="form-group">
@@ -97,7 +73,7 @@ else{
                 <input type="file" class="form-control form-control-user" name="logo" id="logo">
                 </div>
                 <div class="form-group">
-                <input type="hidden" class="form-control form-control-user" name="id" id="id" value="<?php echo $id; ?>">
+                <input type="hidden" class="form-control form-control-user" name="id" id="id" value="">
                 </div> 
                 <div class="text-center">
                 <button class="btn btn-primary btn-user btn-block" id="submit">Submit</button>
@@ -124,15 +100,17 @@ else{
   <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Bootstrap Form Helpers -->
-  <script src="js/bootstrap-formhelpers.min.js"></script>
+  <script src="js/signup/bootstrap-formhelpers.min.js"></script>
 
   <!-- Custom scripts -->
-  <script src="js/companydetail.js"></script>
+  <script src="js/custom.js"></script>
   <script src="js/notify.min.js"></script>
-  <script src="js/countrySelect.min.js"></script>
+  <script src="js/signup/countrySelect.min.js"></script>
   
   <script>
-  $("#country").countrySelect();
+  $("#country").countrySelect({
+    defaultCountry: "gm"
+  });
 </script>
 
 </body>

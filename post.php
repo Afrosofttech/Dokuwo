@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 // For all post methods or queries that involve inserting, creating, updating
 // and deleting something on the database, direct all the URL\'s here and then 
@@ -13,7 +13,7 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
  $contr =  $urlParts[sizeof($urlParts)-2];
 
  if($contr == 'authentication'){
-   require_once('model/auth.php');
+   require_once('controller/authcontroller.php');
    
    function validate_data(){
             require "gump.class.php";
@@ -43,83 +43,37 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
    switch ($method){
        case "create_company_account":
            
-         $auth = new Auth();
+         $auth = new AuthController();
          $validated_data = validate_data();
          $comp_email = $validated_data['email'];
          $usertype = $validated_data['company'];
-         $verify_email = $auth->verify_email($comp_email);
-         $success = "Account created successfully";
-         $error = "Email already exist, please use a different email!";
-         if($verify_email == null){
-               $hash = md5(rand(0,1000));
-               $passwd = password_hash($validated_data['password'], PASSWORD_DEFAULT);
-               $account = $auth->create_account($comp_email, $passwd, $hash, $usertype,0);
-            
-               echo $success;
-
-         }else{
-
-               echo $error;
-            
-         }
-          
+         $passwd = $validated_data['password'];
+         $account = $auth->create_user_account($comp_email, $passwd, $usertype);
+         echo $account;         
           break;
 
           case "create_jobseeker_account":
            
-            $auth = new Auth();
+            $auth = new AuthController();
             $validated_data = validate_data();
-            $jobemail = $validated_data['email'];
+            $comp_email = $validated_data['email'];
             $usertype = $validated_data['jobseeker'];
-            $verify_email = $auth->verify_email($jobemail);
-            $success = "Account created successfully";
-            $error = "Email already exist, please use a different email!";
-            if($verify_email == null){
-                  $hash = md5(rand(0,1000));
-                  $passwd = password_hash($validated_data['password'], PASSWORD_DEFAULT);
-                  $account = $auth->create_account($jobemail, $passwd, $hash, $usertype,0);
-                  
-                  echo $success;
-   
-            }else{
-   
-                  echo $error;
-               
-            }
-             
-             break;
+            $passwd = $validated_data['password'];
+            $account = $auth->create_user_account($comp_email, $passwd, $usertype);
+            echo $account;    
+            break;
      
        default:
-            $auth = new Auth();
+            $auth = new AuthController();
             $validated_data = validate_data();
             $email = $validated_data['email'];
             $password = $validated_data['password'];
-            $account = $auth->login($email);
-            $pass_verif = password_verify($password, $account['password']);
-            if ($account && $pass_verif)
-               {  
-                  $_SESSION['login_id'] = $account['login_id'];
-                  $_SESSION['email'] = $account['email'];
-                  if($account['user_type'] == 'company'){
-                     $company = $auth->get_company($account['login_id']);
-                     $_SESSION['company_name'] = $company['company_name'];
-                     $_SESSION['logo'] = $company['logo'];
-                  }
-                  if($account['user_type'] == 'jobseeker'){
-                     $jobseeker = $auth->get_jobseeker($account['login_id']);
-                     $_SESSION['fullname'] = $jobseeker['fullname'];
-                     $_SESSION['image'] = $jobseeker['image'];
-                  }
-                  echo "valid";
-               } else {
-                  var_dump($account['password']);
-                  // echo $account['password'];
-               }
-             
-          break;
+            $user = $auth->user_login($email,$password);
+            echo $user;   
+            break;
    }
 }elseif($contr == 'details'){
-   require_once('model/accountmodel.php');
+   require_once('controller/authcontroller.php');
 
    function validate_jobseeker(){
       require "gump.class.php";
@@ -132,14 +86,12 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
          'firstname'   => 'required|alpha_numeric|max_len,100',
          'lastname'    => 'required|alpha_numeric|max_len,100',
          'email'       => 'required|valid_email',
-         'password'    => 'required|max_len,100|min_len,8',
       ));
 
       $gump->filter_rules(array(
          'firstname' => 'trim|sanitize_string',
          'lastname'  => 'trim|sanitize_string',
          'email'     => 'trim|sanitize_email',
-         'password'  => 'trim',
       ));
 
       $validated_data = $gump->run($_POST);
@@ -161,13 +113,11 @@ function validate_company(){
    $gump->validation_rules(array(
       'name'     => 'required|alpha_numeric|max_len,100',
       'email'    => 'required|valid_email',
-      'password' => 'required|max_len,100|min_len,8',
    ));
 
    $gump->filter_rules(array(
       'name'      => 'trim|sanitize_string',
       'email'     => 'trim|sanitize_email',
-      'password'  => 'trim',
    ));
 
    $company_data = $gump->run($_POST);
@@ -182,11 +132,8 @@ function validate_company(){
    switch ($method){
        case "fill_jobseeker_account":
 
-         $account = new Account();
-         $success = "Details submitted successfully";
-         $error = "Email already exist, please use a different email!";
+         $auth = new AuthController();
          $path = 'uploads/';
-         $path2 = 'uploads/';
          $valid_extensions = array('jpeg', 'jpg', 'png');
          $valid_extensions_cv = array('jpeg', 'jpg', 'png', 'pdf' , 'doc' , 'ppt');
          $img = $_FILES["image"]["name"]; 
@@ -208,6 +155,7 @@ function validate_company(){
          }
          else{
             echo "Invalid image extension";
+            return;
          }
          if(in_array($ext_cv, $valid_extensions_cv)) 
          { 
@@ -217,6 +165,7 @@ function validate_company(){
          }
          else{
             echo "Invalid file extension";
+            return;
          }
          $validated_data = validate_jobseeker();
          $fname = $validated_data['firstname'];
@@ -231,14 +180,13 @@ function validate_company(){
          $edulevel = $validated_data['educationlevel'];
          $login_id = $validated_data['id'];
          $email = $validated_data['email'];
-         $fullname = $fname.''.$lname;
-         $passwd = password_hash($validated_data['password'], PASSWORD_DEFAULT);
-         $account = $account->jobseeker_account($login_id,$fname,$lname,$fullname,$email,$passwd,$phone,$skills,$edulevel,$addr,$dateofbirth,$country,$final_image,$final_cv);
-           
+         $fullname = $fname.' '.$lname;
+         $jobseeker = $auth->jobseekerdetails($login_id,$fname,$lname,$fullname,$email,$phone,$skills,$edulevel,$addr,$dateofbirth,$country,$final_image,$final_cv);
+         echo $jobseeker;
           break;
       case "fill_company_account":
 
-         $account = new Account();
+         $auth = new AuthController();
          $valid_extensions = array('jpeg', 'jpg', 'png');
          $path = 'uploads/';
          $img = $_FILES["logo"]["name"]; 
@@ -256,8 +204,6 @@ function validate_company(){
             else{
                echo "Invalid image extension";
             }
-         $success = "Details submitted successfully";
-         $error = "Error in submitting details";
          $company_data = validate_company();
          $cmp_name = $company_data['name'];
          $cmp_email = $company_data['email'];
@@ -267,10 +213,9 @@ function validate_company(){
          $postcode = $company_data['postalcode'];
          $curr = $company_data['currency'];
          $login_id = $company_data['id'];
-         $passwd = password_hash($company_data['password'], PASSWORD_DEFAULT);
-         $account = $account->company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$passwd,$postcode,$country,$curr,$final_image);
+         $company = $auth->companydetails($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$final_image);
             
-         echo $success;
+         echo $company;
           
           break;
        default:

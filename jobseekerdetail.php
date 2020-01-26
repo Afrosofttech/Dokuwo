@@ -1,27 +1,6 @@
 <?php
 include 'includes/autoloader.inc.php';
 
-$uri = $_SERVER['REQUEST_URI'];
-$url_components = parse_url($uri);
-parse_str($url_components['query'], $params);
-
-if($params['email'] == '' && $params['hash'] == ''){
-  header('Location: jobseekerregister.php');
-}
-else{
-  require_once 'model/accountmodel.php';
-
-  $acc = new Account();
-  $email = $params['email'];
-  $hash =  $params['hash'];
-  $get_id = $acc->get_login_id($email,$hash);
-  if($get_id){
-    $id = $get_id['login_id'];
-  }
-  else{
-    header('Location: jobseekerregister.php');
-  }
-}
 ?>
 
 <!DOCTYPE html>
@@ -84,13 +63,8 @@ else{
                     </div>
                   </div>
 
-                <div class="form-group row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                  <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password">
-                  </div>
-                  <div class="col-sm-6">
+                <div class="form-group">
                   <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email">
-                  </div>
                 </div>
 
                 <div class="form-group row">
@@ -125,7 +99,7 @@ else{
                 </select>
               </div>
                 <div class="form-group">
-                <input type="hidden" class="form-control form-control-user" name="id" id="id" value="<?php echo $id; ?>" >
+                <input type="hidden" class="form-control form-control-user" name="id" id="id" value="" >
                 </div>
                 
                 <div class="form-group">
@@ -168,15 +142,15 @@ else{
   <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Custom scripts -->
-  <script src="js/jobseekerdetail.js"></script>
+  <script src="js/custom.js"></script>
   <script src="js/notify.min.js"></script>
 
   <!-- Bootstrap Form Helpers -->
-  <script src="js/bootstrap-formhelpers.min.js"></script>
-  <script src="js/countrySelect.min.js"></script>
+  <script src="js/signup/bootstrap-formhelpers.min.js"></script>
+  <script src="js/signup/countrySelect.min.js"></script>
 
   <!-- Bootstrap tokenfield input js plugin -->
-  <script src="js/bootstrap-tokenfield.min.js"></script>
+  <script src="js/signup/bootstrap-tokenfield.min.js"></script>
   
   <script>
   $("#country").countrySelect({
@@ -201,9 +175,6 @@ else{
 
 $('#skills').on('tokenfield:createtoken', function (event) {
     var existingTokens = $(this).tokenfield('getTokens');
-    console.log('=======================TOKEN======================');
-    console.log(existingTokens);
-    console.log(event.attrs.value);
     $.each(existingTokens, function(index, token) {
         if (token.value === event.attrs.value){
           event.preventDefault();
@@ -211,6 +182,8 @@ $('#skills').on('tokenfield:createtoken', function (event) {
         }
     });
 });
+
+
 
 </script>
 

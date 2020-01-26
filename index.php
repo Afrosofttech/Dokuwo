@@ -1,8 +1,7 @@
 <?php
-if(!isset($_SESSION['email']) || $_SESSION['user_type'] == ''){
-  // console.log($_SESSION['u_email']);
-  // console.log('AMS');
-    header("Location: login.php");
+session_start();
+if(!isset($_SESSION['email'])){
+     header("Location: authentication.php");
 }
 ?>
 <!DOCTYPE html>
