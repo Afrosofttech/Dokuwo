@@ -25,6 +25,8 @@ Once you complete solving an issue or task, checkout and create a new branch and
 <h3>Datatables</h3>
 for any tables, we will be using datatables. check out datatables.net
 
+<h3>PrintArea for printing messages</h3>
+here is a link to the PrintArea plugin https://github.com/RitsC/PrintArea
 <h3>WYSIWYG Editor</h3>
 for any textarea, we will be using CKEDITOR. Check out ckeditor.com
 
