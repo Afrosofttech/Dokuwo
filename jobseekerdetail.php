@@ -201,9 +201,6 @@ else{
 
 $('#skills').on('tokenfield:createtoken', function (event) {
     var existingTokens = $(this).tokenfield('getTokens');
-    console.log('=======================TOKEN======================');
-    console.log(existingTokens);
-    console.log(event.attrs.value);
     $.each(existingTokens, function(index, token) {
         if (token.value === event.attrs.value){
           event.preventDefault();
