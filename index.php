@@ -28,7 +28,11 @@ $_SESSION['company_name'] = 'Afrika Software Technologies'; //This should come f
   <!-- jquery CDN -->
  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- <script src="js/jquery.js"></script> -->
+  
+  <!--jquery printArea -->
+    <script src="js/printArea/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="js/printArea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
+    <link type="text/css" rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css"/>
 
   <!-- Datatables CDN-->
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
