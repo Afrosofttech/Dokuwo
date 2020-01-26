@@ -11,6 +11,7 @@ $_SESSION['email'] = 'contact@afrosofttech.com';
 $_SESSION['password'] = '123@ast';
 $_SESSION['usertype'] = 'company';
 $_SESSION['status'] = 0;
+$_SESSION['company_name'] = 'Afrika Software Technologies'; //This should come from the company table
 
 ?>
 <!DOCTYPE html>
@@ -24,14 +25,22 @@ $_SESSION['status'] = 0;
   <meta name="description" content="This is an accounting Software that aims to automate and make your accounting work simple.">
   <meta name="author" content="Afrika Software Technologies">
 
-  <!-- jquery CDN-->
-<!--  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>-->
-<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
-    <script src="js/jquery.js"></script>
+  <!-- jquery CDN -->
+ <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+  <!--jquery printArea -->
+    <script src="js/printArea/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="js/printArea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
+    <link type="text/css" rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css"/>
 
   <!-- Datatables CDN-->
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
   <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+
+  <!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
 
   <title>Career</title>
 
@@ -54,6 +63,7 @@ $_SESSION['status'] = 0;
   let session_pwd = '<?php echo $_SESSION['password']; ?>';
   let session_usertype = '<?php echo  $_SESSION['usertype']; ?>';
   let session_status = '<?php echo $_SESSION['status']; ?>';
+  let session_fullname ='<?php echo $_SESSION['company_name']; ?>'
 </script>
 
   <div id="wrapper">
