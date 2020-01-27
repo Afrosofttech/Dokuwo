@@ -8,6 +8,11 @@ class AuthController extends Auth{
         return $login_id['login_id'];
     }
 
+    public function login_info($email,$hash){
+        $login_id = $this->get_login_id($email,$hash);
+        return $login_id;
+    }
+
     public function create_user_account($comp_email,$passwd,$usertype){
         $verify_email = $this->verify_email($comp_email);
         if($verify_email == null){

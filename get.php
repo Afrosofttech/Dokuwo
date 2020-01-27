@@ -16,16 +16,16 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
     require_once('view/companyview.php');
     require_once('controller/authcontroller.php');
     switch ($method){
-        case "retrieve_login_id":
-             $get_login_id = new AuthController();
-             $id = $get_login_id->login_id($_GET['email'], $_GET['hash']);
-             echo $id;
-           break;
-       case "":
-           ;
-           break;
+        case "retrieve_login_info":
+               $get_login = new AuthController();
+               $login = $get_login->login_info($_GET['email'], $_GET['hash']);
+               echo json_encode($login);
+            break;
+         case "":
+        
+            break;
         default:
-           break;
+            break;
     }
 
  } elseif($view == 'jobseeker'){
