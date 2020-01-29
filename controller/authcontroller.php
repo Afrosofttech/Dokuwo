@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once 'model/auth.php';
 
 class AuthController extends Auth{
@@ -35,14 +36,16 @@ class AuthController extends Auth{
            $_SESSION['login_id'] = $user['login_id'];
            $_SESSION['email'] = $user['email'];
            $_SESSION['status'] = $user['status'];
-           if($user['user_type'] == 'company'){
+           if($user['user_type'] === 'company')
+           {
               $company = $this->get_company_login($user['login_id']);
               $_SESSION['name'] = $company['company_name'];
               $_SESSION['usertype'] = $user['user_type'];
            }
-           if($user['user_type'] == 'jobseeker'){
+           if($user['user_type'] === 'jobseeker')
+           {
               $jobseeker = $this->get_jobseeker_login($user['login_id']);
-              $_SESSION['name'] = $jobseeker['fullname'];
+              $_SESSION['name'] = $jobseeker['fname'];
               $_SESSION['usertype'] = $user['user_type'];
            }
            return true;

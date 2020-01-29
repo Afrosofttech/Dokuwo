@@ -35,7 +35,7 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="login-form" action="post.php/authentication/company_login" method="post" role="form" style="display: block;" autocomplete="off">
+								<form id="login-form" action="post.php/authentication/user_login" method="post" role="form" style="display: block;" autocomplete="off">
 									<div class="form-group">
 										<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Enter Email">
 									</div>
@@ -60,7 +60,7 @@
 										</div>
 									</div>
 								</form>
-								<form id="jobseeker-form" action="post.php/authentication/create_company_account" method="post" role="form" style="display: none;" autocomplete="off">
+								<form id="jobseeker-form" action="post.php/authentication/create_jobseeker_account" method="post" role="form" style="display: none;" autocomplete="off">
 									<div class="form-group">
 										<input type="email" name="email" id="job_email" tabindex="1" class="form-control" placeholder="Enter Email Address" value="">
 									</div>

@@ -60,10 +60,13 @@ function login(){
             url: url,
             data: formData,
             success:function(data){
-               if(data == true){
+                var response = $.parseJSON(data);
+               if(response === true)
+               {
                   window.location.replace('index.php');
-                  }
-               else{
+                }
+               if(response === false)
+               {
                 $.notify('Account does not exist','warn');
                }
             },
