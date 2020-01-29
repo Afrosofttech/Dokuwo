@@ -43,7 +43,7 @@ class Auth extends Dbh {
 
     public function get_jobseeker_login($login_id){
     
-        $sql = " SELECT * FROM jobseeker WHERE login_id=?";
+        $sql = " SELECT * FROM job_seeker WHERE login_id=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id]);
         $data = $stmt->fetch();
