@@ -8,7 +8,6 @@ session_start();
 
 $_SESSION['login_id'] = 2;
 $_SESSION['email'] = 'contact@afrosofttech.com';
-// $_SESSION['password'] = '123@ast';
 $_SESSION['usertype'] = 'company';
 $_SESSION['status'] = 0;
 $_SESSION['name'] = 'Afrika Software Technologies'; //This should come from the company table
@@ -60,7 +59,6 @@ $_SESSION['name'] = 'Afrika Software Technologies'; //This should come from the 
 
   let session_id = '<?php echo $_SESSION['login_id']; ?>';
   let session_email = '<?php echo $_SESSION['email']; ?>';
-  let session_pwd = '<?php echo $_SESSION['password']; ?>';
   let session_usertype = '<?php echo  $_SESSION['usertype']; ?>';
   let session_status = '<?php echo $_SESSION['status']; ?>';
   let session_fullname ='<?php echo $_SESSION['name']; ?>'
