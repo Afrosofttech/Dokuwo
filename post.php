@@ -1,4 +1,5 @@
 <?php 
+//include 'includes/autoloader.inc.php';
 include 'includes/autoloader.inc.php';
 // For all post methods or queries that involve inserting, creating, updating
 // and deleting something on the database, direct all the URL\'s here and then 
@@ -14,30 +15,30 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
  $contr =  $urlParts[sizeof($urlParts)-2];
 
  if($contr == 'company'){
-    //require_once('controller/companycontroller.php');
+
     switch ($method){
         case "delete_message":
-         $result = new CompanyController();
+         $result = new MessagesController();
          $res = $result->delete_message($_POST['message_id']);
          echo $res; 
          break;
-       case "delete_message_sent":
-         $result = new CompanyController();
-         $res = $result->delete_message_sent($_POST['message_id']);
-         echo $res; 
-         break;
+      //  case "delete_message_sent":
+      //    $result = new MessagesController();
+      //    $res = $result->delete_message_sent($_POST['message_id']);
+      //    echo $res; 
+      //    break;
        case "message_is_read":
-         $result = new CompanyController();
+         $result = new MessagesController();
          $res = $result->message_is_read($_POST['message_id']);
          echo $res;
            break;
        case "send_msg_to_jobseeker":
-         $result = new CompanyController();
+         $result = new MessagesController();
          $res = $result->send_msg_to_jobseeker($_POST['creator_id'],$_POST['fullname'],$_POST['jobseeker_login_id'],$_POST['Name'],$_POST['parent_msg_id'],$_POST['Subject'],$_POST['messageBody']);
          echo $res;
            break;
        case "reply_jobseeker":
-         $result = new CompanyController();
+         $result = new MessagesController();
          $res = $result->send_msg_to_jobseeker($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']);
          echo $res;
         default:
@@ -45,7 +46,7 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
     }
 
  } elseif($contr == 'jobseeker'){
-    //require_once('controller/jobseekercontroller.php');
+
     switch ($method){
         case "":
            ;

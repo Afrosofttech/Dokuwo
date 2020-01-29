@@ -7,6 +7,7 @@ include 'includes/autoloader.inc.php';
 // to use the first MVC model, then there will be no need for views here since Jquery will handle everything involving viewing
 
 $uri = $_SERVER['REQUEST_URI'];
+
 $urlParts = parse_url($uri, PHP_URL_PATH);
 $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
 
@@ -16,53 +17,62 @@ $view =  $urlParts[sizeof($urlParts)-2];
 if($view == 'company'){
    switch ($method){
        case "no_of_jobs_published":
+        //include 'view/Company/companyview.php';
+         //use view\Company\CompanyView;
+
+         //require view\Company\CompanyView;
           $result = new CompanyView();
           $res = $result->no_of_jobs_published($_GET['login_id']);
           echo $res;
           break;
       case "is_profile_complete":
+        //include 'view/Company/companyview.php';
+         //require view\Company\CompanyView;
          $result = new CompanyView();
          $res = $result->is_profile_complete($_GET['login_id']);
         //  echo json_encode($results);
         echo $res;
           break;
       case "profile":
+        //include 'view/Company/companyview.php';
+        // require Company\CompanyView;
           $result = new CompanyView();
           $res = $result->get_profile($_GET['login_id']);
           echo json_encode($res);
          break;
        case "no_of_new_messages":
-         $result = new CompanyView();
+         $result = new MessagesView();
          $res = $result->no_of_new_messages($_GET['login_id']);
          //echo json_encode($results);
          echo $res;
          break;
        case "all_inbox_messages":
-         $result = new CompanyView();
+         $result = new MessagesView();
          $res = $result->all_inbox_messages($_GET['login_id']);
          echo json_encode($res);
        break;
        case "read_messages":
-         $result = new CompanyView();
+         $result = new MessagesView();
          $res = $result->read_messages($_GET['login_id']);
          echo json_encode($res);
        break;
        case "all_sent_messages":
-         $result = new CompanyView();
+         $result = new MessagesView();
          $res = $result->all_sent_messages($_GET['login_id']);
          echo json_encode($res);
        break;
        case "message_recipient":
-         $result = new CompanyView();
+         $result = new MessagesView();
          $res = $result->message_recipient($_GET['message_id']);
          echo json_encode($res);
        break;
        case "new_unread_messages":
-         $result = new CompanyView();
+         $result = new MessagesView();
          $res = $result->new_unread_messages($_GET['login_id']);
          echo json_encode($res);
        case "retreive_all_jobseekers":
-        $result = new CompanyView();
+        //AMS: to be moved to jobseekerView
+        $result = new MessagesView();
         $res = $result->retreive_all_jobseekers();
         echo json_encode($res);
        break;
@@ -73,7 +83,8 @@ if($view == 'company'){
 } elseif($view == 'jobseeker'){
    switch ($method){
        case "no_of_job_seekers":
-         $result = new JobseekerView();
+        //AMS: This explains why we need to use namespace
+         $result = new SeekerHomeView();
          $count = $result->no_of_job_seekers();
          echo $count;
          break;

@@ -1,7 +1,7 @@
 <?php
 include_once 'model/companymodel.php';
 
-class CompanyController extends Company{
+class MessagesController extends Company{
   
     public function delete_message($message_id){
         $res = $this->delete_this_message($message_id);

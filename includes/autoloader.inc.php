@@ -4,10 +4,18 @@ spl_autoload_register(function($class_name) {
         'view/',
         'controller/',
     );
+    $subDirs = array(
+        '/Admin/',
+        '/Authenticate/',
+        '/Company/',
+        '/Jobseeker/',
+    );
     foreach( $dirs as $dir ) {
-        if (file_exists($dir.strtolower($class_name).'.php')) {
-            require_once($dir.strtolower($class_name).'.php');
+        foreach ($subDirs as $sub) {
+        if (file_exists($dir.$sub.strtolower($class_name).'.php')) {
+            require_once($dir.$sub.strtolower($class_name).'.php');
             return;
         }
+    }
     }
 });
