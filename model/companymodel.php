@@ -35,7 +35,8 @@ class Company extends Dbh{
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$recipient_id,0]);
         $rowCount = $stmt->rowCount();
-        if(!$rowCount) return ('No rows');
+        //if(!$rowCount) return ('No rows');
+        if(!$rowCount) return 0;
         return $rowCount;
         $stmt = null;
     }
