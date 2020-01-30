@@ -8,7 +8,7 @@ session_start();
 
 $_SESSION['login_id'] = 2;
 $_SESSION['email'] = 'contact@afrosofttech.com';
-//$_SESSION['password'] = '123@ast';
+$_SESSION['password'] = '123@ast';
 $_SESSION['usertype'] = 'company';
 $_SESSION['status'] = 0;
 $_SESSION['name'] = 'Afrika Software Technologies'; //This should come from the company table
