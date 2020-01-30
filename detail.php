@@ -14,7 +14,7 @@ include 'includes/autoloader.inc.php';
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Company Details</title>
+  <title>Career</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -193,7 +193,7 @@ include 'includes/autoloader.inc.php';
   var email = urlParams.get('email');
   var hash = urlParams.get('hash');
   
-  if(email == null && hash == null){
+  if(email == null || hash == null){
     window.location.replace('authentication.php');
   }
   else{
@@ -203,12 +203,13 @@ include 'includes/autoloader.inc.php';
       data:{"email" : email, "hash" : hash},
       success:function(data){
         //   $('#id').val(data);
+        console.log('DATA BACK');
+        console.log(data);
         var values = $.parseJSON(data);
         if(values.user_type == "company"){
             $('#jobseeker').hide();
             $('#comp_id').val(values.login_id);
-        }
-        if(values.user_type == "jobseeker"){
+        }else if(values.user_type == "jobseeker"){
             $('#companydetail').hide();
             $('#header-title').html("JOBSEEKER DETAILS");
             $('#id').val(values.login_id);   
