@@ -1,7 +1,7 @@
 <?php
     session_start();
 	session_unset();
-    session_destroy();
+	session_destroy();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,38 +109,40 @@
 			</div>
 		</div>
 	</div>
-    <script src="js/notify.min.js"></script>
+    <script src="js/plugins/notify.min.js"></script>
     <script src="js/auth.js"></script>
     <script>
     $(function() {
+	let attempt = '<?php echo $_REQUEST['attempt']; ?>';
+	attempt? $.notify('You need to create an account first','warning') : null;
 
-$('#login-form-link').click(function(e) {
-    $("#login-form").delay(100).fadeIn(100);
-     $("#jobseeker-form").fadeOut(100);
-     $("#company-form").fadeOut(100);
-    $('#jobseeker-form-link').removeClass('active');
-    $('#company-form-link').removeClass('active');
-    $(this).addClass('active');
-    e.preventDefault();
-});
-$('#jobseeker-form-link').click(function(e) {
-    $("#jobseeker-form").delay(100).fadeIn(100);
-     $("#login-form").fadeOut(100);
-     $("#company-form").fadeOut(100);
-    $('#login-form-link').removeClass('active');
-    $('#company-form-link').removeClass('active');
-    $(this).addClass('active');
-    e.preventDefault();
-});
-$('#company-form-link').click(function(e) {
-    $("#company-form").delay(100).fadeIn(100);
-     $("#login-form").fadeOut(100);
-     $("#jobseeker-form").fadeOut(100);
-    $('#login-form-link').removeClass('active');
-    $('#jobseeker-form-link').removeClass('active');
-    $(this).addClass('active');
-    e.preventDefault();
-});
+	$('#login-form-link').click(function(e) {
+		$("#login-form").delay(100).fadeIn(100);
+		$("#jobseeker-form").fadeOut(100);
+		$("#company-form").fadeOut(100);
+		$('#jobseeker-form-link').removeClass('active');
+		$('#company-form-link').removeClass('active');
+		$(this).addClass('active');
+		e.preventDefault();
+	});
+	$('#jobseeker-form-link').click(function(e) {
+		$("#jobseeker-form").delay(100).fadeIn(100);
+		$("#login-form").fadeOut(100);
+		$("#company-form").fadeOut(100);
+		$('#login-form-link').removeClass('active');
+		$('#company-form-link').removeClass('active');
+		$(this).addClass('active');
+		e.preventDefault();
+	});
+	$('#company-form-link').click(function(e) {
+		$("#company-form").delay(100).fadeIn(100);
+		$("#login-form").fadeOut(100);
+		$("#jobseeker-form").fadeOut(100);
+		$('#login-form-link').removeClass('active');
+		$('#jobseeker-form-link').removeClass('active');
+		$(this).addClass('active');
+		e.preventDefault();
+	});
 
 });
     </script>

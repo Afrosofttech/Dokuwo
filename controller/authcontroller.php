@@ -11,8 +11,8 @@ class AuthController extends Auth{
     }
 
     public function login_info($email,$hash){
-        $login_id = $this->get_login_id($email,$hash);
-        return $login_id;
+        $login_info = $this->get_login_info($email,$hash);
+        return $login_info;
     }
 
     public function create_user_account($comp_email,$passwd,$usertype){
@@ -62,7 +62,7 @@ class AuthController extends Auth{
     }
 
     public function companydetails($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$logo){
-        $company = $this->company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$logo);
-        return true;
+        $result = $this->company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$logo);
+        return $result;
     }
 }

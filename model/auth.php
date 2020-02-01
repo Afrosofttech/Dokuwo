@@ -51,7 +51,7 @@ class Auth extends Dbh {
         $stmt = null;
     }
 
-    public function get_login_id($email,$hash){
+    public function get_login_info($email,$hash){
         $sql = " SELECT * FROM login WHERE email=? and hash=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$email,$hash]);
@@ -73,6 +73,7 @@ class Auth extends Dbh {
         $sql = " INSERT INTO company (login_id,company_name,company_email,company_phone,company_address,postal_code,country,currency,logo) VALUES(?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$logo]);
+        return 200;
         $stmt = null;
     }
 

@@ -18,8 +18,8 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
     switch ($method){
         case "retrieve_login_info":
                $get_login = new AuthController();
-               $login = $get_login->login_info($_GET['email'], $_GET['hash']);
-               echo json_encode($login);
+               $login_info = $get_login->login_info($_GET['email'], $_GET['hash']);
+               echo json_encode($login_info);
             break;
          case "":
         

@@ -60,5 +60,6 @@ if(!isset($_SESSION['email'])){
   <script src="js/admin.js"></script>
   <script src="js/company.js"></script>
   <script src="js/jobseeker.js"></script>
+  <script src="js/plugins/notify.min.js"></script>
 </body>
 </html>

@@ -51,7 +51,7 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
          echo $account;         
           break;
 
-          case "create_jobseeker_account":
+      case "create_jobseeker_account":
            
             $auth = new AuthController();
             $validated_data = validate_data();
@@ -85,10 +85,10 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
       $gump = new GUMP();
 
       $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
-
+      //@techjobis-> i have replaced most alpha_numeric with alpha_space cus names can be multiple and need to allow spaces between
       $gump->validation_rules(array(
-         'firstname'   => 'required|alpha_numeric|max_len,100',
-         'lastname'    => 'required|alpha_numeric|max_len,100',
+         'firstname'   => 'required|alpha_space|max_len,100', 
+         'lastname'    => 'required|alpha_space|max_len,100',
          'email'       => 'required|valid_email',
       ));
 
@@ -115,7 +115,7 @@ function validate_company(){
    $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
 
    $gump->validation_rules(array(
-      'name'     => 'required|alpha_numeric|max_len,100',
+      'name'     => 'required|alpha_space|max_len,100',
       'email'    => 'required|valid_email',
    ));
 
@@ -209,6 +209,7 @@ function validate_company(){
                echo "Invalid image extension";
             }
          $company_data = validate_company();
+
          $cmp_name = $company_data['name'];
          $cmp_email = $company_data['email'];
          $phone = $company_data['phone'];
@@ -217,9 +218,18 @@ function validate_company(){
          $postcode = $company_data['postalcode'];
          $curr = $company_data['currency'];
          $login_id = $company_data['id'];
-         $company = $auth->companydetails($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$final_image);
+
+         // var_dump($cmp_name);
+         // var_dump($cmp_email);
+         // var_dump($phone);
+         // var_dump($addr);
+         // var_dump($country);
+         // var_dump($postcode);
+         // var_dump($curr);
+
+          //$result = $auth->companydetails($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$final_image);
             
-         echo $company;
+          echo $result;
           
           break;
        default:

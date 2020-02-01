@@ -25,10 +25,10 @@ $(document).ready(()=>{
     });
 
     // Company detail form submission
-    $('#companydetail').submit(function(e) {
-        e.preventDefault();
-        companydetail();
-    });
+    // $('#companydetail').submit(function(e) {
+    //     e.preventDefault();
+    //     companydetail();
+    // });
 });
 
 function login(){
@@ -291,18 +291,21 @@ function companydetail(){
           processData: false,
           cache:false,
           success:function(data){
+            console.log('RETURNED VALUES->');
             console.log(data);
-            if(data == true){
+            if(data == 200){
             window.location.replace('authentication.php');
             }
             else{
+              console.log('FAILED VALUES->');
               $('#message').html("INVALID INPUT FIELDS. PLEASE ENTER VALID DETAILS");
               console.log(data);
             }
             
           },
           error: function(err){
-            $('#message').html(err);
+            console.log('error->');
+            $('#message').html(err.responseText);
             console.log(err);
 
           }
