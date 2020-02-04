@@ -70,11 +70,22 @@ if($view == 'company'){
          $result = new MessagesView();
          $res = $result->new_unread_messages($_GET['login_id']);
          echo json_encode($res);
+       break;
        case "retreive_all_jobseekers":
         //AMS: to be moved to jobseekerView
         $result = new MessagesView();
         $res = $result->retreive_all_jobseekers();
         echo json_encode($res);
+       break;
+       case "categories_of_jobseekers":
+           $result = new JobseekersView();
+           $response = $result->categories_of_jobseekers();
+           echo json_encode($response);
+       break;
+       case "jobseekers_of_this_category":
+           $result = new JobseekersView();
+           $response =$result->jobseekers_of_this_category($_GET['category']);
+           echo json_encode($response);
        break;
        default:
           break;

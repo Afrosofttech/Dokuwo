@@ -83,6 +83,7 @@ $_SESSION['name'] = 'Afrika Software Technologies'; //This should come from the 
   <script src="js/sb-admin-2.min.js"></script>
  
   <!--Custom scripts-->
+  <script src="js/core/jobseeker_categories.js"></script>
   <script src="js/career.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/company.js"></script>
