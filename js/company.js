@@ -39,7 +39,7 @@ function sideBar(){
           '</li>'+
         
           '<li class="nav-item">'+
-          '<a class="nav-link" style="cursor: pointer;">'+
+          '<a class="nav-link" style="cursor: pointer;" onclick="companyJobseekers();">'+
               '<i class="fas fa-fw fa-users"></i>'+
               '<span>Job Seekers</span></a>'+
           '</li>'+
@@ -248,7 +248,6 @@ function alertNotification(){
 }
 function newMsgNotification(){
 let temp = '';
-console.log('====CALL->AMSJRJR====');
   $.ajax({
     method: "GET",
     dataType: 'json',
@@ -258,15 +257,15 @@ console.log('====CALL->AMSJRJR====');
       temp += '<h6 class="dropdown-header">'+
         'Message Center'+
       '</h6>';
-console.log('====AMSJRJR====');
       $.each(data, function(i,val){
+        console.log(val);
         temp += '<a class="dropdown-item d-flex align-items-center" id="'+val[0].message_id+'" style="cursor: pointer;" onclick="redirectToMessageFromNotification(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');">'+
         // '<div class="dropdown-list-image mr-3">'+
         //   '<img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">'+
         //   '<div class="status-indicator bg-success"></div>'+
         // '</div>'+
         '<div class="font-weight-bold">'+
-          '<div class="text-truncate">'+val[0].message_body+'</div>'+
+          '<div class="text-truncate">'+val[0].subject+'</div>'+
           '<div class="small text-gray-500">'+val[0].creator_name+' · unread</div>'+
         '</div>'+
       '</a>';
@@ -550,6 +549,7 @@ function jobStatistics(){
 $('.dbInner').append(job_statistics);
 
 }
+//Message center by @ams
 function MessagesCenter(){
 let temp = '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>';
 $('#content').empty().append(temp);
@@ -1046,8 +1046,6 @@ function selectAJobseekerToMsg(){
     dataType: 'json',
     url: "get.php/company/retreive_all_jobseekers",
     success: function(data){
-
-      // console.log(data);
    conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
         '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
           '<h4 class="card-title">Select a recipient</h4>'+
@@ -1121,10 +1119,13 @@ function selectAJobseekerToMsg(){
       }
      });
 }
-function composeNewMessage(login_id,fullName){
-let temp =' <div class="card card-primary card-outline">'+
-  '<div class="card-header">'+
-    '<h3 class="card-title">Compose New Message</h3>'+
+function composeNewMessage(login_id,fullName,divToClear){
+   
+let discard =  (divToClear == undefined)?"selectAJobseekerToMsg()": "discardMsg(\'"+divToClear+"\')";
+let temp =' <div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+// '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+    '<h2 class="card-title text-primary">Compose New Message</h2>'+
   '</div>'+
   '<!-- /.card-header -->'+
   '<div class="card-body">'+
@@ -1147,7 +1148,7 @@ let temp =' <div class="card card-primary card-outline">'+
     '<div class="float-right">'+
       '<button type="submit" name="submit" id="newmessage" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
     '</div>'+
-    '<button type="reset" class="btn btn-default" onclick="selectAJobseekerToMsg();"><i class="fas fa-times"></i> Discard</button>'+
+    '<button type="reset" class="btn btn-default" onclick="'+discard+'"><i class="fas fa-times"></i> Discard</button>'+
   '</div>'+
   '</form>';
 
@@ -1190,7 +1191,6 @@ let temp =' <div class="card card-primary card-outline">'+
     }else if($('#theSubject').val() === ''){
       $.notify('Subject field cannot be empty','error');
     }else{
-      console.log('===AMS===');
       $.ajax({
         method: "POST",
         // dataType: 'html',
@@ -1199,7 +1199,12 @@ let temp =' <div class="card card-primary card-outline">'+
         success: function(data){
            if(data == 200){
             $.notify('Message successfully sent','success'); 
-            contentMessage();
+            // if (divToClear == undefined){
+            //   contentMessage();
+            // }else{
+
+            // }
+            (divToClear == undefined)? contentMessage(): discardMsg(divToClear);
           }
         },
         error: function(err){
@@ -1213,6 +1218,9 @@ let temp =' <div class="card card-primary card-outline">'+
 });
 
 
+}
+function discardMsg(id){
+$('.'+id).empty();
 }
 function sentMessages(){
     let sentMessages ={};
@@ -1479,4 +1487,227 @@ function geyOutReadMessages(param){
       //
     }
   });
+}
+
+//company_jobseekers by @ams
+function companyJobseekers(){
+let temp ='<section class="content">'+
+'<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+'<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+  '<h4 class="card-title">Categories</h4>'+
+'</div>'+ 
+ '<!-- Default box -->'+
+ '<div class="card card-solid">'+
+   '<div class="card-body pb-0">'+
+     '<div class="row d-flex align-items-stretch comp_jobseekers">'+
+
+     '</div>'+
+     '</div>'+
+   '</div>'+
+   '<!-- /.card -->'+
+   '</div>'+
+  '</section>';
+  $('#content').empty().append(temp);
+let innertemp = '';
+let subcat = '';
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/company/categories_of_jobseekers",
+  success: function(response){
+    console.log(response);
+
+    if(response != false){
+      $.each(response, function(index,row){
+        let sub = row.category;
+       let  profileImage = '';
+  (sub=='Finance')?subcat=Finance:(sub=='Software Engineers')?subcat=SE:(sub=='Health')?subcat=Health:(sub=='Law')?subcat=Law:subcat=''; 
+   (sub=='Finance')?profileImage=FinanceImage:(sub=='Software Engineers')?profileImage=SEImage:(sub=='Health')?profileImage=HealthImage:(sub=='Law')?profileImage=LawImage:profileImage='graphic.jpeg';
+        innertemp += '<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch pb-5">'+
+          '<div class="card bg-light" style="border-top: 3px solid #007bff;">'+
+           '<div class="card-header text-muted border-bottom-0">'+
+             '<h6 class="text-primary">'+row.category+"("+row.count+")"+'</h6>'+
+           '</div>'+
+           '<div class="card-body pt-0">'+
+             '<div class="row">'+
+               '<div class="col-6">'+
+                 '<h3 class="lead"><b>Subcategories</b></h3>'+
+                  '<ul class="ml-4 mb-0 fa-ul text-muted">'+
+                   ''+subcat+''+
+                  '</ul>'+
+               '</div>'+
+               '<div class="col-6 text-center">'+
+                 '<img src="uploads/'+profileImage+'" alt="" class="img-fluid card-img-top rounded-circle img-thumbnail" style="width: 200px; height: 150px;">'+
+               '</div>'+
+             '</div>'+
+           '</div>'+
+           '<div class="card-footer">'+
+           '<div class="text-right">'+
+             '<a href="#" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View" onclick="viewpeople(\''+row.category+'\')">'+
+               '<i class="fas fa-users"></i> View people'+
+             '</a>'+
+           '</div>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+      });
+    }
+    $('.comp_jobseekers').append(innertemp);
+  },
+  error: function(err){
+    //console.log(err.responseText);
+  }
+});
+}
+function viewpeople(category){
+  let temp = '<section class="content">'+
+ '<!-- Default box -->'+
+ '<div class="card card-solid">'+
+   '<div class="card-body pb-0">'+
+     '<div class="row d-flex align-items-stretch card-body-content">'+
+     '</div>'+
+   '</div>'+
+   '<!-- /.card-body -->'+
+   '<div class="text-left">'+
+   '<a href="#" class="btn btn-sm bg-teal btn-danger m-2 px-3" onclick=" companyJobseekers();">'+
+     '<i class="fa fa-arrow-left"> Back </i>'+
+   '</a>'+
+  '</div>'+
+  '<!-- / .back-btn -->'+
+   '<div class="card-footer card-footer-links">'+
+   '</div>';
+   '<!-- /.card footer-->'+
+ '</div>'+
+ '<!-- /.card -->'+
+'</section>';
+$('#content').empty().append(temp);
+
+let cardbody = '';
+$.ajax({
+  method: "GET",
+  dataType: "json",
+  url: "get.php/company/jobseekers_of_this_category",
+  data:{ 'category': category},
+  success: function(response){
+    console.log('AMS->');
+    console.log(response);
+
+    if(response != 400){
+      $.each(response, function(index,individual){
+        (individual.image == null || individual.image == '')?individual.image = 'default.jpg': individual.image = individual.image;
+          
+        cardbody +='<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch pb-5">'+
+        '<div class="card bg-light" style="border-top: 3px solid #007bff;">'+
+        '<div class="card-header text-muted border-bottom-0">'+
+          ''+individual.tag_line+''+
+        '</div>'+
+        '<div class="card-body pt-0">'+
+          '<div class="row">'+
+            '<div class="col-7">'+
+              '<h2 class="lead"><b>'+individual.fullName+'</b></h2>'+
+              // '<p class="text-muted text-sm"><i class="fas fa-lg fa-wrench"></i><b class="text-info">Skills: </b>'+individual.skills.replace(/,/g, "/")+'</p>'+
+                '<ul class="ml-4 mb-0 fa-ul text-muted">'+
+                '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span><b class="text-info">Skills: </b>'+individual.skills.replace(/,/g, "/")+'</li>'+
+                '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span><b class="text-info">Address: </b>'+individual.address+'</li>'+
+                '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b class="text-info">Phone #: </b>'+individual.phone+'</li>'+
+                '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b class="text-info">Email: </b>'+individual.email+'</li>'+
+              '</ul>'+
+            '</div>'+
+            '<div class="col-5 text-center">'+
+              '<img src="uploads/'+individual.image+'" alt="" class="img-fluid card-img-top rounded-circle img-thumbnail" style="width: 1500px; height: 150px;">'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+        '<div class="card-footer">'+
+          '<div class="text-right">'+
+            '<a href="#" class="btn btn-sm bg-teal btn-success mx-1" data-toggle="tooltip" title="Send Message">'+
+              '<i class="fas fa-comments"></i>'+
+            '</a>'+
+            '<a href="#" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View profile" onclick="viewProfile(\''+individual.jobseeker_id+'\',\''+individual.login_id+'\',\''+individual.fname+'\',\''+individual.lname+'\',\''+individual.fullName+'\',\''+individual.email+'\',\''+individual.phone+'\',\''+individual.skills+'\',\''+individual.tag_line+'\',\''+individual.education_level+'\',\''+individual.address+'\',\''+individual.dob+'\',\''+individual.country+'\',\''+individual.image+'\',\''+individual.CV+'\',\''+category+'\');">'+
+              '<i class="fas fa-user"></i> View Profile'+
+            '</a>'+
+          '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+      });
+      $('.card-body-content').append(cardbody);
+    }
+  },
+  error: function(err){
+
+  }
+});
+
+let footerlinks ='<nav aria-label="Contacts Page Navigation">'+
+  '<ul class="pagination justify-content-center m-0">'+
+    '<li class="page-item active"><a class="page-link" href="#">First</a></li>'+
+    '<li class="page-item"><a class="page-link" href="#">Prev</a></li>'+
+    '<li class="page-item"><a class="page-link" href="#">Next</a></li>'+
+    '<li class="page-item"><a class="page-link" href="#">Last</a></li>'+
+  '</ul>'+
+'</nav>';
+
+$('.card-footer-links').append(footerlinks);
+}
+function viewProfile(profile_id,profile_log_id,profile_fname,profile_lname,profile_fullname,profile_email,profile_phone,profile_skills, profile_tag_line,profile_edu_level,profile_address,profile_dob,profile_country,profile_image,profile_cv,category){
+console.log('PROFILE->');
+console.log(profile_id+" "+profile_fullname);
+let temp ='<div class="container-fluid"><div class="row"><div class="col-xl-6 col-lg-7 profileInner"></div><div class="col-xl-6 col-lg-5 contentMessage"></div></div></div>';
+// '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>'
+
+$('#content').empty().append(temp);
+let divToClear = 'contentMessage';
+(profile_cv == null || profile_cv == '')?profile_cv = 'javascript:void();': profile_cv = 'uploads/'+profile_cv;
+let profile =
+'<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
+    '<h6 class="m-0 font-weight-bold text-primary">Profile</h6>'+
+  '</div>'+
+  '<div class="card-body">'+
+  '<div class="container">'+
+  '<div class="row justify-content mb-4">'+
+  '<div class="col col-lg-4">'+
+    '<img src="uploads/'+profile_image+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+  '</div>'+
+    '<div class="col-lg-4">'+
+      '<ul class="ml-4 mb-0 fa-ul text-muted">'+
+      '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b class="text-info">First Name: </b>'+profile_fname+'</li>'+
+      '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b class="text-info">Email: </b>'+profile_email+'</li>'+
+      '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-book"></i></span><b class="text-info">Education Level: </b>'+profile_edu_level+'</li>'+
+      '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-id-card"></i></span><b class="text-info">Date of birth: </b>'+profile_dob.toString()+'</li>'+
+      '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span><b class="text-info">Skills: </b>'+profile_skills.replace(/,/g, "/")+'</li>'+
+      '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-info"></i></span><b class="text-info">Tag-line: </b>'+profile_tag_line+'</li>'+
+    '</ul>'+
+  '</div>'+
+    '<div class="col col-lg-4">'+
+     '<ul class="ml-4 mb-0 fa-ul text-muted">'+
+     '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b class="text-info">Last Name: </b>'+profile_lname+'</li>'+
+     '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b class="text-info">Phone #: </b>'+profile_phone+'</li>'+
+     '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-globe"></i></span><b class="text-info">Country: </b>'+profile_country+'</li>'+
+     '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span><b class="text-info">Address: </b>'+profile_address+'</li>'+
+     '</ul>'+
+    '</div>'+
+    '</div>'+
+   '</div>'+
+  '</div>'+
+    '<div class="card-footer">'+
+      '<div class="text-right">'+
+        '<a href="#" class="btn btn-sm btn-danger " data-toggle="tooltip" title="Back" onclick="viewpeople(\''+category+'\')">'+
+         '<i class="fa fa-arrow-left"> Back </i>'+
+        '</a>'+
+        '<a href="#" class="btn btn-sm bg-teal btn-success mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+profile_log_id+'\',\''+profile_fullname+'\',\''+divToClear+'\');">'+
+          '<i class="fas fa-comments"> Message</i>'+
+        '</a>'+
+        '<a href="'+profile_cv+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
+          '<i class="fas fa-file-image"></i> View CV'+
+        '</a>'+
+      '</div>'+
+    '</div>'+
+   '</div>'+
+  '</div>'+
+ '</div>'+
+'</div>';
+
+  $('.profileInner').empty().append(profile);
 }
