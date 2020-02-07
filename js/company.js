@@ -733,11 +733,7 @@ function viewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,created
       '<h3 class="card-title">Read Message</h3>'+
 
       '<div class="card-tools">';
-      if(jobseeker_id === undefined){
-        temp += '<button class="btn btn-primary btn-icon-split" onclick="contentMessage();">';
-      }else{
-        temp +='<button class="btn btn-primary btn-icon-split" onclick="sentMessages();">';
-      }
+      (jobseeker_id === undefined)?temp += '<button class="btn btn-primary btn-icon-split" onclick="contentMessage();">':temp +='<button class="btn btn-primary btn-icon-split" onclick="sentMessages();">';
       
       temp +='<span class="icon text-white-50">'+
         '<i class="fas fa-arrow-left"></i>'+
@@ -1559,12 +1555,22 @@ $.ajax({
   }
 });
 }
-function viewpeople(category){
+function viewpeople(category,start,finish){
+  console.log(start);
+  console.log(finish);
+  let beg ='';
+  let end ='';
+  let numberOfItems = '';
+  let totalPages = '';
+  let forward = '';
+  let Backward = '';
+  let Prev = '';
+  let Next = '';
   let temp = '<section class="content">'+
  '<!-- Default box -->'+
  '<div class="card card-solid">'+
    '<div class="card-body pb-0">'+
-     '<div class="row d-flex align-items-stretch card-body-content">'+
+     '<div class="row d-flex align-items-stretch card-body-content" id="itemTemplate">'+
      '</div>'+
    '</div>'+
    '<!-- /.card-body -->'+
@@ -1581,7 +1587,7 @@ function viewpeople(category){
  '<!-- /.card -->'+
 '</section>';
 $('#content').empty().append(temp);
-
+if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else{ beg = 0; end = 9;}
 let cardbody = '';
 $.ajax({
   method: "GET",
@@ -1589,14 +1595,15 @@ $.ajax({
   url: "get.php/company/jobseekers_of_this_category",
   data:{ 'category': category},
   success: function(response){
-    console.log('AMS->');
-    console.log(response);
-
+     numberOfItems = response.length;
+     limitPerPage = 9;
+     totalPages = Math.round(numberOfItems/limitPerPage);
     if(response != 400){
-      $.each(response, function(index,individual){
+
+      $.each(response.slice(beg,end), function(index,individual){
         (individual.image == null || individual.image == '')?individual.image = 'default.jpg': individual.image = individual.image;
           
-        cardbody +='<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch pb-5">'+
+        cardbody +='<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch pb-5 profileItem">'+
         '<div class="card bg-light" style="border-top: 3px solid #007bff;">'+
         '<div class="card-header text-muted border-bottom-0">'+
           ''+individual.tag_line+''+
@@ -1605,7 +1612,6 @@ $.ajax({
           '<div class="row">'+
             '<div class="col-7">'+
               '<h2 class="lead"><b>'+individual.fullName+'</b></h2>'+
-              // '<p class="text-muted text-sm"><i class="fas fa-lg fa-wrench"></i><b class="text-info">Skills: </b>'+individual.skills.replace(/,/g, "/")+'</p>'+
                 '<ul class="ml-4 mb-0 fa-ul text-muted">'+
                 '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span><b class="text-info">Skills: </b>'+individual.skills.replace(/,/g, "/")+'</li>'+
                 '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span><b class="text-info">Address: </b>'+individual.address+'</li>'+
@@ -1633,28 +1639,31 @@ $.ajax({
       });
       $('.card-body-content').append(cardbody);
     }
+    let LastLast =  "viewpeople(\'"+category+"\',\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
+    (numberOfItems <= limitPerPage || numberOfItems == end)?(Next = 'disabled'):(numberOfItems < end+limitPerPage)? (forward = "viewpeople(\'"+category+"\',\'"+(beg+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "viewpeople(\'"+category+"\',\'"+(beg+limitPerPage)+"\',\'"+(end+limitPerPage)+"\')"); 
+    (beg == 0 && (end == numberOfItems || end == limitPerPage))? (Prev = 'disabled',Backward = "viewpeople(\'"+category+"\',\'"+(beg)+"\',\'"+(end)+"\')"):(beg != 0 && end != numberOfItems)?(Backward = "viewpeople(\'"+category+"\',\'"+(beg-limitPerPage)+"\',\'"+(end-limitPerPage)+"\')"): (Backward = "viewpeople(\'"+category+"\',\'"+(beg-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
+    let footerlinks ='<nav aria-label="Contacts Page Navigation">'+
+      '<ul class="pagination justify-content-center m-0">'+
+        '<li class="page-item First active"><a class="page-link" href="javascript:void(0)" onclick=" viewpeople(\''+category+'\',0,9)">First</a></li>'+
+        '<li class="page-item '+Prev+'"><a class="page-link" href="javascript:void(0)" onclick="'+Backward+'">Prev</a></li>'+
+        '<li class="page-item '+Next+'"><a class="page-link" href="javascript:void(0)" onclick="'+forward+'">Next</a></li>'+
+        '<li class="page-item Last"><a class="page-link" href="javascript:void(0)" onclick="'+LastLast+'">Last</a></li>'+
+      '</ul>'+
+    '</nav>';
+    
+    $('.card-footer-links').append(footerlinks);
+
   },
   error: function(err){
 
   }
 });
 
-let footerlinks ='<nav aria-label="Contacts Page Navigation">'+
-  '<ul class="pagination justify-content-center m-0">'+
-    '<li class="page-item active"><a class="page-link" href="#">First</a></li>'+
-    '<li class="page-item"><a class="page-link" href="#">Prev</a></li>'+
-    '<li class="page-item"><a class="page-link" href="#">Next</a></li>'+
-    '<li class="page-item"><a class="page-link" href="#">Last</a></li>'+
-  '</ul>'+
-'</nav>';
-
-$('.card-footer-links').append(footerlinks);
 }
 function viewProfile(profile_id,profile_log_id,profile_fname,profile_lname,profile_fullname,profile_email,profile_phone,profile_skills, profile_tag_line,profile_edu_level,profile_address,profile_dob,profile_country,profile_image,profile_cv,category){
 console.log('PROFILE->');
 console.log(profile_id+" "+profile_fullname);
 let temp ='<div class="container-fluid"><div class="row"><div class="col-xl-6 col-lg-7 profileInner"></div><div class="col-xl-6 col-lg-5 contentMessage"></div></div></div>';
-// '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>'
 
 $('#content').empty().append(temp);
 let divToClear = 'contentMessage';
