@@ -105,9 +105,9 @@ include 'includes/autoloader.inc.php';
                   ''+countries.map((currency,index) =>  '<option value = "'+currency.value+'" id="'+currency.value+'">'+currency.name+'</option>')+''+
                   '</select>'+
                 '</div>'+
-                '<div class="form-group">'+
-                '<input type="file" class="form-control form-control-user" name="logo" id="logo">'+
-                '</div>'+
+                // '<div class="form-group">'+
+                // '<input type="file" class="form-control form-control-user" name="logo" id="logo">'+
+                // '</div>'+
                 '<div class="form-group">'+
                 '<input type="hidden" class="form-control form-control-user" name="id" id="comp_id" value="'+entity.login_id+'">'+
                 '</div>'+
@@ -139,45 +139,31 @@ include 'includes/autoloader.inc.php';
       if (!validEmail) {
           $('#email').after('<span class="error">Enter a valid email</span>');
           return;
-       }
+        }
       }
 
       var data  = $("#companydetail :input").serializeArray();
-      //var fileInput = document.getElementById('image_input_field');
-      var formData = new FormData();
-      console.log(formData);
-      var file = $('#logo')[0].files[0];
-      //@ams-> this is where you have to fix and make sure that the image is sent as a file
-      console.log(file);
-      console.log(file.name);
-      data.push({name: 'logo', value: file.name});
-      console.log('ALL DATA');
-      console.log(data);
+      // var file = $('#logo')[0].files[0];
+      // //@ams-> this is where you have to fix and make sure that the image is sent as a file
   
       if(errors.length < 1){
-      console.log('CLOSE TO AJAX');
           $.ajax({
             method: "POST",
             enctype: 'multipart/form-data',
-            url: 'post.php/details/fill_company_account',
+            url: 'post.php/authentication/fill_company_account',
             data: data,
-            success:function(data){
+            success:function(response){
               console.log('AMADOU SARJO JALLOW');
-              console.log(data);
-              //$.notify(data,"success",{position:"top center"});
-              $("#company-form :input").each( function() {
-                  $(this).val('');
-              });
-              
+              if(response == 200){
+                window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
+              }else{
+                window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');
+              }
             },
             error: function(err){
               $.notify("Error in creating account","warn",{position:"top center"});
-              console.log(err);
-
             }
-          
-          });
-          
+          });    
       }
       else{
         return;
@@ -196,7 +182,7 @@ include 'includes/autoloader.inc.php';
                 '<h1 class="h4 text-gray-900 mb-4" id="header-title">Complete your profile details</h1>'+
               '</div>'+
               '<div>'+
-            '<form class="user" action="post.php/details/fill_jobseeker_account" method="POST" id="jobseeker" enctype="multipart/form-data" autocomplete="off">'+
+            '<form class="user" action="post.php/authentication/fill_jobseeker_account" method="POST" id="jobseeker" enctype="multipart/form-data" autocomplete="off">'+
                 '<div class="form-group row">'+
                     '<div class="col-sm-6 mb-3 mb-sm-0">'+
                         '<input type="text" class="form-control form-control-user" name="firstname" id="firstname" placeholder="First name">'+
@@ -262,12 +248,12 @@ include 'includes/autoloader.inc.php';
       '</div>'+
     '</div>');
 
+       }else{
+        window.location.replace('authentication.php?attempt=<?php echo "failed"; ?>');
        }
        $("#comp_country").countrySelect({
             defaultCountry: "gm"
           });
-          // $('#currency').addClass('bfh-currencies');
-
           //@ams->I need to delete this function
           $("select#currency").change(function(){
             var selectedCountry = $(this).children("option:selected").val();

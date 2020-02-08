@@ -61,8 +61,13 @@ class AuthController extends Auth{
         return true;
     }
 
-    public function companydetails($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$logo){
-        $result = $this->company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$logo);
-        return $result;
+    public function companydetails($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr){
+        $exist = $this->does_profile_already_exist($login_id);
+        if(!$exist){
+            $result = $this->company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr);
+            return $result;
+        }else{
+            return 'duplicate';
+        }
     }
 }

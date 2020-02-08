@@ -2,6 +2,7 @@
     session_start();
 	session_unset();
 	session_destroy();
+	include 'includes/functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +16,9 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="js/core/functions.js"></script>
 <link rel="stylesheet" href="css/custom.css" type="text/css">
 
 </head>
@@ -113,8 +117,10 @@
     <script src="js/auth.js"></script>
     <script>
     $(function() {
-	let attempt = '<?php echo $_REQUEST['attempt']; ?>';
-	attempt? $.notify('You need to create an account first','warning') : null;
+	let attempt = '<?php if(isset($_REQUEST['attempt'])){echo $_REQUEST['attempt'];}else{ echo '';}  ?>';
+	(attempt == 'success')? swal('Profile creation complete!','Please login to continue','success','Cool'):
+	(attempt == 'failed')?swal('Profile creation failed!','You need to create an account first','error','Cool'):
+	(attempt == 'duplicate')?swal('Account already exist!','Please login to continue','warning','Cool'): null;
 
 	$('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);

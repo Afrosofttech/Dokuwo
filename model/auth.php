@@ -69,10 +69,20 @@ class Auth extends Dbh {
         $stmt = null;
     }
 
-    public function company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$logo){
-        $sql = " INSERT INTO company (login_id,company_name,company_email,company_phone,company_address,postal_code,country,currency,logo) VALUES(?,?,?,?,?,?,?,?,?)";
+    public function does_profile_already_exist($login_id){
+        $sql = "SELECT login_id FROM company WHERE login_id=?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$logo]);
+        $stmt->execute([$login_id]);
+        $rowCount = $stmt->rowCount();
+        var_dump($rowCount);
+        if(!$rowCount) return false;
+        return true;
+        $stmt = null;
+    }
+    public function company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr){
+        $sql = " INSERT INTO company (login_id,company_name,company_email,company_phone,company_address,postal_code,country,currency) VALUES(?,?,?,?,?,?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr]);
         return 200;
         $stmt = null;
     }
