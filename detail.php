@@ -1,6 +1,3 @@
-<?php
-include 'includes/autoloader.inc.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -153,11 +150,10 @@ include 'includes/autoloader.inc.php';
             url: 'post.php/authentication/fill_company_account',
             data: data,
             success:function(response){
-              console.log('AMADOU SARJO JALLOW');
               if(response == 200){
                 window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
               }else{
-                window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');
+               window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');
               }
             },
             error: function(err){

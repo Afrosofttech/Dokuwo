@@ -74,7 +74,6 @@ class Auth extends Dbh {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id]);
         $rowCount = $stmt->rowCount();
-        var_dump($rowCount);
         if(!$rowCount) return false;
         return true;
         $stmt = null;
