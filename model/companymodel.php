@@ -19,7 +19,6 @@ class Company extends Dbh{
             $stmt = null;
         } 
     }
-
     public function get_no_of_jobs_published($company_id){
         $sql = " Select * from job where company_id = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -29,7 +28,6 @@ class Company extends Dbh{
         return $rowCount;
         $stmt = null;
     }
-
     public function get_no_of_new_messages($recipient_id){
         $sql = " Select * from message_recipient where recipient_id = ? AND is_read = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -40,7 +38,6 @@ class Company extends Dbh{
         return $rowCount;
         $stmt = null;
     }
-
     public function get_reference_of_all_inbox_messages($recipient_id){
         $sql = " Select message_id from message_recipient where recipient_id = ? AND delete_request != ? ORDER BY mess_rec_id DESC";
         $stmt = $this->connect()->prepare($sql);
@@ -54,7 +51,6 @@ class Company extends Dbh{
             $stmt = null;
         }
     }
-
     public function get_all_inbox_messages($message_id){
         $sql = " Select * from message where message_id = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -63,7 +59,6 @@ class Company extends Dbh{
         return  $result;
         $stmt = null;
     }
-   
     public function delete_this_message($message_id){
         $sql = " UPDATE message_recipient SET delete_request = ?  WHERE message_id = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -72,7 +67,6 @@ class Company extends Dbh{
         $stmt = null;
 
     }
-
     public function set_message_is_read($message_id){
         $sql = " UPDATE message_recipient SET is_read = ?  WHERE message_id = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -80,7 +74,6 @@ class Company extends Dbh{
         return 200;
         $stmt = null;
     }
-
     public function get_read_messages($recipient_id){
         $sql = " Select * from message_recipient where recipient_id = ? and is_read = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -94,7 +87,6 @@ class Company extends Dbh{
             $stmt = null;
         }
     }
-
     public function get_all_sent_messages($recipient_id){
         $sql = " Select * from message where creator_id = ? order by create_date desc";
         $stmt = $this->connect()->prepare($sql);
@@ -103,7 +95,6 @@ class Company extends Dbh{
         return  $result;
         $stmt = null;
     }
-
     public function get_message_recipient($message_id){
         $sql = " Select * from message_recipient where message_id = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -115,7 +106,6 @@ class Company extends Dbh{
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$res]);
         $result = $stmt->fetch();
-
 
         return  $result;
         $stmt = null;
@@ -145,10 +135,8 @@ class Company extends Dbh{
     }else{
         return  $result ;
         $stmt = null;
+     }
     }
-
-    }
-
     public function send_msg_to_a_jobseeker($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody){
 
     $date = date('Y-m-d');
@@ -169,40 +157,7 @@ class Company extends Dbh{
         $stmt3->execute([$recipient_id,$res['message_id'],0,0]);
 
          return 200;
-        
-        // try {
-        //     // $pdo->beginTransaction();
-        //     $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,create_date) VALUES (?, ?, ?, ?, ?)");
-        //     $stmt2 = $this->connect()->prepare("INSERT INTO message_recipient (recipient_id, creator_name, subject,message_body,create_date) VALUES (?, ?, ?, ?, ?)");
-        //     if(!$stmt1->execute(['Rick', 'NY'])) throw new Exception('Stmt 1 Failed');
-        //     else if(!$stmt2->execute([27, 139])) throw new Exception('Stmt 2 Failed');
-        //     $stmt1 = null;
-        //     $stmt2 = null;
-        //     $pdo->commit();
-        //   } catch(Exception $e) {
-        //     $pdo->rollback();
-        //     throw $e;
-        //   }
     }
-    public function reply_to_jobseeker($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$subject,$msg_body){
-        //same as the above function . so they should be one
-    }
-    //    if(!$result ){
-    //             return 0;
-    //             $stmt = null;
-    //     }else{
-    //         return  $result ;
-    //         $stmt = null;
-    //     }
-   // }
-
-    //     $sql = " Select * from company where login_id = ?";
-    //     $stmt = $this->connect()->prepare($sql);
-    //     $stmt->execute([$creator_id]);
-    //     $result = $stmt->fetchAll();
-    //     return  $result;
-    //     $stmt = null;
-    // }
 
     // public function is_the_profile_complete($company_id){
     //     $sql = " Select * from  where company_id = ?";
@@ -213,4 +168,34 @@ class Company extends Dbh{
     //     return $rowCount;
     //     $stmt = null;
     // }
+    public function get_categories_of_jobseekers(){
+        //$seekersArray = array();
+        $sql = " SELECT category, COUNT(*) AS count FROM job_seeker GROUP BY category";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        
+        return  $result;
+        $stmt = null;
+        // $sql2 = "SELECT category,skills,COUNT(*) AS count FROM job_seeker GROUP BY category,skills";
+        // $stmt2 = $this->connect()->prepare($sql2);
+        // $stmt2->execute();
+        // $result2 = $stmt2->fetchAll();
+        // array_push($seekersArray,$result2);
+        //var_dump($result);
+    }
+    public function get_jobseekers_of_this_category($category){
+        $sql = " SELECT * FROM job_seeker where category = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$category]);
+        $result = $stmt->fetchAll();
+        
+        if(!$result ){
+            return 400;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }
+    }
 }
