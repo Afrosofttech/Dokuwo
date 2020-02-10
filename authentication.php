@@ -44,18 +44,20 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="login-form" action="post.php/authentication/user_login" method="post" role="form" style="display: block;" autocomplete="off">
+								<form id="login-form" role="form" style="display: block;" class="my-form" autocomplete="off">
 									<div class="form-group">
-										<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Enter Email">
+										<input type="email" name="email" id="login_email" tabindex="1" class="form-control email" placeholder="Enter Email">
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Enter Password">
+										<input type="password" name="password" id="login_pwd" tabindex="2" class="form-control password" placeholder="Enter Password">
 									</div>
-									
+									<div class="form-group">
+										<input type="hidden" name="tag" tabindex="2" class="form-control tag" value="login">
+									</div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In" placeholder="Log In">
+												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login btn-submit-request" value="Log In" placeholder="Log In">
 											</div>
 										</div>
 									</div>
@@ -69,39 +71,38 @@
 										</div>
 									</div>
 								</form>
-								<form id="jobseeker-form" action="post.php/authentication/create_jobseeker_account" method="post" role="form" style="display: none;" autocomplete="off">
+								<form id="jobseeker-form" role="form" style="display: none;" class="my-form" autocomplete="off">
 									<div class="form-group">
-										<input type="email" name="email" id="job_email" tabindex="1" class="form-control" placeholder="Enter Email Address" value="">
+										<input type="email" name="email" id="jobseeker_email" tabindex="1" class="form-control password" placeholder="Enter Email Address" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="job_password" tabindex="2" class="form-control" placeholder="Enter Password">
+										<input type="password" name="password" id="jobseeker_pwd" tabindex="2" class="form-control" placeholder="Enter Password">
 									</div>
 									<div class="form-group">
-										<input type="hidden" name="jobseeker" id="jobseeker" tabindex="2" class="form-control" value="jobseeker">
+										<input type="hidden" name="tag" id="jobseeker" tabindex="2" class="form-control tag" value="jobseeker">
 									</div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now" placeholder="Register Now">
+												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register btn-submit-request" value="Register Now" placeholder="Register Now">
 											</div>
 										</div>
 									</div>
 								</form>
-                                <form id="company-form" action="post.php/authentication/create_company_account" method="post" role="form" style="display: none;" autocomplete="off">
-									
+                                <form id="company-form" role="form" style="display: none;" class="my-form" autocomplete="off">
 									<div class="form-group">
-										<input type="email" name="email" id="comp_email" tabindex="1" class="form-control" placeholder="Enter Email Address" value="">
+										<input type="email" name="email" id="company_email" tabindex="1" class="form-control" placeholder="Enter Email Address" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="comp_password" tabindex="2" class="form-control" placeholder="Password">
+										<input type="password" name="password" id="company_pwd" tabindex="2" class="form-control" placeholder="Password">
 									</div>
 									<div class="form-group">
-										<input type="hidden" name="company" id="company" tabindex="2" class="form-control" value="company">
+										<input type="hidden" name="tag" id="company" tabindex="2" class="form-control tag" value="company">
 									</div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="company-submit" id="company-submit" tabindex="4" class="form-control btn btn-register" value="Register Now" placeholder="Register Now">
+												<input type="submit" name="company-submit" id="company-submit" tabindex="4" class="form-control btn btn-register btn-submit-request" value="Register Now" placeholder="Register Now">
 											</div>
 										</div>
 									</div>
@@ -150,6 +151,71 @@
 		e.preventDefault();
 	});
 
+	$('#login-submit').click(function(e){
+		e.preventDefault();
+		auth('login_email','login_pwd','login');
+	})
+	$('#register-submit').click(function(e){
+		e.preventDefault();
+		auth('jobseeker_email','jobseeker_pwd','jobseeker');
+	})
+	$('#company-submit').click(function(e){
+		e.preventDefault('','');
+		auth('company_email','company_pwd','company');
+	})
+
+	function auth(mail,pwd,tag_val){
+	var email = $('#'+mail).val();
+	var passwd = $('#'+pwd).val();
+	var tag = tag_val;
+    var errors = [];
+    $(".error").remove();
+    if (email.length < 1) {
+	    swal('Invalid email!','Email cannot be empty','error','Cool');
+	errors.push('email_error');
+	return;
+    } else {
+	var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var validEmail = regEx.test(email);
+    if (!validEmail) {
+		swal('Invalid Email!','Please enter a valid email','error','Cool');
+		return;
+    }
+    }
+    if (passwd.length < 8) {
+	swal('Short password!','Password must be at least 8 characters long','error','Cool');
+	errors.push('password_error');
+	return;
+	}
+	
+    if(errors.length < 1){
+        $.ajax({
+            method:'POST',
+			url: (tag == 'login')?'post.php/authentication/user_login':(tag == 'company')? 'post.php/authentication/create_company_account':
+			(tag == 'jobseeker')?'post.php/authentication/create_jobseeker_account':null,
+            data: {'email':email,'password': passwd,'tag':tag},
+            success:function(response){
+               if(response == 200){
+                  window.location.replace('index.php');
+                }else if(response == 'success'){
+					swal('Account creation complete!','A link has been sent to your email to activate your account','success','Cool');
+				}else if(response == 'duplicate'){
+                    swal('Account already exist!','Please login to continue or create a different account','warning','Cool');
+				}else{
+				swal('Account does not exist!','You need to create an account first','warning','Cool');
+               }
+            },
+            error: function(err){
+              console.log(err);
+      
+            }
+           
+		  });
+    }
+    else{
+        return;
+	}
+	}
 });
     </script>
 </body>

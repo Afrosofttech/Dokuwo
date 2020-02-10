@@ -44,6 +44,9 @@
   <script src="js/core/currency.js"></script>
   <!-- Bootstrap tokenfield input js plugin -->
   <script src="js/plugins/bootstrap-tokenfield.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="js/core/functions.js"></script>
   <!-- Custom scripts -->
   <script src="js/auth.js"></script>
   <script src="js/plugins/notify.min.js"></script>
@@ -102,9 +105,9 @@
                   ''+countries.map((currency,index) =>  '<option value = "'+currency.value+'" id="'+currency.value+'">'+currency.name+'</option>')+''+
                   '</select>'+
                 '</div>'+
-                // '<div class="form-group">'+
-                // '<input type="file" class="form-control form-control-user" name="logo" id="logo">'+
-                // '</div>'+
+                '<div class="form-group">'+
+                '<input type="file" class="form-control form-control-user" name="logo" id="logo">'+
+                '</div>'+
                 '<div class="form-group">'+
                 '<input type="hidden" class="form-control form-control-user" name="id" id="comp_id" value="'+entity.login_id+'">'+
                 '</div>'+
@@ -128,30 +131,32 @@
       $(".error").remove();
 
       if (email.length < 1) {
-      $('#comp_email').after('<span class="error">This field is required</span>');
+      swal('Invalid Email!','Email cannot be empty','error','Cool');
+      return;
       errors.push('email_error');
       } else {
       var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var validEmail = regEx.test(email);
       if (!validEmail) {
-          $('#email').after('<span class="error">Enter a valid email</span>');
-          return;
+      swal('Invalid Email!','Please enter a valid email','error','Cool');
+      return;
         }
       }
 
-      var data  = $("#companydetail :input").serializeArray();
-      // var file = $('#logo')[0].files[0];
-      // //@ams-> this is where you have to fix and make sure that the image is sent as a file
-  
       if(errors.length < 1){
           $.ajax({
             method: "POST",
             enctype: 'multipart/form-data',
             url: 'post.php/authentication/fill_company_account',
-            data: data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: new FormData(this),
             success:function(response){
               if(response == 200){
                 window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
+              }else if( response == "Invalid"){
+                swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
               }else{
                window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');
               }
@@ -178,7 +183,7 @@
                 '<h1 class="h4 text-gray-900 mb-4" id="header-title">Complete your profile details</h1>'+
               '</div>'+
               '<div>'+
-            '<form class="user" action="post.php/authentication/fill_jobseeker_account" method="POST" id="jobseeker" enctype="multipart/form-data" autocomplete="off">'+
+            '<form class="user" method="POST" id="jobseeker" enctype="multipart/form-data" autocomplete="off">'+
                 '<div class="form-group row">'+
                     '<div class="col-sm-6 mb-3 mb-sm-0">'+
                         '<input type="text" class="form-control form-control-user" name="firstname" id="firstname" placeholder="First name">'+
@@ -243,10 +248,77 @@
         '</div>'+
       '</div>'+
     '</div>');
+$(document).ready(function(){
+  $('#jobseeker').submit(function(e) {
+    e.preventDefault();
+    var fname = $('#firstname').val();
+    var lname = $('#lastname').val();
+    var email = $('#email').val();
+    var dob = $('#dateofbirth').val();
+    var errors = [];
 
-       }else{
+    $(".error").remove();
+ 
+    if (email.length < 1) {
+      swal('Invalid Email!','Email cannot be empty','error','Cool');
+      return;
+    } else {
+      var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var validEmail = regEx.test(email);
+      if (!validEmail) {
+         swal('Invalid Email!','Please enter a valid email','error','Cool');
+         return;
+      }
+    }
+    if (fname.length < 1) {
+      swal('Invalid First Name!','First name cannot be empty','error','Cool');
+      return;
+      errors.push('fname_error');
+    }
+    if (lname.length < 1) {
+      swal('Invalid Last Name!','Last name cannot be empty','error','Cool');
+      return;
+      errors.push('lname_error');
+    }
+    if(dob == ''){
+      swal('Invalid date!','Date cannot be empty','error','Cool');
+      return;
+      errors.push('date_error');
+    }
+    
+    if(errors.length < 1){
+        $.ajax({
+          method:'POST',
+          url: 'post.php/authentication/fill_jobseeker_account',
+          data: new FormData(this),
+          contentType: false,
+          processData: false,
+          cache:false,
+          success:function(response){
+            console.log(response);
+            if(response == 200){
+              window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
+            }else if( response == "Invalid Image"){
+                swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
+            }else if(response == "Invalid CV"){
+               //@ams->this else is not working. Pls fix
+               swal('Invalid CV type!','You can only upload png, jpeg, pdf, doc, ppt or jpg','error','Cool');
+            }else if(response == 'duplicate'){
+               window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');
+            }
+          },
+          error: function(err){
+            $('#message').html(err.responseText);
+          } 
+        });
+      }else{
+          return;
+      }
+    });
+  });
+  }else{
         window.location.replace('authentication.php?attempt=<?php echo "failed"; ?>');
-       }
+   }
        $("#comp_country").countrySelect({
             defaultCountry: "gm"
           });
@@ -263,7 +335,7 @@
           $(function() { 
                 $( "#dateofbirth" ).datepicker({
                   dateFormat: "yy-mm-dd",
-                  yearRange: "c-100:c+0",
+                  yearRange: "-100:+0",
                   changeMonth: true,
                   changeYear: true
                 }); 

@@ -2,6 +2,7 @@
 session_start();
 
 include_once 'model/auth.php';
+include_once 'includes/functions.php';
 
 class AuthController extends Auth{
   
@@ -21,10 +22,9 @@ class AuthController extends Auth{
             $hash = md5(rand(0,1000));
             $password = password_hash($passwd, PASSWORD_DEFAULT);
             $company_account = $this->create_account($comp_email,$password,$hash,$usertype,0);
-            return "Account created successfully";
-        }
-        else{
-            return "Account already exist";
+            return "success";
+        }else{
+            return "duplicate";
         }
     }
 
@@ -32,8 +32,7 @@ class AuthController extends Auth{
         $user = $this->login($email);
         $pass_verif = password_verify($passwd, $user['password']);
 
-        if ($user && $pass_verif)
-        {   
+        if ($user && $pass_verif){
 
            $_SESSION['login_id'] = $user['login_id'];
            $_SESSION['email'] = $user['email'];
@@ -50,21 +49,73 @@ class AuthController extends Auth{
               $_SESSION['name'] = $jobseeker['fullname'];
               $_SESSION['usertype'] = $user['user_type'];
            }
-           return true;
+           return 200;
         } else {
            return false;
         }
     }
 
-    public function jobseekerdetails($login_id,$fname,$lname,$fullname,$email,$phone,$skills,$edulevel,$adr,$dob,$country,$image,$cv){
-        $jobseeker = $this->jobseeker_account($login_id,$fname,$lname,$fullname,$email,$phone,$skills,$edulevel,$adr,$dob,$country,$image,$cv);
-        return true;
+    public function jobseekerdetails(){
+        $v_data = validate_jobseeker();
+        $exist = $this->does_profile_already_exist($v_data['id'],'jobseeker');
+        if(!$exist){
+        $imagePath = 'uploads/';
+        $cvPath = 'uploads/';
+        $valid_extensions = array('jpeg', 'jpg', 'png');
+        $valid_extensions_cv = array('jpeg', 'jpg', 'png', 'pdf' , 'doc' , 'ppt');
+        $img = $_FILES["image"]["name"]; 
+        $tmp = $_FILES["image"]["tmp_name"];
+        $cv = $_FILES["CV"]["name"]; 
+        $cv_tmp = $_FILES["CV"]["tmp_name"];
+        $errorimg = $_FILES["image"]["error"];
+        $errorcv = $_FILES["CV"]["error"];
+        $final_image = strtolower(rand(1000,1000000).$img);
+        $final_cv = strtolower(rand(1000,1000000).$cv);
+        $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+        $ext_cv = strtolower(pathinfo($cv, PATHINFO_EXTENSION));
+
+        if(in_array($ext, $valid_extensions)){ 
+        $imagePath = $imagePath.strtolower($final_image);
+        move_uploaded_file($tmp,$imagePath);
+        }else{
+            return 'Invalid Image';
+        }
+        if(in_array($ext_cv, $valid_extensions_cv)){ 
+        $cvPath = $cvPath.strtolower($final_cv);
+        move_uploaded_file($cv_tmp,$cvPath);
+        }else{
+           return 'Invalid CV';
+        }
+        $dob = $v_data['dateofbirth'];
+        $time = strtotime($dob);
+        $dateofbirth = date('Y-m-d',$time);
+        $fullname = $v_data['firstname'].' '.$v_data['lastname'];
+
+        $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['email'],$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$final_image,$final_cv);
+        return $response;
+      }else{
+        return 'duplicate';
+      }
     }
 
-    public function companydetails($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr){
-        $exist = $this->does_profile_already_exist($login_id);
+    public function companydetails(){
+        $company_data = validate_company();
+        $exist = $this->does_profile_already_exist($company_data['id'],'company');
         if(!$exist){
-            $result = $this->company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr);
+        $valid_extensions = array('jpeg', 'jpg', 'png');
+        $path = 'uploads/';
+        $img = $_FILES["logo"]["name"]; 
+        $tmp = $_FILES["logo"]["tmp_name"]; 
+        $errorimg = $_FILES["logo"]["error"];
+        $final_image = rand(1000,1000000).$img;
+        $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+           if(in_array($ext, $valid_extensions)){ 
+           $path = $path.strtolower($final_image);
+           move_uploaded_file($tmp,$path);
+           }else{
+              return 'Invalid';  //@ams-> make sure this is also considered as a return value
+           }
+        $result = $this->company_account($company_data['id'],$company_data['name'],$company_data['email'],$company_data['phone'],$company_data['address'],$company_data['postalcode'],$company_data['country'],$company_data['currency'],$final_image);
             return $result;
         }else{
             return 'duplicate';

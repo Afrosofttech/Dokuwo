@@ -17,6 +17,15 @@
             "program": "${file}",
             "cwd": "${fileDirname}",
             "port": 9000
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch js Program",
+            "program": "${file}",
+            "outFiles": [
+                "${workspaceRoot}/out/*.js*"
+            ]
+          }
     ]
 }

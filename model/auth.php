@@ -1,5 +1,4 @@
 <?php
-//include '../includes/dbh.inc.php';
 include_once 'dbhmodel.php';
 
 class Auth extends Dbh {
@@ -66,11 +65,16 @@ class Auth extends Dbh {
         $sql = " INSERT INTO job_seeker (login_id,fname,lname,fullname,email,phone,skills,education_level,address,dob,country,image,cv) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id,$fname,$lname,$fullname,$email,$phone,$skills,$edulevel,$adr,$dob,$country,$image,$cv]);
+        return 200;
         $stmt = null;
     }
 
-    public function does_profile_already_exist($login_id){
-        $sql = "SELECT login_id FROM company WHERE login_id=?";
+    public function does_profile_already_exist($login_id,$caller){
+        if($caller == 'company')
+            $sql = "SELECT login_id FROM company WHERE login_id=?";
+        else
+            $sql = "SELECT login_id FROM job_seeker WHERE login_id=?";
+
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id]);
         $rowCount = $stmt->rowCount();
@@ -78,13 +82,12 @@ class Auth extends Dbh {
         return true;
         $stmt = null;
     }
-    public function company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr){
-        $sql = " INSERT INTO company (login_id,company_name,company_email,company_phone,company_address,postal_code,country,currency) VALUES(?,?,?,?,?,?,?,?)";
+    public function company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$final_image){
+        $sql = " INSERT INTO company (login_id,company_name,company_email,company_phone,company_address,postal_code,country,currency,logo) VALUES(?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr]);
+        $stmt->execute([$login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$final_image]);
         return 200;
         $stmt = null;
     }
-
 
 }
