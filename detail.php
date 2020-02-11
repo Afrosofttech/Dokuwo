@@ -48,7 +48,6 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="js/core/functions.js"></script>
   <!-- Custom scripts -->
-  <script src="js/auth.js"></script>
   <script src="js/plugins/notify.min.js"></script>
   <script src="js/plugins/countrySelect.min.js"></script>
   
@@ -321,11 +320,6 @@ $(document).ready(function(){
    }
        $("#comp_country").countrySelect({
             defaultCountry: "gm"
-          });
-          //@ams->I need to delete this function
-          $("select#currency").change(function(){
-            var selectedCountry = $(this).children("option:selected").val();
-            alert("You have selected currency - " + selectedCountry);
           });
           
           $("#country").countrySelect({

@@ -23,10 +23,11 @@ class Auth extends Dbh {
 
     public function login($email){
     
-        $sql = " SELECT * FROM login WHERE email=?";
+        $sql = " SELECT * FROM login WHERE email=? and status =?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$email]);
+        $stmt->execute([$email,1]);
         $user = $stmt->fetch();
+        if(!$user) return null;
         return $user;
         $stmt = null;
     }
@@ -58,13 +59,16 @@ class Auth extends Dbh {
         return  $data;
         $stmt = null;
       
-
     }
 
     public function jobseeker_account($login_id,$fname,$lname,$fullname,$email,$phone,$skills,$edulevel,$adr,$dob,$country,$image,$cv){
         $sql = " INSERT INTO job_seeker (login_id,fname,lname,fullname,email,phone,skills,education_level,address,dob,country,image,cv) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id,$fname,$lname,$fullname,$email,$phone,$skills,$edulevel,$adr,$dob,$country,$image,$cv]);
+        //@ams->change this entire query later
+        $sql = " UPDATE login SET status=? WHERE login_id=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([1,$login_id]);
         return 200;
         $stmt = null;
     }
@@ -86,6 +90,10 @@ class Auth extends Dbh {
         $sql = " INSERT INTO company (login_id,company_name,company_email,company_phone,company_address,postal_code,country,currency,logo) VALUES(?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$final_image]);
+        //@ams->change this entire query later
+        $sql = " UPDATE login SET status=? WHERE login_id=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([1,$login_id]);
         return 200;
         $stmt = null;
     }

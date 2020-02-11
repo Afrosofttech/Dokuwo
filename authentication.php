@@ -52,9 +52,6 @@
 										<input type="password" name="password" id="login_pwd" tabindex="2" class="form-control password" placeholder="Enter Password">
 									</div>
 									<div class="form-group">
-										<input type="hidden" name="tag" tabindex="2" class="form-control tag" value="login">
-									</div>
-									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
 												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login btn-submit-request" value="Log In" placeholder="Log In">
@@ -79,9 +76,6 @@
 										<input type="password" name="password" id="jobseeker_pwd" tabindex="2" class="form-control" placeholder="Enter Password">
 									</div>
 									<div class="form-group">
-										<input type="hidden" name="tag" id="jobseeker" tabindex="2" class="form-control tag" value="jobseeker">
-									</div>
-									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
 												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register btn-submit-request" value="Register Now" placeholder="Register Now">
@@ -95,9 +89,6 @@
 									</div>
 									<div class="form-group">
 										<input type="password" name="password" id="company_pwd" tabindex="2" class="form-control" placeholder="Password">
-									</div>
-									<div class="form-group">
-										<input type="hidden" name="tag" id="company" tabindex="2" class="form-control tag" value="company">
 									</div>
 									<div class="form-group">
 										<div class="row">
@@ -115,7 +106,6 @@
 		</div>
 	</div>
     <script src="js/plugins/notify.min.js"></script>
-    <script src="js/auth.js"></script>
     <script>
     $(function() {
 	let attempt = '<?php if(isset($_REQUEST['attempt'])){echo $_REQUEST['attempt'];}else{ echo '';}  ?>';
@@ -197,12 +187,14 @@
             success:function(response){
                if(response == 200){
                   window.location.replace('index.php');
-                }else if(response == 'success'){
+                }else if(response == 400){
+					swal('Invalid account access!','Activate your account if you have already created an account','warning','Cool');
+				}else if(response == 'success'){
 					swal('Account creation complete!','A link has been sent to your email to activate your account','success','Cool');
 				}else if(response == 'duplicate'){
                     swal('Account already exist!','Please login to continue or create a different account','warning','Cool');
 				}else{
-				swal('Account does not exist!','You need to create an account first','warning','Cool');
+				    swal('Account does not exist!','You need to create an account first','warning','Cool');
                }
             },
             error: function(err){

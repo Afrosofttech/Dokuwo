@@ -16,43 +16,48 @@ class AuthController extends Auth{
         return $login_info;
     }
 
-    public function create_user_account($comp_email,$passwd,$usertype){
-        $verify_email = $this->verify_email($comp_email);
+    public function create_user_account(){
+        $validated_data = validate_data();
+        $verify_email = $this->verify_email($validated_data['email']);
         if($verify_email == null){
             $hash = md5(rand(0,1000));
-            $password = password_hash($passwd, PASSWORD_DEFAULT);
-            $company_account = $this->create_account($comp_email,$password,$hash,$usertype,0);
+            $password = password_hash($validated_data['password'], PASSWORD_DEFAULT);
+            $company_account = $this->create_account($validated_data['email'],$password,$hash,$validated_data['tag'],0);
             return "success";
         }else{
             return "duplicate";
         }
     }
 
-    public function user_login($email,$passwd){
-        $user = $this->login($email);
-        $pass_verif = password_verify($passwd, $user['password']);
+    public function user_login(){
+        $validated_data = validate_data();
+        $user = $this->login($validated_data['email']);
+        if($user != null){
+        $pass_verif = password_verify($validated_data['password'], $user['password']);
 
         if ($user && $pass_verif){
 
            $_SESSION['login_id'] = $user['login_id'];
            $_SESSION['email'] = $user['email'];
            $_SESSION['status'] = $user['status'];
+           $_SESSION['usertype'] = $user['user_type'];
            if($user['user_type'] == 'company')
            {
               $company = $this->get_company_login($user['login_id']);
               $_SESSION['name'] = $company['company_name'];
-              $_SESSION['usertype'] = $user['user_type'];
            }
            if($user['user_type'] == 'jobseeker')
            {
               $jobseeker = $this->get_jobseeker_login($user['login_id']);
-              $_SESSION['name'] = $jobseeker['fullname'];
-              $_SESSION['usertype'] = $user['user_type'];
+              $_SESSION['name'] = $jobseeker['fullName'];
            }
            return 200;
         } else {
            return false;
         }
+      }else{
+          return 400;
+      }
     }
 
     public function jobseekerdetails(){

@@ -16,21 +16,18 @@ $contr =  $urlParts[sizeof($urlParts)-2];
    switch ($method){
        case "create_company_account":
             $auth = new AuthController();
-            $validated_data = validate_data();
-            $account = $auth->create_user_account($validated_data['email'],$validated_data['password'], $validated_data['tag']);
+            $account = $auth->create_user_account();
             echo $account;         
             break;
       case "create_jobseeker_account":
             $auth = new AuthController();
-            $validated_data = validate_data();
-            $account = $auth->create_user_account($validated_data['email'],$validated_data['password'], $validated_data['tag']);
+            $account = $auth->create_user_account();
             echo $account;    
             break;
       case "user_login":
             $auth = new AuthController();
-            $validated_data = validate_data();
-            $user = $auth->user_login($validated_data['email'],$validated_data['password']);
-            echo json_encode($user);    
+            $response  = $auth->user_login();
+            echo $response;    
             break;
       case "fill_jobseeker_account":
             $auth = new AuthController();

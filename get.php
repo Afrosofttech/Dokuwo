@@ -1,6 +1,5 @@
 <?php 
 include 'includes/autoloader.inc.php';
-include 'includes/functions.php';
 // For all get methods or queries that only involve retrieving
 // something from the database, direct all the URL\'s here and then 
 // reroute them to the correct view and method. I know that all this is not neccessary 
