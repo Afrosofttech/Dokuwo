@@ -1,16 +1,9 @@
 <?php
 session_start();
 
-// if(!isset($_SESSION['password']) || $_SESSION['usertype'] == ''){
-//     header("Location: login.php");
-// }
-//these are default values. They will will be totally removed once sign up is complete
-
-$_SESSION['login_id'] = 2;
-$_SESSION['email'] = 'contact@afrosofttech.com';
-$_SESSION['usertype'] = 'company';
-$_SESSION['status'] = 0;
-$_SESSION['name'] = 'Afrika Software Technologies'; //This should come from the company table
+if(!isset($_SESSION['email'])){
+     header("Location: authentication.php");
+}
 
 ?>
 <!DOCTYPE html>
@@ -33,9 +26,11 @@ $_SESSION['name'] = 'Afrika Software Technologies'; //This should come from the 
     <script src="js/printArea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
     <link type="text/css" rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css"/>
 
+
   <!-- Datatables CDN-->
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
   <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+
 
   <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
@@ -64,6 +59,7 @@ $_SESSION['name'] = 'Afrika Software Technologies'; //This should come from the 
   let session_fullname ='<?php echo $_SESSION['name']; ?>'
 </script>
 
+
   <div id="wrapper">
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content"></div>
@@ -88,6 +84,6 @@ $_SESSION['name'] = 'Afrika Software Technologies'; //This should come from the 
   <script src="js/admin.js"></script>
   <script src="js/company.js"></script>
   <script src="js/jobseeker.js"></script>
-  <script src="js/notify.min.js"></script>
+  <script src="js/plugins/notify.min.js"></script>
 </body>
 </html>
