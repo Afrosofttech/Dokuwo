@@ -11,11 +11,16 @@ $uri = $_SERVER['REQUEST_URI'];
 $urlParts = parse_url($uri, PHP_URL_PATH);
 $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
 
-$method =  $urlParts[sizeof($urlParts)-1];
-$view =  $urlParts[sizeof($urlParts)-2];
+ $method =  $urlParts[sizeof($urlParts)-1];
+ $view =  $urlParts[sizeof($urlParts)-2];
 
 if($view == 'company'){
    switch ($method){
+      case "retrieve_login_info":
+         $get_login = new AuthController();
+         $login_info = $get_login->login_info($_GET['email'], $_GET['hash']);
+         echo json_encode($login_info);
+          break;
        case "no_of_jobs_published":
         //include 'view/Company/companyview.php';
          //use view\Company\CompanyView;
@@ -105,18 +110,17 @@ if($view == 'company'){
        default:
           break;
    }
-
-}else{
-   switch ($method){
+ }else{
+    switch ($method){
+        case "":
+           ;
+           break;
        case "":
-          ;
-          break;
-      case "":
-          ;
-          break;
-       default:
-          break;
-   }
-}
+           ;
+           break;
+        default:
+           break;
+    }
+ }
 
 ?>

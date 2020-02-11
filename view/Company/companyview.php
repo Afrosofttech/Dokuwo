@@ -5,7 +5,7 @@
 include_once 'model/companymodel.php';
 
 class CompanyView extends Company{
-      
+ 
     public function no_of_jobs_published($login_id){
         $company = $this->get_company($login_id);
         $jobsPublished = $this->get_no_of_jobs_published($company['company_id']);
