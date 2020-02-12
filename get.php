@@ -22,10 +22,6 @@ if($view == 'company'){
          echo json_encode($login_info);
           break;
        case "no_of_jobs_published":
-        //include 'view/Company/companyview.php';
-         //use view\Company\CompanyView;
-
-         //require view\Company\CompanyView;
           $result = new CompanyView();
           $res = $result->no_of_jobs_published($_GET['login_id']);
           echo $res;
@@ -64,11 +60,6 @@ if($view == 'company'){
        case "all_sent_messages":
          $result = new MessagesView();
          $res = $result->all_sent_messages($_GET['login_id']);
-         echo json_encode($res);
-       break;
-       case "message_recipient":
-         $result = new MessagesView();
-         $res = $result->message_recipient($_GET['message_id']);
          echo json_encode($res);
        break;
        case "new_unread_messages":

@@ -8,23 +8,16 @@ class Company extends Dbh{
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id]);
         $result = $stmt->fetch();
-        try {
-            if(!$result ){
-                throw new Exception('This company doesn\'t exist.');
-            }
-           return  $result ;
-           $stmt = null;
-        } catch (Exception $e) {
-            return   $e->getMessage();
-            $stmt = null;
-        } 
+        if(!$result) return false;
+        return  $result ;
+        $stmt = null;
     }
     public function get_no_of_jobs_published($company_id){
         $sql = " Select * from job where company_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$company_id]);
         $rowCount = $stmt->rowCount();
-        if(!$rowCount) return ('No rows');
+        if(!$rowCount) return ('0');
         return $rowCount;
         $stmt = null;
     }
@@ -87,30 +80,15 @@ class Company extends Dbh{
             $stmt = null;
         }
     }
-    public function get_all_sent_messages($recipient_id){
-        $sql = " Select * from message where creator_id = ? order by create_date desc";
+    public function get_all_sent_messages($creator_id){
+        $sql = "SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,recipient_id,fullName  FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id INNER JOIN job_seeker on message_recipient.recipient_id = job_seeker.login_id where message.creator_id =? order by create_date desc";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$recipient_id]);
+        $stmt->execute([$creator_id]);
         $result = $stmt->fetchAll();
         return  $result;
         $stmt = null;
     }
-    public function get_message_recipient($message_id){
-        $sql = " Select * from message_recipient where message_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$message_id]);
-        $result = $stmt->fetch();
-        $res = $result['recipient_id'];
-         
-        $sql = " Select * from job_seeker where login_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$res]);
-        $result = $stmt->fetch();
 
-        return  $result;
-        $stmt = null;
-    }
-    
     public function get_new_unread_messages($recipient_id){
         $sql = " Select message_id from message_recipient where recipient_id = ? AND is_read = ?";
         $stmt = $this->connect()->prepare($sql);

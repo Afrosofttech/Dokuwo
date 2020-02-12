@@ -474,7 +474,7 @@ let profile = '';
            '<div class="col col-lg-2">'+
            '</div>'+
            '<div class="col-md-auto">'+
-             '<img src="uploads/fb-cover.png" class="card-img-top rounded-circle img-thumbnail" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+             '<img src="uploads/'+data.logo+'" class="card-img-top rounded-circle img-thumbnail" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
            '</div>'+
            '<div class="col col-lg-2">'+
            '</div>'+
@@ -866,14 +866,12 @@ function selectAJobseekerToForward(msg_subject,msg_body){
              }else{
 
               $.each(data, function( i, val ) {
-                //console.log(val);
-                // let checkId = val.message_id+"checkbox";
-
+                let img = (val.image == null)?"uploads/default.jpg": "uploads/"+val.image;
                 conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="forwardMsgTo(\''+val.login_id+'\',\''+val.fullName+'\',\''+msg_subject+'\',\''+msg_body+'\');">'+
                             '<td>'+
                                 '<input type="hidden" value="" id="'+val.login_id+'">'+
                             '</td>'+
-                            '<td class="img-link"><img class=" rounded-circle" src="https://ui-avatars.com/api/?name=John+Doe&size=40" alt=""/>'+
+                            '<td class="img-link"><img class=" rounded-circle" src="'+img+'" style="height: auto;width: 5rem;" alt=""/>'+
                             '<div class="status-indicator bg-success"></div>'+
                             '</td>'+
                             '<td class="full-name"><b>'+val.fullName+'</b></td>'+
@@ -1064,14 +1062,13 @@ function selectAJobseekerToMsg(){
              }else{
 
               $.each(data, function( i, val ) {
-                //console.log(val);
-                // let checkId = val.message_id+"checkbox";
+            let img = (val.image == null)?"uploads/default.jpg": "uploads/"+val.image;
 
                 conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="composeNewMessage(\''+val.login_id+'\',\''+val.fullName+'\');">'+
                             '<td>'+
                                 '<input type="hidden" value="" id="'+val.login_id+'">'+
                             '</td>'+
-                            '<td class="img-link"><img class=" rounded-circle" src="https://ui-avatars.com/api/?name=John+Doe&size=40" alt=""/>'+
+                            '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+img+'" style="height: auto;width: 5rem;" alt=""/>'+
                             '<div class="status-indicator bg-success"></div>'+
                             '</td>'+
                             '<td class="full-name"><b>'+val.fullName+'</b></td>'+
@@ -1219,222 +1216,82 @@ function discardMsg(id){
 $('.'+id).empty();
 }
 function sentMessages(){
-    let sentMessages ={};
-    let sentMessagesArray = [];
-    let count = 0;
-    let loopLength = '';
-    let repeat = 0;
+    let temp = '';
     $.ajax({
       method: "GET",
       dataType: 'json',
       url: "get.php/company/all_sent_messages",
       data: {"login_id" : session_id},
       success: function(data){
-        //console.log(data);
-    //     console.log(data);
-    //  sentMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
-    //       '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-    //         '<h4 class="card-title">Received Messages</h4>'+
-  
-    //         '<div class="card-tools">'+
-    //           '<div class="input-group input-group-sm">'+
-    //             '<input type="text" class="form-control" placeholder="Search for a message">'+
-    //             '<div class="input-group-append">'+
-    //               '<div class="btn btn-primary">'+
-    //                 '<i class="fas fa-search"></i>'+
-    //               '</div>'+
-    //             '</div>'+
-    //           '</div>'+
-    //         '</div>'+
-    //         '<!-- /.card-tools -->'+
-    //       '</div>'+
-    //       '<!-- /.card-header -->'+
-    //       '<div class="card-body p-0">'+
-    //         '<div class="mailbox-controls">'+
-    //           '<!-- Check all button -->'+
-    //           '<button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>'+
-    //           '</button>'+
-    //           '<div class="btn-group">'+
-    //             '<button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>'+
-    //             '<button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>'+
-    //             '<button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>'+
-    //           '</div>'+
-    //           '<!-- /.btn-group -->'+
-    //           '<button type="button" class="btn btn-default btn-sm" onclick="MessagesCenter();"><i class="fas fa-sync-alt"></i></button>'+
-    //           '<div class="float-right">'+
-    //             '1-50/200'+
-    //             '<div class="btn-group">'+
-    //               '<button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>'+
-    //               '<button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>'+
-    //             '</div>'+
-    //             '<!-- /.btn-group -->'+
-    //           '</div>'+
-    //           '<!-- /.float-right -->'+
-    //         '</div>'+
-    //         '<div class="table-responsive mailbox-messages">'+
-    //           '<table class="table table-hover">'+
-    //             '<tbody>';
+        temp +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+        '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+          '<h4 class="card-title">Sent Messages</h4>'+
+
+        '</div>'+
+        '<!-- /.card-header -->'+
+        '<div class="card-body p-0">'+
+          '<div class="table-responsive mailbox-messages">'+
+            '<table class="table table-hover" id="myt">'+
+            '<thead>'+
+            ' <th></th>'+
+            ' <th></th>'+
+            ' <th></th>'+
+            ' <th></th>'+
+            '</thead>'+
+              '<tbody>';
   
                 $.each(data, function( i, val ) {
-                  //let checkId = val.message_id+"checkbox";
-                  loopLength = data.length;
-                  ++count;
-                  $.ajax({
-                    method: "GET",
-                    dataType: 'json',
-                    url: "get.php/company/message_recipient",
-                    data: {"message_id" : val.message_id},
-                    success: function(data){
-
-                      let login_id = data.login_id;
-                      let fullName = data.fullName;
-                      let message_id = val.message_id;
-                      let creator_id = val.creator_id;
-                      let creator_name = val.creator_name;
-                      let subject = val.subject;
-                      let message_body = val.message_body;
-                      let create_date = val.create_date;
-                      let parent_message_id = val.parent_message_id;
-
-                      var sentMessages = {login_id,fullName,message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id};
-                      sentMessagesArray.push(sentMessages);
-                      
-                      if(count == loopLength){
-                        if(repeat == 0){
-                          repeat = 1;
-                          return;
-                        }else{
-                         sentMessagesContent(sentMessagesArray);
-                        }
-                     }                     
-                    }
-                  });
-                  
-                  // sentMessage+= '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
-                  //             '<td>'+
-                  //               '<div class="icheck-primary">'+
-                  //                 '<input type="checkbox" value="" id="'+checkId+'">'+
-                  //                 '<label for="check1"></label>'+
-                  //               '</div>'+
-                  //             '</td>'+
-                  //             // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
-                  //             '<td class="mailbox-name">'+val.creator_name+'</td>'+
-                  //             '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+val.message_body.substring(0, 50)+''+
-                  //             '</td>'+
-                  //             // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
-                  //             '<td class="mailbox-date">'+val.create_date+'</td>'+
-                  //           '</tr>';
+                  let checkId = val.message_id+"checkbox";
+                  //AMS: am filtering the message body to get rid of all <p> tags
+                   var filteredMsgBody = val.message_body.replace(/<[^>]+>/g, '');
+         temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\',\''+val.fullName+'\',\''+val.recipient_id+'\');">'+
+                       '<td>'+
+                         '<div class="icheck-primary">'+
+                           '<input type="checkbox" value="" id="'+checkId+'">'+
+                           '<label for="check1"></label>'+
+                         '</div>'+
+                       '</td>'+
+                       // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
+                       '<td class="mailbox-name">'+val.creator_name+'</td>'+
+                       '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                       '</td>'+
+                       // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
+                       '<td class="mailbox-date">'+val.create_date+'</td>'+
+                     '</tr>';
                 });
-        //       sentMessage +=  '</tbody>'+
-        //                       '</table>'+
-        //                       '<!-- /.table -->'+
-        //                     '</div>'+
-        //                     '<!-- /.mail-box-messages -->'+
-        //                   '</div>'+
-        //                   '<!-- /.card-body -->'+
-        //                   '<div class="card-footer p-0">'+
-        //                     '<div class="mailbox-controls">'+
-        //                       '<!-- Check all button -->'+
-        //                       '<button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>'+
-        //                       '</button>'+
-        //                       '<div class="btn-group">'+
-        //                         '<button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>'+
-        //                         '<button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>'+
-        //                         '<button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>'+
-        //                       '</div>'+
-        //                       '<!-- /.btn-group -->'+
-        //                       '<button type="button" class="btn btn-default btn-sm" onclick="MessagesCenter();"><i class="fas fa-sync-alt"></i></button>'+
-        //                       '<div class="float-right">'+
-        //                         '1-50/200'+
-        //                         '<div class="btn-group " id="sajojr">'+
-        //                         ' <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left" onclick=""></i></button>'+
-        //                           '<button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>'+
-        //                         '</div>'+
-        //                         '<!-- /.btn-group -->'+
-        //                       '</div>'+
-        //                       '<!-- /.float-right -->'+
-        //                     '</div>'+
-        //                   '</div>'+
-        //                   '</div>'+
-  
-        //                 '</div>';
-  
-        //  $('.contentMessage').empty().append(sentMessage);
+                temp +=  '</tbody>'+
+                      '</table>'+
+                      '<!-- /.table -->'+
+                    '</div>'+
+                    '<!-- /.mail-box-messages -->'+
+                  '</div>'+
+                  '<!-- /.card-body -->'+
+                  '<div class="card-footer p-0">'+
+                '</div>'+
+                '</div>'+
+              '</div>';
 
+                $('.contentMessage').empty().append(temp);
+
+                $(document).ready( function () {
+                $('#myt').DataTable({
+                "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+                "oLanguage": {
+                "sLengthMenu": "Display _MENU_ messages",
+                },
+                "emptyTable":     "No message available",
+                "bDestroy": true,
+                fnDrawCallback: function() {
+                $("#myt thead").remove();
+                }
+              });
+            });
         },
         error: function(err){
          //console.log(err.responseText);
          //$.notify(err.responseText,'error');
         }
        });
-}
-function sentMessagesContent(sentMessagesArray){
-let temp = '';
-       temp +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
-          '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-            '<h4 class="card-title">Sent Messages</h4>'+
-
-          '</div>'+
-          '<!-- /.card-header -->'+
-          '<div class="card-body p-0">'+
-            '<div class="table-responsive mailbox-messages">'+
-              '<table class="table table-hover" id="myt">'+
-              '<thead>'+
-              ' <th></th>'+
-              ' <th></th>'+
-              ' <th></th>'+
-              ' <th></th>'+
-              '</thead>'+
-                '<tbody>';
-                $.each(sentMessagesArray, function(i,val){
-                  let checkId = val.message_id+"checkbox";
-                 //AMS: am filtering the message body to get rid of all <p> tags
-                  var filteredMsgBody = val.message_body.replace(/<[^>]+>/g, '');
-        temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\',\''+val.fullName+'\',\''+val.login_id+'\');">'+
-                      '<td>'+
-                        '<div class="icheck-primary">'+
-                          '<input type="checkbox" value="" id="'+checkId+'">'+
-                          '<label for="check1"></label>'+
-                        '</div>'+
-                      '</td>'+
-                      // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
-                      '<td class="mailbox-name">'+val.creator_name+'</td>'+
-                      '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
-                      '</td>'+
-                      // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
-                      '<td class="mailbox-date">'+val.create_date+'</td>'+
-                    '</tr>';
-                });
-
-              temp +=  '</tbody>'+
-                              '</table>'+
-                              '<!-- /.table -->'+
-                            '</div>'+
-                            '<!-- /.mail-box-messages -->'+
-                          '</div>'+
-                          '<!-- /.card-body -->'+
-                          '<div class="card-footer p-0">'+
-                          '</div>'+
-                          '</div>'+
-  
-                        '</div>';
-  
-        $('.contentMessage').empty().append(temp);
-
-
-        $(document).ready( function () {
-          $('#myt').DataTable({
-            "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
-            "oLanguage": {
-              "sLengthMenu": "Display _MENU_ messages",
-            },
-            "emptyTable":     "No message available",
-            "bDestroy": true,
-            fnDrawCallback: function() {
-              $("#myt thead").remove();
-            }
-          });
-      } );
 }
 function DeleteMessage(msg_id,jobseeker_id){
   console.log('default:'+jobseeker_id);

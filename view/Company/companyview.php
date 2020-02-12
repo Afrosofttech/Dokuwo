@@ -8,6 +8,7 @@ class CompanyView extends Company{
  
     public function no_of_jobs_published($login_id){
         $company = $this->get_company($login_id);
+        if($company == false){ return 0; }
         $jobsPublished = $this->get_no_of_jobs_published($company['company_id']);
         return $jobsPublished;
     }
@@ -21,8 +22,6 @@ class CompanyView extends Company{
         }
        $result = floor(($count/11)*100);
        return $result;
-        // return $company;
-        //$isProfileComplete =  $this->is_the_profile_complete($company['company_id']);
     }
     public function get_profile($login_id){
         $company = $this->get_company($login_id);
