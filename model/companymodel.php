@@ -3,7 +3,7 @@ include_once 'dbhmodel.php';
 
 class Company extends Dbh{
     
-    public function get_company($login_id){
+    public function get_company($login_id){ //@ams->merge this query with get_company_profile_details
         $sql = " Select * from company where login_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id]);
@@ -176,4 +176,30 @@ class Company extends Dbh{
             $stmt = null;
         }
     }
+    public function get_company_profile_details($login_id){
+     $sql="SELECT  company.login_id,company_name, company_phone, company_address, postal_code, country, currency, logo, login.email, password FROM company INNER JOIN login ON company.login_id = login.login_id WHERE login.login_id=? ";
+     $stmt =$this->connect()->prepare($sql);
+     $stmt->execute([$login_id]);
+     $result=$stmt->fetch();
+     if(!$result) return 400;
+     return $result;
+     $stmt = null;
+    }
+    public function update_company_profile($login_id,$name,$email,$phone,$country,$address,$password,$currency,$code,$final_image){
+        
+        $sql = ($final_image == "" || null)? "UPDATE company SET company_name = ?,company_phone=?,company_address=?,postal_code=?,country=?,currency=? WHERE login_id = ?":
+        "UPDATE company SET company_name = ?,company_phone=?,company_address=?,postal_code=?,country=?,currency=?,logo=? WHERE login_id = ?";
+        $det = ($final_image == "" || null)?[$name,$phone,$address,$code,$country,$currency,$login_id]:[$name,$phone,$address,$code,$country,$currency,$final_image,$login_id];
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute($det);
+
+        $sql2 = ($password == "" || null)? " UPDATE login SET email = ?  WHERE login_id = ?":" UPDATE login SET email = ?,password=?  WHERE login_id = ?";
+        $det2 = ($password == "" || null)? [$email,$login_id]:[$email,$password,$login_id];
+        $stmt = $this->connect()->prepare($sql2);
+        $stmt->execute($det2);
+        
+        return 200;
+        $stmt = null;
+    }
+
 }

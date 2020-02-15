@@ -45,6 +45,9 @@ if(!isset($_SESSION['email'])){
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+  <!-- Bootstrap Form Helpers -->
+	<link href="css/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" href="css/countrySelect.min.css">
 </head>
 
 <body id="page-top">
@@ -77,7 +80,16 @@ if(!isset($_SESSION['email'])){
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
- 
+  <!-- currency list -->
+  <script src="js/core/currency.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="js/core/functions.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="js/core/functions.js"></script>
+  <!-- country select -->
+  <script src="js/plugins/countrySelect.min.js"></script>
   <!--Custom scripts-->
   <script src="js/core/jobseeker_categories.js"></script>
   <script src="js/career.js"></script>

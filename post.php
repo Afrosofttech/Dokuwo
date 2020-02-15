@@ -68,6 +68,11 @@ $contr =  $urlParts[sizeof($urlParts)-2];
          $result = new MessagesController();
          $res = $result->send_msg_to_jobseeker($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']);
          echo $res;
+       case "update_company":
+         $result = new  SettingsController();
+         $response =$result->update_company();
+         echo $response;
+       break;
         default:
            break;
     }
