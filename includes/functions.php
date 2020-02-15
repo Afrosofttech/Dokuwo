@@ -32,7 +32,7 @@ function validate_jobseeker(){
     $gump = new GUMP();
 
     $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
-    //@techjobis-> i have replaced most alpha_numeric with alpha_space cus names can be multiple and need to allow spaces between
+    //@ams-> i have replaced most alpha_numeric with alpha_space cus names can be multiple and need to allow spaces between
     $gump->validation_rules(array(
        'firstname'   => 'required|alpha_space|max_len,100', 
        'lastname'    => 'required|alpha_space|max_len,100',
@@ -55,6 +55,7 @@ function validate_jobseeker(){
 }
 
 function validate_company(){
+//@ams->both company signup and update company profile are using this.To be changed
  require "gump.class.php";
  $gump = new GUMP();
 

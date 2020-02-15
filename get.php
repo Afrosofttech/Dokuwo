@@ -37,7 +37,7 @@ if($view == 'company'){
       case "profile":
         //include 'view/Company/companyview.php';
         // require Company\CompanyView;
-          $result = new CompanyView();
+          $result = new CompanyView();  //to be merge with case: 'company_profile'
           $res = $result->get_profile($_GET['login_id']);
           echo json_encode($res);
          break;
@@ -83,8 +83,13 @@ if($view == 'company'){
            $response =$result->jobseekers_of_this_category($_GET['category']);
            echo json_encode($response);
        break;
+       case "company_profile":
+        $result = new CompanyView();
+        $company = $result->get_company_profile($_GET['login_id']);
+        echo json_encode($company);
+       break;
        default:
-          break;
+       break;
    }
 
 } elseif($view == 'jobseeker'){

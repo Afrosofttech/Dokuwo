@@ -300,7 +300,7 @@ $(document).ready(function(){
             }else if( response == "Invalid Image"){
                 swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
             }else if(response == "Invalid CV"){
-               //@ams->this else is not working. Pls fix
+               //@ams->this else is not working. Pls check
                swal('Invalid CV type!','You can only upload png, jpeg, pdf, doc, ppt or jpg','error','Cool');
             }else if(response == 'duplicate'){
                window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');

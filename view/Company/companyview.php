@@ -23,8 +23,12 @@ class CompanyView extends Company{
        $result = floor(($count/11)*100);
        return $result;
     }
-    public function get_profile($login_id){
+    public function get_profile($login_id){ //to be merged with  get_company_profile
         $company = $this->get_company($login_id);
+        return $company;
+    }
+    public function get_company_profile($login_id){
+        $company = $this->get_company_profile_details($login_id);
         return $company;
     }
 }

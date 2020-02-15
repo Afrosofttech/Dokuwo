@@ -45,7 +45,7 @@ function sideBar(){
           '</li>'+
         
           '<li class="nav-item">'+
-            '<a class="nav-link" style="cursor: pointer;">'+
+            '<a class="nav-link" style="cursor: pointer;" onclick="settings()">'+
               '<i class="fas fa-fw fa-cog""></i>'+
               '<span>Settings</span></a>'+
           '</li>'+
@@ -674,9 +674,9 @@ function contentMessage(){
         $('#myTable').DataTable({
           "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
           "oLanguage": {
-            "sLengthMenu": "Display _MENU_ messages"
+            "sLengthMenu": "Display _MENU_ messages",
+            "sEmptyTable":     "No message available"
           },
-          "emptyTable":     "No message available",
           fnDrawCallback: function() {
             $("#myTable thead").remove();
           }
@@ -700,7 +700,7 @@ function contentMessage(){
       },
       error: function(err){
        //console.log(err.responseText);
-       //$.notify(err.responseText,'error');
+       $.notify(err.responseText,'error');
       }
      });
 }
@@ -791,7 +791,6 @@ function viewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,created
 $('.contentMessage').empty().append(temp);
 
 $(document).ready(function (){
-  console.log('amddddddd');
   if(jobseeker_id){
     $('#'+msg_id).html('To: '+jobseeker_name+'');
   }
@@ -899,9 +898,9 @@ function selectAJobseekerToForward(msg_subject,msg_body){
         $('#mySelector').DataTable({
           "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
           "oLanguage": {
-            "sLengthMenu": "Display _MENU_ job seekers"
+            "sLengthMenu": "Display _MENU_ job seekers",
+            "sEmptyTable":     "No message available"
           },
-          "emptyTable":     "No message available",
           fnDrawCallback: function() {
             $("#mySelector thead").remove();
           }
@@ -923,7 +922,7 @@ function forwardMsgTo(login_id,fullName,msg_subject,msg_body){
         data: {"creator_id" : session_id, "fullname": session_fullname, "jobseeker_login_id" : login_id, "Name" : fullName,"parent_msg_id": null, "Subject" : msg_subject, "messageBody" : msg_body},
         success: function(data){
            if(data == 200){
-            $.notify('Message has been sent successfully forwarded','success'); 
+            $.notify('Message has been successfully forwarded','success'); 
             contentMessage();
           }
         },
@@ -1096,9 +1095,9 @@ function selectAJobseekerToMsg(){
         $('#mySelector').DataTable({
           "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
           "oLanguage": {
-            "sLengthMenu": "Display _MENU_ job seekers"
+            "sLengthMenu": "Display _MENU_ job seekers",
+            "sEmptyTable":     "No message available"
           },
-          "emptyTable":     "No message available",
           fnDrawCallback: function() {
             $("#mySelector thead").remove();
           }
@@ -1108,7 +1107,7 @@ function selectAJobseekerToMsg(){
       },
       error: function(err){
        //console.log(err.responseText);
-       //$.notify(err.responseText,'error');
+       $.notify(err.responseText,'error');
       }
      });
 }
@@ -1252,7 +1251,7 @@ function sentMessages(){
                          '</div>'+
                        '</td>'+
                        // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
-                       '<td class="mailbox-name">'+val.creator_name+'</td>'+
+                       '<td class="mailbox-name">'+val.fullName+'</td>'+
                        '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
                        '</td>'+
                        // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
@@ -1278,8 +1277,8 @@ function sentMessages(){
                 "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
                 "oLanguage": {
                 "sLengthMenu": "Display _MENU_ messages",
+                "sEmptyTable":     "No message available"
                 },
-                "emptyTable":     "No message available",
                 "bDestroy": true,
                 fnDrawCallback: function() {
                 $("#myt thead").remove();
@@ -1289,7 +1288,7 @@ function sentMessages(){
         },
         error: function(err){
          //console.log(err.responseText);
-         //$.notify(err.responseText,'error');
+         $.notify(err.responseText,'error');
         }
        });
 }
@@ -1312,7 +1311,7 @@ $.ajax({
     // }
   },
   error: function(err){
-    //
+    $.notify(err.responseText,'error');
   }
 });
 }else{
@@ -1337,12 +1336,12 @@ function geyOutReadMessages(param){
       }
     },
     error: function(err){
-      //
+      $.notify(err.responseText,'error');
     }
   });
 }
 
-//company_jobseekers by @ams
+//@ams->company_jobseekers
 function companyJobseekers(){
 let temp ='<section class="content">'+
 '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
@@ -1408,7 +1407,7 @@ $.ajax({
     $('.comp_jobseekers').append(innertemp);
   },
   error: function(err){
-    //console.log(err.responseText);
+    $.notify(err.responseText,'error');
   }
 });
 }
@@ -1512,14 +1511,12 @@ $.ajax({
 
   },
   error: function(err){
-
+    $.notify(err.responseText,'error');
   }
 });
 
 }
 function viewProfile(profile_id,profile_log_id,profile_fname,profile_lname,profile_fullname,profile_email,profile_phone,profile_skills, profile_tag_line,profile_edu_level,profile_address,profile_dob,profile_country,profile_image,profile_cv,category){
-console.log('PROFILE->');
-console.log(profile_id+" "+profile_fullname);
 let temp ='<div class="container-fluid"><div class="row"><div class="col-xl-6 col-lg-7 profileInner"></div><div class="col-xl-6 col-lg-5 contentMessage"></div></div></div>';
 
 $('#content').empty().append(temp);
@@ -1576,4 +1573,244 @@ let profile =
 '</div>';
 
   $('.profileInner').empty().append(profile);
+}
+//@ams->Company settings
+function settings(){
+// <!-- Content Wrapper. Contains page content -->
+let temp='<div class="content-wrapper">'+
+  '<!-- Content Header (Page header) -->'+
+
+ ' <!-- Main content -->'+
+  '<section class="content">'+
+  
+  '  <div class="container-fluid">'+
+     ' <div class="row">';
+
+     $.ajax({
+      method: "GET",
+      dataType: 'json',
+      url: "get.php/company/company_profile",
+      data: {"login_id" : session_id},
+      success: function(data){
+     if(data !== 400 ){
+        temp += ' <div class="col-md-4">'+
+        ' <!-- Profile Image -->'+
+        ' <div class="card card-primary card-outline" style="border-top: 3px solid #007bff;">'+
+          ' <div class="card-body box-profile">'+
+             '<div class="text-center">'+
+               '<img class="img-fluid img-circle img-thumbnail" src="uploads/'+data.logo+'" style="width:100%;height:150px" alt="User profile picture">'+
+             '</div>'+
+              '<h4 class="profile-username text-center">'+data.company_name+'</h4>'+
+             '<ul class="list-group list-group-unbordered mb-3">'+
+               '<li class="list-group-item">'+
+                 '<i class="fas fa-lg fa-envelope"></i><b> Email</b> <a class="float-right">'+data.email+'</a>'+
+               '</li>'+
+               '<li class="list-group-item">'+
+                '<i class="fas fa-lg fa-phone"></i><b> Phone</b> <a class="float-right">'+data.company_phone+'</a>'+
+              ' </li>'+
+               '<li class="list-group-item">'+
+                 '<i class="fas fa-lg fa-globe"></i><b> Country</b> <a class="float-right">'+data.country+'</a>'+
+               '</li>'+
+               '<li class="list-group-item">'+
+               '<i class="fas fa-lg fa-building"></i><b> Address</b> <a class="float-right">'+data.company_address+'</a>'+
+             '</li>'+
+             '</ul>'+
+             '<a href="javascript:void(0);" class="btn btn-primary btn-block"><b>Profile</b></a>'+
+           '</div>'+
+           '<!-- /.card-body -->'+
+         '</div>'+
+        ' <!-- /.card -->'+
+       '</div>'+
+       '<!-- /.col -->'+
+       '<div class="col-md-8">'+
+         '<div class="card" style="border-top: 3px solid #007bff;">'+
+           '<div class="card-header p-2">'+
+             '<ul class="nav nav-pills">'+
+               '<li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>'+
+               '</ul>'+
+             '</div><!-- /.card-header -->'+
+             '<div class="card-body">'+
+              ' <div class="tab-content">'+
+ 
+                 '<div class="active tab-pane" id="settings">'+
+                   '<form class="form-horizontal" method="POST" id="editCompany" enctype="multipart/form-data" autocomplete="off">'+
+                   '<div class="form-group row">'+
+                      '<div class="col-sm-10">'+
+                        '<input type="hidden" class="form-control" name="login_id" id="login_id" value="'+data.login_id+'">'+
+                      '</div>'+
+                   '</div>'+  
+                   '<div class="form-group row">'+
+                       '<label for="inputName" class="col-sm-2 col-form-label">Name</label>'+
+                       '<div class="col-sm-10">'+
+                         '<input type="text" class="form-control" name="name" id="inputName" value="'+data.company_name+'">'+
+                       '</div>'+
+                     '</div>'+
+                     '<div class="form-group row">'+
+                       '<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>'+
+                       '<div class="col-sm-10">'+
+                         '<input type="email" class="form-control" name="email" id="inputEmail" value="'+data.email+'">'+
+                       '</div>'+
+                     '</div>'+
+                     '<div class="form-group row">'+
+                       '<label for="phone" class="col-sm-2 col-form-label">Phone</label>'+
+                       '<div class="col-sm-10">'+
+                         '<input type="text" class="form-control" name="phone" id="phone" value="'+data.company_phone+'">'+
+                       '</div>'+
+                     '</div>'+
+                     '<div class="form-group row">'+
+                     '<label for="country" class="col-sm-2 col-form-label">Country</label>'+
+                     '<div class="col-sm-10">'+
+                       '<input type="text" class="form-control" name="country" id="country">'+
+                     '</div>'+
+                   '</div>'+
+                     '<div class="form-group row">'+
+                       '<label for="address" class="col-sm-2 col-form-label">Address</label>'+
+                       '<div class="col-sm-10">'+
+                         '<textarea class="form-control" name="address" id="address" >'+data.company_address+'</textarea>'+
+                       '</div>'+
+                    ' </div>'+
+                     '<div class="form-group row">'+
+                       '<label for="password" class="col-sm-2 col-form-label">Password</label>'+
+                      ' <div class="col-sm-10">'+
+                         '<input type="password" class="form-control" name="password" id="password" placeholder="Enter new password">'+
+                       '</div>'+
+                     '</div>'+
+                     '<div class="form-group row">'+
+                     '<label for="currency" class="col-sm-2 col-form-label">Currency</label>'+
+                    ' <div class="col-sm-10">'+
+                    '<select class="form-control" name="currency" id="currency">'+
+                      ''+countries.map((currency,index) =>  '<option value = "'+currency.value+'" id="'+currency.value+'">'+currency.name+'</option>')+''+
+                       '</select>'+
+                       '</div>'+
+                   '</div>'+
+                   '<div class="form-group row">'+
+                     '<label for="code" class="col-sm-2 col-form-label">Postal Code</label>'+
+                   ' <div class="col-sm-10">'+
+                       '<input type="text" class="form-control" name="code" id="code" value="'+data.postal_code+'">'+
+                     '</div>'+
+                   '</div>'+
+                   ' <div class="form-group row">'+
+                   ' <label for="exampleInputFile" class="col-sm-2 col-form-label">Logo</label>'+
+                      '<div class="col-sm-10">'+
+                       ' <input type="file" id="exampleInputFile" name="logo" onchange="readURL(this);">'+
+                     ' </div>'+
+                  '</div>'+
+                     '<div class="form-group row">'+
+                       '<div class="offset-sm-2 col-sm-10">'+
+                         '<button type="submit" class="btn btn-success float-right">Update</button>'+
+                       '</div>'+
+                     '</div>'+
+                   '</form>'+
+                 '</div>'+
+                 '<!-- /.tab-pane -->'+
+
+               '</div>'+
+              ' <!-- /.tab-content -->'+
+             '</div><!-- /.card-body -->'+
+
+           '</div>'+
+           '<!-- /.nav-tabs-custom -->'+
+         '</div>'+
+         ' <!-- /.col -->'+
+        '</div>'+
+        ' <!-- /.row -->'+
+        '</div><!-- /.container-fluid -->'+
+  
+      '</section>'+
+      '<!-- /.content -->'+
+  
+    '</div>'+
+    '<!-- /.content-wrapper -->';
+
+    $('#content').empty().append(temp);
+
+    $("#country").countrySelect();
+    $("#country").countrySelect("setCountry",""+data.country+"");
+    //ams->countries actually refers to the currency of countries
+     $.each(countries, function(index,currencyVals){
+     if(currencyVals.value == data.currency){
+       $("#currency option[value="+data.currency+"]").attr('selected', 'selected');
+     }
+    }) 
+  $(document).ready(function(){
+    $('#editCompany').submit(function(e) {
+    e.preventDefault();
+    var name = $('#inputName').val();
+    var email = $('#inputEmail').val();
+    var password = $('#password').val();
+    var errors = [];
+ 
+    if (email.length < 1) {
+      swal('Invalid Email!','Email cannot be empty','error','Cool');
+      errors.push('email_error');
+      return;
+    } else {
+      var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var validEmail = regEx.test(email);
+      if (!validEmail) {
+         swal('Invalid Email!','Please enter a valid email!','error','Cool');
+         errors.push('email_error');
+         return;
+      }
+    }
+    if (name.length < 1) {
+      swal('Invalid Name!','Name cannot be empty!','error','Cool');
+      errors.push('name_error');
+      return;
+    }
+    if(password !== '' && password.length < 8){
+      swal('Invalid password!','password must at least be 8 characters!','error','Cool');
+      errors.push('password_error');
+      return;
+    }
+    
+    if(errors.length < 1){
+        $.ajax({
+          method:'POST',
+          url: 'post.php/company/update_company',
+          data: new FormData(this),
+          contentType: false,
+          processData: false,
+          cache:false,
+          success:function(response){
+            console.log(response);
+            if(response == 200){
+              swal('Update Successful!','Profile successfully updated','success','cool');
+            }else if( response == "Invalid"){
+                swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
+            }
+          },
+          error: function(err){
+            $.notify(err.responseText,'error');
+          } 
+        });
+      }else{
+          return;
+      }
+    //
+    })
+    });
+  }else{
+  $('#content').empty().append('<div>ERROR: This account doesn\'t exist. You should access here</div>');
+  }
+
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+});
+  $('#content').empty().append(temp);
+}
+function readURL(input) {
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('.img-thumbnail')
+              .attr('src', e.target.result)
+              .addClass('img-fluid img-circle')
+              .css({'width' : '100%' , 'height' : '150px'});
+      };
+      reader.readAsDataURL(input.files[0]);
+  }
 }
