@@ -88,6 +88,31 @@ if($view == 'company'){
         $company = $result->get_company_profile($_GET['login_id']);
         echo json_encode($company);
        break;
+       case "show_jobs_posted":
+        $result = new JobsView();
+        $jobs =$result->get_jobs_posted($_GET['company_id']);
+        echo json_encode($jobs);
+       break;
+       case "show_app_stats":
+        $result = new JobsView();
+        $app_stats =$result->show_application_stats($_GET['company_id']);
+        echo json_encode($app_stats);
+       break;
+       case "job_info":
+        $result = new JobsView();
+        $job_info =$result->job_info($_GET['job_id']);
+        echo json_encode($job_info);
+       break;
+       case "job_applicatants":
+        $result = new JobsView();
+        $job_applicants =$result->job_applicatants($_GET['job_id']);
+        echo json_encode($job_applicants);
+       break;
+       case "job_applicatant":
+        $result = new JobsView();
+        $job_applicant =$result->job_applicatant($_GET['login_id']);
+        echo json_encode($job_applicant);
+       break;
        default:
        break;
    }

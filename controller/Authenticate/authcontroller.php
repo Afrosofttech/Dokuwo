@@ -45,11 +45,13 @@ class AuthController extends Auth{
            {
               $company = $this->get_company_login($user['login_id']);
               $_SESSION['name'] = $company['company_name'];
+              $_SESSION['_id'] = $company['company_id'];
            }
            if($user['user_type'] == 'jobseeker')
            {
               $jobseeker = $this->get_jobseeker_login($user['login_id']);
               $_SESSION['name'] = $jobseeker['fullName'];
+              $_SESSION['_id'] = $jobseeker['jobseeker_id'];
            }
            return 200;
         } else {

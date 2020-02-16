@@ -201,5 +201,100 @@ class Company extends Dbh{
         return 200;
         $stmt = null;
     }
+    public function get_jobs($company_id){
+        $sql = " SELECT * FROM job where company_id = ? ORDER BY status ASC;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$company_id]);
+        $result = $stmt->fetchAll();
+        
+        if(!$result ){
+            return 400;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }
+    }
+    public function get_application_stats($company_id){
+        $sql = " SELECT COUNT(application.jobseeker_id) AS no_of_applicants,job.status, job.job_id,job.job_name,job.date_posted FROM application INNER JOIN job ON application.job_id = job.job_id WHERE application.company_id = ? GROUP BY application.job_id";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$company_id]);
+        $result = $stmt->fetchAll();
 
+        if(!$result ){
+            return 400;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }
+    }
+    public function get_job_info($job_id){
+        $sql = " SELECT * FROM job where job_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$job_id]);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return 400;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }
+    }
+    public function get_job_applicatants($job_id){
+        $sql = " SELECT app_status,job_seeker.login_id,job_seeker.fname,job_seeker.lname,job_seeker.address,job_seeker.email,job_seeker.skills FROM application INNER JOIN job_seeker ON application.jobseeker_id=job_seeker.jobseeker_id WHERE job_id = ? ORDER BY application.app_date;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$job_id]);
+        $result = $stmt->fetchAll();
+        if(!$result ){
+            return 400;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }
+    }
+    public function get_job_applicatant($login_id){
+        $sql = " SELECT login.login_id,login.email,jobseeker_id,fname,lname,fullName,phone,category,skills,tag_line,education_level,address,country,dob,image,CV FROM login INNER JOIN job_seeker ON login.login_id=job_seeker.login_id WHERE login.login_id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id]);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return 400;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }
+    }
+    public function accept_and_change_app_status($jobseeker_id,$job_id){
+        $sql = " UPDATE application SET app_status=? WHERE job_id=? AND jobseeker_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([1,$job_id,$jobseeker_id]);
+        return  200;
+        $stmt = null;
+    }
+    public function close_this_job($job_id){
+        $sql = " UPDATE job SET status=? WHERE job_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([1,$job_id]);
+        return  200;
+        $stmt = null;
+    }
+    public function update_this_job($job_id,$jobName,$jobLocation,$jobType,$jobCategory,$requirements,$salary,$email,$phone){
+        $sql = " UPDATE job SET job_name=?,job_type=?,job_cat=?,requirements=?,job_location=?,job_contact_email=?,job_contact_phone=?,salary=? WHERE job_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobName,$jobType,$jobCategory,$requirements,$jobLocation,$email,$phone,$salary,$job_id]);
+        return  200;
+        $stmt = null;
+    }
+    public function create_this_job($company_id,$jobName,$jobLocation,$jobType,$jobCategory,$requirements,$salary,$email,$phone){
+        $date = date('Y-m-d');$date = date('Y-m-d');
+        $sql = " INSERT INTO job(company_id,job_name,job_type,job_cat,requirements,job_location,job_contact_email,job_contact_phone,salary,date_posted,status) VALUES(?,?,?,?,?,?,?,?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$company_id,$jobName,$jobType,$jobCategory,$requirements,$jobLocation,$email,$phone,$salary,$date,0]);
+        return  200;
+        $stmt = null;
+    }
 }

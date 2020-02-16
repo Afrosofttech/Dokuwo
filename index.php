@@ -44,7 +44,6 @@ if(!isset($_SESSION['email'])){
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
   <!-- Bootstrap Form Helpers -->
 	<link href="css/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
   <link rel="stylesheet" href="css/countrySelect.min.css">
@@ -53,13 +52,14 @@ if(!isset($_SESSION['email'])){
 <body id="page-top">
 
 <script type="text/javascript">
-//these are default values. they will be replaced with sessions coming from when someone logs in
-
+//these are default values. they will be replaced with sessions coming from when someone logs in.
+//@ams->to be moved to career.js
   let session_id = '<?php echo $_SESSION['login_id']; ?>';
   let session_email = '<?php echo $_SESSION['email']; ?>';
   let session_usertype = '<?php echo  $_SESSION['usertype']; ?>';
   let session_status = '<?php echo $_SESSION['status']; ?>';
-  let session_fullname ='<?php echo $_SESSION['name']; ?>'
+  let session_fullname ='<?php echo $_SESSION['name']; ?>';
+  let session_user_id ='<?php echo $_SESSION['_id'];?>';
 </script>
 
 

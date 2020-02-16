@@ -73,8 +73,28 @@ $contr =  $urlParts[sizeof($urlParts)-2];
          $response =$result->update_company();
          echo $response;
        break;
-        default:
-           break;
+       case "accept_application":
+         $result = new JobsController();
+         $response = $result->accept_application($_POST['jobseeker_id'],$_POST['job_id']);
+         echo $response;
+       break;
+       case "close_job":
+         $result = new JobsController();
+         $response = $result->close_job($_POST['job_id']);
+         echo $response;
+       break;
+       case "update_job":
+         $result = new JobsController();
+         $response = $result->update_job($_POST['job_id'],$_POST['jobName'],$_POST['jobLocation'],$_POST['jobType'],$_POST['jobCategory'],$_POST['requirements'],$_POST['salary'],$_POST['email'],$_POST['phone']);
+         echo $response;
+       break;
+       case "create_job":
+         $result = new JobsController();
+         $response = $result->create_job($_POST['company_id'],$_POST['jobName'],$_POST['jobLocation'],$_POST['jobType'],$_POST['jobCategory'],$_POST['requirements'],$_POST['salary'],$_POST['email'],$_POST['phone']);
+         echo $response;
+       break;
+       default:
+       break;
     }
 
  } elseif($contr == 'jobseeker'){
