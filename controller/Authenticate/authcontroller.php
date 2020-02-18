@@ -2,7 +2,6 @@
 session_start();
 
 include_once 'model/auth.php';
-include_once 'includes/functions.php';
 
 class AuthController extends Auth{
   
@@ -17,7 +16,7 @@ class AuthController extends Auth{
     }
 
     public function create_user_account(){
-        $validated_data = validate_data();
+        $validated_data = self::validate_data();
         $verify_email = $this->verify_email($validated_data['email']);
         if($verify_email == null){
             $hash = md5(rand(0,1000));
@@ -30,7 +29,7 @@ class AuthController extends Auth{
     }
 
     public function user_login(){
-        $validated_data = validate_data();
+        $validated_data = self::validate_data();
         $user = $this->login($validated_data['email']);
         if($user != null){
         $pass_verif = password_verify($validated_data['password'], $user['password']);
@@ -64,7 +63,7 @@ class AuthController extends Auth{
     }
 
     public function jobseekerdetails(){
-        $v_data = validate_jobseeker();
+        $v_data = self::validate_jobseeker();
         $exist = $this->does_profile_already_exist($v_data['id'],'jobseeker');
         if(!$exist){
         $imagePath = 'uploads/';
@@ -107,7 +106,7 @@ class AuthController extends Auth{
     }
 
     public function companydetails(){
-        $company_data = validate_company();
+        $company_data = self::validate_company();
         $exist = $this->does_profile_already_exist($company_data['id'],'company');
         if(!$exist){
         $valid_extensions = array('jpeg', 'jpg', 'png');
@@ -129,4 +128,81 @@ class AuthController extends Auth{
             return 'duplicate';
         }
     }
+    function validate_jobseeker(){
+        require "gump.class.php";
+       
+        $gump = new GUMP();
+    
+        $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
+        //@ams-> i have replaced most alpha_numeric with alpha_space cus names can be multiple and need to allow spaces between
+        $gump->validation_rules(array(
+           'firstname'   => 'required|alpha_space|max_len,100', 
+           'lastname'    => 'required|alpha_space|max_len,100',
+           'email'       => 'required|valid_email',
+        ));
+    
+        $gump->filter_rules(array(
+           'firstname' => 'trim|sanitize_string',
+           'lastname'  => 'trim|sanitize_string',
+           'email'     => 'trim|sanitize_email',
+        ));
+    
+        $validated_data = $gump->run($_POST);
+    
+        if($validated_data === false) {
+           return $gump->get_readable_errors(true);
+        } else {
+           return $validated_data; // validation successful
+        }
+    }
+    function validate_company(){
+        //@ams->both company signup and update company profile are using this.To be changed
+         require "gump.class.php";
+         $gump = new GUMP();
+        
+         $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
+        
+         $gump->validation_rules(array(
+            'name'     => 'required|alpha_space|max_len,100',
+            'email'    => 'required|valid_email',
+         ));
+        
+         $gump->filter_rules(array(
+            'name'      => 'trim|sanitize_string',
+            'email'     => 'trim|sanitize_email',
+         ));
+        
+         $company_data = $gump->run($_POST);
+        
+         if($company_data === false) {
+            return $gump->get_readable_errors(true);
+         } else {
+            return $company_data; // validation successful
+         }
+        }
+    function validate_data(){
+            require "gump.class.php";
+            
+            $gump = new GUMP();
+        
+            $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
+        
+            $gump->validation_rules(array(
+               'email'       => 'required|valid_email',
+               'password'    => 'required|max_len,100|min_len,8',
+            ));
+        
+            $gump->filter_rules(array(
+               'email'    => 'trim|sanitize_email',
+               'password' => 'trim',
+            ));
+        
+            $validated_data = $gump->run($_POST);
+        
+            if($validated_data === false) {
+               return $gump->get_readable_errors(true);
+            } else {
+               return $validated_data; // validation successful
+            }
+        }
 }
