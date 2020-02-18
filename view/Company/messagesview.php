@@ -8,7 +8,7 @@ class MessagesView extends Company{
       $noOfNewRecievedMessages = $this->get_no_of_new_messages($recipient_id);
       return $noOfNewRecievedMessages;
     }
-    public function all_inbox_messages($recipient_id){
+    public function all_inbox_messages($recipient_id){//@ams->to be changed. Please make sure to change this-> same as  public function new_unread_messages
         $referenceOffAllInboxMessages = $this->get_reference_of_all_inbox_messages($recipient_id);
         //$messageArray = [];
         $messageArray = array();
@@ -18,8 +18,6 @@ class MessagesView extends Company{
         foreach ($referenceOffAllInboxMessages as $key => $value) {
                 $allInboxMessages = $this->get_all_inbox_messages($value['message_id']);
                 array_push($messageArray, $allInboxMessages);
-                //$messageArray[$key] = $allInboxMessages;
-                //return $allInboxMessages;
             }
         return $messageArray;
         }
@@ -34,16 +32,7 @@ class MessagesView extends Company{
     }
     public function new_unread_messages($recipient_id){
         $allUnreadMessages = $this->get_new_unread_messages($recipient_id);
-        $messageArray = array();
-        if($allUnreadMessages == 0){
-            return $allUnreadMessages;
-        }else{
-            foreach ($allUnreadMessages as $key => $value) {
-                    $res = $this->get_all_inbox_messages($value['message_id']);
-                    array_push($messageArray, $res);
-                }
-            return $messageArray;
-            }
+        return $allUnreadMessages;
     }
     public function retreive_all_jobseekers(){
       $listOfAllJobseekers =$this->get_all_jobseekers();

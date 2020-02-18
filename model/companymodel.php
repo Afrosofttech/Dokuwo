@@ -11,8 +11,17 @@ class Company extends Dbh{
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$login_id]);
         $result = $stmt->fetch();
-        if(!$result) return false;
+        if(!$result) return self::fail;
         return  $result ;
+        $stmt = null;
+    }
+    public function get_no_of_job_seekers(){ 
+        $sql = "Select * from job_seeker";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([]);
+        $rowCount = $stmt->rowCount();
+        if(!$rowCount) return self::fail;
+        return  $rowCount ;
         $stmt = null;
     }
     protected function get_no_of_jobs_published($company_id){
@@ -93,12 +102,12 @@ class Company extends Dbh{
     }
 
     protected function get_new_unread_messages($recipient_id){
-        $sql = " Select message_id from message_recipient where recipient_id = ? AND is_read = ?";
+        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.is_read = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$recipient_id,0]);
         $result = $stmt->fetchAll();
        if(!$result ){
-                return 0;
+                return self::fail;
                 $stmt = null;
         }else{
             return  $result ;
