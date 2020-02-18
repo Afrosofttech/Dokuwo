@@ -21,19 +21,11 @@ if($view == 'company'){
          $login_info = $get_login->login_info($_GET['email'], $_GET['hash']);
          echo json_encode($login_info);
           break;
-       case "no_of_jobs_published":
-          $result = new CompanyView();
-          $res = $result->no_of_jobs_published($_GET['login_id']);
-          echo $res;
-          break;
-      case "is_profile_complete":
-        //include 'view/Company/companyview.php';
-         //require view\Company\CompanyView;
+       case "dashboard_header_info":
          $result = new CompanyView();
-         $res = $result->is_profile_complete($_GET['login_id']);
-        //  echo json_encode($results);
-        echo $res;
-          break;
+         $res = $result->dashboard_header_info($_GET['login_id']);
+         echo json_encode($res);
+         break;
       case "profile":
         //include 'view/Company/companyview.php';
         // require Company\CompanyView;
@@ -119,14 +111,9 @@ if($view == 'company'){
 
 } elseif($view == 'jobseeker'){
    switch ($method){
-       case "no_of_job_seekers":
-        //AMS: This explains why we need to use namespace
-         $result = new SeekerHomeView();
-         $count = $result->no_of_job_seekers();
-         echo $count;
+       case "":
          break;
       case "":
-          ;
           break;
        default:
           break;
