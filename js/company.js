@@ -1575,6 +1575,7 @@ let temp='<div class="content-wrapper">'+
       data: {"login_id" : session_id},
       success: function(data){
      if(data !== 400 ){
+       console.log(data.postal_code);
         temp += ' <div class="col-md-4">'+
         ' <!-- Profile Image -->'+
         ' <div class="card card-primary card-outline" style="border-top: 3px solid #007bff;">'+
@@ -1636,7 +1637,7 @@ let temp='<div class="content-wrapper">'+
                      '<div class="form-group row">'+
                        '<label for="phone" class="col-sm-2 col-form-label">Phone</label>'+
                        '<div class="col-sm-10">'+
-                         '<input type="text" class="form-control" name="phone" id="phone" value="'+data.company_phone+'">'+
+                         '<input type="text" placeholder="5336171" pattern="[0-9]+" class="form-control" name="phone" id="phone" value="'+data.company_phone+'">'+
                        '</div>'+
                      '</div>'+
                      '<div class="form-group row">'+
@@ -1668,7 +1669,7 @@ let temp='<div class="content-wrapper">'+
                    '<div class="form-group row">'+
                      '<label for="code" class="col-sm-2 col-form-label">Postal Code</label>'+
                    ' <div class="col-sm-10">'+
-                       '<input type="text" class="form-control" name="code" id="code" value="'+data.postal_code+'">'+
+                       '<input type="text" class="form-control" name="code" placeholder="00000" pattern="[0-9]+" maxlength="5" id="code" value="'+postalCodeFormatter(data.postal_code)+'">'+
                      '</div>'+
                    '</div>'+
                    ' <div class="form-group row">'+
@@ -1708,7 +1709,7 @@ let temp='<div class="content-wrapper">'+
 
     $("#country").countrySelect();
     $("#country").countrySelect("setCountry",""+data.country+"");
-    //ams->countries actually refers to the currency of countries
+    //@ams->countries actually refers to the currency of countries
      $.each(countries, function(index,currencyVals){
      if(currencyVals.value == data.currency){
        $("#currency option[value="+data.currency+"]").attr('selected', 'selected');
@@ -1745,7 +1746,7 @@ let temp='<div class="content-wrapper">'+
       errors.push('password_error');
       return;
     }
-    
+
     if(errors.length < 1){
         $.ajax({
           method:'POST',
@@ -1788,8 +1789,13 @@ function readURL(input) {
   if (input.files && input.files[0]) {
       var reader = new FileReader();
 
-      reader.onload = function (e) {
-          $('.img-thumbnail')
+      reader.onload = (e) => {
+        Swal.fire({
+          title: 'Your Selected picture',
+          imageUrl: e.target.result,
+          imageAlt: 'The uploaded picture',
+        })
+        $('.img-thumbnail')
               .attr('src', e.target.result)
               .addClass('img-fluid img-circle')
               .css({'width' : '100%' , 'height' : '150px'});
@@ -2071,7 +2077,66 @@ function show_posted_jobs(){
         //on submit
       $('#createNewJob').click(function(e){
         e.preventDefault();
-       //@ams->do some validations
+        let jobName = $('#jobName').val();
+        let jobLocation = $('#jobLocation').val();
+        let contactEmail = $('#contactEmail').val();
+        let contactPhone = $('#contactPhone').val();
+        let salary = $('#salary').val();
+        let jobType = $('#jobType').val();
+        let jobCategory = $('#jobCategory').val();
+        
+        if (jobName == ''){
+          swal('Invalid Job Position!','Job position cannot be empty','error','Cool');
+          return;
+        }
+        if (jobLocation == ''){
+         swal('Invalid Job Location!','Job location cannot be empty','error','Cool');
+         return;
+        }
+        if (contactEmail.length < 1) {
+         swal('Invalid Email!','Email cannot be empty','error','Cool');
+         return;
+        }else {
+         var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+         var validEmail = regEx.test(contactEmail);
+         if (!validEmail) {
+            swal('Invalid Email!','Please enter a valid email!','error','Cool');
+            return;
+         }
+        }
+        if(contactPhone.length < 1){
+         swal('Invalid Phone number!','Please enter a phone number','error','Cool');
+         return;
+        }else{
+         var regEx = new RegExp('^[0-9]+$');
+         var validPhone = regEx.test(contactPhone);
+         if(!validPhone){
+           swal('Invalid Phone number!','Please enter a valid phone number','error','Cool');
+           return;
+         }
+        }
+        if(salary == 0){
+         swal('Invalid Salary!','Please enter the salary for the job','error','Cool');
+         return;
+        }else if(salary.length < 1){
+         swal('Invalid Salary!','Please enter the salary for the job','error','Cool');
+         return;
+        }else{
+         var regEx = new RegExp('^[0-9]+$');
+         var validSalary = regEx.test(salary);
+         if(!validSalary){
+           swal('Invalid Salary!','Please enter a valid salary for the job','error','Cool');
+           return;
+         }
+       }
+       if(jobType == 'Choose...'){
+        swal('Invalid Job Type!','Please select the job type','error','Cool');
+        return;
+       }
+       if(jobCategory == 'Choose...'){
+        swal('Invalid Job Category!','Please select the job category','error','Cool');
+        return;
+       }
        $.ajax({
         url: 'post.php/company/create_job',
         method: 'POST',
@@ -2123,7 +2188,6 @@ function show_posted_jobs(){
             '<label class="input-group-text" for="jobType">Job Type</label>'+
         '</div>'+
           '<select class="custom-select" id="jobType">'+
-            // '<option selected>Choose...</option>'+
             '<option value="Full Time">Full Time</option>'+
             '<option value="Part Time">Part Time</option>'+
             '<option value="Internship">Internship</option>'+
@@ -2134,7 +2198,6 @@ function show_posted_jobs(){
           '<label class="input-group-text" for="jobCategory">Category</label>'+
        '</div>'+
         '<select class="custom-select" id="jobCategory">'+
-          //'<option selected>Choose...</option>'+
           '<option value="Finance">Finance</option>'+
           '<option value="Graphic designers">Graphic designers</option>'+
           '<option value="Health">Health</option>'+
@@ -2158,19 +2221,19 @@ function show_posted_jobs(){
         '<div class="input-group-prepend">'+
           '<span class="input-group-text">Salary</span>'+
         '</div>'+
-        '<input type="text" class="form-control" id="salary" value="'+salary+'">'+
+        '<input type="text" class="form-control" pattern="[0-9]+" id="salary" value="'+salary+'">'+
        '</div>'+
        '<div class="input-group mb-3">'+
         '<div class="input-group-prepend">'+
          '<span class="input-group-text">Contact Email</span>'+
         '</div>'+
-        '<input type="text" class="form-control" id="contactEmail" value="'+job_contact_email+'">'+
+        '<input type="email" class="form-control" id="contactEmail" value="'+job_contact_email+'">'+
        '</div>'+
        '<div class="input-group mb-3">'+
          '<div class="input-group-prepend">'+
            '<span class="input-group-text">Contact Phone</span>'+
          '</div>'+
-         '<input type="text" class="form-control" id="contactPhone" value="'+job_contact_phone+'">'+
+         '<input type="text" class="form-control" placeholder="5336171" pattern="[0-9]+" id="contactPhone" value="'+job_contact_phone+'">'+
        '</div>'+
         '</div>'+
         '<!-- /.col-md-9 col-sm-4 -->'+
@@ -2236,7 +2299,55 @@ function show_posted_jobs(){
           //on submit
         $('#sendJobUpdate').click(function(e){
           e.preventDefault();
-         //@ams->do some validations
+         let jobName = $('#jobName').val();
+         let jobLocation = $('#jobLocation').val();
+         let contactEmail = $('#contactEmail').val();
+         let contactPhone = $('#contactPhone').val();
+         let salary = $('#salary').val();
+         if (jobName == ''){
+           swal('Invalid Job Position!','Job position cannot be empty','error','Cool');
+           return;
+         }
+         if (jobLocation == ''){
+          swal('Invalid Job Location!','Job location cannot be empty','error','Cool');
+          return;
+         }
+         if (contactEmail.length < 1) {
+          swal('Invalid Email!','Email cannot be empty','error','Cool');
+          return;
+         }else {
+          var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          var validEmail = regEx.test(contactEmail);
+          if (!validEmail) {
+             swal('Invalid Email!','Please enter a valid email!','error','Cool');
+             return;
+          }
+         }
+         if(contactPhone.length < 1){
+          swal('Invalid Phone number!','Please enter a phone number','error','Cool');
+          return;
+         }else{
+          var regEx = new RegExp('^[0-9]+$');
+          var validPhone = regEx.test(contactPhone);
+          if(!validPhone){
+            swal('Invalid Phone number!','Please enter a valid phone number','error','Cool');
+            return;
+          }
+         }
+         if(salary == 0){
+          swal('Invalid Salary!','Please enter the salary for the job','error','Cool');
+          return;
+         }else if(salary.length < 1){
+          swal('Invalid Salary!','Please enter the salary for the job','error','Cool');
+          return;
+         }else{
+          var regEx = new RegExp('^[0-9]+$');
+          var validSalary = regEx.test(salary);
+          if(!validSalary){
+            swal('Invalid Salary!','Please enter a valid salary for the job','error','Cool');
+            return;
+          }
+        }
          $.ajax({
           url: 'post.php/company/update_job',
           method: 'POST',
@@ -2315,14 +2426,14 @@ $.ajax({
   '</div>';
 
 $('.jobdetails').append(jobdetails);
-  jobApplicants(job_id);
+  jobApplicants(job_id,data.status);
   },
   error: function(err){
     $.notify(err.responseText,'error');
   }
 });
 }
-function jobApplicants(job_id){
+function jobApplicants(job_id,job_status){
   let applicants ='<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
   '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
     '<h4 class="card-title">Job Applicants</h4>'+
@@ -2348,7 +2459,7 @@ function jobApplicants(job_id){
     success: function(data){
       if(data !== 400){
         $.each(data,function(index,val){
-          applicants +='<tr id="'+data.login_id+'" style="cursor: pointer;"  onclick="viewApplicant(\''+job_id+'\',\''+val.login_id+'\',\''+val.app_status+'\')">'+
+          applicants +='<tr id="'+data.login_id+'" style="cursor: pointer;"  onclick="viewApplicant(\''+job_id+'\',\''+val.login_id+'\',\''+val.app_status+'\',\''+job_status+'\')">'+
           '<td>' + val.fname +'</td>'+
           '<td>'+ val.lname +'</td>'+
           '<td>'+ val.address +'</td>'+
@@ -2386,8 +2497,9 @@ function jobApplicants(job_id){
   });
 
 }
-function viewApplicant(job_id,login_id,status){
-// let divToClear = 'contentMessage';
+function viewApplicant(job_id,login_id,status,job_status){
+console.log(job_status);
+//@ams->am using the job_status to know if a job is already closed. It is the status of a job whilst status is the status of the application 
 let profile_cv ='';
 let applicant = '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
     '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
@@ -2432,7 +2544,7 @@ applicant += '<div class="col col-lg-4">'+
       '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+data.login_id+'\',\''+data.fullName+'\',\'contentMessage\')">'+
       '<i class="fas fa-comments"> Message</i>'+
       '</a>'+
-      '<a href="#" class="btn btn-sm btn-success '+((status == 0)?'':'disabled')+'"  data-toggle="tooltip" title="Back" onclick="acceptApplication(\''+data.jobseeker_id+'\',\''+job_id+'\',\''+login_id+'\');">'+
+      '<a href="#" class="btn btn-sm btn-success '+((job_status == 1)?'disabled':(status == 0)?'':'disabled')+'"  data-toggle="tooltip" title="Back" onclick="acceptApplication(\''+data.jobseeker_id+'\',\''+job_id+'\',\''+login_id+'\');">'+
         '<i class="fa fa-handshake"> Accept Application</i>'+
       '</a>'+
     '</div>';
