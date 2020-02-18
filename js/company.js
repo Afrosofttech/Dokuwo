@@ -380,8 +380,6 @@ function loadCompanyDashboard(){
   $('#content').append(dbcontentHeader);
   $('#content-wrapper').append(foot);
   
-  $.notify("Welcome back", 'success');
-  
   // $.when(newMsgNotification())
   // .then(function () {
   // no_of_job_seekers();
@@ -903,7 +901,7 @@ function selectAJobseekerToForward(msg_subject,msg_body){
       },
       error: function(err){
        //console.log(err.responseText);
-       //$.notify(err.responseTezxt,'error');
+       $.notify(err.responseText,'error');
       }
      });
 }
@@ -1844,7 +1842,7 @@ function show_posted_jobs(){
         jobsPosted+='<tr id="'+val.job_id+'" style="cursor: pointer;" onclick="viewJob(\''+val.job_id+'\',\''+val.job_name+'\',\''+val.job_type+'\',\''+val.job_cat+'\',\''+val.requirements+'\',\''+val.job_location+'\',\''+val.date_posted+'\',\''+val.job_contact_email+'\',\''+val.job_contact_phone+'\',\''+val.salary+'\',\''+val.status+'\')">'+
                     '<td>' + val.job_name +'</td>'+
                     '<td>'+ val.job_type +'</td>'+
-                    '<td>'+ val.salary +'</td>'+
+                    '<td>'+ session_curr+currencyFormat(val.salary) +'</td>'+
                     '<td>'+ val.date_posted +'</td>'+
                     '<td>'+ ((val.status == 0)?"Open": "Close") +'</td>'+
                   '</tr>';
@@ -1880,7 +1878,7 @@ function show_posted_jobs(){
    
   function show_application_stats(){
     let appStats = '';
-    appStats+=''+
+    appStats+=
     '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
     '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
       '<h4 class="card-title">Appliation Statistics</h4>'+
@@ -2305,6 +2303,7 @@ $.ajax({
           '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b class="text-info">Contact Email: </b>'+data.job_contact_email+'</li>'+
           '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b class="text-info">Contact Phone: </b>'+data.job_contact_phone+'</li>'+
           '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-map-marker"></i></span><b class="text-info">Location: </b>'+data.job_location+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fa fa-lg fa-shopping-bag"></i></span><b class="text-info">Salary: </b>'+ session_curr+currencyFormat(data.salary)+'</li>'+
           '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span><b class="text-info">Job Type: </b>'+data.job_type+'</li>'+
           '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-info"></i></span><b class="text-info">Job Category: </b>'+data.job_cat+'</li>'+
           '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-id-card"></i></span><b class="text-info">Job Description: </b>'+data.requirements+'</li>'+

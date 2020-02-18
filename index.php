@@ -53,13 +53,14 @@ if(!isset($_SESSION['email'])){
 
 <script type="text/javascript">
 //these are default values. they will be replaced with sessions coming from when someone logs in.
-//@ams->to be moved to career.js
+//@ams->to be moved to career.js-urgent
   let session_id = '<?php echo $_SESSION['login_id']; ?>';
   let session_email = '<?php echo $_SESSION['email']; ?>';
   let session_usertype = '<?php echo  $_SESSION['usertype']; ?>';
   let session_status = '<?php echo $_SESSION['status']; ?>';
   let session_fullname ='<?php echo $_SESSION['name']; ?>';
   let session_user_id ='<?php echo $_SESSION['_id'];?>';
+  let session_curr ='<?php echo $_SESSION['Currency'];?>';
 </script>
 
 

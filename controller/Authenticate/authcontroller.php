@@ -46,6 +46,7 @@ class AuthController extends Auth{
               $company = $this->get_company_login($user['login_id']);
               $_SESSION['name'] = $company['company_name'];
               $_SESSION['_id'] = $company['company_id'];
+              $_SESSION['Currency'] = $company['currency'];
            }
            if($user['user_type'] == 'jobseeker')
            {
