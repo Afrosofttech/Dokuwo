@@ -18,8 +18,8 @@ class SettingsController extends Company{
         $final_image = rand(1000,1000000).$img;
         $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
         if(in_array($ext, $valid_extensions)){ 
-            $Details = $this->get_company($v_data['login_id']);
-            if($Details['logo'] !== null || $Details['logo'] !=="")
+           $Details = $this->get_company($v_data['login_id']);
+           if($Details['logo'] !== null || $Details['logo'] !=="")
                 unlink($path.$Details['logo']);
             $path = $path.strtolower($final_image);
             move_uploaded_file($tmp,$path);

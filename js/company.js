@@ -4,7 +4,7 @@ $(document).ready(function(){
 function sideBar(){
         return '<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">'+
         
-          '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">'+
+          '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">'+
             '<div class="sidebar-brand-icon rotate-n-15">'+
               '<i class="fas fa-laugh-wink"></i>'+
             '</div>'+
@@ -19,19 +19,12 @@ function sideBar(){
               '<span>Dashboard</span></a>'+
           '</li>'+
         
-          '<li class="nav-item">'+
-            '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">'+
-              '<i class="fas fa-fw fa-briefcase"></i>'+
-              '<span>Jobs</span>'+
-            '</a>'+
-            '<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">'+
-              '<div class="bg-white py-2 collapse-inner rounded">'+
-                '<a class="collapse-item" style="cursor: pointer;">Jobs</a>'+
-                '<a class="collapse-item" style="cursor: pointer;">Create a new Job</a>'+
-              '</div>'+
-            '</div>'+
-          '</li>'+
-        
+        '<li class="nav-item">'+
+          '<a class="nav-link" style="cursor: pointer;" onclick="ShowJobsInfo();">'+
+            '<i class="fas fa-fw fa-briefcase"></i>'+
+            '<span>Jobs</span></a>'+
+        '</li>'+
+
           '<li class="nav-item">'+
             '<a class="nav-link" style="cursor: pointer;" onclick="MessagesCenter();">'+
               '<i class="fas fa-fw fa-envelope"></i>'+
@@ -387,8 +380,6 @@ function loadCompanyDashboard(){
   $('#content').append(dbcontentHeader);
   $('#content-wrapper').append(foot);
   
-  $.notify("Welcome back", 'success');
-  
   // $.when(newMsgNotification())
   // .then(function () {
   // no_of_job_seekers();
@@ -464,7 +455,7 @@ let profile = '';
     success: function(data){
  
     profile += '<div class="col-xl-6 col-lg-7">'+
-     '<div class="card shadow mb-4">'+
+     '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
        '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
          '<h6 class="m-0 font-weight-bold text-primary">Profile</h6>'+
        '</div>'+
@@ -510,7 +501,7 @@ let profile = '';
 function jobStatistics(){
   let job_statistics =  '<div class="col-xl-6 col-lg-5">'+
     
-  '<div class="card shadow mb-4">'+
+  '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
 
     '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
       '<h6 class="m-0 font-weight-bold text-primary">Jobs Statistics</h6>'+
@@ -626,7 +617,7 @@ function contentMessage(){
 
         '</div>'+
         '<!-- /.card-header -->'+
-        '<div class="card-body p-0">'+
+        '<div class="card-body p-1">'+
           '<div class="table-responsive mailbox-messages">'+
             '<table class="table table-hover" id="myTable">'+
             '<thead>'+
@@ -849,7 +840,7 @@ function selectAJobseekerToForward(msg_subject,msg_body){
 
         '</div>'+
         '<!-- /.card-header -->'+
-        '<div class="card-body p-0">'+
+        '<div class="card-body p-1">'+
           '<div class="table-responsive mailbox-messages">'+
             '<table class="table table-hover" id="mySelector">'+
             '<thead>'+
@@ -910,7 +901,7 @@ function selectAJobseekerToForward(msg_subject,msg_body){
       },
       error: function(err){
        //console.log(err.responseText);
-       //$.notify(err.responseTezxt,'error');
+       $.notify(err.responseText,'error');
       }
      });
 }
@@ -1045,7 +1036,7 @@ function selectAJobseekerToMsg(){
 
         '</div>'+
         '<!-- /.card-header -->'+
-        '<div class="card-body p-0">'+
+        '<div class="card-body p-1">'+
           '<div class="table-responsive mailbox-messages">'+
             '<table class="table table-hover" id="mySelector">'+
             '<thead>'+
@@ -1112,8 +1103,6 @@ function selectAJobseekerToMsg(){
      });
 }
 function composeNewMessage(login_id,fullName,divToClear){
-   
-let discard =  (divToClear == undefined)?"selectAJobseekerToMsg()": "discardMsg(\'"+divToClear+"\')";
 let temp =' <div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
 // '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
   '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
@@ -1129,7 +1118,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
     '<input class="form-control" type="text" name="recipient" id="thefullname" value="'+fullName+'" readonly>'+
     '</div>'+
     '<div class="form-group">'+
-      '<input class="form-control" id="theSubject" placeholder="Subject:">'+
+      '<input class="form-control" id="theSubject" placeholder="Subject:" value="">'+
     '</div>'+
     '<div class="form-group">'+
      '<div id="summernote" class="message_info"></div>'+
@@ -1140,7 +1129,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
     '<div class="float-right">'+
       '<button type="submit" name="submit" id="newmessage" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
     '</div>'+
-    '<button type="reset" class="btn btn-default" onclick="'+discard+'"><i class="fas fa-times"></i> Discard</button>'+
+    '<button type="reset" class="btn btn-default" onclick="'+((divToClear == undefined)?"selectAJobseekerToMsg()": "discardMsg(\'"+divToClear+"\')")+'"><i class="fas fa-times"></i> Discard</button>'+
   '</div>'+
   '</form>';
 
@@ -1228,7 +1217,7 @@ function sentMessages(){
 
         '</div>'+
         '<!-- /.card-header -->'+
-        '<div class="card-body p-0">'+
+        '<div class="card-body p-1">'+
           '<div class="table-responsive mailbox-messages">'+
             '<table class="table table-hover" id="myt">'+
             '<thead>'+
@@ -1241,7 +1230,7 @@ function sentMessages(){
   
                 $.each(data, function( i, val ) {
                   let checkId = val.message_id+"checkbox";
-                  //AMS: am filtering the message body to get rid of all <p> tags
+                  //@ams-> am filtering the message body to get rid of all <p> tags
                    var filteredMsgBody = val.message_body.replace(/<[^>]+>/g, '');
          temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\',\''+val.fullName+'\',\''+val.recipient_id+'\');">'+
                        '<td>'+
@@ -1367,8 +1356,6 @@ $.ajax({
   dataType: 'json',
   url: "get.php/company/categories_of_jobseekers",
   success: function(response){
-    console.log(response);
-
     if(response != false){
       $.each(response, function(index,row){
         let sub = row.category;
@@ -1412,8 +1399,6 @@ $.ajax({
 });
 }
 function viewpeople(category,start,finish){
-  console.log(start);
-  console.log(finish);
   let beg ='';
   let end ='';
   let numberOfItems = '';
@@ -1520,8 +1505,6 @@ function viewProfile(profile_id,profile_log_id,profile_fname,profile_lname,profi
 let temp ='<div class="container-fluid"><div class="row"><div class="col-xl-6 col-lg-7 profileInner"></div><div class="col-xl-6 col-lg-5 contentMessage"></div></div></div>';
 
 $('#content').empty().append(temp);
-let divToClear = 'contentMessage';
-(profile_cv == null || profile_cv == '')?profile_cv = 'javascript:void();': profile_cv = 'uploads/'+profile_cv;
 let profile =
 '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
   '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
@@ -1559,10 +1542,10 @@ let profile =
         '<a href="#" class="btn btn-sm btn-danger " data-toggle="tooltip" title="Back" onclick="viewpeople(\''+category+'\')">'+
          '<i class="fa fa-arrow-left"> Back </i>'+
         '</a>'+
-        '<a href="#" class="btn btn-sm bg-teal btn-success mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+profile_log_id+'\',\''+profile_fullname+'\',\''+divToClear+'\');">'+
+        '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+profile_log_id+'\',\''+profile_fullname+'\',\'contentMessage\');">'+
           '<i class="fas fa-comments"> Message</i>'+
         '</a>'+
-        '<a href="'+profile_cv+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
+        '<a href="'+((profile_cv == null || profile_cv == '')?'javascript:void();': 'uploads/'+profile_cv)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
           '<i class="fas fa-file-image"></i> View CV'+
         '</a>'+
       '</div>'+
@@ -1585,7 +1568,6 @@ let temp='<div class="content-wrapper">'+
   
   '  <div class="container-fluid">'+
      ' <div class="row">';
-
      $.ajax({
       method: "GET",
       dataType: 'json',
@@ -1776,6 +1758,7 @@ let temp='<div class="content-wrapper">'+
             console.log(response);
             if(response == 200){
               swal('Update Successful!','Profile successfully updated','success','cool');
+              settings();
             }else if( response == "Invalid"){
                 swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
             }
@@ -1813,4 +1796,674 @@ function readURL(input) {
       };
       reader.readAsDataURL(input.files[0]);
   }
+}
+//@Biran->Company Job
+function ShowJobsInfo(){
+  let  temp = '<div class="container-fluid">'+
+                  '<div class="d-sm-flex align-items-center justify-content-between mb-4">'+
+                    '<div class="h3 mb-0"></div>'+
+                    '<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="cursor: pointer;" onclick="CreateNewJob();"><i class="fas fa-shopping-bag fa-sm text-white-50"></i> New Job</a>'+
+                  '</div>'+
+              '<div class="row"><div class="col-md-7 jobsposted"></div><div class="col-md-5 appStatistics"></div></div></div>';
+  $('#content').empty().append(temp);
+  show_posted_jobs();
+  show_application_stats();
+ 
+}
+
+function show_posted_jobs(){ 
+  let jobsPosted = '';
+  
+  jobsPosted +='<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+    '<h4 class="card-title">Job History</h4>'+
+  '</div>'+
+  '<!-- /.card-header -->'+
+  '<div class="card-body p-1">'+
+    '<div class="table-responsive mailbox-messages">'+
+      '<table class="table table-hover" id="jobsPostedTable">'+
+      '<thead>'+
+       ' <th>Position</th>'+
+       '<th>Job Type</th>'+
+      ' <th>Salary</th>'+
+      ' <th>Date Posted</th>'+
+      ' <th>Status</th>'+
+      '</thead>'+
+        '<tbody>';
+
+  $.ajax({
+    url: 'get.php/company/show_jobs_posted',
+    method: 'GET',
+    data: {'company_id':session_user_id},
+    dataType: 'json',
+    success: function(data){
+    if(data !== 400){
+      $.each(data, function( i, val ) {
+        jobsPosted+='<tr id="'+val.job_id+'" style="cursor: pointer;" onclick="viewJob(\''+val.job_id+'\',\''+val.job_name+'\',\''+val.job_type+'\',\''+val.job_cat+'\',\''+val.requirements+'\',\''+val.job_location+'\',\''+val.date_posted+'\',\''+val.job_contact_email+'\',\''+val.job_contact_phone+'\',\''+val.salary+'\',\''+val.status+'\')">'+
+                    '<td>' + val.job_name +'</td>'+
+                    '<td>'+ val.job_type +'</td>'+
+                    '<td>'+ session_curr+currencyFormat(val.salary) +'</td>'+
+                    '<td>'+ val.date_posted +'</td>'+
+                    '<td>'+ ((val.status == 0)?"Open": "Close") +'</td>'+
+                  '</tr>';
+      });
+    }    
+        jobsPosted+='</tbody>'+
+      '</table>'+
+      '<!-- /.table -->'+
+      '</div>'+
+      '<!-- /.mail-box-messages -->'+
+    '</div>'+
+    '<!-- /.card-body -->'+
+
+    '</div>';
+    $('.jobsposted').empty().append(jobsPosted);
+    $(document).ready( function () {
+      $('#jobsPostedTable').DataTable({
+        "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+        "oLanguage": {
+          "sLengthMenu": "Display _MENU_ jobs Posted",
+          "sEmptyTable":     "No Jobs Posted"
+        },
+        
+      });
+      });
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  });
+
+  }
+   
+  function show_application_stats(){
+    let appStats = '';
+    appStats+=
+    '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+    '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+      '<h4 class="card-title">Appliation Statistics</h4>'+
+    '</div>'+
+    '<!-- /.card-header -->'+
+    '<div class="card-body p-1">'+
+      '<div class="table-responsive mailbox-messages">'+
+        '<table class="table table-hover" id="appStatsTable">'+
+        '<thead>'+
+         ' <th>Position</th>'+
+         '<th>Date Posted</th>'+
+        ' <th>No. of Applicants</th>'+
+        ' <th>Status</th>'+
+        '</thead>'+
+          '<tbody>';
+    $.ajax({
+      url: 'get.php/company/show_app_stats',
+      method: 'GET',
+      data: {'company_id':session_user_id},
+      dataType: 'json',
+      success: function(data){
+        if(data !== 400){
+          $.each(data, function( i, val ) {
+            appStats+='<tr id="'+val.job_id+'" style="cursor: pointer;"  onclick="viewApplicantsDetails(\''+val.job_id+'\')">'+
+                        '<td>' + val.job_name +'</td>'+
+                        '<td>'+ val.date_posted +'</td>'+
+                        '<td>'+ val.no_of_applicants +'</td>'+
+                        '<td>'+((val.status == 0)?"Open": "Close")+'</td>'+
+                      '</tr>';
+          });
+        }
+        appStats+='</tbody>'+
+      '</table>'+
+      '<!-- /.table -->'+
+      '</div>'+
+      '<!-- /.mail-box-messages -->'+
+    '</div>'+
+    '<!-- /.card-body -->'+
+
+    '</div>';
+    $('.appStatistics').empty().append(appStats);
+    $(document).ready( function () {
+      $('#appStatsTable').DataTable({
+        "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+        "oLanguage": {
+          "sLengthMenu": "Display _MENU_ App Stats",
+          "sEmptyTable":     "No Applications submitted"
+        },
+      
+      });
+      });
+    
+      },
+      error:function(err){
+        $.notify(err.responseText,'error');
+      }
+    
+    });
+
+    }
+
+   function CreateNewJob(){
+      let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12 jobsposted">'+
+      '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+        '<h4 class="card-title">New Job</h4>'+
+      '</div>'+
+      '<!-- /.card-header -->'+
+      '<div class="card-body p-2">'+
+      '<div class="table-responsive">'+
+      '<form method="POST" id="createJob" autocomplete="off">'+
+      '<div class="row p-3">'+
+      '<div class="col-md-6 col-sm-4">'+
+      '<div class="input-group mb-3">'+
+      '<div class="input-group-prepend">'+
+        '<span class="input-group-text">Position</span>'+
+      '</div>'+
+      '<input type="text" class="form-control" id="jobName" value="">'+
+      '</div>'+
+      '<div class="input-group mb-3">'+
+      '<div class="input-group-prepend">'+
+        '<span class="input-group-text">Location</span>'+
+      '</div>'+
+      '<input type="text" class="form-control" id="jobLocation" value="">'+
+      '</div>'+
+      '<div class="input-group mb-3">'+
+      '<div class="input-group-prepend">'+
+        '<span class="input-group-text">Salary</span>'+
+      '</div>'+
+      '<input type="number" class="form-control" id="salary" value="">'+
+      '</div>'+
+      '<div class="input-group mb-3">'+
+      '<div class="input-group-prepend">'+
+       '<span class="input-group-text">Contact Email</span>'+
+      '</div>'+
+      '<input type="text" class="form-control" id="contactEmail" value="">'+
+      '</div>'+
+      '<div class="input-group mb-3">'+
+      '<div class="input-group-prepend">'+
+        '<span class="input-group-text">Contact Phone</span>'+
+      '</div>'+
+      '<input type="text" class="form-control" id="contactPhone" value="">'+
+     '</div>'+
+     '<div class="input-group mb-3">'+
+     '<div class="input-group-prepend">'+
+       '<label class="input-group-text" for="jobType">Job Type</label>'+
+      '</div>'+
+        '<select class="custom-select" id="jobType">'+
+          '<option selected>Choose...</option>'+
+          '<option value="Full Time">Full Time</option>'+
+          '<option value="Part Time">Part Time</option>'+
+          '<option value="Internship">Internship</option>'+
+        '</select>'+
+      '</div>'+
+      '</div>'+
+      '<!-- /.col-md-6 col-sm-4-->'+
+      '<div class="col-md-6 col-sm-4">'+
+      '<div class="form-group">'+
+      '<label class="input-group-text" for="summernote">Requirements</label>'+
+      '<div id="summernote" class="message_body_info"></div>'+
+     '</div>'+
+      '</div>'+
+      '<!-- /.col-md-6 col-sm-4-->'+
+     ' <!-- Force next columns to break to new line at md breakpoint and up -->'+
+      '<div class="w-100 d-none d-md-block"></div>'+
+    
+     ' <div class="col-md-6 col-sm-4">'+
+     '<div class="input-group mb-3">'+
+     '<div class="input-group-prepend">'+
+       '<label class="input-group-text" for="jobCategory">Category</label>'+
+     '</div>'+
+     '<select class="custom-select" id="jobCategory">'+
+       '<option selected>Choose...</option>'+
+       '<option value="Finance">Finance</option>'+
+       '<option value="Graphic designers">Graphic designers</option>'+
+       '<option value="Health">Health</option>'+
+       '<option value="Law">Law</option>'+
+       '<option value="Software Engineers">Software Engineers</option>'+
+       '<option value="Others">Others</option>'+
+     '</select>'+
+    '</div>'+
+     '</div>'+
+     '<!-- /.col-md-6 col-sm-4-->'+
+      '<div class="col-md-6 col-sm-4 py-2 d-flex justify-content-between">'+
+      '<button type="button" class="btn btn-danger" style="cursor: pointer;" onclick="ShowJobsInfo();"><i class="fas fa-lg fa-arrow-left"></i> Back</button>'+
+      '<button type="submit" name="submit" id="createNewJob" class="btn btn-success" style="cursor: pointer;">Create <i class="fas fa-lg fa-arrow-right"></i></button>'+
+      '</div>'+
+      '<!-- /.col-md-6 col-sm-4-->'+
+      '</form>'+
+      '<!-- /.form-->'+
+        '</div>'+
+      '<!-- /.row p-2-->'+
+      '</div>'+
+      '<!-- /.mail-box-messages -->'+
+    '</div>'+
+    '<!-- /.card-body -->'+
+    '</div>';
+      '</div></div></div>';
+    $('#content').empty().append(temp);
+    $(document).ready(function(){
+        $('#summernote').summernote({
+          height: 200,
+          lineHeight: 1,
+          callbacks: {
+            onPaste: function (e) {
+                if (document.queryCommandSupported("insertText")) {
+                    var text = $(e.currentTarget).html();
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+    
+                    setTimeout(function () {
+                        document.execCommand('insertText', false, bufferText);
+                    }, 10);
+                    e.preventDefault();
+                } else { //IE
+                    var text = window.clipboardData.getData("text")
+                    if (trap) {
+                        trap = false;
+                    } else {
+                        trap = true;
+                        setTimeout(function () {
+                            document.execCommand('paste', false, text);
+                        }, 10);
+                        e.preventDefault();
+                    }
+                }
+    
+            }
+        }
+        });
+        //on submit
+      $('#createNewJob').click(function(e){
+        e.preventDefault();
+       //@ams->do some validations
+       $.ajax({
+        url: 'post.php/company/create_job',
+        method: 'POST',
+        data: {'company_id':session_user_id,'jobName': $('#jobName').val(),'jobLocation':$('#jobLocation').val(),'jobType':$('#jobType').val(),
+        'jobCategory':$('#jobCategory').val(),'requirements':$('#summernote').summernote('code'),'salary':$('#salary').val(),
+        'email':$('#contactEmail').val(),'phone':$('#contactPhone').val()},
+        success: function(response){
+          if(response == 200){
+            $.notify('Job successfully created!','success');
+            ShowJobsInfo();
+          }
+        },
+        error: function(err){
+          $.notify(err.responseText,'error');
+        }
+      });
+
+      })
+
+    })
+
+    }
+
+    function viewJob(job_id,job_name,job_type,job_cat,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status){
+      let temp = '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+        '<h4 class="card-title">Job detail</h4>'+
+      '</div>'+
+      '<!-- /.card-header -->'+
+      '<div class="card-body p-1">'+
+      '<div class="table-responsive">'+
+      '<div class="row p-2">'+
+        '<div class="col-md-9 col-sm-4">'+
+        '<form method="POST" id="updateJob" autocomplete="off">'+
+          '<div class="input-group mb-3">'+
+            '<div class="input-group-prepend">'+
+              '<span class="input-group-text">Position</span>'+
+            '</div>'+
+            '<input type="text" class="form-control" id="jobName" value="'+job_name+'">'+
+          '</div>'+
+          '<div class="input-group mb-3">'+
+            '<div class="input-group-prepend">'+
+              '<span class="input-group-text">Location</span>'+
+            '</div>'+
+            '<input type="text" class="form-control" id="jobLocation" value="'+job_location+'">'+
+          '</div>'+
+          '<div class="input-group mb-3">'+
+          '<div class="input-group-prepend">'+
+            '<label class="input-group-text" for="jobType">Job Type</label>'+
+        '</div>'+
+          '<select class="custom-select" id="jobType">'+
+            // '<option selected>Choose...</option>'+
+            '<option value="Full Time">Full Time</option>'+
+            '<option value="Part Time">Part Time</option>'+
+            '<option value="Internship">Internship</option>'+
+          '</select>'+
+        '</div>'+
+        '<div class="input-group mb-3">'+
+        '<div class="input-group-prepend">'+
+          '<label class="input-group-text" for="jobCategory">Category</label>'+
+       '</div>'+
+        '<select class="custom-select" id="jobCategory">'+
+          //'<option selected>Choose...</option>'+
+          '<option value="Finance">Finance</option>'+
+          '<option value="Graphic designers">Graphic designers</option>'+
+          '<option value="Health">Health</option>'+
+          '<option value="Law">Law</option>'+
+          '<option value="Software Engineers">Software Engineers</option>'+
+          '<option value="Others">Others</option>'+
+        '</select>'+
+       '</div>'+
+          '<div class="form-group">'+
+          '<label class="input-group-text" for="summernote">Requirements</label>'+
+          '<div id="summernote" class="message_body_info">'+requirements+'</div>'+
+         '</div>'+
+        '</div>'+
+        '<!-- /.col-md-9 col-sm-4 -->'+
+        '<div class="col-md-3 col-sm-4"></div>'+
+        '<!-- Force next columns to break to new line at md breakpoint and up -->'+
+        '<div class="w-100 d-none d-md-block"></div>'+
+
+        '<div class="col-md-9 col-sm-4">'+
+       '<div class="input-group mb-3">'+
+        '<div class="input-group-prepend">'+
+          '<span class="input-group-text">Salary</span>'+
+        '</div>'+
+        '<input type="text" class="form-control" id="salary" value="'+salary+'">'+
+       '</div>'+
+       '<div class="input-group mb-3">'+
+        '<div class="input-group-prepend">'+
+         '<span class="input-group-text">Contact Email</span>'+
+        '</div>'+
+        '<input type="text" class="form-control" id="contactEmail" value="'+job_contact_email+'">'+
+       '</div>'+
+       '<div class="input-group mb-3">'+
+         '<div class="input-group-prepend">'+
+           '<span class="input-group-text">Contact Phone</span>'+
+         '</div>'+
+         '<input type="text" class="form-control" id="contactPhone" value="'+job_contact_phone+'">'+
+       '</div>'+
+        '</div>'+
+        '<!-- /.col-md-9 col-sm-4 -->'+
+       '<div class="col-md-3 col-sm-4">'+
+       ''+((status == 0)?('<div class="input-group mb-3">'+
+       '<button type="submit" name="submit" class="btn btn-success btn-block" id="sendJobUpdate"><i class="fas fa-lg fa-arrow-right"></i> Update</button>'+
+        '</div>'):('<div class="input-group mb-3">'+
+        '<button type="button" class="btn btn-success btn-block disabled"><i class="fas fa-lg fa-arrow-right"></i> Update</button>'+
+      '</div>'))+''+
+        '</form>'+
+        '<!-- /.form -->'+
+        ''+((status == 0)?('<div class="input-group mb-3">'+
+        '<button type="button" class="btn btn-warning btn-block" style="cursor: pointer;" onclick="closeJob(\''+job_id+'\')"><i class="fas fa-lg fa-window-close"></i> Close Job</button>'+
+     '</div>'):( '<div class="input-group mb-3">'+
+     '<button type="button" class="btn btn-warning btn-block disabled" style="cursor: pointer;" onclick="javascript:void(0);"><i class="fas fa-lg fa-window-close"></i> Close Job</button>'+
+     '</div>'))+''+
+        '<div class="input-group mb-3">'+
+            '<button type="button" class="btn btn-danger btn-block" style="cursor: pointer;" onclick=" ShowJobsInfo();"><i class="fas fa-lg fa-arrow-left"></i> Back</button>'+
+        '</div>'+
+      '</div>'+
+      '<!-- /.col-md-3 col-sm-4 -->'+
+      '</div>'+
+      '<!-- /.row p-2-->'+
+      '</div>'+
+      '<!-- /.mail-box-messages -->'+
+    '</div>'+
+    '<!-- /.card-body -->'+
+    '</div>';
+      $('.jobsposted').empty().append(temp);
+      $(document).ready(function(){
+        $("#jobType option[value='"+job_type+"']").attr('selected', 'selected');
+        $("#jobCategory option[value='"+job_cat+"']").attr('selected', 'selected');
+          $('#summernote').summernote({
+            height: 100,
+            lineHeight: 1,
+            callbacks: {
+              onPaste: function (e) {
+                  if (document.queryCommandSupported("insertText")) {
+                      var text = $(e.currentTarget).html();
+                      var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+      
+                      setTimeout(function () {
+                          document.execCommand('insertText', false, bufferText);
+                      }, 10);
+                      e.preventDefault();
+                  } else { //IE
+                      var text = window.clipboardData.getData("text")
+                      if (trap) {
+                          trap = false;
+                      } else {
+                          trap = true;
+                          setTimeout(function () {
+                              document.execCommand('paste', false, text);
+                          }, 10);
+                          e.preventDefault();
+                      }
+                  }
+      
+              }
+          }
+          });
+
+          //on submit
+        $('#sendJobUpdate').click(function(e){
+          e.preventDefault();
+         //@ams->do some validations
+         $.ajax({
+          url: 'post.php/company/update_job',
+          method: 'POST',
+          data: {'job_id':job_id,'jobName': $('#jobName').val(),'jobLocation':$('#jobLocation').val(),'jobType':$('#jobType').val(),
+          'jobCategory':$('#jobCategory').val(),'requirements':$('#summernote').summernote('code'),'salary':$('#salary').val(),
+          'email':$('#contactEmail').val(),'phone':$('#contactPhone').val()},
+          success: function(response){
+            if(response == 200){
+              $.notify('Job successfully updated!','success');
+              ShowJobsInfo();
+            }
+          },
+          error: function(err){
+            $.notify(err.responseText,'error');
+          }
+        });
+
+        })
+
+      })
+    }
+function closeJob(job_id){
+  $.ajax({
+    url: 'post.php/company/close_job',
+    method: 'POST',
+    data: {'job_id':job_id},
+    success: function(response){
+      if(response == 200){
+        $.notify('Job has been closed. Applicants will be notified!','success');
+        ShowJobsInfo();
+      }
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  });
+}
+function viewApplicantsDetails(job_id){
+  let  temp = '<div class="container-fluid">'+
+          '<div class="d-sm-flex align-items-center justify-content-between mb-4">'+
+          '<div class="h3 mb-0"></div>'+
+          '<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" style="cursor: pointer;" onclick="ShowJobsInfo();"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a>'+
+        '</div>'+
+          '<div class="row"><div class="col-md-5 col-sm-3 jobdetails"></div><div class="col-md-7 col-sm-3 applicantsList"></div>'+
+          '<div class="w-100"></div><div class="col-md-5 col-sm-3 singleApplicant"></div><div class="col-md-7 col-sm-3 contentMessage"></div></div>';
+$('#content').empty().append(temp);
+
+let jobdetails ='<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
+'<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
+  '<h6 class="m-0 font-weight-bold text-primary">Job details</h6>'+
+'</div>'+
+'<div class="card-body">'+
+'<div class="container">'+
+'<div class="row justify-content mb-4">';
+$.ajax({
+  url: 'get.php/company/job_info',
+  method: 'GET',
+  data: {'job_id':job_id},
+  dataType: 'json',
+  success: function(data){
+    if(data !== 400){
+      jobdetails +='<ul class="ml-4 mb-0 fa-ul text-muted">'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b class="text-info">Position: </b>'+data.job_name+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b class="text-info">Contact Email: </b>'+data.job_contact_email+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b class="text-info">Contact Phone: </b>'+data.job_contact_phone+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-map-marker"></i></span><b class="text-info">Location: </b>'+data.job_location+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fa fa-lg fa-shopping-bag"></i></span><b class="text-info">Salary: </b>'+ session_curr+currencyFormat(data.salary)+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span><b class="text-info">Job Type: </b>'+data.job_type+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-info"></i></span><b class="text-info">Job Category: </b>'+data.job_cat+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-id-card"></i></span><b class="text-info">Job Description: </b>'+data.requirements+'</li>'+
+        '</ul>';
+    }
+    jobdetails += '</div>'+
+    '</div>'+
+   '</div>'+
+  '</div>';
+
+$('.jobdetails').append(jobdetails);
+  jobApplicants(job_id);
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+});
+}
+function jobApplicants(job_id){
+  let applicants ='<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+    '<h4 class="card-title">Job Applicants</h4>'+
+  '</div>'+
+  '<!-- /.card-header -->'+
+  '<div class="card-body p-1">'+
+    '<div class="table-responsive mailbox-messages">'+
+      '<table class="table table-hover" id="jobsApplicantsTable">'+
+      '<thead>'+
+       ' <th>First Name</th>'+
+       '<th>Last Name</th>'+
+      ' <th>Address</th>'+
+      ' <th>Email</th>'+
+      ' <th>Skills</th>'+
+      ' <th>Status</th>'+
+      '</thead>'+
+        '<tbody>';
+  $.ajax({
+    url: 'get.php/company/job_applicatants',
+    method: 'GET',
+    data: {'job_id':job_id},
+    dataType: 'json',
+    success: function(data){
+      if(data !== 400){
+        $.each(data,function(index,val){
+          applicants +='<tr id="'+data.login_id+'" style="cursor: pointer;"  onclick="viewApplicant(\''+job_id+'\',\''+val.login_id+'\',\''+val.app_status+'\')">'+
+          '<td>' + val.fname +'</td>'+
+          '<td>'+ val.lname +'</td>'+
+          '<td>'+ val.address +'</td>'+
+          '<td>'+ val.email +'</td>'+
+          '<td>'+ val.skills.replace(/,/g, "/")+'</td>'+
+          '<td>'+((val.app_status == 0)?"Pending": (val.app_status == 1)?"Accepted":"Rejcted")+'</td>'+
+        '</tr>';
+
+        })
+      }
+      applicants +='</tbody>'+
+          '</table>'+
+          '<!-- /.table -->'+
+          '</div>'+
+          '<!-- /.mail-box-messages -->'+
+        '</div>'+
+        '<!-- /.card-body -->'+
+
+        '</div>';
+      $('.applicantsList').empty().append(applicants);
+      $(document).ready( function () {
+        $('#jobsApplicantsTable').DataTable({
+          "aLengthMenu": [[5,10,25, 50, 75, -1], [5,10,25, 50, 75, "All"]],
+          "oLanguage": {
+            "sLengthMenu": "Display _MENU_ Applicants",
+            "sEmptyTable":     "No Applicants"
+          },
+        
+        });
+        });
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  });
+
+}
+function viewApplicant(job_id,login_id,status){
+// let divToClear = 'contentMessage';
+let profile_cv ='';
+let applicant = '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
+    '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
+      '<h6 class="m-0 font-weight-bold text-primary">Profile</h6>'+
+    '</div>'+
+    '<div class="card-body">'+
+    '<div class="container">'+
+    '<div class="row justify-content mb-4">';
+    $.ajax({
+      url: 'get.php/company/job_applicatant',
+      method: 'GET',
+      data: {'login_id':login_id},
+      dataType: 'json',
+      success: function(data){
+        if(data !== 400){
+      // (data.CV == null || data.CV == '')?profile_cv = 'javascript:void();': profile_cv = 'uploads/'+data.CV;
+applicant += '<div class="col col-lg-4">'+
+      '<img src="uploads/'+((data.image == '' || null)?"default.jpg":data.image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+    '</div>'+
+      '<div class="col-lg-8">'+
+        '<ul class="ml-4 mb-0 fa-ul text-muted">'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b class="text-info">First Name: </b>'+data.fname+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b class="text-info">Last Name: </b>'+data.lname+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b class="text-info">Email: </b>'+data.email+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b class="text-info">Phone #: </b>'+data.phone+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-book"></i></span><b class="text-info">Education Level: </b>'+data.education_level+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-globe"></i></span><b class="text-info">Country: </b>'+data.country+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-id-card"></i></span><b class="text-info">Date of birth: </b>'+data.dob+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span><b class="text-info">Address: </b>'+data.address+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span><b class="text-info">Skills: </b>'+data.skills+'</li>'+
+          '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-info"></i></span><b class="text-info">Tag-line: </b>'+data.tag_line+'</li>'+
+        '</ul>'+
+       '</div>'+
+      '</div>'+
+     '</div>'+
+    '</div>'+
+    '<div class="card-footer">'+
+      '<div class="text-right">'+
+      '<a href="'+((data.CV == null || data.CV == '')?'javascript:void();':'uploads/'+data.CV)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
+      '<i class="fas fa-file-image"></i> View CV'+
+      '</a>'+
+      '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+data.login_id+'\',\''+data.fullName+'\',\'contentMessage\')">'+
+      '<i class="fas fa-comments"> Message</i>'+
+      '</a>'+
+      '<a href="#" class="btn btn-sm btn-success '+((status == 0)?'':'disabled')+'"  data-toggle="tooltip" title="Back" onclick="acceptApplication(\''+data.jobseeker_id+'\',\''+job_id+'\',\''+login_id+'\');">'+
+        '<i class="fa fa-handshake"> Accept Application</i>'+
+      '</a>'+
+    '</div>';
+   }
+    applicant += '</div>'+
+          '</div>'+
+        '</div>'+
+        '</div>'+
+      '</div>';
+    $('.singleApplicant').empty().append(applicant);
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  });
+
+}
+function acceptApplication(jobseeker_id,job_id,login_id){
+  $.ajax({
+    url: 'post.php/company/accept_application',
+    method: 'POST',
+    data: {'jobseeker_id':jobseeker_id,'job_id':job_id},
+    success: function(response){
+      if(response == 200){
+        $.notify('Application accepted. Applicant will be notified!','success');
+        jobApplicants(job_id);
+        viewApplicant(job_id,login_id,1);
+      }
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  });
 }
