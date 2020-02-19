@@ -276,13 +276,6 @@ function loadCompanyDashboard(){
    let foot = footer();
    $('#content-wrapper').append(foot);
     topBar();
- //  let dbcontentHeader = dashBoardContentheader(); //@ams-> on success of tobBar
-
- //$('#content').append(dbcontentHeader);
-//  $('#content-wrapper').prepend(topbar); //to be moved
-
-
-  //dashBoardContent();
 }
 function dashBoardContent(){
 
@@ -341,7 +334,7 @@ let profile = '';
 
    },
    error: function(err){
-    //to be included soon
+    $.notify(err.responseText,'error');
    }
   });
 
@@ -404,7 +397,6 @@ function sidebarMessage(){
     url: "get.php/company/no_of_new_messages",
     data: {"login_id" : session_id},
     success: function(data){
-      // console.log(data);
 
       let sbMessage =  '<a style="cursor: pointer;" class="btn btn-primary btn-block mb-3 text-white" onclick="selectAJobseekerToMsg();">Compose</a>'+
 
@@ -444,8 +436,7 @@ function sidebarMessage(){
       // contentMessage();
    },
    error: function(err){
-    //console.log(err.responseText);
-    //$.notify(err.responseText,'error');
+    $.notify(err.responseText,'error');
    }
   });
 }
@@ -458,7 +449,6 @@ function contentMessage(){
     data: {"login_id" : session_id},
     success: function(data){
 
-      //console.log(data);
    conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
         '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
           '<h4 class="card-title">Received Messages</h4>'+
@@ -477,7 +467,6 @@ function contentMessage(){
               '<tbody>';
 
               $.each(data, function( i, val ) {
-                //console.log(val);
                 let checkId = val[0].message_id+"checkbox";
                 //AMS: am filtering the message body to get rid of all <p> tags
                 var filteredMsgBody = val[0].message_body.replace(/<[\/]{0,1}(p)[^><]*>/ig,"");
@@ -521,11 +510,8 @@ function contentMessage(){
           }
         });
 
-        //callback
-        //callback();
         $("#myTable").on("click", ".test", function(e){
           var id = $(this).attr('id');
-          //console.log(data);
           $.each(data, function( i, val ) {
            if(val[0].message_id === id){
             viewMessage(val[0].message_id,val[0].creator_id,val[0].creator_name,val[0].subject,val[0].message_body,val[0].create_date,val[0].parent_message_id);
@@ -540,7 +526,6 @@ function contentMessage(){
        geyOutReadMessages('myTable');
       },
       error: function(err){
-       //console.log(err.responseText);
        $.notify(err.responseText,'error');
       }
      });
@@ -686,7 +671,6 @@ function selectAJobseekerToForward(msg_subject,msg_body){
     url: "get.php/company/retreive_all_jobseekers",
     success: function(data){
 
-      // console.log(data);
    conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
         '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
           '<h4 class="card-title">Select a recipient</h4>'+
@@ -753,7 +737,6 @@ function selectAJobseekerToForward(msg_subject,msg_body){
 
       },
       error: function(err){
-       //console.log(err.responseText);
        $.notify(err.responseText,'error');
       }
      });
@@ -950,7 +933,6 @@ function selectAJobseekerToMsg(){
 
       },
       error: function(err){
-       //console.log(err.responseText);
        $.notify(err.responseText,'error');
       }
      });
@@ -1129,7 +1111,6 @@ function sentMessages(){
             });
         },
         error: function(err){
-         //console.log(err.responseText);
          $.notify(err.responseText,'error');
         }
        });
@@ -1656,7 +1637,7 @@ function readURL(input) {
       reader.readAsDataURL(input.files[0]);
   }
 }
-//@Biran->Company Job
+//@ams->this is the begn. of the jobs part
 function ShowJobsInfo(){
   let  temp = '<div class="container-fluid">'+
                   '<div class="d-sm-flex align-items-center justify-content-between mb-4">'+
