@@ -191,9 +191,6 @@
                         '<input type="text" class="form-control form-control-user" name="lastname" id="lastname" placeholder="Last name">'+
                     '</div>'+
                   '</div>'+
-                '<div class="form-group">'+
-                  '<input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email">'+
-                '</div>'+
                 '<div class="form-group row">'+
                   '<div class="col-sm-6 mb-3 mb-sm-0">'+
                     '<input type="text" class="form-control form-control-user" name="phone" id="phone" placeholder="Phone">'+
@@ -224,7 +221,7 @@
                 '</select>'+
               '</div>'+
                 '<div class="form-group">'+
-                '<input type="hidden" class="form-control form-control-user" name="id" id="id" value="'+entity.login_id+'" >'+
+                '<input type="hidden" class="form-control form-control-user" name="id" id="Jobseeker_id" value="'+entity.login_id+'" >'+
                 '</div>'+
                 '<div class="form-group">'+
                   '<div class="custom-file">'+
@@ -252,23 +249,10 @@ $(document).ready(function(){
     e.preventDefault();
     var fname = $('#firstname').val();
     var lname = $('#lastname').val();
-    var email = $('#email').val();
     var dob = $('#dateofbirth').val();
     var errors = [];
 
     $(".error").remove();
- 
-    if (email.length < 1) {
-      swal('Invalid Email!','Email cannot be empty','error','Cool');
-      return;
-    } else {
-      var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      var validEmail = regEx.test(email);
-      if (!validEmail) {
-         swal('Invalid Email!','Please enter a valid email','error','Cool');
-         return;
-      }
-    }
     if (fname.length < 1) {
       swal('Invalid First Name!','First name cannot be empty','error','Cool');
       return;

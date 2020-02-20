@@ -98,7 +98,7 @@ class AuthController extends Auth{
         $dateofbirth = date('Y-m-d',$time);
         $fullname = $v_data['firstname'].' '.$v_data['lastname'];
 
-        $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['email'],$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$final_image,$final_cv);
+        $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$final_image,$final_cv);
         return $response;
       }else{
         return 'duplicate';
@@ -137,14 +137,12 @@ class AuthController extends Auth{
         //@ams-> i have replaced most alpha_numeric with alpha_space cus names can be multiple and need to allow spaces between
         $gump->validation_rules(array(
            'firstname'   => 'required|alpha_space|max_len,100', 
-           'lastname'    => 'required|alpha_space|max_len,100',
-           'email'       => 'required|valid_email',
+           'lastname'    => 'required|alpha_space|max_len,100'
         ));
     
         $gump->filter_rules(array(
            'firstname' => 'trim|sanitize_string',
-           'lastname'  => 'trim|sanitize_string',
-           'email'     => 'trim|sanitize_email',
+           'lastname'  => 'trim|sanitize_string'
         ));
     
         $validated_data = $gump->run($_POST);
