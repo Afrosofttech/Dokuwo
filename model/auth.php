@@ -61,10 +61,10 @@ class Auth extends Dbh {
       
     }
 
-    public function jobseeker_account($login_id,$fname,$lname,$fullname,$email,$phone,$skills,$edulevel,$adr,$dob,$country,$image,$cv){
-        $sql = " INSERT INTO job_seeker (login_id,fname,lname,fullname,email,phone,skills,education_level,address,dob,country,image,cv) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public function jobseeker_account($login_id,$fname,$lname,$fullname,$phone,$skills,$edulevel,$adr,$dob,$country,$image,$cv){
+        $sql = " INSERT INTO job_seeker (login_id,fname,lname,fullname,phone,skills,education_level,address,dob,country,image,cv) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$login_id,$fname,$lname,$fullname,$email,$phone,$skills,$edulevel,$adr,$dob,$country,$image,$cv]);
+        $stmt->execute([$login_id,$fname,$lname,$fullname,$phone,$skills,$edulevel,$adr,$dob,$country,$image,$cv]);
         //@ams->change this entire query later
         $sql = " UPDATE login SET status=? WHERE login_id=?";
         $stmt = $this->connect()->prepare($sql);
