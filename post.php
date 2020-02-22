@@ -99,8 +99,10 @@ $contr =  $urlParts[sizeof($urlParts)-2];
 
  } elseif($contr == 'jobseeker'){
     switch ($method){
-        case "":
-           ;
+        case "update_jobseeker":
+          $result = new  JobseekerSettingsController();
+          $response =$result->update_jobseeker();
+          echo $response;
            break;
        case "":
            ;

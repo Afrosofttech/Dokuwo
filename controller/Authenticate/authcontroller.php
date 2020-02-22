@@ -98,7 +98,7 @@ class AuthController extends Auth{
         $dateofbirth = date('Y-m-d',$time);
         $fullname = $v_data['firstname'].' '.$v_data['lastname'];
 
-        $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$final_image,$final_cv);
+        $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$v_data['category'],$v_data['tag_line'],$final_image,$final_cv);
         return $response;
       }else{
         return 'duplicate';

@@ -1409,13 +1409,12 @@ let temp='<div class="content-wrapper">'+
       data: {"login_id" : session_id},
       success: function(data){
      if(data !== 400 ){
-       console.log(data.postal_code);
         temp += ' <div class="col-md-4">'+
         ' <!-- Profile Image -->'+
         ' <div class="card card-primary card-outline" style="border-top: 3px solid #007bff;">'+
           ' <div class="card-body box-profile">'+
              '<div class="text-center">'+
-               '<img class="img-fluid img-circle img-thumbnail" src="uploads/'+data.logo+'" style="width:100%;height:150px" alt="User profile picture">'+
+               '<img class="img-fluid img-circle img-thumbnail" src="uploads/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'" style="width:100%;height:150px" alt="User profile picture">'+
              '</div>'+
               '<h4 class="profile-username text-center">'+data.company_name+'</h4>'+
              '<ul class="list-group list-group-unbordered mb-3">'+
@@ -1562,9 +1561,7 @@ let temp='<div class="content-wrapper">'+
       errors.push('email_error');
       return;
     } else {
-      var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      var validEmail = regEx.test(email);
-      if (!validEmail) {
+      if (!validEmail(email)) {
          swal('Invalid Email!','Please enter a valid email!','error','Cool');
          errors.push('email_error');
          return;
@@ -1931,9 +1928,7 @@ function show_posted_jobs(){
          swal('Invalid Email!','Email cannot be empty','error','Cool');
          return;
         }else {
-         var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-         var validEmail = regEx.test(contactEmail);
-         if (!validEmail) {
+         if (!validEmail(contactEmail)) {
             swal('Invalid Email!','Please enter a valid email!','error','Cool');
             return;
          }
@@ -2150,9 +2145,7 @@ function show_posted_jobs(){
           swal('Invalid Email!','Email cannot be empty','error','Cool');
           return;
          }else {
-          var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          var validEmail = regEx.test(contactEmail);
-          if (!validEmail) {
+          if (!validEmail(contactEmail)) {
              swal('Invalid Email!','Please enter a valid email!','error','Cool');
              return;
           }

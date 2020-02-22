@@ -38,15 +38,20 @@ if(!isset($_SESSION['email'])){
 
   <title>Career</title>
 
-  <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
-  <!-- Bootstrap Form Helpers -->
-	<link href="css/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
-  <link rel="stylesheet" href="css/countrySelect.min.css">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<!-- jquery Datepicker plugin -->
+<link href= 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' rel='stylesheet'>
+<!-- Bootstrap Form Helpers -->
+<link href="css/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="css/countrySelect.min.css">
+<!-- Bootstrap tokenfield input -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap-tokenfield.min.css">
+<link rel="stylesheet" type="text/css" href="css/tokenfield-typeahead.min.css">
 </head>
 
 <body id="page-top">
@@ -82,6 +87,8 @@ if(!isset($_SESSION['email'])){
   <script src="js/sb-admin-2.min.js"></script>
   <!-- currency list -->
   <script src="js/core/currency.js"></script>
+  <!-- Bootstrap tokenfield input js plugin -->
+  <script src="js/plugins/bootstrap-tokenfield.min.js"></script>
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="js/core/functions.js"></script>

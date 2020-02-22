@@ -221,6 +221,20 @@
                 '</select>'+
               '</div>'+
                 '<div class="form-group">'+
+                '<select class="form-control" id="category" name="category">'+
+                  '<option value="" selected hidden>Select your job category of interest</option>'+
+                  '<option value="Finance">Finance</option>'+
+                  '<option value="Health">Health</option>'+
+                  '<option value="Law">Law</option>'+
+                  '<option value="Graphic Engineers">Graphic Engineers</option>'+
+                  '<option value="Software Engineers">Software Engineers</option>'+
+                  '<option value="Others">Others</option>'+
+                '</select>'+
+              '</div>'+
+              '<div class="form-group">'+
+                '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" placeholder="choose the tag to appear on your profile">'+
+                '</div>'+
+                '<div class="form-group">'+
                 '<input type="hidden" class="form-control form-control-user" name="id" id="Jobseeker_id" value="'+entity.login_id+'" >'+
                 '</div>'+
                 '<div class="form-group">'+
@@ -250,6 +264,8 @@ $(document).ready(function(){
     var fname = $('#firstname').val();
     var lname = $('#lastname').val();
     var dob = $('#dateofbirth').val();
+    var category =$('#category').val();
+    var tag_line =$('#tag_line').val();
     var errors = [];
 
     $(".error").remove();
@@ -268,7 +284,15 @@ $(document).ready(function(){
       return;
       errors.push('date_error');
     }
-    
+    if(category == 'Select your job category of interest'){
+        swal('Invalid Job Category!','Please select a job category','error','Cool');
+        return;
+       }
+    if(tag_line == '' || tag_line == null){
+    swal('Invalid tag_line!','Please select a tag_line','error','Cool');
+    return;
+    }
+
     if(errors.length < 1){
         $.ajax({
           method:'POST',
