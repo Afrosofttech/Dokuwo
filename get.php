@@ -111,6 +111,11 @@ if($view == 'company'){
 
 } elseif($view == 'jobseeker'){
    switch ($method){
+       case "jobseeker_profile":
+       $result = new JobseekerSettingsView();
+       $jobseeker = $result->get_jobseeker_profile($_GET['login_id']);
+       echo json_encode($jobseeker);
+       break;
        case "":
          break;
       case "":
