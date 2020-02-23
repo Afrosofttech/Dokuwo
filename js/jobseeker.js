@@ -417,11 +417,9 @@ function jsettings(){
                      '</form>'+
                    '</div>'+
                    '<!-- /.tab-pane -->'+
-  
                  '</div>'+
                 ' <!-- /.tab-content -->'+
                '</div><!-- /.card-body -->'+
-  
              '</div>'+
              '<!-- /.nav-tabs-custom -->'+
            '</div>'+
@@ -429,10 +427,8 @@ function jsettings(){
           '</div>'+
           ' <!-- /.row -->'+
           '</div><!-- /.container-fluid -->'+
-    
         '</section>'+
         '<!-- /.content -->'+
-    
       '</div>'+
       '<!-- /.content-wrapper -->';
   
