@@ -116,6 +116,11 @@ if($view == 'company'){
        $jobseeker = $result->get_jobseeker_profile($_GET['login_id']);
        echo json_encode($jobseeker);
        break;
+       case "new_unread_messages":
+        $result = new JobseekerMessagesView();
+        $res = $result->new_unread_messages($_GET['login_id']);
+        echo json_encode($res);
+      break;
        case "":
          break;
       case "":

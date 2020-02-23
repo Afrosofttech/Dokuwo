@@ -46,11 +46,9 @@ function jobseekerSideBar(){
 
   '</ul>';
 }
-function jobseekerDashBoardContent(){
-    return '<div class="container-fluid">'+
-
+function jobseekerDashBoardheader(){
+let header = '<div class="container-fluid">'+
     '<div class="row">'+
-
             '<div class="col-xl-4 col-md-6 mb-4">'+
             '<div class="card border-left-primary shadow h-100 py-2">'+
                 '<div class="card-body">'+
@@ -97,11 +95,11 @@ function jobseekerDashBoardContent(){
                 '<div class="card-body">'+
                 '<div class="row no-gutters align-items-center">'+
                     '<div class="col mr-2">'+
-                    '<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Messages</div>'+
+                    '<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">companies</div>'+
                     '<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>'+
                     '</div>'+
                     '<div class="col-auto">'+
-                    '<i class="fas fa-comments fa-2x text-gray-300"></i>'+
+                    '<i class="fas fa-building fa-2x text-gray-300"></i>'+
                     '</div>'+
                 '</div>'+
                 '</div>'+
@@ -111,20 +109,18 @@ function jobseekerDashBoardContent(){
 
       '</div>'+
     '</div>';
+    $('#content').empty().append(header);
 }
 function loadJobseekerDashboard(){
     let sidebar = jobseekerSideBar();
-    let topbar = jtopBar();
-    let dbcontent = jobseekerDashBoardContent();
     let foot = footer();
-   
+    jtopBar();
+    //let dbcontent = jobseekerDashBoardheader();
    $('#wrapper').prepend(sidebar);
-   $('#content-wrapper').prepend(topbar);
-   $('#content').append(dbcontent);
    $('#content-wrapper').append(foot);
 }
 function jtopBar(){
-  return '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">'+
+  let jtopBar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">'+
         '<ul class="navbar-nav ml-auto">'+
         '<!-- Nav Item - Alerts -->'+
         '<li class="nav-item dropdown no-arrow mx-1">'+
@@ -182,24 +178,50 @@ function jtopBar(){
             '</a>'+
              '<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in NewMsgNotifications" aria-labelledby="messagesDropdown">'+
               //add messages here@ams-target this div
-              '<h6 class="dropdown-header">'+
-              'Message Center'+
-            '</h6>'+
-            '<a class="dropdown-item d-flex align-items-center" id="" style="cursor: pointer;" onclick="">'+
-            '<div class="font-weight-bold">'+
-              '<div class="text-truncate">subject</div>'+
-              '<div class="small text-gray-500">Amadou Sarjo · unread</div>'+
-            '</div>'+
-          '</a>'+
-          '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'+
             '</div>'+ 
           '</li>'+
           '<div class="topbar-divider d-none d-sm-block"></div>'+
           '<li class="nav-item dropdown no-arrow userProfile">'+
           //user Profile
-          '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-              '<span class="mr-2 d-none d-lg-inline text-gray-600 small">Amadou Sarjo jallow</span>'+
-              '<img class="img-profile rounded-circle" src="uploads/default.jpg">'+
+            '</li>'+
+        '</ul>'+
+      '</nav>'; 
+      $('#content-wrapper').prepend(jtopBar);
+      let temp = '';
+      $.ajax({
+        method: "GET",
+        dataType: 'json',
+        url: "get.php/jobseeker/new_unread_messages",
+        data: {"login_id" : session_id},
+        success: function(data){
+          if(data != 400){
+          temp += '<h6 class="dropdown-header">'+
+            'Message Center'+
+          '</h6>';
+          $.each(data, function(i,val){
+            temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="jredirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
+            '<div class="font-weight-bold">'+
+              '<div class="text-truncate">'+val.subject+'</div>'+
+              '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+            '</div>'+
+          '</a>';
+          })
+    
+          temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
+          $('.NewMsgNotificationsCount').empty().html(data.length);
+          $('.NewMsgNotifications').empty().append(temp);
+          }
+          let profile = '';
+          $.ajax({
+            method: "GET",
+            dataType: "JSON",
+            url: "get.php/jobseeker/jobseeker_profile",
+            data: {"login_id" : session_id},
+            success: function(data){
+             if(data != 400){
+              profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+              '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+data[0].fullName+'</span>'+
+              '<img class="img-profile rounded-circle" src="uploads/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'">'+
             '</a>'+
   
             '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
@@ -212,10 +234,22 @@ function jtopBar(){
                 '<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
                 'Logout'+
               '</a>'+
-            '</div>'
-          '</li>'+
-        '</ul>'+
-      '</nav>'; 
+            '</div>';
+              $('.userProfile').append(profile);
+              jobseekerDashBoardheader();
+             }
+  
+            },
+            error: function(err){
+                 $.notify(err.responseText,'error');
+            }
+           })
+  
+         },
+         error: function(err){
+          $.notify(err.responseText,'error');
+       }
+      });
   }
 //@ams-> Settings
 function jsettings(){
@@ -271,7 +305,7 @@ function jsettings(){
              '</div>'+
              '<!-- /.card-header -->'+
              '<div class="card-body">'+
-             '<strong><i class="fas fa-map-marker-alt mr-1"></i> tag_line</strong>'+
+             '<strong><i class="fas fa-info mr-1"></i> tag_line</strong>'+
              '<p class="text-muted">'+data[0].tag_line+'</p>'+
              '<hr>'+
 
