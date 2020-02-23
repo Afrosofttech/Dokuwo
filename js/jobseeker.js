@@ -274,19 +274,16 @@ function jsettings(){
              '<strong><i class="fas fa-map-marker-alt mr-1"></i> tag_line</strong>'+
              '<p class="text-muted">'+data[0].tag_line+'</p>'+
              '<hr>'+
-
              '<strong><i class="fas fa-book mr-1"></i> Education</strong>'+
              '<p class="text-muted">'+
              ''+data[0].education_level+''+
              '</p>'+
              '<hr>'+
-
                '<strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>'+
                '<p class="text-muted">'+
                  '<span class="tag tag-danger">'+data[0].skills+'</span>'+
                '</p>'+
                '<hr>'+
-  
                '<strong><i class="far fa-file-alt mr-1"></i> Date of Birth</strong>'+
                '<p class="text-muted">'+data[0].dob+'</p>'+
              '</div>'+
@@ -304,7 +301,6 @@ function jsettings(){
                '</div><!-- /.card-header -->'+
                '<div class="card-body">'+
                 ' <div class="tab-content">'+
-   
                    '<div class="active tab-pane" id="settings">'+
                      '<form class="form-horizontal" method="POST" id="editJobseeker" enctype="multipart/form-data" autocomplete="off">'+
                      '<div class="form-group row">'+
