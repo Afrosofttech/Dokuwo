@@ -25,13 +25,19 @@ function jobseekerSideBar(){
         '<i class="fas fa-fw fa-briefcase"></i>'+
         '<span>Jobs</span></a>'+
     '</li>'+
-  
+
     '<li class="nav-item">'+
       '<a class="nav-link">'+
-        '<i class="fas fa-fw fa-envelope"></i>'+
-        '<span>Messages</span></a>'+
+       '<i class="fas fa-fw fa-envelope"></i>'+
+       '<span>Messages</span></a>'+
     '</li>'+
-  
+    
+    '<li class="nav-item">'+
+    '<a class="nav-link ">'+
+      '<i class="fas fa-fw fa-briefcase"></i>'+
+      '<span>Hires</span></a>'+
+    '</li>'+
+
     '<li class="nav-item">'+
       '<a class="nav-link" style="cursor: pointer;" onclick="jsettings();">'+
         '<i class="fas fa-fw fa-cog""></i>'+
@@ -46,18 +52,16 @@ function jobseekerSideBar(){
 
   '</ul>';
 }
-function jobseekerDashBoardContent(){
-    return '<div class="container-fluid">'+
-
+function jobseekerDashBoardheader(){
+let header = '<div class="container-fluid">'+
     '<div class="row">'+
-
             '<div class="col-xl-4 col-md-6 mb-4">'+
             '<div class="card border-left-primary shadow h-100 py-2">'+
                 '<div class="card-body">'+
                 '<div class="row no-gutters align-items-center">'+
                     '<div class="col mr-2">'+
                     '<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jobs Available</div>'+
-                    '<div class="h5 mb-0 font-weight-bold text-gray-800">0</div>'+
+                    '<div class="h5 mb-0 font-weight-bold text-gray-800" id="jobsAvailable">0</div>'+
                     '</div>'+
                     '<div class="col-auto">'+
                     '<i class="fas fa-briefcase fa-2x text-gray-300"></i>'+
@@ -75,11 +79,11 @@ function jobseekerDashBoardContent(){
                     '<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Profile(Completion)</div>'+
                     '<div class="row no-gutters align-items-center">'+
                         '<div class="col-auto">'+
-                        '<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>'+
+                        '<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="profileVal">50%</div>'+
                         '</div>'+
                         '<div class="col">'+
                         '<div class="progress progress-sm mr-2">'+
-                            '<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>'+
+                            '<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="profileBar"></div>'+
                         '</div>'+
                         '</div>'+
                     '</div>'+
@@ -97,11 +101,11 @@ function jobseekerDashBoardContent(){
                 '<div class="card-body">'+
                 '<div class="row no-gutters align-items-center">'+
                     '<div class="col mr-2">'+
-                    '<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Messages</div>'+
-                    '<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>'+
+                    '<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">companies</div>'+
+                    '<div class="h5 mb-0 font-weight-bold text-gray-800" id="noOfCompanies">5</div>'+
                     '</div>'+
                     '<div class="col-auto">'+
-                    '<i class="fas fa-comments fa-2x text-gray-300"></i>'+
+                    '<i class="fas fa-building fa-2x text-gray-300"></i>'+
                     '</div>'+
                 '</div>'+
                 '</div>'+
@@ -111,20 +115,36 @@ function jobseekerDashBoardContent(){
 
       '</div>'+
     '</div>';
+    $('#content').empty().append(header);
+    $.ajax({
+      method: "GET",
+      url: "get.php/jobseeker/dashboard_header_info",
+      data: {"login_id" : session_id},
+      dataType: 'json',
+      success: function(data){
+        console.log(data);
+        $('#jobsAvailable' ).html(data.noOfJobsAvailable);
+        $('#profileVal').html(data.isProfileComplete+"%");
+        $('#profileBar').css('width',''+data.isProfileComplete+'%');
+       $('#noOfCompanies' ).html(data.noOfCompanies);
+     //@ams->now calling the dashboard content
+     jdashBoardContent();
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+    });
 }
 function loadJobseekerDashboard(){
     let sidebar = jobseekerSideBar();
-    let topbar = jtopBar();
-    let dbcontent = jobseekerDashBoardContent();
     let foot = footer();
-   
+    jtopBar();
+    //let dbcontent = jobseekerDashBoardheader();
    $('#wrapper').prepend(sidebar);
-   $('#content-wrapper').prepend(topbar);
-   $('#content').append(dbcontent);
    $('#content-wrapper').append(foot);
 }
 function jtopBar(){
-  return '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">'+
+  let jtopBar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">'+
         '<ul class="navbar-nav ml-auto">'+
         '<!-- Nav Item - Alerts -->'+
         '<li class="nav-item dropdown no-arrow mx-1">'+
@@ -182,24 +202,50 @@ function jtopBar(){
             '</a>'+
              '<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in NewMsgNotifications" aria-labelledby="messagesDropdown">'+
               //add messages here@ams-target this div
-              '<h6 class="dropdown-header">'+
-              'Message Center'+
-            '</h6>'+
-            '<a class="dropdown-item d-flex align-items-center" id="" style="cursor: pointer;" onclick="">'+
-            '<div class="font-weight-bold">'+
-              '<div class="text-truncate">subject</div>'+
-              '<div class="small text-gray-500">Amadou Sarjo · unread</div>'+
-            '</div>'+
-          '</a>'+
-          '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'+
             '</div>'+ 
           '</li>'+
           '<div class="topbar-divider d-none d-sm-block"></div>'+
           '<li class="nav-item dropdown no-arrow userProfile">'+
           //user Profile
-          '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-              '<span class="mr-2 d-none d-lg-inline text-gray-600 small">Amadou Sarjo jallow</span>'+
-              '<img class="img-profile rounded-circle" src="uploads/default.jpg">'+
+            '</li>'+
+        '</ul>'+
+      '</nav>'; 
+      $('#content-wrapper').prepend(jtopBar);
+      let temp = '';
+      $.ajax({
+        method: "GET",
+        dataType: 'json',
+        url: "get.php/jobseeker/new_unread_messages",
+        data: {"login_id" : session_id},
+        success: function(data){
+          if(data != 400){
+          temp += '<h6 class="dropdown-header">'+
+            'Message Center'+
+          '</h6>';
+          $.each(data, function(i,val){
+            temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="jredirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
+            '<div class="font-weight-bold">'+
+              '<div class="text-truncate">'+val.subject+'</div>'+
+              '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+            '</div>'+
+          '</a>';
+          })
+    
+          temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
+          $('.NewMsgNotificationsCount').empty().html(data.length);
+          $('.NewMsgNotifications').empty().append(temp);
+          }
+          let profile = '';
+          $.ajax({
+            method: "GET",
+            dataType: "JSON",
+            url: "get.php/jobseeker/jobseeker_profile",
+            data: {"login_id" : session_id},
+            success: function(data){
+             if(data != 400){
+              profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+              '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+data[0].fullName+'</span>'+
+              '<img class="img-profile rounded-circle" src="uploads/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'">'+
             '</a>'+
   
             '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
@@ -212,11 +258,122 @@ function jtopBar(){
                 '<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
                 'Logout'+
               '</a>'+
-            '</div>'
-          '</li>'+
-        '</ul>'+
-      '</nav>'; 
+            '</div>';
+              $('.userProfile').append(profile);
+              jobseekerDashBoardheader();
+             }
+  
+            },
+            error: function(err){
+                 $.notify(err.responseText,'error');
+            }
+           })
+  
+         },
+         error: function(err){
+          $.notify(err.responseText,'error');
+       }
+      });
   }
+function  jdashBoardContent(){
+  let temp ='<div class="container-fluid"><div class="row dbInner"></div></div>';
+
+  $('#content').append(temp);
+  jdashboardProfile();
+}
+function jdashboardProfile(){
+  
+let profile = '';
+$.ajax({
+  method: "GET",
+  dataType: "json",
+  url: "get.php/jobseeker/jobseeker_profile",
+  data: {"login_id" : session_id},
+  success: function(data){
+console.log(data);
+  profile += '<div class="col-xl-6 col-lg-7">'+
+   '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
+     '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
+       '<h6 class="m-0 font-weight-bold text-primary">Profile</h6>'+
+     '</div>'+
+     '<div class="card-body">'+
+       '<div class="container">'+
+       '<div class="row justify-content-md-center mb-4">'+
+       '<div class="col col-lg-4">'+
+       '<img src="uploads/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+     '</div>'+
+       '<div class="col-lg-4">'+
+         '<ul class="ml-4 mb-0 fa-ul text-muted">'+
+         '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b class="text-primary">First Name: </b>'+((data[0].fname =="" || data[0].fname ==null)?"NA":data[0].fname)+'</li>'+
+         '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-id-card"></i></span><b class="text-primary">Date of birth: </b>'+((data[0].dob=="" || data[0].dob==null)?"NA":data[0].dob.toString())+'</li>'+
+         '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span><b class="text-primary">Skills: </b>'+((data[0].skills=="" || data[0].skills==null)?"NA":data[0].skills.replace(/,/g, "/"))+'</li>'+
+         '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-info"></i></span><b class="text-primary">Tag-line: </b>'+((data[0].tag_line=="" || data[0].tag_line==null)?"NA":data[0].tag_line)+'</li>'+
+       '</ul>'+
+     '</div>'+
+       '<div class="col col-lg-4">'+
+        '<ul class="ml-4 mb-0 fa-ul text-muted">'+
+        '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b class="text-primary">Last Name: </b>'+((data[0].lname=="" || data[0].lname==null)?"NA":data[0].lname)+'</li>'+
+        '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b class="text-primary">Phone #: </b>'+((data[0].phone=="" || data[0].phone==null)?"NA":data[0].phone)+'</li>'+
+        '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-globe"></i></span><b class="text-primary">Country: </b>'+((data[0].country=="" || data[0].country==null)?"NA":data[0].country)+'</li>'+
+        '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span><b class="text-primary">Address: </b>'+((data[0].address=="" || data[0].address==null)?"NA":data[0].address)+'</li>'+
+        '</ul>'+
+       '</div>'+
+     '</div>'+
+     '</div>'+
+   '</div>'+
+ '</div>';
+
+ $('.dbInner').append(profile);
+  jJobStatistics();
+
+ },
+ error: function(err){
+  $.notify(err.responseText,'error');
+ }
+});
+
+}
+function jJobStatistics(){
+  let job_statistics =  '<div class="col-xl-6 col-lg-5">'+
+    
+  '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
+
+    '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
+      '<h6 class="m-0 font-weight-bold text-primary">Application Statistics</h6>'+
+     '<div class="dropdown no-arrow">'+
+        '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+          '<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>'+
+        '</a>'+
+        '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'+
+          '<div class="dropdown-header">Dropdown Header:</div>'+
+          '<a class="dropdown-item" href="#">Action</a>'+
+          '<a class="dropdown-item" href="#">Another action</a>'+
+          '<div class="dropdown-divider"></div>'+
+          '<a class="dropdown-item" href="#">Something else here</a>'+
+        '</div>'+
+     '</div>'+
+    '</div>'+
+
+    '<div class="card-body">'+
+      // '<div class="chart-pie pt-4 pb-2">'+
+      //   '<canvas id="myPieChart"></canvas>'+
+      // '</div>'+
+      '<div class="mt-4 text-center small">'+
+        '<span class="mr-2">'+
+          '<i class="fas fa-circle text-primary"></i> Direct'+
+        '</span>'+
+        '<span class="mr-2">'+
+          '<i class="fas fa-circle text-success"></i> Social'+
+        '</span>'+
+        '<span class="mr-2">'+
+          '<i class="fas fa-circle text-info"></i> Referral'+
+        '</span>'+
+      '</div>'+
+    '</div>'+
+  '</div>'+
+'</div>';
+$('.dbInner').append(job_statistics);
+}
 //@ams-> Settings
 function jsettings(){
   // <!-- Content Wrapper. Contains page content -->
@@ -271,7 +428,7 @@ function jsettings(){
              '</div>'+
              '<!-- /.card-header -->'+
              '<div class="card-body">'+
-             '<strong><i class="fas fa-map-marker-alt mr-1"></i> tag_line</strong>'+
+             '<strong><i class="fas fa-info mr-1"></i> tag_line</strong>'+
              '<p class="text-muted">'+data[0].tag_line+'</p>'+
              '<hr>'+
              '<strong><i class="fas fa-book mr-1"></i> Education</strong>'+
@@ -367,10 +524,13 @@ function jsettings(){
                       '<div class="col-sm-10">'+
                         '<select class="custom-select" id="category" name="category">'+
                         '<option value="Finance">Finance</option>'+
-                        '<option value="Health">Health</option>'+
-                        '<option value="Law">Law</option>'+
-                        '<option value="Graphic Engineers">Graphic Engineers</option>'+
-                        '<option value="Software Engineers">Software Engineers</option>'+
+                        '<option value="IT & Engineering">IT & Engineering</option>'+
+                        '<option value="Education/Training">Education/Training</option>'+
+                        '<option value="Art/Design">Art/Design</option>'+
+                        '<option value="Sale/Markting">Sale/Markting</option>'+
+                        '<option value="Healthcare">Healthcare</option>'+
+                        '<option value="Science">Science</option>'+
+                        '<option value="Food Services">Food Services</option>'+
                         '<option value="Others">Others</option>'+
                         '</select>'+
                         '</div>'+

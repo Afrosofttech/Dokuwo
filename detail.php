@@ -224,10 +224,13 @@
                 '<select class="form-control" id="category" name="category">'+
                   '<option value="" selected hidden>Select your job category of interest</option>'+
                   '<option value="Finance">Finance</option>'+
-                  '<option value="Health">Health</option>'+
-                  '<option value="Law">Law</option>'+
-                  '<option value="Graphic Engineers">Graphic Engineers</option>'+
-                  '<option value="Software Engineers">Software Engineers</option>'+
+                  '<option value="IT & Engineering">IT & Engineering</option>'+
+                  '<option value="Education/Training">Education/Training</option>'+
+                  '<option value="Art/Design">Art/Design</option>'+
+                  '<option value="Sale/Markting">Sale/Markting</option>'+
+                  '<option value="Healthcare">Healthcare</option>'+
+                  '<option value="Science">Science</option>'+
+                  '<option value="Food Services">Food Services</option>'+
                   '<option value="Others">Others</option>'+
                 '</select>'+
               '</div>'+

@@ -306,22 +306,22 @@ let profile = '';
            '<div class="col col-lg-2">'+
            '</div>'+
            '<div class="col-md-auto">'+
-             '<img src="uploads/'+data.logo+'" class="card-img-top rounded-circle img-thumbnail" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+             '<img src="uploads/'+((data.logo == "" || data.logo == null)?"default.jpg":data.logo)+'" class="card-img-top rounded-circle img-thumbnail" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
            '</div>'+
            '<div class="col col-lg-2">'+
            '</div>'+
          '</div>'+
          '<div class="row justify-content-md-center mb-2">'+
-           '<h3 class="card-title font-weight-bolder text-primary">'+data.company_name+'</h3>'+
+           '<h3 class="card-title font-weight-bolder text-primary">'+((data.company_name=="" || data.company_name==null)?"NA":data.company_name)+'</h3>'+
          '</div>'+
          '<div class="row">'+
            '<div class="col col-lg-6">'+
-             '<i class="fas fa-home"> '+data.company_address+'</i><br>'+
-             '<i class="fas fa-map-marker"> '+data.country+'</i>'+
+             '<i class="fas fa-home"> '+((data.company_address=="" || data.company_address==null)?"NA":data.company_address)+'</i><br>'+
+             '<i class="fas fa-map-marker"> '+((data.country=="" || data.country==null)?"NA":data.country)+'</i>'+
            '</div>'+
            '<div class="col col-lg-6">'+
-             '<i class="fas fa-envelope"> '+data.company_email+'</i><br>'+
-             '<i class="fas fa-phone"> '+data.company_phone+'</i><br>'+
+             '<i class="fas fa-envelope"> '+((data.company_email=="" || data.company_email==null)?"NA":data.company_email)+'</i><br>'+
+             '<i class="fas fa-phone"> '+((data.company_phone=="" || data.company_phone==null)?"NA":data.company_phone)+'</i><br>'+
            '</div>'+
          '</div>'+
        '</div>'+
@@ -1194,8 +1194,8 @@ $.ajax({
       $.each(response, function(index,row){
         let sub = row.category;
        let  profileImage = '';
-  (sub=='Finance')?subcat=Finance:(sub=='Software Engineers')?subcat=SE:(sub=='Health')?subcat=Health:(sub=='Law')?subcat=Law:subcat=''; 
-   (sub=='Finance')?profileImage=FinanceImage:(sub=='Software Engineers')?profileImage=SEImage:(sub=='Health')?profileImage=HealthImage:(sub=='Law')?profileImage=LawImage:profileImage='graphic.jpeg';
+  (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education/Training')?subcat=Education:(sub=='Art/Design')?subcat=Art:(sub=='Sale/Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:subcat=''; 
+   (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education/Training')?profileImage=EducationImage:(sub=='Art/Design')?profileImage=ArtImage:(sub=='Sale/Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:profileImage='graphic.jpeg';
         innertemp += '<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch pb-5">'+
           '<div class="card bg-light" style="border-top: 3px solid #007bff;">'+
            '<div class="card-header text-muted border-bottom-0">'+
@@ -1295,7 +1295,7 @@ $.ajax({
               '</ul>'+
             '</div>'+
             '<div class="col-5 text-center">'+
-              '<img src="uploads/'+individual.image+'" alt="" class="img-fluid card-img-top rounded-circle img-thumbnail" style="width: 1500px; height: 150px;">'+
+              '<img src="uploads/'+((individual.image == "" || individual.image == null)?"default.jpg":individual.image)+'" alt="" class="img-fluid card-img-top rounded-circle img-thumbnail" style="width: 1500px; height: 150px;">'+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -1348,7 +1348,7 @@ let profile =
   '<div class="container">'+
   '<div class="row justify-content mb-4">'+
   '<div class="col col-lg-4">'+
-    '<img src="uploads/'+profile_image+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+    '<img src="uploads/'+((profile_image == "" || profile_image == null)?"default.jpg": profile_image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
   '</div>'+
     '<div class="col-lg-4">'+
       '<ul class="ml-4 mb-0 fa-ul text-muted">'+
@@ -1848,12 +1848,15 @@ function show_posted_jobs(){
        '<label class="input-group-text" for="jobCategory">Category</label>'+
      '</div>'+
      '<select class="custom-select" id="jobCategory">'+
-       '<option selected>Choose...</option>'+
+       '<option selected hidden>Choose...</option>'+
        '<option value="Finance">Finance</option>'+
-       '<option value="Graphic designers">Graphic designers</option>'+
-       '<option value="Health">Health</option>'+
-       '<option value="Law">Law</option>'+
-       '<option value="Software Engineers">Software Engineers</option>'+
+       '<option value="IT & Engineering">IT & Engineering</option>'+
+       '<option value="Education/Training">Education/Training</option>'+
+       '<option value="Art/Design">Art/Design</option>'+
+       '<option value="Sale/Markting">Sale/Markting</option>'+
+       '<option value="Healthcare">Healthcare</option>'+
+       '<option value="Science">Science</option>'+
+       '<option value="Food Services">Food Services</option>'+
        '<option value="Others">Others</option>'+
      '</select>'+
     '</div>'+
@@ -2027,12 +2030,15 @@ function show_posted_jobs(){
           '<label class="input-group-text" for="jobCategory">Category</label>'+
        '</div>'+
         '<select class="custom-select" id="jobCategory">'+
-          '<option value="Finance">Finance</option>'+
-          '<option value="Graphic designers">Graphic designers</option>'+
-          '<option value="Health">Health</option>'+
-          '<option value="Law">Law</option>'+
-          '<option value="Software Engineers">Software Engineers</option>'+
-          '<option value="Others">Others</option>'+
+        '<option value="Finance">Finance</option>'+
+        '<option value="IT & Engineering">IT & Engineering</option>'+
+        '<option value="Education/Training">Education/Training</option>'+
+        '<option value="Art/Design">Art/Design</option>'+
+        '<option value="Sale/Markting">Sale/Markting</option>'+
+        '<option value="Healthcare">Healthcare</option>'+
+        '<option value="Science">Science</option>'+
+        '<option value="Food Services">Food Services</option>'+
+        '<option value="Others">Others</option>'+
         '</select>'+
        '</div>'+
           '<div class="form-group">'+
