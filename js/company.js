@@ -2030,6 +2030,7 @@ function show_posted_jobs(){
           '<label class="input-group-text" for="jobCategory">Category</label>'+
        '</div>'+
         '<select class="custom-select" id="jobCategory">'+
+        '<option value="Finance">Finance</option>'+
         '<option value="IT & Engineering">IT & Engineering</option>'+
         '<option value="Education/Training">Education/Training</option>'+
         '<option value="Art/Design">Art/Design</option>'+
