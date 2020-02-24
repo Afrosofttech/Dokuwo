@@ -25,13 +25,19 @@ function jobseekerSideBar(){
         '<i class="fas fa-fw fa-briefcase"></i>'+
         '<span>Jobs</span></a>'+
     '</li>'+
-  
+
     '<li class="nav-item">'+
       '<a class="nav-link">'+
-        '<i class="fas fa-fw fa-envelope"></i>'+
-        '<span>Messages</span></a>'+
+       '<i class="fas fa-fw fa-envelope"></i>'+
+       '<span>Messages</span></a>'+
     '</li>'+
-  
+    
+    '<li class="nav-item">'+
+    '<a class="nav-link ">'+
+      '<i class="fas fa-fw fa-briefcase"></i>'+
+      '<span>Hires</span></a>'+
+    '</li>'+
+
     '<li class="nav-item">'+
       '<a class="nav-link" style="cursor: pointer;" onclick="jsettings();">'+
         '<i class="fas fa-fw fa-cog""></i>'+
@@ -55,7 +61,7 @@ let header = '<div class="container-fluid">'+
                 '<div class="row no-gutters align-items-center">'+
                     '<div class="col mr-2">'+
                     '<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jobs Available</div>'+
-                    '<div class="h5 mb-0 font-weight-bold text-gray-800">0</div>'+
+                    '<div class="h5 mb-0 font-weight-bold text-gray-800" id="jobsAvailable">0</div>'+
                     '</div>'+
                     '<div class="col-auto">'+
                     '<i class="fas fa-briefcase fa-2x text-gray-300"></i>'+
@@ -73,11 +79,11 @@ let header = '<div class="container-fluid">'+
                     '<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Profile(Completion)</div>'+
                     '<div class="row no-gutters align-items-center">'+
                         '<div class="col-auto">'+
-                        '<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>'+
+                        '<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="profileVal">50%</div>'+
                         '</div>'+
                         '<div class="col">'+
                         '<div class="progress progress-sm mr-2">'+
-                            '<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>'+
+                            '<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="profileBar"></div>'+
                         '</div>'+
                         '</div>'+
                     '</div>'+
@@ -96,7 +102,7 @@ let header = '<div class="container-fluid">'+
                 '<div class="row no-gutters align-items-center">'+
                     '<div class="col mr-2">'+
                     '<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">companies</div>'+
-                    '<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>'+
+                    '<div class="h5 mb-0 font-weight-bold text-gray-800" id="noOfCompanies">5</div>'+
                     '</div>'+
                     '<div class="col-auto">'+
                     '<i class="fas fa-building fa-2x text-gray-300"></i>'+
@@ -110,6 +116,24 @@ let header = '<div class="container-fluid">'+
       '</div>'+
     '</div>';
     $('#content').empty().append(header);
+    $.ajax({
+      method: "GET",
+      url: "get.php/jobseeker/dashboard_header_info",
+      data: {"login_id" : session_id},
+      dataType: 'json',
+      success: function(data){
+        console.log(data);
+        $('#jobsAvailable' ).html(data.noOfJobsAvailable);
+        $('#profileVal').html(data.isProfileComplete+"%");
+        $('#profileBar').css('width',''+data.isProfileComplete+'%');
+       $('#noOfCompanies' ).html(data.noOfCompanies);
+     //@ams->now calling the dashboard content
+     jdashBoardContent();
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+    });
 }
 function loadJobseekerDashboard(){
     let sidebar = jobseekerSideBar();
@@ -251,6 +275,105 @@ function jtopBar(){
        }
       });
   }
+function  jdashBoardContent(){
+  let temp ='<div class="container-fluid"><div class="row dbInner"></div></div>';
+
+  $('#content').append(temp);
+  jdashboardProfile();
+}
+function jdashboardProfile(){
+  
+let profile = '';
+$.ajax({
+  method: "GET",
+  dataType: "json",
+  url: "get.php/jobseeker/jobseeker_profile",
+  data: {"login_id" : session_id},
+  success: function(data){
+console.log(data);
+  profile += '<div class="col-xl-6 col-lg-7">'+
+   '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
+     '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
+       '<h6 class="m-0 font-weight-bold text-primary">Profile</h6>'+
+     '</div>'+
+     '<div class="card-body">'+
+       '<div class="container">'+
+       '<div class="row justify-content-md-center mb-4">'+
+       '<div class="col col-lg-4">'+
+       '<img src="uploads/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+     '</div>'+
+       '<div class="col-lg-4">'+
+         '<ul class="ml-4 mb-0 fa-ul text-muted">'+
+         '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b class="text-primary">First Name: </b>'+((data[0].fname =="" || data[0].fname ==null)?"NA":data[0].fname)+'</li>'+
+         '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-id-card"></i></span><b class="text-primary">Date of birth: </b>'+((data[0].dob=="" || data[0].dob==null)?"NA":data[0].dob.toString())+'</li>'+
+         '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span><b class="text-primary">Skills: </b>'+((data[0].skills=="" || data[0].skills==null)?"NA":data[0].skills.replace(/,/g, "/"))+'</li>'+
+         '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-info"></i></span><b class="text-primary">Tag-line: </b>'+((data[0].tag_line=="" || data[0].tag_line==null)?"NA":data[0].tag_line)+'</li>'+
+       '</ul>'+
+     '</div>'+
+       '<div class="col col-lg-4">'+
+        '<ul class="ml-4 mb-0 fa-ul text-muted">'+
+        '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b class="text-primary">Last Name: </b>'+((data[0].lname=="" || data[0].lname==null)?"NA":data[0].lname)+'</li>'+
+        '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b class="text-primary">Phone #: </b>'+((data[0].phone=="" || data[0].phone==null)?"NA":data[0].phone)+'</li>'+
+        '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-globe"></i></span><b class="text-primary">Country: </b>'+((data[0].country=="" || data[0].country==null)?"NA":data[0].country)+'</li>'+
+        '<li class="small mb-3"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span><b class="text-primary">Address: </b>'+((data[0].address=="" || data[0].address==null)?"NA":data[0].address)+'</li>'+
+        '</ul>'+
+       '</div>'+
+     '</div>'+
+     '</div>'+
+   '</div>'+
+ '</div>';
+
+ $('.dbInner').append(profile);
+  jJobStatistics();
+
+ },
+ error: function(err){
+  $.notify(err.responseText,'error');
+ }
+});
+
+}
+function jJobStatistics(){
+  let job_statistics =  '<div class="col-xl-6 col-lg-5">'+
+    
+  '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
+
+    '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
+      '<h6 class="m-0 font-weight-bold text-primary">Application Statistics</h6>'+
+     '<div class="dropdown no-arrow">'+
+        '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+          '<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>'+
+        '</a>'+
+        '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'+
+          '<div class="dropdown-header">Dropdown Header:</div>'+
+          '<a class="dropdown-item" href="#">Action</a>'+
+          '<a class="dropdown-item" href="#">Another action</a>'+
+          '<div class="dropdown-divider"></div>'+
+          '<a class="dropdown-item" href="#">Something else here</a>'+
+        '</div>'+
+     '</div>'+
+    '</div>'+
+
+    '<div class="card-body">'+
+      // '<div class="chart-pie pt-4 pb-2">'+
+      //   '<canvas id="myPieChart"></canvas>'+
+      // '</div>'+
+      '<div class="mt-4 text-center small">'+
+        '<span class="mr-2">'+
+          '<i class="fas fa-circle text-primary"></i> Direct'+
+        '</span>'+
+        '<span class="mr-2">'+
+          '<i class="fas fa-circle text-success"></i> Social'+
+        '</span>'+
+        '<span class="mr-2">'+
+          '<i class="fas fa-circle text-info"></i> Referral'+
+        '</span>'+
+      '</div>'+
+    '</div>'+
+  '</div>'+
+'</div>';
+$('.dbInner').append(job_statistics);
+}
 //@ams-> Settings
 function jsettings(){
   // <!-- Content Wrapper. Contains page content -->
@@ -405,10 +528,13 @@ function jsettings(){
                       '<div class="col-sm-10">'+
                         '<select class="custom-select" id="category" name="category">'+
                         '<option value="Finance">Finance</option>'+
-                        '<option value="Health">Health</option>'+
-                        '<option value="Law">Law</option>'+
-                        '<option value="Graphic Engineers">Graphic Engineers</option>'+
-                        '<option value="Software Engineers">Software Engineers</option>'+
+                        '<option value="IT & Engineering">IT & Engineering</option>'+
+                        '<option value="Education/Training">Education/Training</option>'+
+                        '<option value="Art/Design">Art/Design</option>'+
+                        '<option value="Sale/Markting">Sale/Markting</option>'+
+                        '<option value="Healthcare">Healthcare</option>'+
+                        '<option value="Science">Science</option>'+
+                        '<option value="Food Services">Food Services</option>'+
                         '<option value="Others">Others</option>'+
                         '</select>'+
                         '</div>'+

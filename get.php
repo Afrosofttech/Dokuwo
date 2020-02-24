@@ -121,6 +121,11 @@ if($view == 'company'){
         $res = $result->new_unread_messages($_GET['login_id']);
         echo json_encode($res);
       break;
+       case "dashboard_header_info":
+        $result = new JobseekerView();
+        $res = $result->dashboard_header_info($_GET['login_id']);
+        echo json_encode($res);
+        break;
        case "":
          break;
       case "":

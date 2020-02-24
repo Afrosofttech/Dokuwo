@@ -74,4 +74,24 @@ class Jobseeker extends Dbh{
             $stmt = null;
         }
     }
+    protected function get_no_of_jobs_available()
+    {
+      $sql="SELECT * FROM job WHERE status=?;";
+      $stmt=$this->connect()->prepare($sql);
+      $stmt->execute([0]);
+      $result= $stmt->rowCount();
+      if(!$result) return self::fail;
+      return $result;
+      $stmt = null;
+    }
+    protected function get_no_of_companies()
+    {
+        $sql="SELECT * FROM company;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([]);
+        $rowCount = $stmt->rowCount();
+        if(!$rowCount) return self::fail;
+        return  $rowCount ;
+        $stmt = null;
+    }
 }
