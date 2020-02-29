@@ -22,7 +22,7 @@ function jobseekerSideBar(){
   
     '<li class="nav-item">'+
       '<a class="nav-link ">'+
-        '<i class="fas fa-fw fa-briefcase"></i>'+
+        '<i class="fas fa-fw fa-briefcase" style="cursor: pointer;" onclick="jobs();"></i>'+
         '<span>Jobs</span></a>'+
     '</li>'+
 
@@ -371,6 +371,23 @@ function jJobStatistics(){
   '</div>'+
 '</div>';
 $('.dbInner').append(job_statistics);
+}
+function jobs(){
+  let jobs=
+  '<!-- Page Header Start -->'
+  '<div class="page-header">'
+    '<div class="container">'
+      '<div class="row">'         
+        '<div class="col-lg-12">'
+          '<div class="inner-header">'
+            '<h3>Browse Job</h3>'
+         ' </div>'
+        '</div>'
+      '</div>'
+    '</div>'
+ ' </div>'
+  '<!-- Page Header End --> ';
+  $('#content').empty().append(jobs);
 }
 function jMessagesCenter(){
     let temp = '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>';
