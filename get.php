@@ -126,6 +126,31 @@ if($view == 'company'){
         $res = $result->dashboard_header_info($_GET['login_id']);
         echo json_encode($res);
         break;
+      case "no_of_new_messages":
+        $result = new JobseekerMessagesView();
+        $res = $result->no_of_new_messages($_GET['login_id']);
+        echo $res;
+        break;
+      case "all_inbox_messages":
+        $result = new JobseekerMessagesView();
+        $res = $result->all_inbox_messages($_GET['login_id']);
+        echo json_encode($res);
+      break;
+      case "read_messages":
+        $result = new JobseekerMessagesView();
+        $res = $result->read_messages($_GET['login_id']);
+        echo json_encode($res);
+      break;
+      case "all_sent_messages":
+        $result = new JobseekerMessagesView();
+        $res = $result->all_sent_messages($_GET['login_id']);
+        echo json_encode($res);
+      break;
+      case "retreive_all_companies":
+        $result = new JobseekerMessagesView();
+        $res = $result->retreive_all_companies();
+        echo json_encode($res);
+       break;
        case "":
          break;
       case "":

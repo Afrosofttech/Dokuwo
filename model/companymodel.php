@@ -43,25 +43,12 @@ class Company extends Dbh{
         return $rowCount;
         $stmt = null;
     }
-    protected function get_reference_of_all_inbox_messages($recipient_id){
-        $sql = " Select message_id from message_recipient where recipient_id = ? AND delete_request != ? ORDER BY mess_rec_id DESC";
+    protected function get_all_inbox_messages($recipient_id){
+        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,message_recipient.recipient_id,job_seeker.fullName FROM message_recipient INNER JOIN message ON message_recipient.message_id = message.message_id INNER JOIN job_seeker ON message.creator_id = job_seeker.login_id WHERE message_recipient.recipient_id = ?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$recipient_id,1]);
+        $stmt->execute([$recipient_id]);
         $result = $stmt->fetchAll();
-       if(!$result ){
-                return 0;
-                $stmt = null;
-        }else{
-            return  $result ;
-            $stmt = null;
-        }
-    }
-    protected function get_all_inbox_messages($message_id){
-        $sql = " Select * from message where message_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$message_id]);
-        $result = $stmt->fetchAll();
-        return  $result;
+        return  $result ;
         $stmt = null;
     }
     protected function delete_this_message($message_id){
@@ -147,16 +134,6 @@ class Company extends Dbh{
 
          return 200;
     }
-
-    // public function is_the_profile_complete($company_id){
-    //     $sql = " Select * from  where company_id = ?";
-    //     $stmt = $this->connect()->prepare($sql);
-    //     $stmt->execute([$company_id]);
-    //     $rowCount = $stmt->rowCount();
-    //     if(!$rowCount) return ('No rows');
-    //     return $rowCount;
-    //     $stmt = null;
-    // }
     protected function get_categories_of_jobseekers(){
         //$seekersArray = array();
         $sql = " SELECT category, COUNT(*) AS count FROM job_seeker GROUP BY category";

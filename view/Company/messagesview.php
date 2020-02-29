@@ -8,19 +8,9 @@ class MessagesView extends Company{
       $noOfNewRecievedMessages = $this->get_no_of_new_messages($recipient_id);
       return $noOfNewRecievedMessages;
     }
-    public function all_inbox_messages($recipient_id){//@ams->to be changed. Please make sure to change this-> same as  public function new_unread_messages
-        $referenceOffAllInboxMessages = $this->get_reference_of_all_inbox_messages($recipient_id);
-        //$messageArray = [];
-        $messageArray = array();
-        if($referenceOffAllInboxMessages == 0){
-            return $referenceOffAllInboxMessages;
-        }else{
-        foreach ($referenceOffAllInboxMessages as $key => $value) {
-                $allInboxMessages = $this->get_all_inbox_messages($value['message_id']);
-                array_push($messageArray, $allInboxMessages);
-            }
-        return $messageArray;
-        }
+    public function all_inbox_messages($recipient_id){
+      $allInboxMessages = $this->get_all_inbox_messages($recipient_id);
+      return $allInboxMessages;
     }
     public function read_messages($recipient_id){
        $res = $this->get_read_messages($recipient_id);

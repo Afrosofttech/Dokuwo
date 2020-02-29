@@ -433,7 +433,7 @@ function sidebarMessage(){
       '</div>';
 
       $('.sidebarMessage').empty().append(sbMessage);
-      // contentMessage();
+       //contentMessage();
    },
    error: function(err){
     $.notify(err.responseText,'error');
@@ -465,23 +465,22 @@ function contentMessage(){
             ' <th></th>'+
             '</thead>'+
               '<tbody>';
-
               $.each(data, function( i, val ) {
-                let checkId = val[0].message_id+"checkbox";
-                //AMS: am filtering the message body to get rid of all <p> tags
-                var filteredMsgBody = val[0].message_body.replace(/<[\/]{0,1}(p)[^><]*>/ig,"");
+                let checkId = val.message_id+"checkbox";
+                //AMS-> am filtering the message body to get rid of all <p> tags
+                var filteredMsgBody = val.message_body.replace(/<[\/]{0,1}(p)[^><]*>/ig,"");
                 // onclick="viewMessage(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');"
-                conMessage+= '<tr id="'+val[0].message_id+'" class="test" style="cursor: pointer;" >'+
+                conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
                             '<td>'+
                               '<div class="icheck-primary">'+
                                 '<input type="checkbox" value="" id="'+checkId+'">'+
                                 '<label for="check1"></label>'+
                               '</div>'+
                             '</td>'+
-                            '<td class="mailbox-name">'+val[0].creator_name+'</td>'+
-                            '<td class="mailbox-subject"><b>'+val[0].subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                            '<td class="mailbox-name">'+val.creator_name+'</td>'+
+                            '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
                             '</td>'+
-                            '<td class="mailbox-date">'+val[0].create_date+'</td>'+
+                            '<td class="mailbox-date">'+val.create_date+'</td>'+
                           '</tr>';
               });
             conMessage +=  '</tbody>'+
@@ -513,8 +512,8 @@ function contentMessage(){
         $("#myTable").on("click", ".test", function(e){
           var id = $(this).attr('id');
           $.each(data, function( i, val ) {
-           if(val[0].message_id === id){
-            viewMessage(val[0].message_id,val[0].creator_id,val[0].creator_name,val[0].subject,val[0].message_body,val[0].create_date,val[0].parent_message_id);
+           if(val.message_id === id){
+            viewMessage(val.message_id,val.creator_id,val.creator_name,val.subject,val.message_body,val.create_date,val.parent_message_id);
            }
           });
           //return false;
@@ -653,7 +652,8 @@ $('p').mousedown(function(e) {
     success: function(data){
       if(data == 200){
         sidebarMessage();
-        newMsgNotification();
+        //$('.NewMsgNotificationsCount').empty().html(5);
+         newMsgNotification();
       }
     },
     error: function(err){
@@ -662,6 +662,35 @@ $('p').mousedown(function(e) {
   })
   })
 
+}
+function newMsgNotification(){  
+  //ams->am using this func to update the topBar message center notification
+  let temp = '';
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/company/new_unread_messages",
+    data: {"login_id" : session_id},
+    success: function(data){
+      if(data != 400){
+      temp += '<h6 class="dropdown-header">'+
+        'Message Center'+
+      '</h6>';
+      $.each(data, function(i,val){
+        temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="redirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
+        '<div class="font-weight-bold">'+
+          '<div class="text-truncate">'+val.subject+'</div>'+
+          '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+        '</div>'+
+      '</a>';
+      })
+
+      temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
+      $('.NewMsgNotificationsCount').empty().html(data.length);
+      $('.NewMsgNotifications').empty().append(temp);
+      }
+    }
+  });
 }
 function selectAJobseekerToForward(msg_subject,msg_body){
   let conMessage ='';
@@ -693,12 +722,11 @@ function selectAJobseekerToForward(msg_subject,msg_body){
              }else{
 
               $.each(data, function( i, val ) {
-                let img = (val.image == null)?"uploads/default.jpg": "uploads/"+val.image;
                 conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="forwardMsgTo(\''+val.login_id+'\',\''+val.fullName+'\',\''+msg_subject+'\',\''+msg_body+'\');">'+
                             '<td>'+
                                 '<input type="hidden" value="" id="'+val.login_id+'">'+
                             '</td>'+
-                            '<td class="img-link"><img class=" rounded-circle" src="'+img+'" style="height: auto;width: 5rem;" alt=""/>'+
+                            '<td class="img-link"><img class=" rounded-circle" src="'+((val.image == null)?"https://ui-avatars.com/api/?name="+val.fullName.replace(/ /g, '+'):'uploads/'+val.image)+'" style="height: auto;width: 5rem;" alt="'+val.fullName+'"/>'+
                             '<div class="status-indicator bg-success"></div>'+
                             '</td>'+
                             '<td class="full-name"><b>'+val.fullName+'</b></td>'+
@@ -1065,7 +1093,7 @@ function sentMessages(){
   
                 $.each(data, function( i, val ) {
                   let checkId = val.message_id+"checkbox";
-                  //@ams-> am filtering the message body to get rid of all <p> tags
+                  //ams-> am filtering the message body to get rid of all <p> tags
                    var filteredMsgBody = val.message_body.replace(/<[^>]+>/g, '');
          temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\',\''+val.fullName+'\',\''+val.recipient_id+'\');">'+
                        '<td>'+
