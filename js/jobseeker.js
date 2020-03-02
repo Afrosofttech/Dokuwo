@@ -21,8 +21,8 @@ function jobseekerSideBar(){
     '</li>'+
   
     '<li class="nav-item">'+
-      '<a class="nav-link ">'+
-        '<i class="fas fa-fw fa-briefcase" style="cursor: pointer;" onclick="jobs();"></i>'+
+      '<a class="nav-link" style="cursor: pointer;" onclick="jobs();">'+
+        '<i class="fas fa-fw fa-briefcase"></i>'+
         '<span>Jobs</span></a>'+
     '</li>'+
 
@@ -33,7 +33,7 @@ function jobseekerSideBar(){
     '</li>'+
     
     '<li class="nav-item">'+
-    '<a class="nav-link ">'+
+    '<a class="nav-link" style="cursor: pointer;" onclick="hires();">'+
       '<i class="fas fa-fw fa-briefcase"></i>'+
       '<span>Hires</span></a>'+
     '</li>'+
@@ -373,21 +373,232 @@ function jJobStatistics(){
 $('.dbInner').append(job_statistics);
 }
 function jobs(){
-  let jobs=
-  '<!-- Page Header Start -->'
-  '<div class="page-header">'
-    '<div class="container">'
-      '<div class="row">'         
-        '<div class="col-lg-12">'
-          '<div class="inner-header">'
-            '<h3>Browse Job</h3>'
-         ' </div>'
+  $.ajax({
+    method: "GET",
+    dataType: "json",
+    url: "get.php/jobseeker/retreive_jobs",
+    success: function(data){
+      if(data != 400){
+        paginateJobs(data);
+      }else{
+       //
+      }
+    },
+    error: function(err){
+
+    }
+  })
+}
+function paginateJobs(data){
+    let jobs= '<!-- Page Header Start -->'+
+                '<div class="container">'+
+                  '<div class="row text-center">'+         
+                    '<div class="col-lg-12">'+
+                      '<div class="inner-header">'+
+                        '<h3>Browse Job</h3>'+
+                    ' </div>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>'+
+              '<!-- Page Header End --> '+
+  
+              '<!-- Job Browse Section Start -->'+  
+              '<section class="job-browse section">'+
+                '<div class="container">'+
+                  '<div class="row">'+
+                    '<div class="col-lg-12 col-md-12 col-xs-12">'+
+                      '<div class="wrap-search-filter row">'+
+                       '<form class="col-lg-12 col-md-12 col-xs-12 d-flex content-space-between" method="POST" id="editJobseeker" autocomplete="off">'+
+                        '<div class="col-lg-5 col-md-5 col-xs-12">'+
+                          '<input type="text" class="form-control" name="job" id="job" placeholder="Keyword: Job Name">'+
+                        '</div>'+
+                        '<div class="col-lg-5 col-md-5 col-xs-12">'+
+                          '<input type="text" class="form-control" id="location" name="location" placeholder="Location: City, State">'+
+                        '</div>'+
+                        '<div class="col-lg-2 col-md-2 col-xs-12">'+
+                          '<button type="submit" name="filter" id="filter" class="btn btn-common btn-success btn-block float-right">Filter</button>'+
+                        '</div>'+
+                       '</form>'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="col-lg-12 col-md-12 col-xs-12 jobsContentArea">';
+                     $.each(data,function(index,val){
+                      jobs += '<a class="job-listings" style="cursor: pointer;" onclick="applyNow(\''+val.job_id+'\',\''+val.job_name+'\',\''+val.job_cat+'\',\''+val.job_type+'\',\''+val.requirements+'\',\''+val.job_location+'\',\''+val.date_posted+'\',\''+val.job_contact_email+'\',\''+val.job_contact_phone+'\',\''+val.salary+'\',\''+val.company_name+'\',\''+val.currency+'\',\''+val.logo+'\',\''+val.company_id+'\');">'+
+                      '<div class="row">'+
+                        '<div class="col-lg-4 col-md-4 col-xs-12">'+
+                          '<div class="job-company-logo">'+
+                            '<img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
+                          '</div>'+
+                          '<div class="job-details">'+
+                            '<h3>'+val.job_name+'</h3>'+
+                            '<span class="company-neme">'+
+                              ''+val.company_name+''+
+                            '</span>'+
+                          '</div>'+
+                        '</div>'+
+                        '<div class="col-lg-2 col-md-2 col-xs-12 text-center">'+
+                          '<span class="btn-open text-xs">'+
+                           ''+val.currency+currencyFormat(val.salary)+''+
+                          '</span>'+
+                        '</div>'+
+                        '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
+                         '<div class="location">'+
+                           '<i class="lni-map-marker"></i> '+val.job_location+''+
+                         '</div>'+
+                        '</div>'+
+                        '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
+                          '<span class="btn-full-time">'+val.job_type+'</span>'+
+                        '</div>'+
+                        '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
+                          '<span class="btn-apply" style="cursor: pointer;">Apply Now</span>'+
+                        '</div>'+
+                      '</div>'+
+                    '</a>';
+                     })
+
+                     jobs += '<!-- Start Pagination -->'+
+                      '<ul class="j-pagination" id="pagin">' +             
+  
+                      '</ul>'+
+                      '<!-- End Pagination -->'+
+  
+                    '</div> '+
+                 ' </div>'+
+                '</div>'+
+              '</section>'+
+              '<!-- Job Browse Section End -->';
+  
+    $('#content').empty().append(jobs);
+  
+    $(document).ready(function(e){
+      limitPerPage = 3;
+      numberOfItems = data.length;
+      let totalPages = Math.round(numberOfItems/limitPerPage);
+      let temp ='<li class="active"><a class="btn-prev btn-link  disabled"><i class="lni-angle-left"></i> prev</a></li>';
+  
+     for(i=0; i<totalPages; i++){
+       temp +='<li><a href="#" class="'+((i==0)?'current':'')+'"><i class="lni-angle-left"></i> '+(i+1)+'</a></li>';
+     }
+     temp +=' <li class="active"><a class="btn-next  btn-link  disabled">Next <i class="lni-angle-right"></i></a></li>';
+    $('.j-pagination').append(temp);
+      
+    showPage = function(page) {
+        $(".job-listings").hide();
+        $(".job-listings").each(function(n) {
+            if (n >= limitPerPage * (page - 1) && n < limitPerPage * page)
+                $(this).show();
+        });        
+    }
+        
+    showPage(1);
+  
+    $("#pagin li a").click(function() {
+        $("#pagin li a").removeClass("current");
+        $(this).addClass("current");
+        showPage(parseInt($(this).text())) 
+    });
+
+$('#filter').click(function(e){
+  e.preventDefault();
+  if($('#job').val() ==='' && $('#location').val() ===''){
+    $.notify('There is nothing to search for','error');
+  }else{
+    $.ajax({
+      method: "GET",
+      dataType: 'json',
+      url: "get.php/jobseeker/search_jobs",
+      data: {"job" : $('#job').val(), "location": $('#location').val()},
+      success: function(data){
+        if(data.length > 0){
+          paginateJobs(data);
+        }else{
+          $.notify('search result doesn\'t exist','error');
+        }
+      },
+      error: function(err){
+        $.notify(err.responseText,'error');
+      }
+  
+      })
+     }
+   })
+ })
+}
+function applyNow(job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,company_name,currency,logo,company_id){
+// alert(job_id);
+//  let apply = '<!-- Job Browse Section Start -->'+  
+//  '<section class="job-browse section">'+
+//    '<div class="container">'+
+//      '<div class="row">'+
+//      '<div class="col-lg-12 col-md-12 col-xs-12 applyJobArea">'+
+//        '<p>Hello ams I hope you are doing well</p>'+
+//      '</div>'+
+//    '</div>'+
+//   '</div>'+
+//   '</section>';
+let apply = '<!-- Job Detail Section Start -->'  +
+'<section class="job-detail section">'+
+  '<div class="container">'+
+    '<div class="row justify-con+tent-between">'+
+      '<div class="col-lg-8 col-md-12 col-xs-12">'+
+      '<div class="content-area">  '+
+
+          '<div class="breadcrumb-wrapper">'+
+         ' <div class="img-wrapper">'+
+            '<img src="'+((logo == 'null')?"https://ui-avatars.com/api/?name="+company_name.replace(/ /g, '+'):'uploads/'+logo)+'" style="height: 5rem;width: 5rem;" alt="'+company_name+'">'+
+          '</div>'+
+          '<div class="content">'+
+            '<h3 class="product-title font-weight-bold">Hiring '+job_name+'</h3>'+
+            '<p class="brand">'+company_name+'</p>'+
+            '<div class="tags">'+  
+              '<span><i class="fa fa-map-marker mr-1"></i>'+job_location+'</span>  '+
+              '<span><i class="fa fa-calendar mr-1"></i> Posted '+date_posted+'</span>'+ 
+              '<div class="year">Monthly</div>'+
+              '<span class="price">'+currency+currencyFormat(salary)+'</span>'+
+              '<div class="year">'+job_type+'</div>'+ 
+            '</div>'+
+          '</div>'+
+        '</div>'+
+
+          '<h4 class="font-weight-bold">Job Requirements</h4>'+
+          ''+requirements+''+
+          '<h5 class="font-weight-bold">Contact details</h5>'+
+          '<ul>'+
+            '<li><i class="fas fa-envelope mr-1"></i>- '+job_contact_email+'</li>'+
+            '<li><i class="fas fa-phone mr-1"></i>- '+job_contact_phone+'</li>'+
+          '</ul>'+
+          '<div class="d-flex justify-content-between">'+
+          '<a href="#" class="btn btn-common" style="cursor: pointer;" onclick="sendApp(\''+job_id+'\',\''+company_id+'\');">Apply job</a> '+
+          '<a href="#" class="btn btn-danger" style="cursor: pointer;" onclick="jobs();"><i class="fa fa-arrow-left"> Back </i></a>'
+          '</div>'
         '</div>'
-      '</div>'
-    '</div>'
- ' </div>'
-  '<!-- Page Header End --> ';
-  $('#content').empty().append(jobs);
+      '</div>'+
+
+    '</div>'+
+  '</div>'+
+'</section>'+
+'<!-- Job Detail Section End -->';
+  $('#content').empty().append(apply);
+}
+function sendApp(job_id,company_id){  
+  $.ajax({
+    method: "POST",
+    dataType: 'json',
+    url: "post.php/jobseeker/send_application",
+    data: {"jobseeker_id" : session_user_id,"job_id": job_id,"company_id": company_id},
+    success: function(response){
+    if(response == 200 ){
+      $.notify('job application successfully sent','success');
+    }else if(response == 'You already applied!'){
+      $.notify('You have already applied for this job. The company will get back to you','error');
+    }else{
+      $.notify('application not sent. Please try again','error');
+    }
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+ })
 }
 function jMessagesCenter(){
     let temp = '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>';
@@ -413,7 +624,7 @@ function jsidebarMessage(){
               '<span class="badge bg-info float-right">'+data+'</span>'+
             '</a>'+
           '</li>'+
-          '<li class="nav-item">'+
+          '<li class="nav-item text-dark">'+
             '<a style="cursor: pointer;" class="nav-link" onclick="jsentMessages();">'+
               '<i class="far fa-envelope"></i> Sent'+
             '</a>'+
@@ -588,7 +799,7 @@ function selectACompanyToMsg(){
                             '<td>'+
                                 '<input type="hidden" value="" id="'+val.login_id+'">'+
                             '</td>'+
-                            '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: auto;width: 5rem;" alt=""/>'+
+                            '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt=""/>'+
                             '<div class="status-indicator bg-success"></div>'+
                             '</td>'+
                             '<td class="full-name"><b>'+val.company_name+'</b></td>'+
@@ -953,7 +1164,7 @@ function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
         }
       },
       error: function(err){
-     //
+        $.notify(err.responseText,'error');
       }
     });
   }
@@ -986,15 +1197,14 @@ function selectACompanyToForward(msg_subject,msg_body){
             '</thead>'+
               '<tbody>';
              if(data === 0){
-
+              //
              }else{
-
               $.each(data, function( i, val ) {
                 conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="jforwardMsgTo(\''+val.login_id+'\',\''+val.company_name+'\',\''+msg_subject+'\',\''+msg_body+'\');">'+
                             '<td>'+
                                 '<input type="hidden" value="" id="'+val.login_id+'">'+
                             '</td>'+
-                            '<td class="img-link"><img class=" rounded-circle" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: auto;width: 5rem;" alt=""/>'+
+                            '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'"/>'+
                             '<div class="status-indicator bg-success"></div>'+
                             '</td>'+
                             '<td class="full-name"><b>'+val.company_name+'</b></td>'+
@@ -1136,38 +1346,134 @@ function jsentMessages(){
                      '<td class="mailbox-date">'+val.create_date+'</td>'+
                    '</tr>';
               });
-              temp +=  '</tbody>'+
-                    '</table>'+
-                    '<!-- /.table -->'+
-                  '</div>'+
-                  '<!-- /.mail-box-messages -->'+
-                '</div>'+
-                '<!-- /.card-body -->'+
-                '<div class="card-footer p-0">'+
+          temp +=  '</tbody>'+
+                '</table>'+
+                '<!-- /.table -->'+
               '</div>'+
-              '</div>'+
-            '</div>';
+              '<!-- /.mail-box-messages -->'+
+            '</div>'+
+            '<!-- /.card-body -->'+
+            '<div class="card-footer p-0">'+
+          '</div>'+
+          '</div>'+
+        '</div>';
 
-              $('.contentMessage').empty().append(temp);
+          $('.contentMessage').empty().append(temp);
 
-              $(document).ready( function () {
-              $('#myt').DataTable({
-              "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
-              "oLanguage": {
-              "sLengthMenu": "Display _MENU_ messages",
-              "sEmptyTable":     "No message available"
-              },
-              "bDestroy": true,
-              fnDrawCallback: function() {
-              $("#myt thead").remove();
-              }
-            });
-          });
+          $(document).ready( function () {
+          $('#myt').DataTable({
+          "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+          "oLanguage": {
+          "sLengthMenu": "Display _MENU_ messages",
+          "sEmptyTable":     "No message available"
+          },
+          "bDestroy": true,
+          fnDrawCallback: function() {
+          $("#myt thead").remove();
+          }
+        });
+      });
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+  });
+}
+function hires(){
+  let temp =      ' <!-- Begin Page Content -->'+
+  '<div class="container-fluid">'+
+
+  '<!-- Page Heading -->'+
+  '<!-- DataTales Example -->'+
+  '<div class="card shadow mb-4">'+
+    '<div class="card-header py-3">'+
+      '<h6 class="m-0 font-weight-bold text-primary">Hires</h6>'+
+    '</div>'+
+    '<div class="card-body">'+
+      ' <div class="table-responsive">'+
+        '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">'+
+          '<thead>'+
+            '<tr>'+
+              '<th>Name</th>'+
+              '<th>Email</th>'+
+              '<th>Phone</th>'+
+              '<th style="width: 30%">Task description</th>'+
+              '<th>Date</th>'+
+              '<th></th>'+
+            '</tr>'+
+          '</thead>'+
+          ' <tfoot>'+
+            '<tr>'+
+              '<th>Name</th>'+
+              '<th>Email</th>'+
+              '<th>Phone</th>'+
+              '<th style="width: 30%">Task description</th>'+
+              '<th>Date</th>'+
+              '<th></th>'+
+            '</tr>'+
+          '</tfoot>'+
+          '<tbody>';
+          $.ajax({
+            method: "GET",
+            dataType: 'json',
+            url: "get.php/jobseeker/all_hires",
+            data: {"jobseeker_id" : session_user_id},
+            success: function(data){
+             if(data != 400){
+              $.each(data, function(i,val){
+                temp += '<tr>'+
+                '<td>'+val.name+'</td>'+
+                '<td>'+val.email+'</td>'+
+                '<td>'+val.phone+'</td>'+
+                '<td>'+val.task+'</td>'+
+                '<td>'+val.date+'</td>'+
+                '<td class="text-right"><a class="btn btn-danger btn-block btn-sm" href="#" style="cursor: pointer;" onclick="delHire(\''+val.hire_id+'\');">'+
+                '<i class="fas fa-trash">'+
+                '</i>'+
+                'Delete'+
+                '</a></td>'+
+              '</tr>';
+              })
+             }
+             temp += '</tbody>'+
+        '</table>'+
+      '</div>'+
+    '</div>'+
+  '</div>'+
+
+  '</div>'+
+  '<!-- /.container-fluid -->';
+  $('#content').empty().append(temp);
+  $(document).ready( function () {
+    $('#dataTable').DataTable({
+      "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+      "oLanguage": {
+        //"sLengthMenu": "Display _MENU_ messages",
+        "sEmptyTable":     "No hires available"
       },
-      error: function(err){
-       $.notify(err.responseText,'error');
-      }
-     });
+    });
+  });
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+ });
+
+}
+function delHire(hire_id){  
+  $.ajax({
+    method: "POST",
+    dataType: 'json',
+    url: "post.php/jobseeker/delete_hire",
+    data: {"hire_id" : hire_id},
+    success: function(response){
+      $.notify('Deleted','success');
+      hires();
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  });
 }
 //ams-> Settings
 function jsettings(){

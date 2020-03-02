@@ -153,8 +153,21 @@ if($view == 'company'){
        break;
        case "":
          break;
-      case "":
-          break;
+      case "retreive_jobs":
+       $result = new JobseekerJobsView();
+       $res = $result->retreive_jobs();
+       echo json_encode($res);
+      break;
+      case "all_hires":
+        $result = new JobseekerView();
+        $res = $result->all_hires($_GET['jobseeker_id']);
+        echo json_encode($res);
+      break;
+      case "search_jobs":
+        $result = new JobseekerJobsView();
+        $res = $result->search_jobs($_GET['job'],$_GET['location']);
+        echo json_encode($res);
+      break;
        default:
           break;
    }

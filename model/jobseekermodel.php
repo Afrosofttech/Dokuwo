@@ -27,9 +27,6 @@ class Jobseeker extends Dbh{
     }
     protected function update_jobseeker_profile($login_id,$fName,$lName,$email,$phone,$country,$address,$password,$dob,$category,$skills,$tag_line,$education_level,$dateofbirth,$final_image,$final_cv)
     {
-        if($final_image == ""){
-          $ams= 'AMS-JR';
-        }
         $fullname = $fName.' '.$lName;
         if(($final_image == "" || $final_image == null) && ($final_cv == "" || $final_cv == null)){
             $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=? WHERE login_id=?;";
@@ -182,5 +179,75 @@ class Jobseeker extends Dbh{
             return self::success;
             $stmt = null;
     
+        }
+        protected function retreive_all_jobs()
+        {
+            $sql = "SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE status=?";
+            $stmt =$this->connect()->prepare($sql);
+            $stmt->execute([0]);
+            $result = $stmt->fetchAll();
+            if(!$result) return self::fail;
+            return $result;
+            $stmt = null;
+        }
+        protected function have_user_already_applied_this_job($jobseeker_id,$job_id,$company_id)
+        {
+            $sql = "SELECT * FROM application WHERE job_id = ? AND jobseeker_id = ?AND company_id = ?;";
+            $stmt =$this->connect()->prepare($sql);
+            $stmt->execute([$job_id,$jobseeker_id,$company_id]);
+            $result = $stmt->fetch();
+            if(!$result) return 0;
+            return $result;
+            $stmt = null; 
+        }
+        protected function apply_to_this_job($jobseeker_id,$job_id,$company_id)
+        {
+            $date = date('Y-m-d');
+            $sql = "INSERT INTO application (job_id,jobseeker_id,company_id,app_date,app_status) VALUES (?,?,?,?,?);";
+            $stmt =$this->connect()->prepare($sql);
+            $stmt->execute([$job_id,$jobseeker_id,$company_id,$date,0]);
+            return self::success;
+            $stmt = null;
+        }
+        protected function get_all_hires($jobseeker_id)
+        {
+            $sql = "SELECT * FROM hires WHERE jobseeker_id = ?;";
+            $stmt =$this->connect()->prepare($sql);
+            $stmt->execute([$jobseeker_id]);
+            $result = $stmt->fetchAll();
+            if(!$result) return self::fail;
+            return $result;
+            $stmt = null; 
+        }
+        protected function delete_this_hire($hire_id)
+        {
+            $sql = "DELETE FROM hires WHERE hire_id = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$hire_id]);
+            return  self::success;
+            $stmt = null;  
+        }
+        protected function search_for_jobs($job,$location)
+        {
+           if($job == ''){
+            $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_location like :search;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(array(
+                ':search' => '%' . $location . '%'));
+            }else if($location == ''){
+                $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like :search;";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute(array(
+                    ':search' => '%' . $job . '%'));
+            }else{
+                $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like :job AND job_location LIKE :location;";
+                $stmt = $this->connect()->prepare($sql);
+               $stmt->execute(array(
+                ':job' => '%' . $job . '%',
+                ':location' => '%'. $location . '%'));
+            }
+            $result = $stmt->fetchAll();
+            return $result;
+            $stmt = null;
         }
 }
