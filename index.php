@@ -52,6 +52,7 @@ if(!isset($_SESSION['email'])){
 <!-- Bootstrap tokenfield input -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap-tokenfield.min.css">
 <link rel="stylesheet" type="text/css" href="css/tokenfield-typeahead.min.css">
+<link rel="stylesheet" type="text/css" href="css/jobseeker_jobs.css">
 </head>
 
 <body id="page-top">

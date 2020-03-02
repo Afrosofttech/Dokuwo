@@ -123,9 +123,17 @@ $contr =  $urlParts[sizeof($urlParts)-2];
           $result = new JobseekerMessagesController();
           $res = $result->send_msg_to_company($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']);
           echo $res;
-       case "":
-           ;
-           break;
+          break;
+       case "send_application":
+          $result = new JobseekerJobsController();
+          $res = $result->send_application($_POST['jobseeker_id'],$_POST['job_id'],$_POST['company_id']);
+          echo $res;
+          break;
+       case "delete_hire":
+          $result = new JobseekerController();
+          $res = $result->delete_hire($_POST['hire_id']);
+          echo $res;
+          break;
         default:
            break;
     }

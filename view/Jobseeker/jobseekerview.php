@@ -21,4 +21,9 @@ class JobseekerView extends Jobseeker{
        $dbContentArray['noOfCompanies'] = $noOfCompanies;
        return $dbContentArray;
     }
+    public function all_hires($jobseeker_id)
+    {
+        $allHires = $this->get_all_hires($jobseeker_id);
+        return $allHires;
+    }
 }
