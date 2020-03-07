@@ -2307,7 +2307,6 @@ function jobApplicants(job_id,job_status){
        ' <th>First Name</th>'+
        '<th>Last Name</th>'+
       ' <th>Address</th>'+
-      ' <th>Email</th>'+
       ' <th>Skills</th>'+
       ' <th>Status</th>'+
       '</thead>'+
@@ -2324,7 +2323,6 @@ function jobApplicants(job_id,job_status){
           '<td>' + val.fname +'</td>'+
           '<td>'+ val.lname +'</td>'+
           '<td>'+ val.address +'</td>'+
-          '<td>'+ val.email +'</td>'+
           '<td>'+ val.skills.replace(/,/g, "/")+'</td>'+
           '<td>'+((val.app_status == 0)?"Pending": (val.app_status == 1)?"Accepted":"Rejcted")+'</td>'+
         '</tr>';

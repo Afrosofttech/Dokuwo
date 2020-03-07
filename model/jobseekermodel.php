@@ -230,21 +230,24 @@ class Jobseeker extends Dbh{
         protected function search_for_jobs($job,$location)
         {
            if($job == ''){
-            $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_location like :search;";
+            $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_location like :search AND status =:status;";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute(array(
-                ':search' => '%' . $location . '%'));
+                ':search' => '%' . $location . '%',
+                ':status' => 0));
             }else if($location == ''){
-                $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like :search;";
+                $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like :search AND status =:status;";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->execute(array(
-                    ':search' => '%' . $job . '%'));
+                    ':search' => '%' . $job . '%',
+                    ':status' => 0));
             }else{
-                $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like :job AND job_location LIKE :location;";
+                $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like :job AND job_location LIKE :location AND status =:status;";
                 $stmt = $this->connect()->prepare($sql);
                $stmt->execute(array(
                 ':job' => '%' . $job . '%',
-                ':location' => '%'. $location . '%'));
+                ':location' => '%'. $location . '%',
+                ':status' => 0));
             }
             $result = $stmt->fetchAll();
             return $result;

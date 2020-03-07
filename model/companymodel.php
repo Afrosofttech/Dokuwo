@@ -231,7 +231,7 @@ class Company extends Dbh{
         }
     }
     protected function get_job_applicatants($job_id){
-        $sql = " SELECT app_status,job_seeker.login_id,job_seeker.fname,job_seeker.lname,job_seeker.address,job_seeker.email,job_seeker.skills FROM application INNER JOIN job_seeker ON application.jobseeker_id=job_seeker.jobseeker_id WHERE job_id = ? ORDER BY application.app_date;";
+        $sql = " SELECT app_status,job_seeker.login_id,job_seeker.fname,job_seeker.lname,job_seeker.address,job_seeker.skills FROM application INNER JOIN job_seeker ON application.jobseeker_id=job_seeker.jobseeker_id WHERE job_id = ? ORDER BY application.app_date;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$job_id]);
         $result = $stmt->fetchAll();
