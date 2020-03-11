@@ -2403,7 +2403,7 @@ applicant += '<div class="col col-lg-4">'+
       '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+data.login_id+'\',\''+data.fullName+'\',\'contentMessage\')">'+
       '<i class="fas fa-comments"> Message</i>'+
       '</a>'+
-      '<a href="#" class="btn btn-sm btn-success '+((job_status == 1)?'disabled':(status == 0)?'':'disabled')+'"  data-toggle="tooltip" title="Back" onclick="acceptApplication(\''+data.jobseeker_id+'\',\''+job_id+'\',\''+login_id+'\');">'+
+      '<a href="#" class="btn btn-sm btn-success '+((job_status == 1)?'disabled':(status == 0)?'':'disabled')+'"  data-toggle="tooltip" title="Back" onclick="acceptApplication(\''+data.jobseeker_id+'\',\''+data.fullName+'\',\''+job_id+'\',\''+login_id+'\');">'+
         '<i class="fa fa-handshake"> Accept Application</i>'+
       '</a>'+
     '</div>';
@@ -2421,11 +2421,11 @@ applicant += '<div class="col col-lg-4">'+
   });
 
 }
-function acceptApplication(jobseeker_id,job_id,login_id){
+function acceptApplication(jobseeker_id,fullName,job_id,login_id){
   $.ajax({
     url: 'post.php/company/accept_application',
     method: 'POST',
-    data: {'jobseeker_id':jobseeker_id,'job_id':job_id},
+    data: {'jobseeker_id':jobseeker_id,'jobseeker_login_id':login_id,'fullName':fullName,'job_id':job_id},
     success: function(response){
       if(response == 200){
         $.notify('Application accepted. Applicant will be notified!','success');
