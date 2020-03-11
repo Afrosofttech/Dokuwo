@@ -263,6 +263,18 @@ class Company extends Dbh{
         return  self::success;
         $stmt = null;
     }
+    protected function get_job_details($job_id){
+        $sql = "SELECT job_name FROM job WHERE job_id=?;";
+        $stmt =$this->connect()->prepare($sql);
+        $stmt->execute([$job_id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+    protected function send_this_to_applicant($information){
+        $res = $this->send_msg_to_a_jobseeker($information['creator_id'],$information['creator_name'],$information['recipient_id'],$information['recipient_name'],$information['parent_msg_id'],$information['Subject'],$information['messageBody']);
+        if($res == 200) return $res;
+        else return self::fail;
+    }
     protected function close_this_job($job_id){
         $sql = " UPDATE job SET status=? WHERE job_id=?;";
         $stmt = $this->connect()->prepare($sql);
