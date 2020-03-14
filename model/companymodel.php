@@ -34,9 +34,9 @@ class Company extends Dbh{
         $stmt = null;
     }
     protected function get_no_of_new_messages($recipient_id){
-        $sql = " Select * from message_recipient where recipient_id = ? AND is_read = ?";
+        $sql = " Select * from message_recipient where recipient_id = ? AND is_read = ? AND delete_request = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$recipient_id,0]);
+        $stmt->execute([$recipient_id,0,0]);
         $rowCount = $stmt->rowCount();
         //if(!$rowCount) return ('No rows');
         if(!$rowCount) return 0;
@@ -44,9 +44,9 @@ class Company extends Dbh{
         $stmt = null;
     }
     protected function get_all_inbox_messages($recipient_id){
-        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,message_recipient.recipient_id,job_seeker.fullName FROM message_recipient INNER JOIN message ON message_recipient.message_id = message.message_id INNER JOIN job_seeker ON message.creator_id = job_seeker.login_id WHERE message_recipient.recipient_id = ?;";
+        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,message_recipient.recipient_id,job_seeker.fullName FROM message_recipient INNER JOIN message ON message_recipient.message_id = message.message_id INNER JOIN job_seeker ON message.creator_id = job_seeker.login_id WHERE message_recipient.recipient_id = ? AND message_recipient.delete_request = ?  order by create_date desc;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$recipient_id]);
+        $stmt->execute([$recipient_id,0]);
         $result = $stmt->fetchAll();
         return  $result ;
         $stmt = null;
@@ -57,19 +57,25 @@ class Company extends Dbh{
         $stmt->execute(['1',$message_id]);
         return self::success;
         $stmt = null;
-
+    }
+    protected function delete_this_sent_message($message_id){ //new
+        $sql = " UPDATE message SET sender_delete_request = ?  WHERE message_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(['1',$message_id]);
+        return self::success;
+        $stmt = null;
     }
     protected function set_message_is_read($message_id){
-        $sql = " UPDATE message_recipient SET is_read = ?  WHERE message_id = ?";
+        $sql = " UPDATE message_recipient SET is_read = ? WHERE message_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(['1',$message_id]);
         return self::success;
         $stmt = null;
     }
     protected function get_read_messages($recipient_id){
-        $sql = " Select * from message_recipient where recipient_id = ? and is_read = ?";
+        $sql = " Select * from message_recipient WHERE recipient_id = ? AND is_read = ? AND delete_request = ? ";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$recipient_id,1]);
+        $stmt->execute([$recipient_id,1,0]);
         $result = $stmt->fetchAll();
         if(!$result){
             return 0;
@@ -80,17 +86,17 @@ class Company extends Dbh{
         }
     }
     protected function get_all_sent_messages($creator_id){
-        $sql = "SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,recipient_id,fullName  FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id INNER JOIN job_seeker on message_recipient.recipient_id = job_seeker.login_id where message.creator_id =? order by create_date desc";
+        $sql = "SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,recipient_id,fullName  FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id INNER JOIN job_seeker on message_recipient.recipient_id = job_seeker.login_id WHERE message.creator_id =? AND message.sender_delete_request =? order by create_date desc";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$creator_id]);
+        $stmt->execute([$creator_id,0]);
         $result = $stmt->fetchAll();
         return  $result;
         $stmt = null;
     }
     protected function get_new_unread_messages($recipient_id){
-        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.is_read = ?;";
+        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.is_read = ? AND message_recipient.delete_request = ?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$recipient_id,0]);
+        $stmt->execute([$recipient_id,0,0]);
         $result = $stmt->fetchAll();
        if(!$result ){
                 return self::fail;

@@ -102,17 +102,17 @@ class Jobseeker extends Dbh{
     }
     protected function get_all_inbox_messages($recipient_id)
     {
-        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ?;";
+        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.delete_request = ? order by create_date desc;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$recipient_id]);
+        $stmt->execute([$recipient_id,0]);
         $result = $stmt->fetchAll();
         return  $result ;
         $stmt = null;
     }
     protected function get_read_messages($recipient_id){
-        $sql = " Select * from message_recipient where recipient_id = ? and is_read = ?";
+        $sql = " Select * from message_recipient where recipient_id = ? AND is_read = ? AND delete_request = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$recipient_id,1]);
+        $stmt->execute([$recipient_id,1,0]);
         $result = $stmt->fetchAll();
         if(!$result){
             return 0;
@@ -123,9 +123,9 @@ class Jobseeker extends Dbh{
         }
     }
     protected function get_all_sent_messages($creator_id){
-        $sql = "SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,recipient_id,company.company_name FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id INNER JOIN company on message_recipient.recipient_id = company.login_id where message.creator_id =? order by create_date desc";
+        $sql = "SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,recipient_id,company.company_name FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id INNER JOIN company on message_recipient.recipient_id = company.login_id where message.creator_id =? AND message.sender_delete_request =? order by create_date desc";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$creator_id]);
+        $stmt->execute([$creator_id,0]);
         $result = $stmt->fetchAll();
         return  $result;
         $stmt = null;
@@ -178,7 +178,14 @@ class Jobseeker extends Dbh{
             $stmt->execute(['1',$message_id]);
             return self::success;
             $stmt = null;
-    
+        }
+        protected function delete_this_sent_message($message_id)
+        { //new
+            $sql = " UPDATE message SET sender_delete_request = ?  WHERE message_id = ?";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(['1',$message_id]);
+            return self::success;
+            $stmt = null;
         }
         protected function retreive_all_jobs()
         {

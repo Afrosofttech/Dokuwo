@@ -609,6 +609,7 @@ function viewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,created
         '<button type="button" class="btn btn-default" onclick="selectAJobseekerToForward(\''+msg_subject+'\',\''+msg_body+'\')"><i class="fas fa-share"></i> Forward</button>'+
       '</div>'+
     '<button type="button" class="btn btn-default" onclick="DeleteMessage(\''+msg_id+'\',\''+jobseeker_id+'\');"><i class="far fa-trash-alt"></i> Delete</button>'+
+    '<button type="button" class="btn btn-default"><i class="fas fa-ban"></i> Block user</button>'+
     '<button type="button" class="btn btn-default printbtn"><i class="fas fa-print"></i> Print</button>'+
     '</div>'+
     '<!-- /.card-footer -->'+
@@ -1144,32 +1145,23 @@ function sentMessages(){
        });
 }
 function DeleteMessage(msg_id,jobseeker_id){
-  console.log('default:'+jobseeker_id);
-if(jobseeker_id === 'undefined'){
-
 $.ajax({
   method: "POST",
   dataType: 'json',
-  url: "post.php/company/delete_message",
+  url: (jobseeker_id === 'undefined')? "post.php/company/delete_message":"post.php/company/delete_sent_message",
   data: {"message_id" : msg_id},
   success: function(data){
     if(data == 200){
       $.notify('message successfully deleted','success');
-      contentMessage();
+      (jobseeker_id === 'undefined')?contentMessage():sentMessages();
+    }else{
+      $.notify('message has not been deleted','error');
     }
-    // else{
-    //   $.notify('message has not been deleted','error');
-    // }
   },
   error: function(err){
     $.notify(err.responseText,'error');
   }
-});
-}else{
-  $.notify('You can\'t delete sent messages','error');
-  sentMessages();
-}
-
+ });
 }
 function geyOutReadMessages(param){
   $.ajax({
