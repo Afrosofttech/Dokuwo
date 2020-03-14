@@ -940,7 +940,7 @@ function jcomposeNewMessage(login_id,cName,divToClear){
   });  
 }
 function jviewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,created_date,parent_msg_id,company_name,company_id){
-  //AMS-> both jobseeker_name and jobseeker_id are optional and only set when viewing sent messages
+  //AMS-> both company_name and company_id are optional and only set when viewing sent messages
     let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
       '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
         '<h3 class="card-title">Read Message</h3>'+
@@ -1028,7 +1028,7 @@ function jviewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,create
         $.notify('right-click is disabled!','warning'); 
     }
   })
-  
+  if(company_id === undefined){
     $.ajax({
       method: "POST",
       dataType: 'json',
@@ -1044,7 +1044,8 @@ function jviewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,create
       //
       }
     })
-    })
+  }
+ })
 }
 function jDeleteMessage(msg_id,company_id){
   $.ajax({

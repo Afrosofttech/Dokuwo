@@ -645,6 +645,7 @@ $('p').mousedown(function(e) {
   }
 })
 
+if(jobseeker_id === undefined){
   $.ajax({
     method: "POST",
     dataType: 'json',
@@ -661,7 +662,8 @@ $('p').mousedown(function(e) {
     //
     }
   })
-  })
+ }
+})
 
 }
 function newMsgNotification(){  
