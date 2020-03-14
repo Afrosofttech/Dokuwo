@@ -49,11 +49,11 @@ $contr =  $urlParts[sizeof($urlParts)-2];
          $res = $result->delete_message($_POST['message_id']);
          echo $res; 
          break;
-      //  case "delete_message_sent":
-      //    $result = new MessagesController();
-      //    $res = $result->delete_message_sent($_POST['message_id']);
-      //    echo $res; 
-      //    break;
+       case "delete_sent_message":
+         $result = new MessagesController();
+         $res = $result->delete_sent_message($_POST['message_id']);
+         echo $res; 
+         break;
        case "message_is_read":
          $result = new MessagesController();
          $res = $result->message_is_read($_POST['message_id']);
@@ -118,6 +118,11 @@ $contr =  $urlParts[sizeof($urlParts)-2];
           $result = new JobseekerMessagesController();
           $res = $result->delete_message($_POST['message_id']);
           echo $res; 
+          break;
+        case "delete_sent_message":
+            $result = new MessagesController();
+            $res = $result->delete_sent_message($_POST['message_id']);
+            echo $res; 
           break;
         case "reply_company":
           $result = new JobseekerMessagesController();

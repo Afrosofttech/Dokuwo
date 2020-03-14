@@ -16,4 +16,9 @@ class JobseekerMessagesController extends Jobseeker{
         $res = $this->delete_this_message($message_id);
         return $res;
     }
+    public function delete_sent_message($message_id)
+    {
+        $res = $this->delete_this_sent_message($message_id);
+        return $res;
+    }
 }

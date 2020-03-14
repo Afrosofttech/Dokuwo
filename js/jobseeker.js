@@ -1047,17 +1047,15 @@ function jviewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,create
     })
 }
 function jDeleteMessage(msg_id,company_id){
-  if(company_id === 'undefined'){
-
   $.ajax({
     method: "POST",
     dataType: 'json',
-    url: "post.php/jobseeker/delete_message",
+    url: (company_id === 'undefined')?"post.php/jobseeker/delete_message":"post.php/jobseeker/delete_sent_message",
     data: {"message_id" : msg_id},
     success: function(data){
       if(data == 200){
         $.notify('message successfully deleted','success');
-        contentMessage();
+        (company_id === 'undefined')?jcontentMessage():jsentMessages();
       }else {
         $.notify('message has not been deleted','error');
       }
@@ -1066,11 +1064,6 @@ function jDeleteMessage(msg_id,company_id){
       $.notify(err.responseText,'error');
     }
   });
-  }else{
-    $.notify('You can\'t delete sent messages','error');
-    jsentMessages();
-  }
-
 }
 function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
   //ams-> company_id is basically not necessary here. But since we are using the same function for viewing messages,
