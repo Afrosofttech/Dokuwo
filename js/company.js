@@ -609,7 +609,7 @@ function viewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,created
         '<button type="button" class="btn btn-default" onclick="selectAJobseekerToForward(\''+msg_subject+'\',\''+msg_body+'\')"><i class="fas fa-share"></i> Forward</button>'+
       '</div>'+
     '<button type="button" class="btn btn-default" onclick="DeleteMessage(\''+msg_id+'\',\''+jobseeker_id+'\');"><i class="far fa-trash-alt"></i> Delete</button>'+
-    '<button type="button" class="btn btn-default"><i class="fas fa-ban"></i> Block user</button>'+
+    ''+((jobseeker_id === undefined)?('<button type="button" class="btn btn-default"><i class="fas fa-ban"></i> Block user</button>'):'')+''+
     '<button type="button" class="btn btn-default printbtn"><i class="fas fa-print"></i> Print</button>'+
     '</div>'+
     '<!-- /.card-footer -->'+
