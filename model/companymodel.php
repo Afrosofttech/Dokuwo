@@ -210,7 +210,7 @@ class Company extends Dbh{
         }
     }
     protected function get_application_stats($company_id){
-        $sql = " SELECT COUNT(application.jobseeker_id) AS no_of_applicants,job.status, job.job_id,job.job_name,job.date_posted FROM application INNER JOIN job ON application.job_id = job.job_id WHERE application.company_id = ? GROUP BY application.job_id";
+        $sql = " SELECT COUNT(application.jobseeker_id) AS no_of_applicants,job.status, job.job_id,job.job_name,job.date_posted FROM application INNER JOIN job ON application.job_id = job.job_id WHERE application.company_id = ? GROUP BY application.job_id ORDER BY job.date_posted DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$company_id]);
         $result = $stmt->fetchAll();

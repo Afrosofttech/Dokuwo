@@ -8,7 +8,7 @@ function adminSideBar(){
         '<div class="sidebar-brand-icon rotate-n-15">'+
           '<i class="fas fa-laugh-wink"></i>'+
         '</div>'+
-        '<div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>'+
+        '<div class="sidebar-brand-text mx-3">Dokuwo<sup></sup></div>'+
       '</a>'+
     
       '<hr class="sidebar-divider my-0">'+
@@ -78,7 +78,7 @@ function footer(){
     return '<footer class="sticky-footer bg-white">'+
     '<div class="container my-auto">'+
       '<div class="copyright text-center my-auto">'+
-        '<span>Copyright &copy; Afrika Software Technologies</span>'+
+        '<span>Powered by &copy; Afrika Software Technologies</span>'+
       '</div>'+
     '</div>'+
   '</footer>';

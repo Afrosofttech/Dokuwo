@@ -7,9 +7,9 @@ function jobseekerSideBar(){
         
     '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">'+
       '<div class="sidebar-brand-icon rotate-n-15">'+
-        '<i class="fas fa-laugh-wink"></i>'+
+        '<i><img src="assets/img/icon.png" class="rounded-circle" alt="Dokuwo" style="width: 50%; height: auto;"></i>'+
       '</div>'+
-      '<div class="sidebar-brand-text mx-3">Career</div>'+
+      '<div class="sidebar-brand-text mr-3">Dokuwo</div>'+
     '</a>'+
   
     '<hr class="sidebar-divider my-0">'+

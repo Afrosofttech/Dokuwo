@@ -6,9 +6,9 @@ function sideBar(){
         
           '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">'+
             '<div class="sidebar-brand-icon rotate-n-15">'+
-              '<i class="fas fa-laugh-wink"></i>'+
+            '<i><img src="assets/img/icon.png" class="rounded-circle" alt="Dokuwo" style="width: 50%; height: auto;"></i>'+
             '</div>'+
-            '<div class="sidebar-brand-text mx-3">CAREER<sup></sup></div>'+ 
+            '<div class="sidebar-brand-text mr-3">Dokuwo<sup></sup></div>'+
           '</a>'+
         
           '<hr class="sidebar-divider my-0">'+
@@ -519,7 +519,6 @@ function contentMessage(){
           //return false;
         });
 
-
         });
 
        geyOutReadMessages('myTable');
@@ -554,7 +553,7 @@ function redirectToMessageFromNotification(message_id,creator_id,creator_name,su
          
 }
 function viewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,created_date,parent_msg_id,jobseeker_name,jobseeker_id){
-//AMS: both jobseeker_name and jobseeker_id are optional and only set when viewing sent messages
+//ams: both jobseeker_name and jobseeker_id are optional and only set when viewing sent messages
 
   let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
     '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
@@ -1740,7 +1739,7 @@ function show_posted_jobs(){
     appStats+=
     '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
     '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-      '<h4 class="card-title">Appliation Statistics</h4>'+
+      '<h4 class="card-title">Application Statistics</h4>'+
     '</div>'+
     '<!-- /.card-header -->'+
     '<div class="card-body p-1">'+
