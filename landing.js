@@ -72,7 +72,7 @@ function header(){
             '<span class="lni-menu"></span>'+
             '<span class="lni-menu"></span>'+
           '</button>'+
-          '<a href="index.php" class="navbar-brand"><img src="assets/img/dokuwo-header.png" alt="logo"></a>'+
+          '<a href="index.php" class="navbar-brand"><img src="assets/img/logo-header.png" alt="logo"></a>'+
         '</div>'+
         '<div class="collapse navbar-collapse" id="main-navbar">'+
           '<ul class="navbar-nav mr-auto w-100 justify-content-end">'+
@@ -377,7 +377,7 @@ function footer(){
           '<div class="row">'+
             '<div class="col-lg-3 col-md-3 col-xs-12">'+
               '<div class="widget">'+
-                '<div class="footer-logo"><img src="assets/img/dokuwo-footer.png" alt=""></div>'+
+                '<div class="footer-logo"><img src="assets/img/logo-footer.png" alt=""></div>'+
                 '<div class="textwidget">'+
                   '<p>Sed consequat sapien faus quam bibendum convallis quis in nulla. Pellentesque volutpat odio eget diam cursus semper.</p>'+
                 '</div>'+
@@ -412,9 +412,9 @@ function footer(){
                   '</div>'+
                 '</form>'+
                 '<ul class="mt-3 footer-social">'+
-                  '<li><a class="facebook" href="#"><i class="lni-facebook-filled"></i></a></li>'+
-                  '<li><a class="twitter" href="#"><i class="lni-twitter-filled"></i></a></li>'+
-                  '<li><a class="linkedin" href="#"><i class="lni-linkedin-fill"></i></a></li>'+
+                  '<li><a class="facebook" href="https://www.facebook.com/pg/Dokuwo-106334990997957"><i class="lni-facebook-filled"></i></a></li>'+
+                  '<li><a class="twitter" href="https://twitter.com/Dokuwo1"><i class="lni-twitter-filled"></i></a></li>'+
+                  '<li><a class="linkedin" href="https://www.linkedin.com/company/38126868/"><i class="lni-linkedin-fill"></i></a></li>'+
                 '</ul> '+       
               '</div>'+
             '</div>'+
