@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0bfe66a6-4466-4fe2-a3a6-bfdee15b4414" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/get.php" beforeDir="false" afterPath="$PROJECT_DIR$/get.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/company.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/company.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/jobseeker.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/jobseeker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/companymodel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/companymodel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/companyview.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/companyview.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="PhpWebServerValidation" path_to_validation_script="C:\xampp\htdocs\Career" selected_validation_type="LOCAL" web_path_to_validation_script="http://127.0.0.1/Career" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.3" />
+  <component name="ProjectId" id="1VyL7kWg8LnhHML5u7TeP5mX7R7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../php/ext/php_xdebug-2.8.0-7.3-vc15-x86_64.dll" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.Career">
+    <configuration name="Career" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Career/" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="get.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/get.php">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.Career" />
+      <item itemvalue="PHP Script.get.php" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script.get.php" />
+        <item itemvalue="JavaScript Debug.Career" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0bfe66a6-4466-4fe2-a3a6-bfdee15b4414" name="Default Changelist" comment="" />
+      <created>1578220222352</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578220222352</updated>
+      <workItem from="1578220233680" duration="8404000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="348" y="68" key="#CLI_Interpreters" timestamp="1578222493326">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="348" y="68" key="#CLI_Interpreters/0.0.1536.824@0.0.1536.824" timestamp="1578222493326" />
+    <state x="476" y="4" key="#PHP" timestamp="1578222497557">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="476" y="4" key="#PHP/0.0.1536.824@0.0.1536.824" timestamp="1578222497557" />
+    <state x="223" y="68" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578221901943">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="223" y="68" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1578221901943" />
+    <state x="484" y="236" width="568" height="415" key="#com.jetbrains.php.debug.validation.PhpWebServerValidationDialog#" timestamp="1578221863190">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="484" y="236" width="568" height="415" key="#com.jetbrains.php.debug.validation.PhpWebServerValidationDialog#/0.0.1536.824@0.0.1536.824" timestamp="1578221863190" />
+    <state x="524" y="116" key="#xdebugger.evaluate" timestamp="1578224391600">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="524" y="116" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1578224391600" />
+    <state width="1534" height="440" key="DebuggerActiveHint" timestamp="1578224230115">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1534" height="440" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1578224230115" />
+    <state x="548" y="168" key="FileChooserDialogImpl" timestamp="1578222392988">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="548" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1578222392988" />
+    <state width="1493" height="185" key="GridCell.Tab.0.bottom" timestamp="1578230825040">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1578230825040" />
+    <state width="1493" height="185" key="GridCell.Tab.0.center" timestamp="1578230825039">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1578230825039" />
+    <state width="1493" height="185" key="GridCell.Tab.0.left" timestamp="1578230825039">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1578230825039" />
+    <state width="1493" height="185" key="GridCell.Tab.0.right" timestamp="1578230825040">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1578230825040" />
+    <state width="1493" height="185" key="GridCell.Tab.1.bottom" timestamp="1578230825040">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1578230825040" />
+    <state width="1493" height="185" key="GridCell.Tab.1.center" timestamp="1578230825040">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1578230825040" />
+    <state width="1493" height="185" key="GridCell.Tab.1.left" timestamp="1578230825040">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1578230825040" />
+    <state width="1493" height="185" key="GridCell.Tab.1.right" timestamp="1578230825040">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1578230825040" />
+    <state width="1493" height="185" key="GridCell.Tab.2.bottom" timestamp="1578230825028">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1578230825028" />
+    <state width="1493" height="185" key="GridCell.Tab.2.center" timestamp="1578230825028">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1578230825028" />
+    <state width="1493" height="185" key="GridCell.Tab.2.left" timestamp="1578230825028">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1578230825028" />
+    <state width="1493" height="185" key="GridCell.Tab.2.right" timestamp="1578230825028">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="185" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1578230825028" />
+    <state x="277" y="56" key="SettingsEditor" timestamp="1578227626767">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1578227626767" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>26</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>27</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>29</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/view/companyview.php</url>
+          <line>20</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/view/companyview.php</url>
+          <line>16</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/view/companyview.php</url>
+          <line>15</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/view/companyview.php</url>
+          <line>14</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/view/companyview.php</url>
+          <line>13</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/view/companyview.php</url>
+          <line>12</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>21</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>23</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>22</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>8</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>9</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>14</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>15</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>10</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>12</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/get.php</url>
+          <line>11</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/js/company.js</url>
+          <line>467</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/js/company.js</url>
+          <line>472</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/js/company.js</url>
+          <line>457</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/js/company.js</url>
+          <line>451</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/js/company.js</url>
+          <line>453</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/js/company.js</url>
+          <line>469</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PhpLocalRunConfigurationType">
+        <watch expression="$_SERVER[&quot;PHP_SELF&quot;]" />
+        <watch expression="$GLOBALS['IDE_EVAL_CACHE']['b7e767ad-566b-4b45-8d22-7bd9f6543de2']" />
+        <watch expression="$GLOBALS['IDE_EVAL_CACHE']['b7e767ad-566b-4b45-8d22-7bd9f6543de2']" />
+        <watch expression="$GLOBALS[&quot;uri&quot;]" language="PHP" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
