@@ -14,6 +14,7 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
  $method =  $urlParts[sizeof($urlParts)-1];
  $view =  $urlParts[sizeof($urlParts)-2];
 
+ 
 if($view == 'company'){
    switch ($method){
       case "retrieve_login_info":
