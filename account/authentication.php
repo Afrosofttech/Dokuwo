@@ -111,7 +111,7 @@
 	let attempt = '<?php if(isset($_REQUEST['attempt'])){echo $_REQUEST['attempt'];}else{ echo '';}  ?>';
 	(attempt == 'success')? swal('Profile creation complete!','Please login to continue','success','Cool'):
 	(attempt == 'failed')?swal('Profile creation failed!','You need to create an account first','error','Cool'):
-	(attempt == 'duplicate')?swal('Account already exist!','Please login to continue','warning','Cool'): null;
+	(attempt == 'duplicate')?swal('account already exist!','Please login to continue','warning','Cool'): null;
 
 	$('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);
@@ -190,11 +190,11 @@
                 }else if(response == 400){
 					swal('Invalid account access!','Activate your account if you have already created an account','warning','Cool');
 				}else if(response == 'success'){
-					swal('Account creation complete!','A link has been sent to your email to activate your account','success','Cool');
+					swal('account creation complete!','A link has been sent to your email to activate your account','success','Cool');
 				}else if(response == 'duplicate'){
-                    swal('Account already exist!','Please login to continue or create a different account','warning','Cool');
+                    swal('account already exist!','Please login to continue or create a different account','warning','Cool');
 				}else{
-				    swal('Account does not exist!','You need to create an account first','warning','Cool');
+				    swal('account does not exist!','You need to create an account first','warning','Cool');
                }
             },
             error: function(err){

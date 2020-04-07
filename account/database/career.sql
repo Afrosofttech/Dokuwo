@@ -153,7 +153,7 @@ INSERT INTO `job_seeker` (`jobseeker_id`, `login_id`, `fname`, `lname`, `fullNam
 (6, 8, 'Jamaal', 'Cham', 'Jamaal Cham', 'jamaal@gmail.com', '427163', 'Software Engineers', 'php, html, css, javascript, jquery, angular, wordpress', 'Programmer', 'B.sc.', 'Kotu', '1993-03-27', 'Gambia', 'jamaal.jpeg', 'myCurrentCV.pdf'),
 (7, 9, 'Biran', 'Jobe', 'Biran Jobe', 'biranjobe@gmail.com', '789163', 'Software Engineers', 'php, html, css, javascript, jquery, angular, wordpress', 'Programmer', 'B.sc.', 'Sukuta', '1997-03-13', 'Gambia', 'biran.jpeg', 'myCurrentCV.pdf'),
 (8, 10, 'Abubacarr', 'Drammeh', 'Abubacarr Drammeh', 'abubacarr@gmail.com', '652163', 'Health', 'Pharmacist, leadership, volunteer', 'Lab Technician', 'B.sc.', 'Farato', '1996-03-13', 'Gambia', 'adrammeh.jpeg', 'myCurrentCV.pdf'),
-(9, 11, 'Fatu', 'Njie', 'Fatu Njie', 'fatunjie@gmail.com', '312163', 'Finance', 'Accounting, Business Management, ACCA, CAT', 'Accountant', 'B.sc.', 'tallinding', '1994-03-13', 'Gambia', 'fatu.jpeg', 'myCurrentCV.pdf'),
+(9, 11, 'Fatu', 'Njie', 'Fatu Njie', 'fatunjie@gmail.com', '312163', 'Finance', 'accounting, Business Management, ACCA, CAT', 'accountant', 'B.sc.', 'tallinding', '1994-03-13', 'Gambia', 'fatu.jpeg', 'myCurrentCV.pdf'),
 (10, 22, 'Aji fatu', 'gaye', 'Aji fatu gaye', 'aji@gmail.com', '6985328', 'Law', 'Leadership, volunteer, law, team work', 'Lawyer', 'B.sc.', 'Serrekunda', '1998-09-19', 'Gambia', 'aji.jpeg', 'myCurrentCV.pdf');
 
 -- --------------------------------------------------------

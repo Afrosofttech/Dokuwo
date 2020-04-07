@@ -1,4 +1,4 @@
-Finance = '<li class="small text-info"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span>Accountants</li>'+
+Finance = '<li class="small text-info"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span>accountants</li>'+
 '<li class="small text-info"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span>Marketers</li>'+
 '<li class="small text-info"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span>Business administrators</li>';
 FinanceImage ='finance.jpeg';

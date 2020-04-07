@@ -6,7 +6,7 @@
 	  session_destroy();
   }
   else if(isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'company'){
-    header('Location: Account/index.php');
+    header('Location: account/index.php');
   }
   // var_dump($_SESSION);
 ?>
@@ -69,9 +69,9 @@
     <script src="assets/js/main.js"></script>
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="Account/js/core/functions.js"></script>
-    <script src="Account/js/core/jobseeker_categories.js"></script>
-    <script src="Account/js/plugins/notify.min.js"></script>
+    <script src="account/js/core/functions.js"></script>
+    <script src="account/js/core/jobseeker_categories.js"></script>
+    <script src="account/js/plugins/notify.min.js"></script>
     <script src="landing.js"></script>
    
     <!-- Go to www.addthis.com/dashboard to customize your tools -->
