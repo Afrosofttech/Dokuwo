@@ -1,0 +1,234 @@
+// job-detail
+.job-detail{
+  .content-area{
+    padding: 15px 20px;
+    box-shadow: 0px 0px 14px rgba(191, 191, 191, 0.24);
+    h4{
+      font-size: 30px;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+    p{
+      margin-bottom: 15px;
+    }
+    h5{
+      font-size: 20px;
+      font-weight: 500;
+      margin: 15px 0;
+    }
+    ul{
+      li{
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+.small-title{
+  font-size: 30px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+.sideber{
+  padding: 15px;
+  box-shadow: 0px 0px 14px rgba(191, 191, 191, 0.24);
+  .widghet{
+    margin-bottom: 30px;
+    h3{
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #333333;
+      font-weight: 500;
+    }
+  }
+  .maps .map-full {
+    width: 100%;
+    height: 250px;
+    iframe{
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+  .share-job{
+    #subscribe-form{
+      .form-group .form-control{
+        border: 1px solid #eaeaea;
+      }
+    }
+    .meta-tag{
+      margin-top: 20px;
+      .meta-part{
+        display: inline-block;
+        margin-right: 5px;
+        a{
+          font-size: 16px;
+          color: #9a9a9a;
+          i{
+            margin-right: 5px;
+          }
+        }
+        a:hover{
+          color: $preset;
+        }
+      }
+    }
+  }
+  .subscribe-form{
+     margin-top: 15px;
+    .form-group{
+      position: relative;
+      .form-control{
+        border-radius: 30px;
+        background: transparent;
+        color: #fff;
+        padding: 8px 15px;
+        &:focus{
+          border-color: $preset;
+        }
+      }
+      .btn-common{
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 7px 15px;
+        height: 39px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+        background: transparent;
+        background: $preset;
+        &:before{
+          border-top-left-radius: 0px;
+          border-bottom-left-radius: 0px;
+          border-top-right-radius: 30px;
+          border-bottom-right-radius: 30px;
+        }
+      }
+    }
+  }
+}
+
+
+// Post Jobs
+.post-job{
+  .job-title{
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  p{
+    margin-bottom: 10px;
+  }
+  .control-label{
+    margin-bottom: 10px;
+  }
+  .styled-select{
+    width: 100%;
+    background-color: #FFF;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    color: #9a9a9a;
+    padding: 0 15px;
+    display: block;
+  }
+}
+.upload-button{
+  position: relative;
+  margin-bottom: 40px;
+  input[type=file] {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    cursor: pointer;
+  }
+  .btn-sm{
+    padding: 5px 20px;
+    font-size: 13px;
+  }
+}
+.input-group-addon{
+  padding: 0!important;
+}
+.styled-select {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  border-radius: 30px;
+}
+.styled-select > select {
+   background: transparent;
+   font-size: 14px;
+   line-height: 18px;
+   border: 0;
+   border-radius: 0;
+   height: 44px;
+   width: 100%;
+ } 
+.search-category select{
+  padding: 12px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+}    
+select:focus{
+  box-shadow: none;
+  border: none;
+  outline: none;
+}    
+.btn-default{
+  padding: 17px 14px;
+  border-radius: 0px;
+  color: #2d2d2d !important;
+  background: #fff;
+  text-transform: none;
+}
+.btn-default:hover{
+  background-color: #fff;
+  border-color: #fff;
+}
+label{
+  margin: 0;
+}
+.divider{
+  padding: 20px 0px 15px;
+}
+#editor {
+  .note-editor.note-frame{
+    border-color: #f1f1f1;
+    border-radius: 4px;
+  }
+  margin-bottom: 30px;
+  .panel-heading {
+    padding: 0px 0px 7px 10px;
+  }
+  .btn-default{
+    padding: 5px 20px;
+  }
+  .panel-default {
+    .panel-heading {
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      a {
+        color: #333;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+.popover{
+  display: none;
+}

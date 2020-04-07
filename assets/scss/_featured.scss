@@ -1,0 +1,433 @@
+/* ==========================================================================
+ Features Section Start
+ ========================================================================== */
+#featured{
+  .job-featured{
+    background: #fff;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 4px;
+    border-left: 4px solid transparent;
+    box-shadow: 0px 0px 14px rgba(191, 191, 191, 0.24);
+    transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    .icon{
+      float: left;
+      position: relative;
+      width: 70px;
+      text-align: center;
+      display: inline-block;
+      height: 70px;
+      line-height: 70px;
+      box-shadow: 0px 0px 7px rgba(203, 203, 203, 0.23);
+    }
+    .content{
+      padding-left: 90px;
+      h3{
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        a{
+          color: #333;
+          &:hover{
+            color: $preset;
+          }
+        }
+      }
+      .brand{
+        font-size: 15px;
+        margin-bottom: 10px;
+        color: #666666;
+      }
+      .tags{
+        margin-bottom: 15px;
+        span{
+          margin-right: 10px;
+          i{
+            margin-right: 5px;
+            color: $preset;
+          }
+        }
+      }
+    }
+  }
+  .job-featured:hover{
+    border-color: $preset;
+  }
+}
+
+/* ==========================================================================
+ Category Section Start
+ ========================================================================== */
+ .f-category{
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear;
+    border: 1px solid #f1f1f1;
+    margin-top: -1px;
+    background: #ffffff;
+    padding: 20px;
+    text-align: center;
+    overflow: hidden;
+    display: block;
+    margin-right: -1px;
+    a{
+      display: block;
+    }
+    &:hover{
+      background: #f9fcff;
+    }
+    .icon{
+        width: 64px;
+        height: 64px;
+        display: inline-block;
+        border-radius: 50%;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        transform: scale(1);
+        -moz-transform: scale(1);
+        -webkit-transform: scale(1); 
+        -webkit-transition: all .3s linear;
+        -moz-transition: all .3s linear;
+        -ms-transition: all .3s linear;
+        -o-transition: all .3s linear;
+        transition: all .3s linear;
+      i{
+        font-size: 30px;
+        color: #ffffff;
+        line-height: 64px;
+      }
+    }
+    h3{
+      font-size: 18px;
+      line-height: 32px;   
+      -webkit-transition: all .3s linear;
+      -moz-transition: all .3s linear;
+      -ms-transition: all .3s linear;
+      -o-transition: all .3s linear;
+      transition: all .3s linear; 
+      color: #333;
+      &:hover{
+        color: $preset;
+      }
+    } 
+    p{
+      color: #9a9a9a;
+    }
+ }
+ .f-category:hover .icon{
+  transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+ }
+ .bg-color-1{
+    background: #26ae61; 
+ }
+ .bg-color-2{
+    background: #4DADF5; 
+ }
+ .bg-color-3{
+    background: #028af1; 
+ }
+ .bg-color-4{
+    background: #8000ff; 
+ }
+ .bg-color-5{
+    background: #40e0d0; 
+ }
+ .bg-color-6{
+    background: #ff8000; 
+ }
+ .bg-color-7{
+    background: #1d64b4; 
+ }
+ .bg-color-8{
+    background: #fbc1f0; 
+ }
+// browse-jobs
+#browse-jobs{
+  .text-wrapper{
+    width: 100%;
+    display: table;
+    height: 100%;
+    > div{
+      vertical-align: middle;
+      display: table-cell;
+    }
+    h3{
+      font-size: 36px;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+    p{
+      margin-bottom: 35px;
+    }
+  }
+}
+
+//Latest Jobs
+#latest-jobs{
+  .jobs-latest{
+    background: #fff;
+    margin: 15px 0;
+    border-radius: 4px;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 0px 14px rgba(191, 191, 191, 0.24);
+    transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    .img-thumb{
+      float: left;
+      position: relative;
+      text-align: center;
+      display: inline-block;
+      line-height: 120px;
+      height: 187px;
+      border-right: 1px solid #e0e0e0;
+      padding: 30px;
+      width: 30%;
+    }
+    .content{
+      padding: 25px;
+      float: left;
+      width: 70%;
+      h3{
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        a{
+          color: #333;
+          &:hover{
+            color: $preset;
+          }
+        }
+      }
+      .brand{
+        font-size: 15px;
+        margin-bottom: 10px;
+        color: #666666;
+      }
+      .tags{
+        margin-bottom: 15px;
+        span{
+          margin-right: 10px;
+          i{
+            margin-right: 5px;
+            color: $preset;
+          }
+        }
+      }
+      .job-type{
+        color: $preset;
+        font-size: 11px;
+        font-weight: 500;
+        display: inline-block;
+        background: #d5ffe7;
+        padding: 5px 15px;
+        border-radius: 50px;
+        text-transform: uppercase;
+      }
+      .part-time{
+        background: #ffd8d2;
+        color: #ff6046;
+      }
+    }
+  }
+  .save-icon{
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    i{
+      color: #e0e0e0;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      display: block;
+      text-align: center;
+      border-radius: 50%;
+      border: 1px solid #e0e0e0;
+      font-size: 15px;
+      transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -webkit-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+    }
+  }
+  .save-icon:hover i{
+    border-color: $preset;
+    background: $preset;
+    color: #fff;
+  }
+}
+
+/* ==========================================================================
+ Featured Listings Styles
+ ========================================================================== */
+ .product-item{
+    background: #ffffff;
+    margin: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0px 0px 14px rgba(191,191,191,0.24);
+    .icon-thumb{
+      display: block;      
+      position: relative;  
+    } 
+    .product-content{
+      padding: 10px 0px;
+      position: relative;
+      .tags{
+        margin-bottom: 15px;
+        span{
+          color: $preset;
+          font-size: 14px;
+          margin-right: 5px;
+          i{
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+    .product-title{
+      margin: 0;
+      font-size: 20px;
+      padding: 10px 0;
+      position: relative;
+        a{
+          color: #333;
+          font-weight: 500;
+          font-size: 18px;
+          &:hover{
+            color: $preset;
+          }
+      }
+    }
+  }
+  .owl-nav{
+    position: relative;
+    top: -180px;
+    left: 0;
+   }
+   .owl-nav  button.owl-prev{
+      float: left;
+      margin-left: -18px;
+   }
+   .owl-nav  button.owl-next{
+      float: right !important;
+      margin-right: -18px;
+   }
+   .owl-nav  button{
+      width: 40px;
+      height: 40px;
+      display: block !important;
+      background: $preset!important;
+      text-align: center;
+      display: inline-block;
+      opacity: 1 !important;
+      border-radius: 4px !important;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18), 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+      transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -webkit-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+     i{
+      color: #fff;
+      font-size: 16px;
+      line-height: 40px;
+    }
+   }
+   .owl-nav  button:hover{
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  }
+
+// Recent Job Post
+.job-listings{
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0px 0px 14px rgba(191,191,191,0.24);
+    -webkit-transition: all 0.4s ease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+  .job-company-logo{
+    float: left;
+    padding-right: 15px;
+    padding-left: 15px;
+    text-align: center;
+  }
+  .job-details{
+    h3{
+      font-size: 18px;
+      font-weight: 500;
+      transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -webkit-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      &:hover{
+        color: $preset;
+      }
+    }
+    .company-neme{
+      font-size: 14px;
+      color: #666666;
+    }
+  }
+  .btn-open{
+    color: $preset;
+    padding: 7px 21px;
+    line-height: 50px;
+    border-radius: 30px;
+    margin: 15px 0;
+    background: #d5ffe7;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+  .location{
+    display: inline-block;
+    color: #9a9a9a;
+    line-height: 22px;
+    margin: 15px 0;
+    i{
+      color: $preset;
+    }
+  }
+  .btn-full-time{
+    line-height: 50px;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .btn-apply{
+    color: $preset;
+    text-transform: uppercase;
+    line-height: 50px;
+    border: 2px solid $preset;
+    padding: 7px 21px;
+    border-radius: 30px;
+    -webkit-transition:all .4s ease;
+    -moz-transition:all .4s ease;
+    -ms-transition:all .4s ease;
+    -o-transition:all .4s ease;
+    transition:all .4s ease;
+    &:hover{
+      color: #fff;
+      background: $preset;
+    }
+  }
+}
+.job-listings:hover{
+  background: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 11px 0px 20px rgba(102, 102, 102, 0.08);
+}
+
+

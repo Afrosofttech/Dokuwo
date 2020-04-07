@@ -1,0 +1,238 @@
+a{
+  color: #00e78d;
+}
+a:hover, a:focus{
+  color: #00e78d;
+}
+.btn-common{
+    background-color: #00e78d;
+}
+.btn-border{
+  border-color: #00e78d;
+  color: #00e78d;
+}
+.btn-border-filled{
+  color: #00e78d;
+}
+.form-control:focus{
+  border-color: #00e78d;
+}
+.top-nav-collapse .navbar-nav .nav-link:hover{
+  color: #00e78d!important;
+}
+.navbar-expand-lg .navbar-nav li a:hover, .navbar-expand-lg .navbar-nav li .active>a, .navbar-expand-lg .navbar-nav li a:focus{
+  color: #00e78d;
+}
+.navbar li.active a.nav-link{
+  color: #00e78d;
+}
+.top-nav-collapse .navbar-nav li.active a.nav-link{
+  color: #00e78d !important;
+}
+.dropdown .dropdown-item:focus, .dropdown .dropdown-item:hover, .dropdown .dropdown-item.active{
+  background: #00e78d;
+}
+.sign-in li .nav-link{
+  color: #00e78d;
+}
+.sign-in li .nav-link:hover{
+  color: #00e78d!important;
+}
+.button-group .button{
+  background: #00e78d;
+}
+.full-time{
+  color: #00e78d;
+  background: #d1fbee;
+}
+.job-listings .btn-open{
+  color: #00e78d;
+  background: #d1fbee;
+}
+#carousel-area .carousel-indicators li:hover, #carousel-area .carousel-indicators li.active{
+  background: #00e78d;
+}
+#carousel-area .carousel-control-next i, #carousel-area .carousel-control-prev i{
+  color: #00e78d;
+  border: 2px solid #00e78d;
+}
+#carousel-area .carousel-control-next i:hover, #carousel-area .carousel-control-prev i:hover {
+  background: #00e78d;
+}
+.job-search-form .button{
+  background: #00e78d;
+}
+.jobs-services .services-inner .icon i{
+  color: #00e78d;
+}
+#featured .job-featured:hover{
+  border-color: #00e78d;
+}
+#featured .job-featured .content h3 a:hover{
+  color: #00e78d;
+}
+#featured .job-featured .content .tags span i{
+  color: #00e78d;
+}
+.work-process .process-icon{
+  color: #00e78d;
+}
+#latest-jobs .jobs-latest .content .tags span i{
+  color: #00e78d;
+}
+#latest-jobs .save-icon:hover i {
+  border-color: #00e78d;
+  background: #00e78d;
+}
+.owl-dots .active span{
+  background: #00e78d !important;
+}
+.testimonial-item .content-inner .author-info h2 a:hover{
+  color: #00e78d;
+}
+.border-color-defult{
+  border-color: #00e78d;
+}
+.pricing-table .icon i{
+  color: #00e78d;
+}
+.pricing-table:hover .btn-border, .pricing-active .btn-border{
+  background: #00e78d;
+}
+#blog .blog-item-wrapper .blog-item-text h3 a:hover{
+  color: #00e78d;
+}
+#download .download-wrapper .app-button .btn-common{
+  border-color: #00e78d;
+}
+.product-item .product-content .tags span{
+  color: #00e78d;
+}
+.owl-nav button{
+  background: #00e78d !important;
+}
+.job-listings .job-details h3:hover{
+  color: #00e78d;
+}
+.job-listings .location i{
+  color: #00e78d;
+}
+.job-listings .btn-apply{
+  color: #00e78d;
+  border-color: #00e78d;
+}
+.job-listings .btn-apply:hover{
+  background: #00e78d;
+}
+#apply .recruiter{
+  background: #00e78d;
+}
+#counter .counter-box .icon i{
+  color: #00e78d;
+}
+.subscribe-form .form-wrapper .form-control:focus{
+  border-color: #00e78d;
+}
+.subscribe-form .form-wrapper .btn-search{
+  background: #00e78d;
+}
+.input-icon i{
+  color: #00e78d;
+}
+.page-login-form .form-links li a:hover{
+  color: #00e78d;
+}
+.contact-info .contact-icon{
+  background: #00e78d;
+}
+.blog-post .post-content .meta .meta-part a:hover{
+  color: #00e78d;
+}
+#sidebar .cat-list li a:hover{
+  color: #00e78d;
+}
+#sidebar .posts-list .widget-content a:hover{
+  color: #00e78d;
+}
+#sidebar .tag a{
+  background: #00e78d;
+}
+.reply-link{
+  color: #00e78d;
+}
+blockquote{
+  background: #00e78d;
+}
+.right-sideabr .list-item li a.active{
+  color: #00e78d;
+}
+.right-sideabr .list-item li a:hover{
+  color: #00e78d;
+}
+.right-sideabr .list-item .notinumber{
+  background: #00e78d;
+}
+.all-categories ul li a:hover{
+  color: #00e78d; 
+}
+.manager-resumes-item .btn-gray:hover{
+  color: #00e78d; 
+}
+.sideber .share-job #subscribe-form .form-group .form-control:focus{
+  border-color: #00e78d;
+}
+#subscribe-form .form-group .btn-common{
+  background: #00e78d;
+}
+.pagination li a{
+  background: #00e78d;
+}
+.post-header a{
+  color: #00e78d; 
+}
+.page-header .month-price{
+  background: #00e78d;
+}
+.page-header .breadcrumb-wrapper .content .tags span i{
+  color: #00e78d;
+}
+.panel-default .panel-heading{
+  background: #00e78d !important;
+  border: 1px solid #00e78d;
+}
+#subscribe-form .form-group .form-control:focus{
+  border-color: #00e78d;
+}
+.footer-social li a{
+  background: #00e78d;
+}
+footer .menu li a:hover{
+  color: #00e78d;
+}
+#copyright{
+  background-color: #00e78d;
+}
+.back-to-top{
+  background: #00e78d;
+}
+#copyright p a:hover{
+  color: #00e78d;
+}
+.slicknav_btn{
+  background-color: #00e78d;
+}
+#latest-jobs .jobs-latest .content h3 a:hover{
+  color: #00e78d;
+}
+#apply .recruiter .img-thumb i{
+  color: #1bce96;
+}
+.sideber .share-job .meta-tag .meta-part a:hover{
+  color: #00e78d;
+}
+.owl-dots span:hover{
+  background: #00e78d;
+}
+.f-category h3:hover{
+  color: #00e78d;
+}

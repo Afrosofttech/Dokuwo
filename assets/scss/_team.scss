@@ -1,0 +1,95 @@
+/* ==========================================================================
+ Team Section
+   ========================================================================== */
+   .single-team:hover .team-details{
+    opacity: 1;
+   }
+   .single-team{
+      position: relative;
+      margin: 15px 0;
+      border-radius: 4px;
+      -webkit-transition: 0.5s;
+      transition: 0.5s;
+      box-shadow: 0px 0px 16px rgba(131, 131, 131, 0.17);
+      border-radius: 0px;
+      overflow: hidden;
+      .team-thumb{
+        position: relative;
+      }
+      &:hover{
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+        box-shadow: 0px 0px 16px rgba(131, 131, 131, 0.35);
+      }
+    img{
+      width: 100%;
+    }
+    .team-inner{
+      -webkit-transition: 0.5s;
+      transition: 0.5s;
+    }
+    .team-details{
+      padding: 20px;
+      width: 100%;
+      text-align: left;
+      -webkit-transition: 0.5s;
+      -moz-transition: 0.5s;
+      transition: 0.5s;
+      .team-title{
+        margin-bottom: 5px;
+        font-size: 18px;
+        color: #263238;
+      }
+      p{
+        font-size: 14px;
+        margin-bottom: 0px;
+      }
+    }
+    .social-list{
+      position: absolute;
+      background-image: -moz-linear-gradient( 0deg, rgb(60,150,255) 0%, rgb(45,251,255) 100%);
+      background-image: -webkit-linear-gradient( 0deg, rgb(60,150,255) 0%, rgb(45,251,255) 100%);
+      background-image: -ms-linear-gradient( 0deg, rgb(60,150,255) 0%, rgb(45,251,255) 100%);
+      border-top-right-radius: 30px;
+      bottom: 0;
+      left: -40px;
+      padding: 20px 0px;
+      -webkit-transition: 0.5s;
+      -moz-transition: 0.5s;
+      transition: 0.5s;
+      li{
+        a{
+          display: block;
+          height: 34px;
+          line-height: 34px;
+          text-align: center;
+          width: 40px;
+          color: #fff;
+          font-size: 16px;
+          border-radius: 0px;
+          -webkit-transition: 0.5s;
+          -moz-transition: 0.5s;
+          transition: 0.5s;
+        }
+      }
+      .facebook a:hover{
+        background: #4867aa;
+        color: #fff;
+      }
+      .twitter a:hover{
+        background: #1da1f2;
+        color: #fff;
+      }
+      .google-plus a:hover{
+        background: #dd4d42;
+        color: #fff;
+      }
+      .linkedin a:hover{
+        background: #007bb6;
+        color: #fff;
+      }
+    }
+   }
+   .single-team:hover .social-list{
+    left: 0;
+   }

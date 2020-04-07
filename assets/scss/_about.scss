@@ -1,0 +1,189 @@
+/* ==========================================================================
+ About Page Style
+ ========================================================================== */
+ .about-content{
+  h3{
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  .desc{
+    font-weight: 500;
+    line-height: 26px;
+    margin-top: 20px;
+  }
+  p{
+    margin-bottom: 20px;
+  }
+ }
+
+// Work Process
+.work-process{
+  padding: 0px 30px;
+  text-align: center;
+  .process-icon{
+    font-size: 48px;
+    color: $preset;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  h4{
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+}
+#download{
+  .download-wrapper{
+    width: 100%;
+    display: table;
+    height: 100%;
+    > div{
+      vertical-align: middle;
+      display: table-cell;
+    }
+    .download-text{
+      h4{
+        font-size: 36px;
+        font-weight: 500;
+        margin-bottom: 30px;
+      }
+    }
+    p{
+      margin-bottom: 35px;
+    }
+    .app-button{
+      .btn{
+        border-radius: 30px;
+        width: 200px;
+        text-align: left;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 7px 17px;
+        margin-right: 10px;
+        text-transform: capitalize;
+        i{
+          display: inline-block;
+          font-size: 30px;
+          float: left;
+          line-height: 36px;
+          margin-right: 10px;
+        }
+        span{
+          font-size: 13px;
+          font-weight: 400;
+        }
+      }
+      .btn-common{
+        border: 2px solid $preset;
+      }
+    }
+  }
+}
+
+// browse-catagories
+.browse-catagories{
+  .img-box{
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    z-index: 90;
+    margin: 10px 0;
+    border-radius: 3px;
+    .img-box-content{
+      position: absolute;
+      z-index: 101;
+      bottom: 0;
+      padding: 30px;
+      width: 100%;
+      transition: 0.3s ease-out;
+      -webkit-transition: 0.3s ease-out;
+      -moz-transition: 0.3s ease-out;
+       h4 {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 36px;
+        color: #fff;
+        margin: 0;
+      }
+      span {
+        font-size: 14px;
+        font-weight: 400;
+        color: #fff;
+      }
+    }
+  }
+  .img-box:before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    content: "";
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 99;
+    transition: 0.3s ease-out;
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+  }
+  .img-box:hover:before{
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Apply Jobs
+#apply{
+  .no-padding{
+    padding: 0;
+  }
+  .recruiter{
+    background: $preset;
+    position: relative;
+    .img-thumb{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      i{
+        font-size: 150px;
+        color: #35bc70;
+      }
+    }
+  }
+  .jobseeker{
+    background: #24324a;
+    position: relative;
+    .img-thumb{
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      i{
+        color: #324360;
+        font-size: 150px;
+      }
+    }
+  }
+  .item-box{
+    color: #fff;
+    text-align: center;
+    padding: 80px;
+    position: relative;
+    h5{
+      font-size: 24px;
+      color: #fff;
+    }
+    h3{
+      color: #fff;
+      font-size: 36px;
+      font-weight: 500;
+    }
+    p{
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .btn{
+      text-transform: capitalize;
+    }
+  }
+}

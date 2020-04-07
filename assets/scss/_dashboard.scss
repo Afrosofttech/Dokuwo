@@ -1,0 +1,560 @@
+
+.inner-box{
+  padding: 30px;
+  box-shadow: 0px 0px 14px rgba(191,191,191,0.24);  
+}
+.full-time,
+.part-time{
+  font-size: 11px;
+  font-weight: 500;
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  text-transform: uppercase;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.full-time{
+  color: #26ae61;
+  background: #d5ffe7;
+}
+.part-time{
+  color: #ff6046;
+  background: #ffd8d2;
+}
+.full-time:hover,
+.part-time:hover,
+.btn-open:hover{
+  box-shadow: 0px 3px 9px rgba(96, 94, 94, 0.17);
+}
+/* ==========================================================================
+   Browse Jobs Page Style
+   ========================================================================== */
+   .job-browse{   
+     .wrap-search-filter{
+      margin-bottom: 30px;
+     }   
+     .pagination{
+      margin-top: 30px;
+     }
+     .cat-list{
+      li{
+        padding: 7px 0;
+        border-bottom: 1px solid #f1f1f1;
+        a{
+          text-decoration: none;
+          color: #999;
+          display: inline-block;
+          transition: all 0.2s ease-in-out;
+          -moz-transition: all 0.2s ease-in-out;
+          -webkit-transition: all 0.2s ease-in-out;
+          -o-transition: all 0.2s ease-in-out;
+        }
+      }
+     }
+    }
+    .job-list{
+      border: 1px solid #f1f1f1;
+      padding: 15px;
+      display: inline-block;
+      margin-bottom: 15px;
+      .thumb{
+        float: left;
+        img{
+          border-radius: 4px;
+        }
+      }
+      .job-list-content{
+        display: block;
+        margin-left: 125px;
+        position: relative;
+        h4{
+          font-size: 24px;
+          margin-bottom: 10px;          
+        }
+        p{
+          margin-bottom: 20px;
+        }
+      }
+      .job-tag{
+        border-top: 1px solid #f1f1f1;
+        padding: 15px 0;
+        line-height: 35px;
+        .meta-tag{
+          span{
+            font-size: 14px;
+            color: #999;
+            margin-right: 10px;
+            a{
+              color: #999;
+              &:hover{
+                color: $preset;
+              }
+            }
+            i{
+              margin-right: 5px;
+            }
+          }
+        }        
+        .icon{
+          float: left;
+          border: 1px solid #f1f1f1;
+          width: 40px;
+          height: 40px;
+          line-height: 42px;
+          border-radius: 50px;
+          text-align: center;
+          margin-right: 18px;
+          background: #f1f1f1;
+          color: #ff4f57;
+          font-size: 16px;
+        }
+      }
+    }
+
+/* ==========================================================================
+   Job Alerts Pages Style
+   ========================================================================== */
+    .right-sideabr{
+      margin-bottom: 30px;
+      box-shadow: 0px 0px 14px rgba(191,191,191,0.24);  
+    h4{
+      font-size: 18px;
+      color: #333;
+      padding: 15px 20px;
+      font-weight: 500;
+      background: #f2f7fb;
+      margin-bottom: 0;
+    }    
+    .list-item{  
+      li{
+          padding: 15px 20px;
+          border-bottom: 1px solid #f7f7f7;
+        a{
+          font-size: 14px;
+          font-weight:400;
+          color: #9a9a9a;
+          &:hover{
+            color: $preset;
+          }
+        }
+        a.active{
+          color: $preset;
+        }
+      }   
+      .notinumber{
+          float: right;
+          width: 20px;
+          height: 20px;
+          background: $preset;
+          text-align: center;
+          border-radius: 50px;
+          color: #fff;
+          font-size: 12px;
+          line-height: 20px;
+      }   
+    }
+   }
+   .job-alerts-item{
+    padding: 30px;
+    box-shadow: 0px 0px 14px rgba(191,191,191,0.24); 
+    .alerts-list{
+      padding: 15px 0;
+      border-bottom: 1px solid #f1f1f1;
+      text-transform: uppercase;
+    }
+    .alerts-title{
+      font-size: 26px;
+      margin-bottom: 30px;      
+    }
+    .alerts-content{
+      padding: 30px 0;
+      border-bottom: 1px solid #f1f1f1;
+      h3{
+        font-size: 16px;        
+      }
+      .location{
+        color: #9a9a9a;
+      }
+      p{
+        color: #9a9a9a;
+        margin-top: 15px;
+        line-height: 20px;
+        i{
+          line-height: 26px;
+        }
+      }
+    }
+    .job-list{
+      border: none;
+      padding: 15px 0;
+    }
+   }
+
+/* ==========================================================================
+   My Resume Page Style
+   ========================================================================== */
+   .my-resume{
+    .item{
+      padding: 20px 0;
+      border-bottom: 1px solid #f1f1f1;
+      h3{
+        font-size: 20px;
+        letter-spacing: 0.5px;
+        margin-bottom: 15px;
+        i{
+          margin-right: 5px;
+          color: #9a9a9a;
+        }
+      }
+      h4{
+        font-size: 15px;
+        padding: 10px 0;
+        margin-bottom: 0;
+        font-weight: 500;
+      }
+      h5{
+        font-size: 13px;
+        color: #9a9a9a;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+      }
+      .date{
+        margin-top: 10px;
+        font-size: 14px;
+        color: #9a9a9a;
+      }
+      p{
+        color: #9a9a9a;
+      }
+      br{
+        margin-bottom: 20px;
+      }
+    }
+    .item:last-child{
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .author-resume{
+      display: inline-block;
+      border-bottom: 1px solid #f1f1f1;
+      padding-bottom: 30px;
+      width: 100%;
+      .thumb{
+        float: left;
+        width: 125px;
+        height: 125px;
+        overflow: hidden;
+        img{
+          border-radius: 4px;
+          width: 100%;
+        }
+      }
+      .author-info{
+        margin-left: 150px;
+        h3{
+          font-size: 15px;
+          text-transform: uppercase;
+        }
+        p{
+          line-height: 30px;
+        }
+        .social-link{
+          margin-top: 5px;
+        }
+      }
+    }
+    .skill{
+      margin-top: 30px;
+      h3{
+        font-size: 20px;
+        letter-spacing: 0.5px;
+        margin-bottom: 15px;
+        i{
+          margin-right: 5px;
+          color: #9a9a9a;
+        }
+      }
+    }
+   }
+
+   /* Add Resume Page */
+   .add-resume{
+    h3{
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .control-label{
+      margin-bottom: 5px;
+    }
+   }
+   .post-header{
+    padding: 10px 15px;
+    background: #f1f1f1;
+    margin-bottom: 20px;
+    a{
+      color: $preset;
+    }
+   }
+   .add-post-btn{
+    width: 100%;
+    display: inline-block;
+    padding: 5px 0px 25px 0px;
+    .btn-added{
+      font-size: 12px;
+      border-radius: 50px;
+      font-weight: 700;
+      background: #ddd;
+      padding: 5px 15px;   
+    }
+    .btn-delete{
+      color: red;
+      font-size: 12px;
+      border-radius: 50px;
+      font-weight: 700;
+      background: #ddd;
+      padding: 5px 15px; 
+    }
+   }
+   .social-link{
+    margin-top: 5px;
+      a{
+        color: #666;
+        text-align: center;
+        width: 32px;
+        border: 1px solid #666;
+        line-height: 32px;
+        border-radius: 50px;
+        display: inline-block;
+        height: 32px;
+      }
+   }
+
+/* ==========================================================================
+   Manager Resumes Pages Style
+   ========================================================================== */
+   .manager-resumes-item{
+    box-shadow: 0px 0px 14px rgba(191,191,191,0.24); 
+    margin: 15px 0;
+    .item-body{
+      .content{
+        padding: 15px 30px;
+      }
+      .resume-skills{
+        display: inline-block;
+        width: 100%;
+        margin-top: 10px;
+        padding: 15px 30px;
+        border-top: 1px solid #f1f1f1;
+      }
+      .tag-list{
+        span{
+          background-color: #f1f1f1;
+          color: #9a9a9a;
+          padding: 4px 8px;
+          margin-right: 8px;
+          font-size: 12px;
+          border-radius: 4px;
+          line-height: 20px;
+          white-space: nowrap;
+          display: inline-block;
+        }
+      }
+    }
+    .manager-content{
+      padding: 20px 30px;
+      background: #f2f7fb;
+      display: inline-block;
+      width: 100%;
+      .resume-thumb{
+        max-width: 64px;
+        width: auto;
+        margin-right: 30px;
+        border-radius: 50%;
+        float: left;
+      }
+      .manager-info{
+        .manager-name{
+          float: left;
+          h4{
+            font-size: 18px;
+            line-height: 30px;
+          }
+          h5{
+            font-size: 15px;
+            margin-top: 5px;
+            font-weight: 400;
+            color: #9a9a9a;
+          }
+        }
+        .manager-meta{
+          float: right;
+          text-align: right;
+          span{
+            display: block;
+            color: #9a9a9a;
+            font-size: 15px;
+            line-height: 30px;
+          }
+        }
+      }
+    }
+    .update-date{
+      padding: 5px 30px;
+      display: inline-block;
+      width: 100%;
+      .status{
+        float: left;
+      }
+      .action-btn{
+        float: right;
+      }
+    }
+    .btn-xs{
+      padding: 4px 17px;
+      font-size: 12px;
+    }
+    .btn-gray{
+      color: #818a91;
+      &:hover{
+        color: $preset;
+      }
+    }
+    .btn-danger{
+      background-color: #ef4d42 !important; 
+    }
+   }
+
+/* ==========================================================================
+   Notifications Page Style
+   ========================================================================== */
+   .notification{
+    .pagination{
+      margin-top: 30px;
+     }
+   }
+   .notification-item{
+    display: inline-block;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    .thums{
+      float: left;
+      img{
+        border-radius: 4px;
+        width: 80px;
+      }
+    }
+    .text-left{
+      margin-left: 98px;
+      padding: 15px 0;
+      p{
+        font-size: 15px;
+      }
+      .time{
+        color: #999;
+        i{
+          margin-right: 5px;
+          vertical-align: middle;
+        }
+      }
+    }   
+   }
+
+/* ==========================================================================
+   Applications Page Style
+   ========================================================================== */
+   .applications-content{
+    padding: 30px 0;
+    border-bottom: 1px solid #f1f1f1;
+    .thums{
+      float: left;
+      margin-right: 8px;
+      img{
+        width: 70px;
+      }
+    }
+    h3{
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    p{
+      color: #999;
+      margin-top: 15px;
+      line-height: 20px;
+    }
+   }
+   .bookmarked{
+    .job-listings .job-details h3{
+      font-size: 16px;
+    }
+    .job-details{
+      margin-left: 76px;
+    }
+   }
+
+/* ==========================================================================
+   Manage Jobs Page Style
+   ========================================================================== */
+   .candidates{
+      .can-img{
+        img{
+          width: 48px;
+          margin: 5px 15px;
+        }
+      }
+   }
+
+/* ==========================================================================
+Categories All Page Style
+========================================================================== */
+.all-categories{
+  .categories-title{
+    font-size: 30px;
+    padding: 0px 0px 30px;
+    font-weight: 700;
+  }
+  .cat-title{
+    font-size: 14px;
+    text-transform: uppercase;
+    background: #f4f9fc;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    span{
+      color: #9a9a9a;
+      font-size: 12px;
+    }
+  }
+  ul{
+    box-shadow: 0px 0px 14px rgba(191,191,191,0.24);
+    padding: 15px;
+    margin-bottom: 20px;
+    li{
+      padding: 4px 0px;
+      font-size: 14px;
+      line-height: 26px;
+      a{
+        color: #9a9a9a;
+        &:hover{
+          color: $preset;
+        }
+      }
+    }
+  }
+}
+.custom-file-label:focus{
+  box-shadow: none;
+}
+.custom-file-label::after{
+  padding: 7px 25px;
+  color: #fff;
+  background-color: $preset;
+  border-left: none;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}

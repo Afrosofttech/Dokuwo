@@ -1,0 +1,24 @@
+/* Custom css for landing page */
+
+.logo-img{
+    width: 64px; 
+    height: 64px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.blog-image{
+    width: 350px;
+    height: 204px;
+}
+
+.employer-card{
+    height: 165px;
+}
+
+.blog-thumb{
+    width: 730px;
+    height: 344px;
+}

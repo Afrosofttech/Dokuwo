@@ -1,0 +1,98 @@
+
+.jobs-services{
+	background: #f2f7fb;
+	padding: 30px 0;
+	.services-inner{
+		.icon{
+			width: 55px;
+		    height: auto;
+		    float: left;
+		    position: relative;
+			i{
+    			font-size: 50px;
+    			color: $preset;
+			}
+		}
+		.detail{
+			margin-left: 20px;
+		    display: inline-block;
+		    text-align: left;
+			h4{
+			    color: #333333;
+			    font-size: 20px;
+			    font-weight: 500;
+			}
+			span{
+				color: #9a9a9a;
+			    font-size: 14px;
+			    float: left;
+			}
+		}
+	}
+}
+/* Services Item */
+.services-item{
+	padding: 15px;
+	background: #fff;
+	position: relative;
+	transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	.icon{
+		margin-bottom: 20px;
+		i{
+			font-size: 42px;
+    		line-height: 60px;
+			background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%);
+		  	-webkit-background-clip: text;
+		  	-webkit-text-fill-color: transparent;
+			transition: all 0.3s ease-in-out;
+			-moz-transition: all 0.3s ease-in-out;
+			-webkit-transition: all 0.3s ease-in-out;
+			-o-transition: all 0.3s ease-in-out;
+		}
+	}
+	h4{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  p{
+  	margin: 0;
+  }
+}
+
+// Single Features
+.feature-content{
+	background: #f6fbfd;
+}
+.single-feature{
+	background: #fff;
+	margin: 15px 0;
+    padding: 60px 50px;
+    position: relative;
+    border-radius: 3px;
+    box-shadow: 0px 0px 16px rgba(131, 131, 131, 0.17);
+    transition: all 0.3s ease 0s;			
+    i{
+    font-size: 42px;
+    background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    margin-bottom: 30px;
+    }
+    h4{
+	    font-size: 20px;
+	    font-weight: 400;
+	    margin-bottom: 15px;
+	    margin-top: 0;
+	    text-transform: capitalize;
+    }
+}
+.single-feature:hover{
+	box-shadow: 0px 0px 16px rgba(131, 131, 131, 0.35);
+}
+
+
