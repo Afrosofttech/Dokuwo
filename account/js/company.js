@@ -554,7 +554,7 @@ function redirectToMessageFromNotification(message_id,creator_id,creator_name,su
 }
 function viewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,created_date,parent_msg_id,jobseeker_name,jobseeker_id){
 //ams: both jobseeker_name and jobseeker_id are optional and only set when viewing sent messages
-
+console.log('amadou sarjo')
   let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
     '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
       '<h3 class="card-title">Read Message</h3>'+
@@ -832,6 +832,16 @@ function ReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,jobseeker_id){
     $('#summernote').summernote({
       height: 300,
       lineHeight: 1,
+      toolbar: [
+        [ 'style', [ 'style' ] ],
+        [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear'] ],
+        [ 'fontname', [ 'fontname' ] ],
+        [ 'fontsize', [ 'fontsize' ] ],
+        [ 'color', [ 'color' ] ],
+        [ 'para', [ 'ol', 'ul', 'height' ] ],
+        [ 'insert', [ 'link'] ],
+        [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+      ],
       callbacks: {
         onPaste: function (e) {
             if (document.queryCommandSupported("insertText")) {
@@ -1003,6 +1013,16 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
     $('#summernote').summernote({
       height: 300,
       lineHeight: 1,
+      toolbar: [
+        [ 'style', [ 'style' ] ],
+        [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear'] ],
+        [ 'fontname', [ 'fontname' ] ],
+        [ 'fontsize', [ 'fontsize' ] ],
+        [ 'color', [ 'color' ] ],
+        [ 'para', [ 'ol', 'ul', 'height' ] ],
+        [ 'insert', [ 'link'] ],
+        [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+    ],
       callbacks: {
         onPaste: function (e) {
             if (document.queryCommandSupported("insertText")) {
@@ -1095,8 +1115,11 @@ function sentMessages(){
   
                 $.each(data, function( i, val ) {
                   let checkId = val.message_id+"checkbox";
+                  // console.log(val.message_body);
                   //ams-> am filtering the message body to get rid of all <p> tags
-                   var filteredMsgBody = val.message_body.replace(/<[^>]+>/g, '');
+                 // var filteredMsgBody = $("<p>").html(val.message_body).text(); // use this to solve the issue
+                  // console.log(filteredMsgBody);
+                  var filteredMsgBody = val.message_body.replace(/<[^>]+>/g, '');
          temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\',\''+val.fullName+'\',\''+val.recipient_id+'\');">'+
                        '<td>'+
                          '<div class="icheck-primary">'+
@@ -1903,6 +1926,16 @@ function show_posted_jobs(){
         $('#summernote').summernote({
           height: 200,
           lineHeight: 1,
+          toolbar: [
+            [ 'style', [ 'style' ] ],
+            [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear'] ],
+            [ 'fontname', [ 'fontname' ] ],
+            [ 'fontsize', [ 'fontsize' ] ],
+            [ 'color', [ 'color' ] ],
+            [ 'para', [ 'ol', 'ul', 'height' ] ],
+            [ 'insert', [ 'link'] ],
+            [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+        ],
           callbacks: {
             onPaste: function (e) {
                 if (document.queryCommandSupported("insertText")) {
@@ -2125,6 +2158,17 @@ function show_posted_jobs(){
           $('#summernote').summernote({
             height: 100,
             lineHeight: 1,
+            toolbar: [
+              [ 'style', [ 'style' ] ],
+              [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+              [ 'fontname', [ 'fontname' ] ],
+              [ 'fontsize', [ 'fontsize' ] ],
+              [ 'color', [ 'color' ] ],
+              [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+              [ 'table', [ 'table' ] ],
+              [ 'insert', [ 'link'] ],
+              [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+          ],
             callbacks: {
               onPaste: function (e) {
                   if (document.queryCommandSupported("insertText")) {
