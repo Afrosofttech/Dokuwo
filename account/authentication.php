@@ -67,6 +67,15 @@
 											</div>
 										</div>
 									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="text-center">
+													<a href="../" tabindex="5" class="forgot-password">Back to homepage</a>
+												</div>
+											</div>
+										</div>
+									</div>
 								</form>
 								<form id="jobseeker-form" role="form" style="display: none;" class="my-form" autocomplete="off">
 									<div class="form-group">
