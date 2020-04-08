@@ -270,7 +270,14 @@ class Company extends Dbh{
         $stmt = null;
     }
     protected function get_job_details($job_id){
-        $sql = "SELECT job_name FROM job WHERE job_id=?;";
+        $sql = "SELECT * FROM job WHERE job_id=?;";
+        $stmt =$this->connect()->prepare($sql);
+        $stmt->execute([$job_id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+    protected function get_job_company_details($job_id){
+        $sql = "SELECT job.*,company.* FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_id=?;";
         $stmt =$this->connect()->prepare($sql);
         $stmt->execute([$job_id]);
         $result = $stmt->fetch();
@@ -302,5 +309,141 @@ class Company extends Dbh{
         $stmt->execute([$company_id,$jobName,$jobType,$jobCategory,$requirements,$jobLocation,$email,$phone,$salary,$date,0]);
         return  self::success;
         $stmt = null;
+    }
+    protected function get_jobs_of_this_category($category){
+        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = ? GROUP BY job.job_id";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$category]);
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+    protected function get_featured_jobs(){
+        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE featured = 1 GROUP BY job.job_id";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }  
+    }
+    protected function get_latest_jobs(){
+        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id GROUP BY job.job_id ORDER BY date_posted DESC";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+
+    public function get_all_blogs(){
+        $sql = "SELECT * FROM blog";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+    public function get_blog_details($blog_id){
+        $sql = " SELECT * FROM blog WHERE blog_id=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$blog_id]);
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+    public function get_blog_categories(){
+        $sql = " SELECT category,COUNT(category) AS num_posts FROM blog GROUP BY category";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+    public function get_recent_posts(){
+        $sql = " SELECT * FROM blog ORDER BY date_posted DESC";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+    public function get_posts_by_category($category){
+        $sql = " SELECT * FROM blog WHERE category = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$category]);
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+    public function get_jobseeker_details($jobseeker_id){
+        $sql = " SELECT * FROM job_seeker WHERE jobseeker_id=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_id]);
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+    public function recruiter_details($recruiter_id){
+        $sql = " SELECT  * FROM company WHERE company_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$recruiter_id]);
+        $result = $stmt->fetchAll();
+        
+        return  $result;
+        $stmt = null; 
     }
 }

@@ -140,6 +140,16 @@ $contr =  $urlParts[sizeof($urlParts)-2];
           $res = $result->delete_hire($_POST['hire_id']);
           echo $res;
           break;
+          case "hire_jobseeker":
+            $result = new JobseekerJobsController();
+            $res = $result->hire_a_jobseeker();
+            echo $res;
+            break;
+          case "contact_admin":
+            $result = new JobseekerJobsController();
+            $res = $result->contact();
+            echo $res;
+            break;
         default:
            break;
     }

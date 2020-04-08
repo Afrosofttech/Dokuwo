@@ -260,4 +260,153 @@ class Jobseeker extends Dbh{
             return $result;
             $stmt = null;
         }
+        protected function search_featured_jobs($job,$location)
+        {
+           if($job == ''){
+            $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE featured = 1 AND job_location LIKE :search  GROUP BY job.job_id;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(array(
+                ':search' => '%' . $location . '%'));
+            }else if($location == ''){
+                $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE featured = 1 AND job_name LIKE :search  GROUP BY job.job_id;";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute(array(
+                    ':search' => '%' . $job . '%'));
+            }else{
+                $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE featured = 1 AND job_name LIKE :job AND job_location LIKE :location  GROUP BY job.job_id;";
+                $stmt = $this->connect()->prepare($sql);
+               $stmt->execute(array(
+                ':job' => '%' . $job . '%',
+                ':location' => '%'. $location . '%'));
+            }
+            $result = $stmt->fetchAll();
+            return $result;
+            $stmt = null;
+        }
+
+        protected function search_latest_jobs($job,$location)
+        {
+           if($job == ''){
+            $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE job_location LIKE :search  GROUP BY job.job_id ORDER BY date_posted DESC;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(array(
+                ':search' => '%' . $location . '%'));
+            }else if($location == ''){
+                $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE job_name LIKE :search  GROUP BY job.job_id ORDER BY date_posted DESC;";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute(array(
+                    ':search' => '%' . $job . '%'));
+            }else{
+                $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE job_name LIKE :job AND job_location LIKE :location  GROUP BY job.job_id ORDER BY date_posted DESC;";
+                $stmt = $this->connect()->prepare($sql);
+               $stmt->execute(array(
+                ':job' => '%' . $job . '%',
+                ':location' => '%'. $location . '%'));
+            }
+            $result = $stmt->fetchAll();
+            return $result;
+            $stmt = null;
+        }
+
+        protected function search_for_jobseekers($tagline,$address)
+        {
+           if($tagline == ''){
+            $sql="SELECT * FROM job_seeker WHERE address like :search;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(array(
+                ':search' => '%' . $address . '%'));
+            }else if($address == ''){
+                $sql="SELECT * FROM job_seeker WHERE tag_line like :search;";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute(array(
+                    ':search' => '%' . $tagline . '%'));
+            }else{
+                $sql="SELECT * FROM job_seeker WHERE tag_line like :tagLine AND address LIKE :location;";
+                $stmt = $this->connect()->prepare($sql);
+               $stmt->execute(array(
+                ':tagLine' => '%' . $tagline . '%',
+                ':location' => '%'. $address . '%'));
+            }
+            $result = $stmt->fetchAll();
+            return $result;
+            $stmt = null;
+        }
+        protected function search_for_employers($companyName,$companyAddress)
+        {
+           if($companyName == ''){
+            $sql="SELECT * FROM company WHERE company_address like :search;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(array(
+                ':search' => '%' . $companyAddress . '%'));
+            }else if($companyAddress == ''){
+                $sql="SELECT * FROM company WHERE compnay_name like :search;";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute(array(
+                    ':search' => '%' . $companyName . '%'));
+            }else{
+                $sql="SELECT * FROM company WHERE company_name like :compName AND company_address LIKE :compAddress;";
+                $stmt = $this->connect()->prepare($sql);
+               $stmt->execute(array(
+                ':compName' => '%' . $companyName . '%',
+                ':compAddress' => '%'. $companyAddress . '%'));
+            }
+            $result = $stmt->fetchAll();
+            return $result;
+            $stmt = null;
+        }
+
+        protected function search_jobs_category($category,$job,$location)
+        {
+           if($job == ''){
+            $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = :category AND job_location LIKE :search GROUP BY job.job_id;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(array(
+                ':category' => $category,
+                ':search' => '%' . $location . '%'));
+            }else if($location == ''){
+                $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = :category AND job_name LIKE :search GROUP BY job.job_id;";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute(array(
+                    ':category' => $category,
+                    ':search' => '%' . $job . '%'));
+            }else{
+                $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = :category AND job_name LIKE :job AND job_location LIKE :location GROUP BY job.job_id;";
+                $stmt = $this->connect()->prepare($sql);
+               $stmt->execute(array(
+                ':category' => $category,
+                ':job' => '%' . $job . '%',
+                ':location' => '%'. $location . '%'));
+            }
+            $result = $stmt->fetchAll();
+            return $result;
+            $stmt = null;
+        }
+
+        protected function hire_jobseeker($jobseeker_id,$name,$email,$phone,$task)
+        {
+            $date = date('Y-m-d');
+            $sql = "INSERT INTO hires (jobseeker_id,name,email,phone,task,date) VALUES (?,?,?,?,?,?);";
+            $stmt =$this->connect()->prepare($sql);
+            $stmt->execute([$jobseeker_id,$name,$email,$phone,$task,$date]);
+            return self::success;
+            $stmt = null;
+        }
+        public function get_categories_of_jobs(){
+            $sql = " SELECT job_cat, COUNT(*) AS count FROM job GROUP BY job_cat";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            
+            return  $result;
+            $stmt = null;
+        }
+        protected function contactAdmin($name,$email,$subject,$message)
+        {
+            // $date = date('Y-m-d');
+            $sql = "INSERT INTO contact (contact_name,contact_email,subject,message) VALUES (?,?,?,?);";
+            $stmt =$this->connect()->prepare($sql);
+            $stmt->execute([$name,$email,$subject,$message]);
+            return self::success;
+            $stmt = null;
+        }
 }

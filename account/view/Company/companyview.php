@@ -33,4 +33,48 @@ class CompanyView extends Company{
         $company = $this->get_company_profile_details($login_id);
         return $company;
     }
+    public function jobs_of_this_category($category){
+        $jobs = $this->get_jobs_of_this_category($category);
+        return $jobs;
+    }
+    public function job_details($jobId){
+        $jobdetails = $this->get_job_company_details($jobId);
+        return $jobdetails;
+    }
+    public function get_featured_job(){
+        $featured_jobs = $this->get_featured_jobs();
+        return $featured_jobs;
+    }
+    public function get_latest_job(){
+        $latest_job = $this->get_latest_jobs();
+        return $latest_job;
+    }
+    public function get_blogs(){
+        $blogs = $this->get_all_blogs();
+        return $blogs;
+    }
+    public function blog_details($blog_id){
+        $blog = $this->get_blog_details($blog_id);
+        return $blog;
+    }
+    public function blog_categories(){
+        $categories = $this->get_blog_categories();
+        return $categories;
+    }
+    public function recent_posts(){
+        $posts = $this->get_recent_posts();
+        return $posts;
+    }
+    public function posts_by_category($category){
+        $posts = $this->get_posts_by_category($category);
+        return $posts;
+    }
+    public function jobseeker_details($jobseeker_id){
+        $details = $this->get_jobseeker_details($jobseeker_id);
+        return $details;
+    }
+    public function get_recruiter_details($recruiter_id){
+        $details = $this->recruiter_details($recruiter_id);
+        return $details;
+    }
 }

@@ -86,14 +86,14 @@ function header(){
                ' Jobs'+
               '</a>'+
             '</li>'+
-            '<li class="nav-item">'+
-              '<a class="nav-link" style="cursor: pointer;" onclick="displayEmployers();" aria-haspopup="true" aria-expanded="false">'+
-                'Employers'+
-              '</a>'+
-            '</li>'+
+            // '<li class="nav-item">'+
+            //   '<a class="nav-link" style="cursor: pointer;" onclick="displayEmployers();" aria-haspopup="true" aria-expanded="false">'+
+            //     'Employers'+
+            //   '</a>'+
+            // '</li>'+
             '<li class="nav-item">'+
               '<a class="nav-link" style="cursor: pointer;" onclick="displayJobseekers();" aria-haspopup="true" aria-expanded="false">'+
-                'Jobseekers'+
+                'Freelancers'+
               '</a>'+
             '</li>'+
             '<li class="nav-item">'+
@@ -696,7 +696,7 @@ function displayEmployers(start,finish){
 
     if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else{ beg = 0; end = 4;}
     $.ajax({
-      method: "POST",
+      method: "GET",
       url: "account/get.php/company/retreive_all_jobseekers",
       dataType: "json",
       success: function(data){
@@ -812,6 +812,7 @@ function displayEmployers(start,finish){
         dataType: "json",
         data:{'job_id':job_id},
         success: function(data){
+          console.log(data);
           temp +=' <!-- Page Header Start -->'+
           '<div class="page-header">'+
             '<div class="container">'+
@@ -819,14 +820,14 @@ function displayEmployers(start,finish){
                ' <div class="col-lg-8 col-md-6 col-xs-12">'+
                   '<div class="breadcrumb-wrapper">'+
                     '<div class="img-wrapper">'+
-                      '<img src="'+((data[0].logo == null)?"https://ui-avatars.com/api/?name="+company_name.replace(/ /g, '+'):'account/uploads/'+data[0].logo)+'" alt="" class="logo-img">'+
+                      '<img src="'+((data.logo == null)?"https://ui-avatars.com/api/?name="+company_name.replace(/ /g, '+'):'account/uploads/'+data.logo)+'" alt="" class="logo-img">'+
                     '</div>'+
                     '<div class="content">'+
-                      '<h3 class="product-title">'+ data[0].job_name +'</h3>'+
+                      '<h3 class="product-title">'+ data.job_name +'</h3>'+
                       '<p class="brand">'+ company_name +'</p>'+
                       '<div class="tags">' + 
-                        '<span><i class="lni-map-marker"></i>'+ data[0].job_location+'</span>'+  
-                        '<span><i class="lni-calendar"></i>'+ data[0].date_posted+'</span>'+  
+                        '<span><i class="lni-map-marker"></i>'+ data.job_location+'</span>'+  
+                        '<span><i class="lni-calendar"></i>'+ data.date_posted+'</span>'+  
                       '</div>'+
                     '</div>'+
                   '</div>'+
@@ -834,7 +835,7 @@ function displayEmployers(start,finish){
                 '<div class="col-lg-4 col-md-6 col-xs-12">'+
                   '<div class="month-price">'+
                     '<span class="year">Monthly</span>'+
-                    '<div class="price">'+currency+currencyFormat(data[0].salary)+'</div>'+
+                    '<div class="price">'+currency+currencyFormat(data.salary)+'</div>'+
                   '</div>'+
                 '</div>'+
               '</div>'+
@@ -849,16 +850,16 @@ function displayEmployers(start,finish){
                 '<div class="col-lg-6 col-md-12 col-xs-12">'+
                   '<div class="content-area">'+  
                     '<h5>Category</h5>'+
-                    '<p>'+ data[0].job_cat +'</p>'+
+                    '<p>'+ data.job_cat +'</p>'+
                      '<h5>Job Requirements</h5>'+
-                    '<p>'+ data[0].requirements +'</p>'+
+                    '<p>'+ data.requirements +'</p>'+
                     '<h5>Job Type</h5>'+
-                    '<p>'+ data[0].job_type +'</p>'+
+                    '<p>'+ data.job_type +'</p>'+
                     '<h5>Contact Email</h5>'+
-                    '<p>'+ data[0].job_contact_email +'</p>'+
+                    '<p>'+ data.job_contact_email +'</p>'+
                     '<h5>Contact Phone</h5>'+
-                    '<p><span><i class="lni-phone-handset"></i> '+ data[0].job_contact_phone+'</span></p>'+
-                    '<a href="#" class="btn btn-common" onclick="apply_job(\''+data[0].job_id+'\',\''+data[0].company_id+'\');">Apply job</a>';
+                    '<p><span><i class="lni-phone-handset"></i> '+ data.job_contact_phone+'</span></p>'+
+                    '<a href="#" class="btn btn-common" onclick="apply_job(\''+data.job_id+'\',\''+data.company_id+'\');">Apply job</a>';
                     if(back === 'displayjobs'){
                       temp +='<a href="#" class="btn btn-danger float-right" onclick="displayJobs();">Back</a>'; 
                     }
@@ -909,7 +910,7 @@ function displayEmployers(start,finish){
                      ' <div class="col-lg-8 col-md-6 col-xs-12">'+
                         '<div class="breadcrumb-wrapper">'+
                           '<div class="img-wrapper">'+
-                            '<img src="account/uploads/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" alt="">'+
+                            '<img src="account/uploads/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" class="logo-img" alt="'+data[0].fullName+'">'+
                           '</div>'+
                           '<div class="content">'+
                             '<h3 class="product-title">'+ data[0].fullName +'</h3>'+
@@ -939,7 +940,7 @@ function displayEmployers(start,finish){
                       '<div class="col-lg-6 col-md-12 col-xs-12">'+
                         '<div class="content-area">'+
                         '<div class="job-company-logo">'+
-                        '<img src="account/uploads/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" alt="" style="width: 200px; height: 200px;display: inline-block;border-radius: 50%;margin-top: 5px;margin-bottom: 15px;">'+
+                        '<img src="account/uploads/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" alt="'+ data[0].fullName +'" style="width: 200px; height: 200px;display: inline-block;border-radius: 50%;margin-top: 5px;margin-bottom: 15px;">'+
                         '</div>'+
                           '<h5>Category</h5>'+
                           '<p>'+ data[0].category +'</p>'+  
@@ -1020,7 +1021,6 @@ function displayEmployers(start,finish){
                 });
               },
               error: function(err){
-               console.log("======error function displayjobs========");
                console.log(err.responseText);
               }
              });
@@ -1985,7 +1985,7 @@ function displayEmployers(start,finish){
 
       if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else{ beg = 0; end = 3;}
       $.ajax({
-        method: "POST",
+        method: "GET",
         url: "account/get.php/company/retrieve_all_blogs",
         dataType: "json",
         success: function(data){
