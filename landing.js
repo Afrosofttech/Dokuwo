@@ -540,17 +540,20 @@ $.ajax({
             '</a>';
             
             });
-  let LastLast =  "displayJobs(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
-  (numberOfItems <= limitPerPage || numberOfItems == end)?(Next = 'disabled'):(numberOfItems < end+limitPerPage)? (forward = "displayJobs(\'"+(beg+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "displayJobs(\'"+(beg+limitPerPage)+"\',\'"+(end+limitPerPage)+"\')"); 
-  (beg == 0 && (end == numberOfItems || end == limitPerPage))? (Prev = 'disabled',Backward = "displayJobs(\'"+(beg)+"\',\'"+(end)+"\')"):(beg != 0 && end != numberOfItems)?(Backward = "displayJobs(\'"+(beg-limitPerPage)+"\',\'"+(end-limitPerPage)+"\')"): (Backward = "displayJobs(\'"+(beg-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
-            temp +='<!-- Start Pagination -->'+
-              '<ul class="pagination">' +             
-              ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" displayJobs(0,4)"><i class="lni-angle-left"></i> First</a></li>'+
-                '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
-                '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
-                '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
-              '</ul>'+
-              '<!-- End Pagination -->'+
+            
+            let begin = parseInt(beg);
+                let ending = parseInt(end);
+      let LastLast =  "displayJobs(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
+      (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "displayJobs(\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "displayJobs(\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\')"); 
+      (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "displayJobs(\'"+(begin)+"\',\'"+(ending)+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "displayJobs(\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\')"): (Backward = "displayJobs(\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
+                temp +='<!-- Start Pagination -->'+
+                  '<ul class="pagination">' +             
+                  ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" displayJobs(0,4)"><i class="lni-angle-left"></i> First</a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
+                  '</ul>'+
+                  '<!-- End Pagination -->'+
               
           ' </div>'+
           '</div>'+
@@ -771,9 +774,11 @@ function displayEmployers(start,finish){
                 '</a>';
                 
                 });
+                let begin = parseInt(beg);
+                let ending = parseInt(end);
       let LastLast =  "displayJobseekers(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
-      (numberOfItems <= limitPerPage || numberOfItems == end)?(Next = 'disabled'):(numberOfItems < end+limitPerPage)? (forward = "displayJobseekers(\'"+(beg+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "displayJobseekers(\'"+(beg+limitPerPage)+"\',\'"+(end+limitPerPage)+"\')"); 
-      (beg == 0 && (end == numberOfItems || end == limitPerPage))? (Prev = 'disabled',Backward = "displayJobseekers(\'"+(beg)+"\',\'"+(end)+"\')"):(beg != 0 && end != numberOfItems)?(Backward = "displayJobseekers(\'"+(beg-limitPerPage)+"\',\'"+(end-limitPerPage)+"\')"): (Backward = "displayJobseekers(\'"+(beg-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
+      (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "displayJobseekers(\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "displayJobseekers(\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\')"); 
+      (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "displayJobseekers(\'"+(begin)+"\',\'"+(ending)+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "displayJobseekers(\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\')"): (Backward = "displayJobseekers(\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
                 temp +='<!-- Start Pagination -->'+
                   '<ul class="pagination">' +             
                   ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" displayJobseekers(0,4)"><i class="lni-angle-left"></i> First</a></li>'+
@@ -803,7 +808,7 @@ function displayEmployers(start,finish){
 
     
       // Show latest jobs details function
-    function show_job_details(job_id,company_name,currency,back){
+    function show_job_details(job_id,company_name,currency,back,category){
       let temp = '';
       // console.log('back: ',back,'currency: ',currency)
       $.ajax({
@@ -875,6 +880,10 @@ function displayEmployers(start,finish){
                     if(back === 'alllatestjobs'){
                       temp +='<a href="#" class="btn btn-danger float-right" onclick="browse_all_latest_jobs();">Back</a>'; 
                     }
+                    if(back === 'categoryjobs'){
+                      temp +='<a href="#" class="btn btn-danger float-right" onclick="show_jobs_and_jobseekers_by_categories(\''+category+'\');">Back</a>'; 
+                    }
+
                     
                     temp +='</div>'+
                 '</div>'+
@@ -1104,8 +1113,6 @@ function displayEmployers(start,finish){
 
     function show_jobs_and_jobseekers_by_categories(category,start,finish){
       let temp = '';
-
-
       let beg ='';
       let end ='';
       let numberOfItems = '';
@@ -1115,6 +1122,7 @@ function displayEmployers(start,finish){
       let Prev = '';
       let Next = '';
       let job_cat = '';
+      back = "categoryjobs";
       
       if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else{ beg = 0; end = 4;}
       $.ajax({
@@ -1163,7 +1171,7 @@ function displayEmployers(start,finish){
                     '</div>'+
                   '<div class="col-lg-12 col-md-12 col-xs-12 job-category">';
                $.each(data.slice(beg,end),function(i,val){
-                temp +='<a class="job-listings" onclick="show_job_details(\''+val.job_id+'\',\''+val.company_name+'\',\''+val.currency+'\');" style="cursor: pointer;">'+
+                temp +='<a class="job-listings" onclick="show_job_details(\''+val.job_id+'\',\''+val.company_name+'\',\''+val.currency+'\',\''+back+'\',\''+category+'\');" style="cursor: pointer;">'+
                     '<div class="row">'+
                       '<div class="col-lg-4 col-md-4 col-xs-12">'+
                         '<div class="job-company-logo">'+
@@ -1196,17 +1204,20 @@ function displayEmployers(start,finish){
                   '</a>';
                   
                   });
-        let LastLast =  "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
-        (numberOfItems <= limitPerPage || numberOfItems == end)?(Next = 'disabled'):(numberOfItems < end+limitPerPage)? (forward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(beg+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(beg+limitPerPage)+"\',\'"+(end+limitPerPage)+"\')"); 
-        (beg == 0 && (end == numberOfItems || end == limitPerPage))? (Prev = 'disabled',Backward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(beg)+"\',\'"+(end)+"\')"):(beg != 0 && end != numberOfItems)?(Backward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(beg-limitPerPage)+"\',\'"+(end-limitPerPage)+"\')"): (Backward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(beg-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
-        temp +='<!-- Start Pagination -->'+
-                    '<ul class="pagination">' +             
-                    ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" show_jobs_and_jobseekers_by_categories(\''+category+'\',0,4)"><i class="lni-angle-left"></i> First</a></li>'+
-                      '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
-                      '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
-                      '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
-                    '</ul>'+
-                    '<!-- End Pagination -->';
+
+                  let begin = parseInt(beg);
+                let ending = parseInt(end);
+      let LastLast =  "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
+      (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\')"); 
+      (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(begin)+"\',\'"+(ending)+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\')"): (Backward = "show_jobs_and_jobseekers_by_categories(\'"+category+"\',\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
+                temp +='<!-- Start Pagination -->'+
+                  '<ul class="pagination">' +             
+                  ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" show_jobs_and_jobseekers_by_categories(\''+category+'\',0,4)"><i class="lni-angle-left"></i> First</a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
+                  '</ul>'+
+                  '<!-- End Pagination -->'+
                     
                   ' </div>'+
                   '</div>'+
@@ -1490,17 +1501,20 @@ function displayEmployers(start,finish){
                   '</a>';
                   
                   });
-        let LastLast =  "browse_all_featured_jobs(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
-        (numberOfItems <= limitPerPage || numberOfItems == end)?(Next = 'disabled'):(numberOfItems < end+limitPerPage)? (forward = "browse_all_featured_jobs(\'"+(beg+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "browse_all_featured_jobs(\'"+(beg+limitPerPage)+"\',\'"+(end+limitPerPage)+"\')"); 
-        (beg == 0 && (end == numberOfItems || end == limitPerPage))? (Prev = 'disabled',Backward = "browse_all_featured_jobs(\'"+(beg)+"\',\'"+(end)+"\')"):(beg != 0 && end != numberOfItems)?(Backward = "browse_all_featured_jobs(\'"+(beg-limitPerPage)+"\',\'"+(end-limitPerPage)+"\')"): (Backward = "browse_all_featured_jobs(\'"+(beg-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
-                  temp +='<!-- Start Pagination -->'+
-                    '<ul class="pagination">' +             
-                    ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" browse_all_featured_jobs(0,4)"><i class="lni-angle-left"></i> First</a></li>'+
-                      '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
-                      '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
-                      '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
-                    '</ul>'+
-                    '<!-- End Pagination -->'+
+
+                  let begin = parseInt(beg);
+                let ending = parseInt(end);
+      let LastLast =  "browse_all_featured_jobs(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
+      (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "browse_all_featured_jobs(\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "browse_all_featured_jobs(\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\')"); 
+      (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "browse_all_featured_jobs(\'"+(begin)+"\',\'"+(ending)+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "browse_all_featured_jobs(\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\')"): (Backward = "browse_all_featured_jobs(\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
+                temp +='<!-- Start Pagination -->'+
+                  '<ul class="pagination">' +             
+                  ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" browse_all_featured_jobs(0,4)"><i class="lni-angle-left"></i> First</a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
+                  '</ul>'+
+                  '<!-- End Pagination -->'+
                 ' </div>'+
                 '</div>'+
               '</div>'+
@@ -1736,9 +1750,12 @@ function displayEmployers(start,finish){
                   '</a>';
                   
                   });
+
+                  let begin = parseInt(beg);
+                  let ending = parseInt(end);
         let LastLast =  "browse_all_latest_jobs(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
-        (numberOfItems <= limitPerPage || numberOfItems == end)?(Next = 'disabled'):(numberOfItems < end+limitPerPage)? (forward = "browse_all_latest_jobs(\'"+(beg+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "browse_all_latest_jobs(\'"+(beg+limitPerPage)+"\',\'"+(end+limitPerPage)+"\')"); 
-        (beg == 0 && (end == numberOfItems || end == limitPerPage))? (Prev = 'disabled',Backward = "browse_all_latest_jobs(\'"+(beg)+"\',\'"+(end)+"\')"):(beg != 0 && end != numberOfItems)?(Backward = "browse_all_latest_jobs(\'"+(beg-limitPerPage)+"\',\'"+(end-limitPerPage)+"\')"): (Backward = "browse_all_latest_jobs(\'"+(beg-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
+        (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "browse_all_latest_jobs(\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "browse_all_latest_jobs(\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\')"); 
+        (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "browse_all_latest_jobs(\'"+(begin)+"\',\'"+(ending)+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "browse_all_latest_jobs(\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\')"): (Backward = "browse_all_latest_jobs(\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
                   temp +='<!-- Start Pagination -->'+
                     '<ul class="pagination">' +             
                     ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" browse_all_latest_jobs(0,4)"><i class="lni-angle-left"></i> First</a></li>'+
@@ -1980,7 +1997,6 @@ function displayEmployers(start,finish){
       let Backward = '';
       let Prev = '';
       let Next = '';
-      let temp = '';
       let back = 'blogposts';
 
       if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else{ beg = 0; end = 3;}
@@ -2012,7 +2028,7 @@ function displayEmployers(start,finish){
                 '<div class="row blogs">'+
                   '<!-- Start Blog Posts -->'+
                   '<div class="col-lg-8 col-md-12 col-xs-12 post-section">';
-                  $.each(data.slice(0,3), function(i,val){
+                  $.each(data.slice(beg,end), function(i,val){
                     posts +='<!-- Start Post -->'+
                       '<div class="blog-post">'+
                         '<!-- Post thumb -->'+
@@ -2044,18 +2060,20 @@ function displayEmployers(start,finish){
                 '</div>'+
                 '<!-- End Post -->';
                   });   
-                    
-        let LastLast =  "show_blog_posts(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
-        (numberOfItems <= limitPerPage || numberOfItems == end)?(Next = 'disabled'):(numberOfItems < end+limitPerPage)? (forward = "show_blog_posts(\'"+(beg+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "show_blog_posts(\'"+(beg+limitPerPage)+"\',\'"+(end+limitPerPage)+"\')"); 
-        (beg == 0 && (end == numberOfItems || end == limitPerPage))? (Prev = 'disabled',Backward = "show_blog_posts(\'"+(beg)+"\',\'"+(end)+"\')"):(beg != 0 && end != numberOfItems)?(Backward = "show_blog_posts(\'"+(beg-limitPerPage)+"\',\'"+(end-limitPerPage)+"\')"): (Backward = "show_blog_posts(\'"+(beg-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
-          posts +='<!-- Start Pagination -->'+
-                '<ul class="pagination">'+              
-                ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" show_blog_posts(0,3)"><i class="lni-angle-left"></i> First</a></li>'+
-                '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
-                '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
-                '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
-                '</ul>'+
-                '<!-- End Pagination -->'+
+                
+                  let begin = parseInt(beg);
+                let ending = parseInt(end);
+      let LastLast =  "show_blog_posts(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
+      (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "show_blog_posts(\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "show_blog_posts(\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\')"); 
+      (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "show_blog_posts(\'"+(begin)+"\',\'"+(ending)+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "show_blog_posts(\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\')"): (Backward = "show_blog_posts(\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
+                posts +='<!-- Start Pagination -->'+
+                  '<ul class="pagination">' +             
+                  ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" show_blog_posts(0,3)"><i class="lni-angle-left"></i> First</a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
+                    '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
+                  '</ul>'+
+                  '<!-- End Pagination -->'+
               '</div>'+
               '<!-- End Blog Posts -->'+
     
