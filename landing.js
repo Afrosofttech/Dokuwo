@@ -125,8 +125,8 @@ function header(){
         '<div class="row space-100">'+
           '<div class="col-lg-7 col-md-12 col-xs-12">'+
             '<div class="contents">'+
-              '<h2 class="head-title">Find the  <br> job that fits your life</h2>'+
-              '<p>Aliquam vestibulum cursus felis. In iaculis iaculis sapien ac condimentum. Vestibulum congue posuere lacus, id tincidunt nisi porta sit amet. Suspendisse et sapien varius, pellentesque dui non.</p>'+
+              '<h2 class="head-title">Find the  <br> person that fits your job</h2>'+
+              '<p>If your\'re looking for a job that fits your life or a freelancer to do some work for you, then you are at the right place.</p>'+
             '</div>'+
           '</div>'+
           '<div class="col-lg-5 col-md-12 col-xs-12">'+
