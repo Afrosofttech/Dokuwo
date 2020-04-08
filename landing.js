@@ -387,16 +387,16 @@ function footer(){
               '<div class="widget">'+
                 '<h3 class="block-title">Quick Links</h3>'+
                 '<ul class="menu">'+
-                  '<li><a href="#">About Us</a></li>'+
-                  '<li><a href="#">Support</a></li>'+
-                  '<li><a href="#">License</a></li>'+
-                  '<li><a href="#">Contact</a></li>'+
+                  '<li><a href="javascript:void(0)">About Us</a></li>'+
+                  '<li><a href="javascript:void(0)">Support</a></li>'+
+                  '<li><a href="javascript:void(0)">License</a></li>'+
+                  '<li><a href="javascript:void(0)">Contact</a></li>'+
                 '</ul>'+
                 '<ul class="menu">'+
-                  '<li><a href="#">Terms & Conditions</a></li>'+
-                  '<li><a href="#">Privacy</a></li>'+
-                  '<li><a href="#">Refferal Terms</a></li>'+
-                  '<li><a href="#">Product License</a></li>'+
+                  '<li><a href="javascript:void(0)">Terms & Conditions</a></li>'+
+                  '<li><a href="javascript:void(0)">Privacy</a></li>'+
+                  '<li><a href="javascript:void(0)">Refferal Terms</a></li>'+
+                  '<li><a href="javascript:void(0)">Product License</a></li>'+
                 '</ul>'+
               '</div>'+
             '</div>'+
@@ -2767,8 +2767,8 @@ function displayEmployers(start,finish){
         '</div>'+
 
         '<div class="row pricing-tables">'+
-          '<div class="col-lg-4 col-md-4 col-xs-12">'+
-            '<div class="pricing-table border-color-defult">'+
+          '<div class="col-lg-4 col-md-4 col-xs-12 margin-price-card">'+
+            '<div class="pricing-table border-color-defult margin-price-card">'+
               '<div class="pricing-details">'+
                 '<div class="icon">'+
                   '<i class="lni-rocket"></i>'+
@@ -2828,12 +2828,32 @@ function displayEmployers(start,finish){
           '</div>'+
 
           '<div class="col-lg-4 col-md-4 col-xs-12">'+
-            '<div class="pricing-table border-color-green">'+
+            '<div class="pricing-table border-color-defult">'+
               '<div class="pricing-details">'+
                 '<div class="icon">'+
                   '<i class="lni-briefcase"></i>'+
                 '</div>'+
-                '<h2>Premium</h2>'+
+                '<h2>Free</h2>'+
+                '<ul>'+
+                  '<li>Post 1 Job</li>'+
+                  '<li>No Featured Job</li>'+
+                  '<li>Edit Your Job Listing</li>'+
+                  '<li>Manage Application</li>'+
+                  '<li>30-day Expired</li>'+
+                '</ul>'+
+                '<div class="price"><span>$</span>40<span>/Month</span></div>'+
+              '</div>'+
+              
+            '</div>'+
+          '</div>'+
+
+          '<div class="col-lg-4 col-md-4 col-xs-12">'+
+            '<div class="pricing-table border-color-red">'+
+              '<div class="pricing-details">'+
+                '<div class="icon">'+
+                  '<i class="lni-briefcase"></i>'+
+                '</div>'+
+                '<h2>Standard</h2>'+
                 '<ul>'+
                   '<li>Post 1 Job</li>'+
                   '<li>No Featured Job</li>'+
@@ -2853,27 +2873,7 @@ function displayEmployers(start,finish){
                 '<div class="icon">'+
                   '<i class="lni-briefcase"></i>'+
                 '</div>'+
-                '<h2>Premium</h2>'+
-                '<ul>'+
-                  '<li>Post 1 Job</li>'+
-                  '<li>No Featured Job</li>'+
-                  '<li>Edit Your Job Listing</li>'+
-                  '<li>Manage Application</li>'+
-                  '<li>30-day Expired</li>'+
-                '</ul>'+
-                '<div class="price"><span>$</span>40<span>/Month</span></div>'+
-              '</div>'+
-              
-            '</div>'+
-          '</div>'+
-
-          '<div class="col-lg-4 col-md-4 col-xs-12">'+
-            '<div class="pricing-table border-color-green">'+
-              '<div class="pricing-details">'+
-                '<div class="icon">'+
-                  '<i class="lni-briefcase"></i>'+
-                '</div>'+
-                '<h2>Premium</h2>'+
+                '<h2>Single</h2>'+
                 '<ul>'+
                   '<li>Post 1 Job</li>'+
                   '<li>No Featured Job</li>'+
