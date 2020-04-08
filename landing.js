@@ -73,7 +73,7 @@ function header(){
           '</div>'+
           '<div class="col-lg-5 col-md-12 col-xs-12">'+
             '<div class="intro-img">'+
-              '<img src="assets/img/search.png" alt="">'+
+              '<img src="assets/img/hire.png" alt="">'+
             '</div> '+        
           '</div>'+
         '</div>'+
