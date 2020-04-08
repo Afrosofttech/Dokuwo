@@ -106,6 +106,66 @@ if($view == 'company'){
         $job_applicant =$result->job_applicatant($_GET['login_id']);
         echo json_encode($job_applicant);
        break;
+       case "jobs_by_category":
+        $result = new CompanyView();
+        $jobs_by_category =$result->jobs_of_this_category($_POST['category']);
+        echo json_encode($jobs_by_category);
+       break;
+       case "get_job_details":
+        $result = new CompanyView();
+        $job_details = $result->job_details($_POST['job_id']);
+        echo json_encode($job_details);       
+        break;
+        case "featured_jobs":
+        $result = new CompanyView();
+        $jobs_featured = $result->get_featured_job();
+        echo json_encode($jobs_featured);  
+        break;
+        case "latest_jobs":
+        $result = new CompanyView();
+        $latest_jobs = $result->get_latest_job();
+        echo json_encode($latest_jobs); 
+        break;
+        case "retrieve_all_blogs":
+        $result = new CompanyView();
+        $all_blogs = $result->get_blogs();
+        echo json_encode($all_blogs); 
+        break;
+        case "get_blog_details":
+        $result = new CompanyView();
+        $blog_info = $result->blog_details($_POST['blog_id']);
+        echo json_encode($blog_info); 
+        break;
+        case "get_blog_categories":
+        $result = new CompanyView();
+        $blog_categories = $result->blog_categories();
+        echo json_encode($blog_categories); 
+        break;
+        case "get_recent_posts":
+        $result = new CompanyView();
+        $recent_posts = $result->recent_posts();
+        echo json_encode($recent_posts); 
+        break;
+        case "get_posts_by_category":
+        $result = new CompanyView();
+        $posts = $result->posts_by_category($_POST['category']);
+        echo json_encode($posts); 
+        break;
+        case "get_jobseeker_details":
+        $result = new CompanyView();
+        $jobseeker_details = $result->jobseeker_details($_POST['jobseeker_id']);
+        echo json_encode($jobseeker_details); 
+        break;
+        case "categories_of_jobs":
+          $result = new JobseekerView();
+          $response = $result->categories_of_jobs();
+          echo json_encode($response);
+        break;
+        case "recruiter_details":
+          $result = new CompanyView();
+          $response = $result->recruiter_details($_GET['recruiter_id']);
+          echo json_encode($response);
+        break;
        default:
        break;
    }
@@ -167,6 +227,31 @@ if($view == 'company'){
       case "search_jobs":
         $result = new JobseekerJobsView();
         $res = $result->search_jobs($_GET['job'],$_GET['location']);
+        echo json_encode($res);
+      break;
+      case "search_featured_jobs":
+        $result = new JobseekerJobsView();
+        $res = $result->search_featured_job($_GET['job'],$_GET['location']);
+        echo json_encode($res);
+      break;
+      case "search_latest_jobs":
+        $result = new JobseekerJobsView();
+        $res = $result->search_latest_job($_GET['job'],$_GET['location']);
+        echo json_encode($res);
+      break;
+      case "search_jobseekers":
+      $result = new JobseekerJobsView();
+      $res = $result->search_jobseekers($_GET['tagline'],$_GET['address']);
+      echo json_encode($res);
+      break;
+      case "search_employers":
+      $result = new JobseekerJobsView();
+      $res = $result->search_employers($_POST['companyName'],$_POST['companyAddress']);
+      echo json_encode($res);
+      break;
+      case "search_jobs_categories":
+        $result = new JobseekerJobsView();
+        $res = $result->search_jobs_in_category($_GET['category'],$_GET['job'],$_GET['location']);
         echo json_encode($res);
       break;
        default:
