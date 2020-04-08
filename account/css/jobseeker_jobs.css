@@ -47,7 +47,7 @@
         .job-list .job-tag .meta-tag span a {
           color: #999; }
           .job-list .job-tag .meta-tag span a:hover {
-            color: #26ae61; }
+            color: #262fae; }
         .job-list .job-tag .meta-tag span i {
           margin-right: 5px; }
       .job-list .job-tag .icon {
@@ -85,17 +85,17 @@
     -webkit-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out; }
     .job-listings .job-details h3:hover {
-      color: #26ae61; }
+      color: #262fae; }
   .job-listings .job-details .company-neme {
     font-size: 14px;
     color: #666666; }
   .job-listings .btn-open {
-    color: #26ae61;
+    color: #262fae;
     padding: 7px 21px;
     line-height: 50px;
     border-radius: 30px;
     margin: 15px 0;
-    background: #d5ffe7;
+    background: #d5e7ff;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -106,16 +106,16 @@
     line-height: 22px;
     margin: 15px 0; }
     .job-listings .location i {
-      color: #26ae61; }
+      color: #262fae; }
   .job-listings .btn-full-time {
     line-height: 50px;
     font-size: 14px;
     text-transform: uppercase; }
   .job-listings .btn-apply {
-    color: #26ae61;
+    color: #262fae;
     text-transform: uppercase;
     line-height: 50px;
-    border: 2px solid #26ae61;
+    border: 2px solid #262fae;
     padding: 7px 21px;
     border-radius: 30px;
     -webkit-transition: all .4s ease;
@@ -125,7 +125,7 @@
     transition: all .4s ease; }
     .job-listings .btn-apply:hover {
       color: #fff;
-      background: #26ae61; }
+      background: #262fae; }
 
 .job-listings:hover {
   background: #ffffff;
@@ -141,7 +141,7 @@
   GENERAL
   ========================================================================== */
     a:hover, a:focus {
-      color: #26ae61; }
+      color: #262fae; }
     
 a {
   color: #262fae;
@@ -164,7 +164,7 @@ a {
     columns: #000000;; }
   
   a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
-    color: #26ae61; }
+    color: #262fae; }
 
 .j-pagination {
     margin: 0;
@@ -183,7 +183,7 @@ a {
         position: relative;
         font-size: 14px;
         text-transform: uppercase;
-        background: #26ae61;
+        background: #262fae;
         display: block;
         color: #fff; }
         .j-pagination li a:hover {
@@ -211,7 +211,7 @@ a {
       padding: 5px 20px !important; }
 
   .btn-common {
-    background: #26ae61;
+    background: #262fae;
     position: relative;
     z-index: 1; }
     .btn-common:hover {
@@ -241,7 +241,7 @@ a {
   opacity: 1;
   transform: scale(1, 1); }
   #download .download-wrapper .app-button .btn-common {
-    border: 2px solid #26ae61; }
+    border: 2px solid #262fae; }
 
 .sideber .subscribe-form .form-group .btn-common {
   position: absolute;
@@ -254,7 +254,7 @@ a {
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
   background: transparent;
-  background: #26ae61; }
+  background: #262fae; }
   .sideber .subscribe-form .form-group .btn-common:before {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
@@ -272,7 +272,7 @@ a {
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     background: transparent;
-    background: #26ae61; }
+    background: #262fae; }
     #subscribe-form .form-group .btn-common:before {
       border-top-left-radius: 0px;
       border-bottom-left-radius: 0px;
