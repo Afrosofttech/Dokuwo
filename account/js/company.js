@@ -1,5 +1,15 @@
 $(document).ready(function(){
 //
+  $('.sidebar li').click(function(e) {
+
+    $('.sidebar li').removeClass('active');
+
+    var $this = $(this);
+    if (!$this.hasClass('active')) {
+        $this.addClass('active');
+    }
+    
+  });
 })
 function sideBar(){
         return '<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">'+

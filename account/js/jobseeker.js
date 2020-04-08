@@ -1,5 +1,15 @@
 $(document).ready(function(){
     //loadJobseekerDashboard();
+    $('.sidebar li').click(function(e) {
+
+      $('.sidebar li').removeClass('active');
+    
+      var $this = $(this);
+      if (!$this.hasClass('active')) {
+          $this.addClass('active');
+      }
+      
+    });
 })
 
 function jobseekerSideBar(){
