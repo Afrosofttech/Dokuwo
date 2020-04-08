@@ -578,7 +578,7 @@ let apply = '<!-- Job Detail Section Start -->'  +
             '<li><i class="fas fa-phone mr-1"></i>- '+job_contact_phone+'</li>'+
           '</ul>'+
           '<div class="d-flex justify-content-between">'+
-          '<a href="#" class="btn btn-common" style="cursor: pointer;" onclick="sendApp(\''+job_id+'\',\''+company_id+'\');">Apply job</a> '+
+          '<a href="#" class="btn btn-success" style="cursor: pointer;" onclick="sendApp(\''+job_id+'\',\''+company_id+'\');">Apply job</a> '+
           '<a href="#" class="btn btn-danger" style="cursor: pointer;" onclick="jobs();"><i class="fa fa-arrow-left"> Back </i></a>'
           '</div>'
         '</div>'
