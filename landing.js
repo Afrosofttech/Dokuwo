@@ -2761,12 +2761,12 @@ function displayEmployers(start,finish){
       '<!-- Start Pricing Table Section -->'+
     '<div id="pricing" class="section bg-gray">'+
       '<div class="container">'+
-        '<div class="section-header">'+  
-          '<h2 class="section-title">Pricing Plan</h2>'+
-          '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ellentesque dignissim quam et <br> metus effici turac fringilla lorem facilisis.</p>'+      
-        '</div>'+
+       
 
         '<div class="row pricing-tables">'+
+        '<div class="col-lg-12 col-md-12 col-xs-12 section-header">'+
+            '<h2 class="section-title text-center margin-price-card">Recruiters</h2>'+
+          '</div>'+
           '<div class="col-lg-4 col-md-4 col-xs-12 margin-price-card">'+
             '<div class="pricing-table border-color-defult margin-price-card">'+
               '<div class="pricing-details">'+
@@ -2825,6 +2825,9 @@ function displayEmployers(start,finish){
               '</div>'+
               
             '</div>'+
+          '</div>'+
+          '<div class="col-lg-12 col-md-12 col-xs-12 section-header">'+
+            '<h2 class="section-title text-center margin-price-card">Jobseekers</h2>'+
           '</div>'+
 
           '<div class="col-lg-4 col-md-4 col-xs-12">'+
