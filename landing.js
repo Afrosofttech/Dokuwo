@@ -888,7 +888,7 @@ function displayEmployers(start,finish){
                     temp +='</div>'+
                 '</div>'+
           '</section>'+
-          '<!-- Job Detail Section End -->';
+          // '<!-- Job Detail Section End -->';
           $(document).ready(()=>{
             $('header .intro-landing').remove();
             $('.content-section').empty().append(temp);
