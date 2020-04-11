@@ -157,7 +157,7 @@ class Company extends Dbh{
         //var_dump($result);
     }
     protected function get_jobseekers_of_this_category($category){
-        $sql = " SELECT * FROM job_seeker where category = ?;";
+        $sql = " SELECT job_seeker.*, login.email FROM job_seeker INNER JOIN login ON job_seeker.login_id = login.login_id where category = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$category]);
         $result = $stmt->fetchAll();
