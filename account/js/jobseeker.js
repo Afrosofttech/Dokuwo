@@ -693,9 +693,9 @@ function jcontentMessage(){
 
               $.each(data, function( i, val ) {
                 let checkId = val.message_id+"checkbox";
-                //AMS-> am filtering the message body to get rid of all <p> tags
-                var filteredMsgBody = val.message_body.replace(/<[\/]{0,1}(p)[^><]*>/ig,"");
-                // onclick="viewMessage(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');"
+                //AMS-> am filtering the message body to get rid of all tags
+                var filteredMsgBody = $("<div>").html(val.message_body).text();
+                //onclick="jviewMessage(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');"
                 conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
                             '<td>'+
                               '<div class="icheck-primary">'+
@@ -1308,160 +1308,160 @@ function jnewMsgNotification(){
   });
 }
 function jsentMessages(){
-  let temp = '';
-  $.ajax({
-    method: "GET",
-    dataType: 'json',
-    url: "get.php/jobseeker/all_sent_messages",
-    data: {"login_id" : session_id},
-    success: function(data){
-      temp +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
-      '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-        '<h4 class="card-title">Sent Messages</h4>'+
-      '</div>'+
-      '<!-- /.card-header -->'+
-      '<div class="card-body p-1">'+
-        '<div class="table-responsive mailbox-messages">'+
-          '<table class="table table-hover" id="myt">'+
-          '<thead>'+
-          ' <th></th>'+
-          ' <th></th>'+
-          ' <th></th>'+
-          ' <th></th>'+
-          '</thead>'+
-            '<tbody>';
+let temp = '';
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/jobseeker/all_sent_messages",
+  data: {"login_id" : session_id},
+  success: function(data){
+    temp +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+    '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+      '<h4 class="card-title">Sent Messages</h4>'+
+    '</div>'+
+    '<!-- /.card-header -->'+
+    '<div class="card-body p-1">'+
+      '<div class="table-responsive mailbox-messages">'+
+        '<table class="table table-hover" id="myt">'+
+        '<thead>'+
+        ' <th></th>'+
+        ' <th></th>'+
+        ' <th></th>'+
+        ' <th></th>'+
+        '</thead>'+
+          '<tbody>';
 
-              $.each(data, function( i, val ) {
-                let checkId = val.message_id+"checkbox";
-                //ams-> am filtering the message body to get rid of all <p> tags
-                 var filteredMsgBody = val.message_body.replace(/<[^>]+>/g, '');
-       temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="jviewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\',\''+val.company_name+'\',\''+val.recipient_id+'\');">'+
-                     '<td>'+
-                       '<div class="icheck-primary">'+
-                         '<input type="checkbox" value="" id="'+checkId+'">'+
-                         '<label for="check1"></label>'+
-                       '</div>'+
-                     '</td>'+
-                     // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
-                     '<td class="mailbox-name">'+val.company_name+'</td>'+
-                     '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
-                     '</td>'+
-                     // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
-                     '<td class="mailbox-date">'+val.create_date+'</td>'+
-                   '</tr>';
-              });
-          temp +=  '</tbody>'+
-                '</table>'+
-                '<!-- /.table -->'+
-              '</div>'+
-              '<!-- /.mail-box-messages -->'+
+            $.each(data, function( i, val ) {
+              let checkId = val.message_id+"checkbox";
+              //ams-> am filtering the message body to get rid of all tags
+              var filteredMsgBody = $("<div>").html(val.message_body).text();
+      temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="jviewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\',\''+val.company_name+'\',\''+val.recipient_id+'\');">'+
+                    '<td>'+
+                      '<div class="icheck-primary">'+
+                        '<input type="checkbox" value="" id="'+checkId+'">'+
+                        '<label for="check1"></label>'+
+                      '</div>'+
+                    '</td>'+
+                    // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
+                    '<td class="mailbox-name">'+val.company_name+'</td>'+
+                    '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                    '</td>'+
+                    // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
+                    '<td class="mailbox-date">'+val.create_date+'</td>'+
+                  '</tr>';
+            });
+        temp +=  '</tbody>'+
+              '</table>'+
+              '<!-- /.table -->'+
             '</div>'+
-            '<!-- /.card-body -->'+
-            '<div class="card-footer p-0">'+
+            '<!-- /.mail-box-messages -->'+
           '</div>'+
-          '</div>'+
-        '</div>';
+          '<!-- /.card-body -->'+
+          '<div class="card-footer p-0">'+
+        '</div>'+
+        '</div>'+
+      '</div>';
 
-          $('.contentMessage').empty().append(temp);
+        $('.contentMessage').empty().append(temp);
 
-          $(document).ready( function () {
-          $('#myt').DataTable({
-          "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
-          "oLanguage": {
-          "sLengthMenu": "Display _MENU_ messages",
-          "sEmptyTable":     "No message available"
-          },
-          "bDestroy": true,
-          fnDrawCallback: function() {
-          $("#myt thead").remove();
-          }
-        });
+        $(document).ready( function () {
+        $('#myt').DataTable({
+        "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+        "oLanguage": {
+        "sLengthMenu": "Display _MENU_ messages",
+        "sEmptyTable":     "No message available"
+        },
+        "bDestroy": true,
+        fnDrawCallback: function() {
+        $("#myt thead").remove();
+        }
       });
-  },
-  error: function(err){
-    $.notify(err.responseText,'error');
-  }
-  });
+    });
+},
+error: function(err){
+  $.notify(err.responseText,'error');
+}
+});
 }
 function hires(){
-  let temp =      ' <!-- Begin Page Content -->'+
-  '<div class="container-fluid">'+
+    let temp =      ' <!-- Begin Page Content -->'+
+    '<div class="container-fluid">'+
 
-  '<!-- Page Heading -->'+
-  '<!-- DataTales Example -->'+
-  '<div class="card shadow mb-4">'+
-    '<div class="card-header py-3">'+
-      '<h6 class="m-0 font-weight-bold text-primary">Hires</h6>'+
-    '</div>'+
-    '<div class="card-body">'+
-      ' <div class="table-responsive">'+
-        '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">'+
-          '<thead>'+
-            '<tr>'+
-              '<th>Name</th>'+
-              '<th>Email</th>'+
-              '<th>Phone</th>'+
-              '<th style="width: 30%">Task description</th>'+
-              '<th>Date</th>'+
-              '<th></th>'+
-            '</tr>'+
-          '</thead>'+
-          ' <tfoot>'+
-            '<tr>'+
-              '<th>Name</th>'+
-              '<th>Email</th>'+
-              '<th>Phone</th>'+
-              '<th style="width: 30%">Task description</th>'+
-              '<th>Date</th>'+
-              '<th></th>'+
-            '</tr>'+
-          '</tfoot>'+
-          '<tbody>';
-          $.ajax({
-            method: "GET",
-            dataType: 'json',
-            url: "get.php/jobseeker/all_hires",
-            data: {"jobseeker_id" : session_user_id},
-            success: function(data){
-             if(data != 400){
-              $.each(data, function(i,val){
-                temp += '<tr>'+
-                '<td>'+val.name+'</td>'+
-                '<td>'+val.email+'</td>'+
-                '<td>'+val.phone+'</td>'+
-                '<td>'+val.task+'</td>'+
-                '<td>'+val.date+'</td>'+
-                '<td class="text-right"><a class="btn btn-danger btn-block btn-sm" href="#" style="cursor: pointer;" onclick="delHire(\''+val.hire_id+'\');">'+
-                '<i class="fas fa-trash">'+
-                '</i>'+
-                'Delete'+
-                '</a></td>'+
-              '</tr>';
-              })
-             }
-             temp += '</tbody>'+
-        '</table>'+
+    '<!-- Page Heading -->'+
+    '<!-- DataTales Example -->'+
+    '<div class="card shadow mb-4">'+
+      '<div class="card-header py-3">'+
+        '<h6 class="m-0 font-weight-bold text-primary">Hires</h6>'+
+      '</div>'+
+      '<div class="card-body">'+
+        ' <div class="table-responsive">'+
+          '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">'+
+            '<thead>'+
+              '<tr>'+
+                '<th>Name</th>'+
+                '<th>Email</th>'+
+                '<th>Phone</th>'+
+                '<th style="width: 30%">Task description</th>'+
+                '<th>Date</th>'+
+                '<th></th>'+
+              '</tr>'+
+            '</thead>'+
+            ' <tfoot>'+
+              '<tr>'+
+                '<th>Name</th>'+
+                '<th>Email</th>'+
+                '<th>Phone</th>'+
+                '<th style="width: 30%">Task description</th>'+
+                '<th>Date</th>'+
+                '<th></th>'+
+              '</tr>'+
+            '</tfoot>'+
+            '<tbody>';
+            $.ajax({
+              method: "GET",
+              dataType: 'json',
+              url: "get.php/jobseeker/all_hires",
+              data: {"jobseeker_id" : session_user_id},
+              success: function(data){
+                if(data != 400){
+                $.each(data, function(i,val){
+                  temp += '<tr>'+
+                  '<td>'+val.name+'</td>'+
+                  '<td>'+val.email+'</td>'+
+                  '<td>'+val.phone+'</td>'+
+                  '<td>'+val.task+'</td>'+
+                  '<td>'+val.date+'</td>'+
+                  '<td class="text-right"><a class="btn btn-danger btn-block btn-sm" href="#" style="cursor: pointer;" onclick="delHire(\''+val.hire_id+'\');">'+
+                  '<i class="fas fa-trash">'+
+                  '</i>'+
+                  'Delete'+
+                  '</a></td>'+
+                '</tr>';
+                })
+                }
+                temp += '</tbody>'+
+          '</table>'+
+        '</div>'+
       '</div>'+
     '</div>'+
-  '</div>'+
 
-  '</div>'+
-  '<!-- /.container-fluid -->';
-  $('#content').empty().append(temp);
-  $(document).ready( function () {
-    $('#dataTable').DataTable({
-      "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
-      "oLanguage": {
-        //"sLengthMenu": "Display _MENU_ messages",
-        "sEmptyTable":     "No hires available"
-      },
+    '</div>'+
+    '<!-- /.container-fluid -->';
+    $('#content').empty().append(temp);
+    $(document).ready( function () {
+      $('#dataTable').DataTable({
+        "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+        "oLanguage": {
+          //"sLengthMenu": "Display _MENU_ messages",
+          "sEmptyTable":     "No hires available"
+        },
+      });
     });
-  });
-  },
-  error: function(err){
-    $.notify(err.responseText,'error');
-  }
- });
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+});
 
 }
 function delHire(hire_id){  

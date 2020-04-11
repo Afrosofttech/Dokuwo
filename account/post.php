@@ -64,6 +64,11 @@ $contr =  $urlParts[sizeof($urlParts)-2];
          $res = $result->send_msg_to_jobseeker($_POST['creator_id'],$_POST['fullname'],$_POST['jobseeker_login_id'],$_POST['Name'],$_POST['parent_msg_id'],$_POST['Subject'],$_POST['messageBody']);
          echo $res;
          break;
+      case "forward_msg_to_jobseeker":
+        $result = new MessagesController();
+        $res = $result->forward_msg_to_jobseeker($_POST['creator_id'],$_POST['fullname'],$_POST['jobseeker_login_id'],$_POST['Name'],$_POST['message_id']);
+        echo $res;
+      break;
        case "reply_jobseeker":
          $result = new MessagesController();
          $res = $result->send_msg_to_jobseeker($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']);
