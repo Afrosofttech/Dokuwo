@@ -1730,7 +1730,7 @@ function show_posted_jobs(){
     success: function(data){
     if(data !== 400){
       $.each(data, function( i, val ) {
-        jobsPosted+='<tr id="'+val.job_id+'" style="cursor: pointer;" onclick="viewJob(\''+val.job_id+'\',\''+val.job_name+'\',\''+val.job_type+'\',\''+val.job_cat+'\',\''+val.requirements+'\',\''+val.job_location+'\',\''+val.date_posted+'\',\''+val.job_contact_email+'\',\''+val.job_contact_phone+'\',\''+val.salary+'\',\''+val.status+'\')">'+
+        jobsPosted+='<tr id="'+val.job_id+'" style="cursor: pointer;" onclick="viewJob(\''+val.job_id+'\')">'+
                     '<td>' + val.job_name +'</td>'+
                     '<td>'+ val.job_type +'</td>'+
                     '<td>'+ session_curr+currencyFormat(val.salary) +'</td>'+
@@ -2056,7 +2056,14 @@ function show_posted_jobs(){
 
     }
 
-    function viewJob(job_id,job_name,job_type,job_cat,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status){
+    function viewJob(job_id){
+      $.ajax({
+        url: 'get.php/company/job_info',
+        method: 'GET',
+        data: {'job_id':job_id},
+        dataType: 'json',
+        success: function(data){
+          console.log(data);
       let temp = '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
       '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
         '<h4 class="card-title">Job detail</h4>'+
@@ -2071,13 +2078,13 @@ function show_posted_jobs(){
             '<div class="input-group-prepend">'+
               '<span class="input-group-text">Position</span>'+
             '</div>'+
-            '<input type="text" class="form-control" id="jobName" value="'+job_name+'">'+
+            '<input type="text" class="form-control" id="jobName" value="'+data.job_name+'">'+
           '</div>'+
           '<div class="input-group mb-3">'+
             '<div class="input-group-prepend">'+
               '<span class="input-group-text">Location</span>'+
             '</div>'+
-            '<input type="text" class="form-control" id="jobLocation" value="'+job_location+'">'+
+            '<input type="text" class="form-control" id="jobLocation" value="'+data.job_location+'">'+
           '</div>'+
           '<div class="input-group mb-3">'+
           '<div class="input-group-prepend">'+
@@ -2107,7 +2114,7 @@ function show_posted_jobs(){
        '</div>'+
           '<div class="form-group">'+
           '<label class="input-group-text" for="summernote">Requirements</label>'+
-          '<div id="summernote" class="message_body_info">'+requirements+'</div>'+
+          '<div id="summernote" class="message_body_info">'+data.requirements+'</div>'+
          '</div>'+
         '</div>'+
         '<!-- /.col-md-9 col-sm-4 -->'+
@@ -2120,32 +2127,32 @@ function show_posted_jobs(){
         '<div class="input-group-prepend">'+
           '<span class="input-group-text">Salary</span>'+
         '</div>'+
-        '<input type="text" class="form-control" pattern="[0-9]+" id="salary" value="'+salary+'">'+
+        '<input type="text" class="form-control" pattern="[0-9]+" id="salary" value="'+data.salary+'">'+
        '</div>'+
        '<div class="input-group mb-3">'+
         '<div class="input-group-prepend">'+
          '<span class="input-group-text">Contact Email</span>'+
         '</div>'+
-        '<input type="email" class="form-control" id="contactEmail" value="'+job_contact_email+'">'+
+        '<input type="email" class="form-control" id="contactEmail" value="'+data.job_contact_email+'">'+
        '</div>'+
        '<div class="input-group mb-3">'+
          '<div class="input-group-prepend">'+
            '<span class="input-group-text">Contact Phone</span>'+
          '</div>'+
-         '<input type="text" class="form-control" placeholder="5336171" pattern="[0-9]+" id="contactPhone" value="'+job_contact_phone+'">'+
+         '<input type="text" class="form-control" placeholder="5336171" pattern="[0-9]+" id="contactPhone" value="'+data.job_contact_phone+'">'+
        '</div>'+
         '</div>'+
         '<!-- /.col-md-9 col-sm-4 -->'+
        '<div class="col-md-3 col-sm-4">'+
-       ''+((status == 0)?('<div class="input-group mb-3">'+
+       ''+((data.status == 0)?('<div class="input-group mb-3">'+
        '<button type="submit" name="submit" class="btn btn-success btn-block" id="sendJobUpdate"><i class="fas fa-lg fa-arrow-right"></i> Update</button>'+
         '</div>'):('<div class="input-group mb-3">'+
         '<button type="button" class="btn btn-success btn-block disabled"><i class="fas fa-lg fa-arrow-right"></i> Update</button>'+
       '</div>'))+''+
         '</form>'+
         '<!-- /.form -->'+
-        ''+((status == 0)?('<div class="input-group mb-3">'+
-        '<button type="button" class="btn btn-warning btn-block" style="cursor: pointer;" onclick="closeJob(\''+job_id+'\')"><i class="fas fa-lg fa-window-close"></i> Close Job</button>'+
+        ''+((data.status == 0)?('<div class="input-group mb-3">'+
+        '<button type="button" class="btn btn-warning btn-block" style="cursor: pointer;" onclick="closeJob(\''+data.job_id+'\')"><i class="fas fa-lg fa-window-close"></i> Close Job</button>'+
      '</div>'):( '<div class="input-group mb-3">'+
      '<button type="button" class="btn btn-warning btn-block disabled" style="cursor: pointer;" onclick="javascript:void(0);"><i class="fas fa-lg fa-window-close"></i> Close Job</button>'+
      '</div>'))+''+
@@ -2163,8 +2170,8 @@ function show_posted_jobs(){
     '</div>';
       $('.jobsposted').empty().append(temp);
       $(document).ready(function(){
-        $("#jobType option[value='"+job_type+"']").attr('selected', 'selected');
-        $("#jobCategory option[value='"+job_cat+"']").attr('selected', 'selected');
+        $("#jobType option[value='"+data.job_type+"']").attr('selected', 'selected');
+        $("#jobCategory option[value='"+data.job_cat+"']").attr('selected', 'selected');
           $('#summernote').summernote({
             height: 100,
             lineHeight: 1,
@@ -2205,50 +2212,51 @@ function show_posted_jobs(){
               }
           }
           });
+        });
 
-          //on submit
+        //on submit
         $('#sendJobUpdate').click(function(e){
           e.preventDefault();
-         let jobName = $('#jobName').val();
-         let jobLocation = $('#jobLocation').val();
-         let contactEmail = $('#contactEmail').val();
-         let contactPhone = $('#contactPhone').val();
-         let salary = $('#salary').val();
-         if (jobName == ''){
-           swal('Invalid Job Position!','Job position cannot be empty','error','Cool');
-           return;
-         }
-         if (jobLocation == ''){
+          let jobName = $('#jobName').val();
+          let jobLocation = $('#jobLocation').val();
+          let contactEmail = $('#contactEmail').val();
+          let contactPhone = $('#contactPhone').val();
+          let salary = $('#salary').val();
+          if (jobName == ''){
+            swal('Invalid Job Position!','Job position cannot be empty','error','Cool');
+            return;
+          }
+          if (jobLocation == ''){
           swal('Invalid Job Location!','Job location cannot be empty','error','Cool');
           return;
-         }
-         if (contactEmail.length < 1) {
+          }
+          if (contactEmail.length < 1) {
           swal('Invalid Email!','Email cannot be empty','error','Cool');
           return;
-         }else {
+          }else {
           if (!validEmail(contactEmail)) {
-             swal('Invalid Email!','Please enter a valid email!','error','Cool');
-             return;
+              swal('Invalid Email!','Please enter a valid email!','error','Cool');
+              return;
           }
-         }
-         if(contactPhone.length < 1){
+          }
+          if(contactPhone.length < 1){
           swal('Invalid Phone number!','Please enter a phone number','error','Cool');
           return;
-         }else{
+          }else{
           var regEx = new RegExp('^[0-9]+$');
           var validPhone = regEx.test(contactPhone);
           if(!validPhone){
             swal('Invalid Phone number!','Please enter a valid phone number','error','Cool');
             return;
           }
-         }
-         if(salary == 0){
+          }
+          if(salary == 0){
           swal('Invalid Salary!','Please enter the salary for the job','error','Cool');
           return;
-         }else if(salary.length < 1){
+          }else if(salary.length < 1){
           swal('Invalid Salary!','Please enter the salary for the job','error','Cool');
           return;
-         }else{
+          }else{
           var regEx = new RegExp('^[0-9]+$');
           var validSalary = regEx.test(salary);
           if(!validSalary){
@@ -2256,7 +2264,7 @@ function show_posted_jobs(){
             return;
           }
         }
-         $.ajax({
+          $.ajax({
           url: 'post.php/company/update_job',
           method: 'POST',
           data: {'job_id':job_id,'jobName': $('#jobName').val(),'jobLocation':$('#jobLocation').val(),'jobType':$('#jobType').val(),
@@ -2274,9 +2282,12 @@ function show_posted_jobs(){
         });
 
         })
-
-      })
-    }
+      },
+      error: function(err){
+        $.notify(err.responseText,'error');
+      }
+    });
+}
 function closeJob(job_id){
   $.ajax({
     url: 'post.php/company/close_job',
