@@ -622,7 +622,7 @@ function viewMessage(msg_id,jobseeker_name,jobseeker_id){
           '<button type="button" class="btn btn-default" onclick="selectAJobseekerToForward(\''+msg_id+'\')"><i class="fas fa-share"></i> Forward</button>'+
         '</div>'+
       '<button type="button" class="btn btn-default" onclick="DeleteMessage(\''+data.message_id+'\',\''+jobseeker_id+'\');"><i class="far fa-trash-alt"></i> Delete</button>'+
-      ''+((jobseeker_id === undefined)?('<button type="button" class="btn btn-default"><i class="fas fa-ban"></i> Block user</button>'):'')+''+
+      ''+((jobseeker_id === undefined)?('<button type="button" class="btn btn-default" onclick="blockJobseeker(\''+data.creator_id+'\')"><i class="fas fa-ban"></i> Block user</button>'):'')+''+
       '<button type="button" class="btn btn-default printbtn"><i class="fas fa-print"></i> Print</button>'+
       '</div>'+
       '<!-- /.card-footer -->'+
@@ -683,6 +683,21 @@ if(jobseeker_id === undefined){
     $.notify(err.responseText,'error');
    }
   });
+}
+function blockJobseeker(jobseeker_login_id){
+$.ajax({
+  method: "POST",
+  dataType: 'json',
+  url: "post.php/company/block_jobseeker",
+  data: {"company_login_id" : session_id,"jobseeker_login_id": jobseeker_login_id},
+  success: function(data){
+    $.notify(data.message,'success');
+  },
+  error: function(error){
+    $.notify(err.responseText,'error');
+  }
+ });
+
 }
 function newMsgNotification(){  
 //ams->am using this func to update the topBar message center notification
@@ -797,10 +812,8 @@ function forwardMsgTo(login_id,fullName,msg_id){
       url: "post.php/company/forward_msg_to_jobseeker",
       data: {"creator_id" : session_id, "fullname": session_fullname, "jobseeker_login_id" : login_id, "Name" : fullName,"message_id": msg_id},
       success: function(data){
-          if(data == 200){
-          $.notify('Message has been successfully forwarded','success'); 
+          $.notify(data.message,'success'); 
           contentMessage();
-        }
       },
       error: function(err){
         //
@@ -899,15 +912,12 @@ $('#newreplymsg').click(function(e){
 
   $.ajax({
     method: "POST",
-    // dataType: 'json',
+    dataType: 'json',
     url: "post.php/company/reply_jobseeker",
     data:{"creator_id": session_id,"creator_name": session_fullname,"recipient_id": recipient_id,"recipient_name": recipient_name,"parent_msg_id": msg_id,"subject": $('#replyToSubject').val(),"msg_body": $('.message_body_info').summernote('code')},
     success: function(data){
-      console.log(data);
-      if(data == 200){
-        $.notify('Message has been sent successfully','success');
+        $.notify(data.message,'success');
         contentMessage();
-      }
     },
     error: function(err){
     //
@@ -1082,15 +1092,8 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
         url: "post.php/company/send_msg_to_jobseeker",
         data: {"creator_id" : session_id, "fullname": session_fullname, "jobseeker_login_id" : login_id, "Name" : $('#thefullname').val(),"parent_msg_id": null, "Subject" : $('#theSubject').val(), "messageBody" : $('.message_info').summernote('code')},
         success: function(data){
-           if(data == 200){
-            $.notify('Message successfully sent','success'); 
-            // if (divToClear == undefined){
-            //   contentMessage();
-            // }else{
-
-            // }
+            $.notify(data.message,'success'); 
             (divToClear == undefined)? contentMessage(): discardMsg(divToClear);
-          }
         },
         error: function(err){
           //

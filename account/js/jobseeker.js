@@ -923,20 +923,12 @@ function jcomposeNewMessage(login_id,cName,divToClear){
       }else{
         $.ajax({
           method: "POST",
-          // dataType: 'html',
+          dataType: 'json',
           url: "post.php/jobseeker/send_msg_to_company",
           data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : $('#thefullname').val(),"parent_msg_id": null, "Subject" : $('#theSubject').val(), "messageBody" : $('.message_info').summernote('code')},
           success: function(data){
-            console.log(data);
-             if(data == 200){
-              $.notify('Message successfully sent','success'); 
-              // if (divToClear == undefined){
-              //   contentMessage();
-              // }else{
-  
-              // }
+              $.notify(data.message,'success'); 
               (divToClear == undefined)? contentMessage(): discardMsg(divToClear);
-            }
           },
           error: function(err){
             //
@@ -1158,34 +1150,31 @@ function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
     });
 
   //on submit
-  $('#newreplymsg').click(function(e){
-    e.preventDefault();
-    if($('#replyToName').val() ===''){
-      $.notify('Message receiver name cannot be empty','error');
-    }else if($('#replyToSubject').val() === ''){
-      $.notify('Subject field cannot be empty','error');
-    }else{
+$('#newreplymsg').click(function(e){
+  e.preventDefault();
+  if($('#replyToName').val() ===''){
+    $.notify('Message receiver name cannot be empty','error');
+  }else if($('#replyToSubject').val() === ''){
+    $.notify('Subject field cannot be empty','error');
+  }else{
 
-    $.ajax({
-      method: "POST",
-      // dataType: 'json',
-      url: "post.php/jobseeker/reply_company",
-      data:{"creator_id": session_id,"creator_name": session_fullname,"recipient_id": recipient_id,"recipient_name": recipient_name,"parent_msg_id": msg_id,"subject": $('#replyToSubject').val(),"msg_body": $('.message_body_info').summernote('code')},
-      success: function(data){
-        console.log(data);
-        if(data == 200){
-          $.notify('Message has been sent successfully','success');
-          jcontentMessage();
-        }
-      },
-      error: function(err){
-        $.notify(err.responseText,'error');
-      }
-    });
-  }
-   });
+  $.ajax({
+    method: "POST",
+    dataType: 'json',
+    url: "post.php/jobseeker/reply_company",
+    data:{"creator_id": session_id,"creator_name": session_fullname,"recipient_id": recipient_id,"recipient_name": recipient_name,"parent_msg_id": msg_id,"subject": $('#replyToSubject').val(),"msg_body": $('.message_body_info').summernote('code')},
+    success: function(data){
+        $.notify(data.message,'success');
+        jcontentMessage();
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
   });
- }
+}
+  });
+});
+}
 }
 function selectACompanyToForward(msg_id){
   let conMessage ='';
@@ -1263,21 +1252,19 @@ function selectACompanyToForward(msg_id){
      });
 }
 function jforwardMsgTo(login_id,company_name,msg_id){
-  $.ajax({
-    method: "POST",
-    // dataType: 'html',
-    url: "post.php/jobseeker/forward_msg_to_company",
-    data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : company_name,"message_id": msg_id},
-    success: function(data){
-       if(data == 200){
-        $.notify('Message has been successfully forwarded','success'); 
-        jcontentMessage();
-      }
-    },
-    error: function(err){
-      $.notify(err.responseText,'error');
-    }
-  });
+$.ajax({
+  method: "POST",
+  dataType: 'json',
+  url: "post.php/jobseeker/forward_msg_to_company",
+  data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : company_name,"message_id": msg_id},
+  success: function(data){
+      $.notify(data.message,'success'); 
+      jcontentMessage();
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+});
 }
 function jnewMsgNotification(){  
   //ams->am using this func to update the topBar message center notification
