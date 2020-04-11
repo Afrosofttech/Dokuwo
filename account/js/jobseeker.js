@@ -695,7 +695,6 @@ function jcontentMessage(){
                 let checkId = val.message_id+"checkbox";
                 //AMS-> am filtering the message body to get rid of all tags
                 var filteredMsgBody = $("<div>").html(val.message_body).text();
-                //onclick="jviewMessage(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');"
                 conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
                             '<td>'+
                               '<div class="icheck-primary">'+
@@ -739,7 +738,7 @@ function jcontentMessage(){
           var id = $(this).attr('id');
           $.each(data, function( i, val ) {
            if(val.message_id === id){
-            jviewMessage(val.message_id,val.creator_id,val.creator_name,val.subject,val.message_body,val.create_date,val.parent_message_id);
+            jviewMessage(val.message_id);
            }
           });
           //return false;
@@ -949,113 +948,125 @@ function jcomposeNewMessage(login_id,cName,divToClear){
       });
   });  
 }
-function jviewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,created_date,parent_msg_id,company_name,company_id){
-  //AMS-> both company_name and company_id are optional and only set when viewing sent messages
-    let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
-      '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
-        '<h3 class="card-title">Read Message</h3>'+
-  
-        '<div class="card-tools">';
-        (company_id === undefined)?temp += '<button class="btn btn-primary btn-icon-split" onclick="jcontentMessage();">':temp +='<button class="btn btn-primary btn-icon-split" onclick="jsentMessages();">';
-        
-        temp +='<span class="icon text-white-50">'+
-          '<i class="fas fa-arrow-left"></i>'+
-        '</span>'+
-        '<span class="text">Back</span>'+
-      '</button>'+
-        '</div>'+
+function jviewMessage(msg_id,company_name,company_id){
+//AMS-> both company_name and company_id are optional and only set when viewing sent messages
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/jobseeker/get_message",
+  data: {"msg_id" : msg_id},
+  success: function(data){
+     console.log(data);
+  let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
+    '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
+      '<h3 class="card-title">Read Message</h3>'+
+
+      '<div class="card-tools">';
+      (company_id === undefined)?temp += '<button class="btn btn-primary btn-icon-split" onclick="jcontentMessage();">':temp +='<button class="btn btn-primary btn-icon-split" onclick="jsentMessages();">';
+      
+      temp +='<span class="icon text-white-50">'+
+        '<i class="fas fa-arrow-left"></i>'+
+      '</span>'+
+      '<span class="text">Back</span>'+
+    '</button>'+
       '</div>'+
-      '<!-- /.card-header -->'+
-      '<div class="card-body p-2 justify-content-between msgBodyViewed">'+
-        '<div class="mailbox-read-info">'+
-          '<h5><b>'+msg_subject+'</b></h5>'+
-          '<h6><p id="'+msg_id+'">From: '+creator_name+'</p>'+
-            '<span class="mailbox-read-time float-right">'+created_date+'</span></h6>'+
-        '</div>'+
-        '<!-- /.mailbox-read-info -->'+
-        '<div class="mailbox-controls  text-center">'+
-        '<hr>'+
-          '<div class="btn-group">'+
-            '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete" onclick="jDeleteMessage(\''+msg_id+'\',\''+company_id+'\');">'+
-            '<i class="far fa-trash-alt"></i></button>'+
-  
-            '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply" onclick="jReplyMsg(\''+msg_id+'\',\''+creator_id+'\',\''+creator_name+'\',\''+msg_subject+'\',\''+company_id+'\');">'+
-              '<i class="fas fa-reply"></i></button>'+
-            '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward" onclick="selectACompanyToForward(\''+msg_subject+'\',\''+msg_body+'\');">'+
-              '<i class="fas fa-share"></i></button>'+
-          '</div>'+
-          '<!-- /.btn-group -->'+
-          '<button type="button" class="btn btn-default btn-sm printbtn" data-toggle="tooltip" title="Print">'+
-            '<i class="fas fa-print"></i></button>'+
-        '</div>'+
-        '<hr>'+
-        '<!-- /.mailbox-controls -->'+
-        '<div class="mailbox-read-message">'+
-           '<p>'+msg_body+'</p>'+
-          //'<p class="msgBodyViewed">This is a static text to be removed</p>'+
-          // '<p>'+creator_name+'</p>'+
-        '</div>'+
-        '<!-- /.mailbox-read-message -->'+
-      '</div>'+
-      '<!-- /.card-footer -->'+
-      '<div class="card-footer">'+
-        '<div class="float-right">'+
-          '<button type="button" class="btn btn-default" onclick="jReplyMsg(\''+msg_id+'\',\''+creator_id+'\',\''+creator_name+'\',\''+msg_subject+'\',\''+company_id+'\');"><i class="fas fa-reply"></i> Reply</button>'+
-          '<button type="button" class="btn btn-default" onclick="selectACompanyToForward(\''+msg_subject+'\',\''+msg_body+'\')"><i class="fas fa-share"></i> Forward</button>'+
-        '</div>'+
-      '<button type="button" class="btn btn-default" onclick="jDeleteMessage(\''+msg_id+'\',\''+company_id+'\');"><i class="far fa-trash-alt"></i> Delete</button>'+
-      '<button type="button" class="btn btn-default printbtn"><i class="fas fa-print"></i> Print</button>'+
-      '</div>'+
-      '<!-- /.card-footer -->'+
     '</div>'+
-    '<!-- /.card -->'+
-  '</div>';
-  
-  $('.contentMessage').empty().append(temp);
-  
-  $(document).ready(function (){
-    if(company_id){
-      $('#'+msg_id).html('To: '+company_name+'');
-    }
-    //Print a message
-    $(".printbtn").click(function(){
-  
-      var mode = 'iframe'; //popup
-      var close = mode == "popup";
-      var options = { mode : mode, popClose : close};
-      $("div.msgBodyViewed").printArea( options );
-  
-   });
-  
-    $("p").on("copy cut", function (e) {
-      $.notify('copying disabled for good reasons','warning');
-      e.preventDefault();
-      return false;
-  });
-  $('p').mousedown(function(e) { 
-    if (e.button == 2) { 
-        e.preventDefault(); 
-        $.notify('right-click is disabled!','warning'); 
-    }
-  })
-  if(company_id === undefined){
-    $.ajax({
-      method: "POST",
-      dataType: 'json',
-      url: "post.php/jobseeker/message_is_read",
-      data: {"message_id" : msg_id},
-      success: function(data){
-        if(data == 200){
-          jsidebarMessage();
-          jnewMsgNotification();
-        }
-      },
-      error: function(err){
-      //
-      }
-    })
+    '<!-- /.card-header -->'+
+    '<div class="card-body p-2 justify-content-between msgBodyViewed">'+
+      '<div class="mailbox-read-info">'+
+        '<h5><b>'+data.subject+'</b></h5>'+
+        '<h6><p id="'+data.message_id+'">From: '+data.creator_name+'</p>'+
+          '<span class="mailbox-read-time float-right">'+data.create_date+'</span></h6>'+
+      '</div>'+
+      '<!-- /.mailbox-read-info -->'+
+      '<div class="mailbox-controls  text-center">'+
+      '<hr>'+
+        '<div class="btn-group">'+
+          '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete" onclick="jDeleteMessage(\''+msg_id+'\',\''+company_id+'\');">'+
+          '<i class="far fa-trash-alt"></i></button>'+
+
+          '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply" onclick="jReplyMsg(\''+msg_id+'\',\''+data.creator_id+'\',\''+data.creator_name+'\',\''+data.message_subject+'\',\''+company_id+'\');">'+
+            '<i class="fas fa-reply"></i></button>'+
+          '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward" onclick="selectACompanyToForward(\''+msg_id+'\');">'+
+            '<i class="fas fa-share"></i></button>'+
+        '</div>'+
+        '<!-- /.btn-group -->'+
+        '<button type="button" class="btn btn-default btn-sm printbtn" data-toggle="tooltip" title="Print">'+
+          '<i class="fas fa-print"></i></button>'+
+      '</div>'+
+      '<hr>'+
+      '<!-- /.mailbox-controls -->'+
+      '<div class="mailbox-read-message">'+
+          '<p>'+data.message_body+'</p>'+
+        //'<p class="msgBodyViewed">This is a static text to be removed</p>'+
+        // '<p>'+creator_name+'</p>'+
+      '</div>'+
+      '<!-- /.mailbox-read-message -->'+
+    '</div>'+
+    '<!-- /.card-footer -->'+
+    '<div class="card-footer">'+
+      '<div class="float-right">'+
+        '<button type="button" class="btn btn-default" onclick="jReplyMsg(\''+msg_id+'\',\''+data.creator_id+'\',\''+data.creator_name+'\',\''+data.subject+'\',\''+company_id+'\');"><i class="fas fa-reply"></i> Reply</button>'+
+        '<button type="button" class="btn btn-default" onclick="selectACompanyToForward(\''+msg_id+'\')"><i class="fas fa-share"></i> Forward</button>'+
+      '</div>'+
+    '<button type="button" class="btn btn-default" onclick="jDeleteMessage(\''+msg_id+'\',\''+company_id+'\');"><i class="far fa-trash-alt"></i> Delete</button>'+
+    '<button type="button" class="btn btn-default printbtn"><i class="fas fa-print"></i> Print</button>'+
+    '</div>'+
+    '<!-- /.card-footer -->'+
+  '</div>'+
+  '<!-- /.card -->'+
+'</div>';
+
+$('.contentMessage').empty().append(temp);
+
+$(document).ready(function (){
+  if(company_id){
+    $('#'+msg_id).html('To: '+company_name+'');
   }
- })
+  //Print a message
+  $(".printbtn").click(function(){
+
+    var mode = 'iframe'; //popup
+    var close = mode == "popup";
+    var options = { mode : mode, popClose : close};
+    $("div.msgBodyViewed").printArea( options );
+
+  });
+
+  $("p").on("copy cut", function (e) {
+    $.notify('copying disabled for good reasons','warning');
+    e.preventDefault();
+    return false;
+});
+$('p').mousedown(function(e) { 
+  if (e.button == 2) { 
+      e.preventDefault(); 
+      $.notify('right-click is disabled!','warning'); 
+  }
+})
+if(company_id === undefined){
+  $.ajax({
+    method: "POST",
+    dataType: 'json',
+    url: "post.php/jobseeker/message_is_read",
+    data: {"message_id" : msg_id},
+    success: function(data){
+      if(data == 200){
+        jsidebarMessage();
+        jnewMsgNotification();
+      }
+    },
+    error: function(err){
+    //
+    }
+   })
+   }
+  })
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+  });
 }
 function jDeleteMessage(msg_id,company_id){
   $.ajax({
@@ -1176,7 +1187,7 @@ function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
   });
  }
 }
-function selectACompanyToForward(msg_subject,msg_body){
+function selectACompanyToForward(msg_id){
   let conMessage ='';
   $.ajax({
     method: "GET",
@@ -1204,7 +1215,7 @@ function selectACompanyToForward(msg_subject,msg_body){
               //
              }else{
               $.each(data, function( i, val ) {
-                conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="jforwardMsgTo(\''+val.login_id+'\',\''+val.company_name+'\',\''+msg_subject+'\',\''+msg_body+'\');">'+
+                conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="jforwardMsgTo(\''+val.login_id+'\',\''+val.company_name+'\',\''+msg_id+'\');">'+
                             '<td>'+
                                 '<input type="hidden" value="" id="'+val.login_id+'">'+
                             '</td>'+
@@ -1251,12 +1262,12 @@ function selectACompanyToForward(msg_subject,msg_body){
       }
      });
 }
-function jforwardMsgTo(login_id,company_name,msg_subject,msg_body){
+function jforwardMsgTo(login_id,company_name,msg_id){
   $.ajax({
     method: "POST",
     // dataType: 'html',
-    url: "post.php/jobseeker/send_msg_to_company",
-    data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : company_name,"parent_msg_id": null, "Subject" : msg_subject, "messageBody" : msg_body},
+    url: "post.php/jobseeker/forward_msg_to_company",
+    data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : company_name,"message_id": msg_id},
     success: function(data){
        if(data == 200){
         $.notify('Message has been successfully forwarded','success'); 
@@ -1335,7 +1346,7 @@ $.ajax({
               let checkId = val.message_id+"checkbox";
               //ams-> am filtering the message body to get rid of all tags
               var filteredMsgBody = $("<div>").html(val.message_body).text();
-      temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="jviewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\',\''+val.company_name+'\',\''+val.recipient_id+'\');">'+
+      temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="jviewMessage(\''+val.message_id+'\',\''+val.company_name+'\',\''+val.recipient_id+'\');">'+
                     '<td>'+
                       '<div class="icheck-primary">'+
                         '<input type="checkbox" value="" id="'+checkId+'">'+

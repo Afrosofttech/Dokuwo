@@ -479,7 +479,6 @@ function contentMessage(){
                 let checkId =  val.message_id+"checkbox";
                 //ams-> am filtering the message body to get rid of all tags
                 var filteredMsgBody = $("<div>").html(val.message_body).text();
-                //onclick="viewMessage(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');"
                 conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
                             '<td>'+
                               '<div class="icheck-primary">'+
@@ -564,14 +563,12 @@ function redirectToMessageFromNotification(message_id,creator_id,creator_name,su
 }
 function viewMessage(msg_id,jobseeker_name,jobseeker_id){
  //ams: both jobseeker_name and jobseeker_id are optional and only set when viewing sent messages
- // i now need to do the check here to know what message to retrieve
  $.ajax({
   method: "GET",
   dataType: 'json',
   url: "get.php/company/get_message",
   data: {"msg_id" : msg_id},
   success: function(data){
-     console.log(data);
     let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
       '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
         '<h3 class="card-title">Read Message</h3>'+
@@ -1189,43 +1186,43 @@ function sentMessages(){
       });
 }
 function DeleteMessage(msg_id,jobseeker_id){
-$.ajax({
-  method: "POST",
-  dataType: 'json',
-  url: (jobseeker_id === 'undefined')? "post.php/company/delete_message":"post.php/company/delete_sent_message",
-  data: {"message_id" : msg_id},
-  success: function(data){
-    if(data == 200){
-      $.notify('message successfully deleted','success');
-      (jobseeker_id === 'undefined')?contentMessage():sentMessages();
-    }else{
-      $.notify('message has not been deleted','error');
-    }
-  },
-  error: function(err){
-    $.notify(err.responseText,'error');
-  }
- });
-}
-function geyOutReadMessages(param){
   $.ajax({
-    method: "GET",
+    method: "POST",
     dataType: 'json',
-    url: "get.php/company/read_messages",
-    data: {"login_id" : session_id},
+    url: (jobseeker_id === 'undefined')? "post.php/company/delete_message":"post.php/company/delete_sent_message",
+    data: {"message_id" : msg_id},
     success: function(data){
-      if(data != 0){
-        $.each(data, function(i,val){
-          var table = $('#'+param).DataTable();
-        table.$('tr#'+val.mess_rec_id).css({'background-color': 'gainsboro'});
-        });
-       
+      if(data == 200){
+        $.notify('message successfully deleted','success');
+        (jobseeker_id === 'undefined')?contentMessage():sentMessages();
+      }else{
+        $.notify('message has not been deleted','error');
       }
     },
     error: function(err){
       $.notify(err.responseText,'error');
     }
   });
+}
+function geyOutReadMessages(param){
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/company/read_messages",
+  data: {"login_id" : session_id},
+  success: function(data){
+    if(data != 0){
+      $.each(data, function(i,val){
+        var table = $('#'+param).DataTable();
+      table.$('tr#'+val.mess_rec_id).css({'background-color': 'gainsboro'});
+      });
+      
+    }
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+});
 }
 
 //@ams->company_jobseekers

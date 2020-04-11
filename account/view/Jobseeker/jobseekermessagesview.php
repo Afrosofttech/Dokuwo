@@ -18,15 +18,23 @@ class JobseekerMessagesView extends Jobseeker{
         $allInboxMessages = $this->get_all_inbox_messages($login_id);
         return $allInboxMessages;
     }
-    public function read_messages($recipient_id){
+    public function get_message($msg_id)
+    {
+        $allInboxMessages = $this->get_this_message($msg_id);
+        return $allInboxMessages;
+    }
+    public function read_messages($recipient_id)
+    {
         $res = $this->get_read_messages($recipient_id);
         return $res;
      }
-    public function all_sent_messages($creator_id){
+    public function all_sent_messages($creator_id)
+    {
         $allSentMessages = $this->get_all_sent_messages($creator_id);
         return $allSentMessages;
     }
-    public function retreive_all_companies(){
+    public function retreive_all_companies()
+    {
         $listOfAllCompanies =$this->get_all_companies();
         return $listOfAllCompanies;  
     }
