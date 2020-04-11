@@ -120,6 +120,11 @@ $contr =  $urlParts[sizeof($urlParts)-2];
           $res = $result->send_msg_to_company($_POST['creator_id'],$_POST['cName'],$_POST['company_login_id'],$_POST['Name'],$_POST['parent_msg_id'],$_POST['Subject'],$_POST['messageBody']);
           echo $res;
           break;
+        case "forward_msg_to_company":
+          $result = new JobseekerMessagesController();
+          $res = $result->forward_msg_to_company($_POST['creator_id'],$_POST['cName'],$_POST['company_login_id'],$_POST['Name'],$_POST['message_id']);
+          echo $res;
+          break;
         case "delete_message":
           $result = new JobseekerMessagesController();
           $res = $result->delete_message($_POST['message_id']);

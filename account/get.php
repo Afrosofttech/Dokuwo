@@ -202,6 +202,11 @@ if($view == 'company'){
         $res = $result->all_inbox_messages($_GET['login_id']);
         echo json_encode($res);
       break;
+      case "get_message":
+        $result = new JobseekerMessagesView();
+        $res = $result->get_message($_GET['msg_id']);
+        echo json_encode($res);
+      break;
       case "read_messages":
         $result = new JobseekerMessagesView();
         $res = $result->read_messages($_GET['login_id']);
