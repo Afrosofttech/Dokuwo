@@ -127,8 +127,14 @@ class Company extends Dbh{
         $stmt = null;
      }
     }
-    protected function send_msg_to_a_jobseeker($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody){
-
+    protected function send_msg_to_a_jobseeker($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody,$type=''){
+    
+    if($this->have_blocked($creator_id,$recipient_id)){
+        return  array('message' => 'You have already blocked this user.');
+    }
+    if($this->account_removed($recipient_id)){
+        return  array('message' => 'This user\'s account have already been removed after numerous reports.');
+    }
     $date = date('Y-m-d');
     if($parent_msg_id =='' || $parent_msg_id == null){
         $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name,subject,message_body,sender_delete_request,create_date) VALUES (?, ?, ?, ?, ?, ?)");
@@ -146,14 +152,15 @@ class Company extends Dbh{
         $stmt3 = $this->connect()->prepare("INSERT INTO message_recipient (recipient_id, message_id, is_read,delete_request) VALUES (?, ?, ?, ?)");
         $stmt3->execute([$recipient_id,$res['message_id'],0,0]);
 
-         return 200;
+         if($type == 'forward') return  array('message' => 'Message has been successfully forwarded');
+         else return  array('message' => 'Message successfully sent.');
     }
     protected function forward_msg_to_a_jobseeker($creator_id,$creator_name,$_recipient_id,$recipient_name,$message_id){
         $sql = " SELECT subject, message_body FROM message where message_id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$message_id]);
         $result = $stmt->fetch();
-        return $this->send_msg_to_a_jobseeker($creator_id,$creator_name,$_recipient_id,$recipient_name,null,$result['subject'],$result['message_body']);
+        return $this->send_msg_to_a_jobseeker($creator_id,$creator_name,$_recipient_id,$recipient_name,null,$result['subject'],$result['message_body'],'forward');
     }
     protected function get_categories_of_jobseekers(){
         //$seekersArray = array();
@@ -367,8 +374,7 @@ class Company extends Dbh{
             $stmt = null;
         }    
     }
-
-    public function get_all_blogs(){
+    protected function get_all_blogs(){
         $sql = "SELECT * FROM blog";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -382,7 +388,7 @@ class Company extends Dbh{
             $stmt = null;
         }    
     }
-    public function get_blog_details($blog_id){
+    protected function get_blog_details($blog_id){
         $sql = " SELECT * FROM blog WHERE blog_id=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$blog_id]);
@@ -396,7 +402,7 @@ class Company extends Dbh{
             $stmt = null;
         }    
     }
-    public function get_blog_categories(){
+    protected function get_blog_categories(){
         $sql = " SELECT category,COUNT(category) AS num_posts FROM blog GROUP BY category";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -410,7 +416,7 @@ class Company extends Dbh{
             $stmt = null;
         }    
     }
-    public function get_recent_posts(){
+    protected function get_recent_posts(){
         $sql = " SELECT * FROM blog ORDER BY date_posted DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -424,7 +430,7 @@ class Company extends Dbh{
             $stmt = null;
         }    
     }
-    public function get_posts_by_category($category){
+    protected function get_posts_by_category($category){
         $sql = " SELECT * FROM blog WHERE category = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$category]);
@@ -438,7 +444,7 @@ class Company extends Dbh{
             $stmt = null;
         }    
     }
-    public function get_jobseeker_details($jobseeker_id){
+    protected function get_jobseeker_details($jobseeker_id){
         $sql = " SELECT * FROM job_seeker WHERE jobseeker_id=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$jobseeker_id]);
@@ -452,7 +458,7 @@ class Company extends Dbh{
             $stmt = null;
         }    
     }
-    public function recruiter_details($recruiter_id){
+    protected function recruiter_details($recruiter_id){
         $sql = " SELECT  * FROM company WHERE company_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$recruiter_id]);
@@ -460,5 +466,46 @@ class Company extends Dbh{
         
         return  $result;
         $stmt = null; 
+    }
+    protected function block_this_jobseeker($company_login_id,$jobseeker_login_id){
+        if($this->have_blocked($company_login_id,$jobseeker_login_id)){
+            return  array('message' => 'You have already blocked this user.');
+        }
+        if($this->account_removed($jobseeker_login_id)){
+            return  array('message' => 'This user\'s account have already been removed after numerous reports.');
+        }
+        $sql = " INSERT INTO actions(company_login_id,jobseeker_login_id,request,action) VALUES(?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$company_login_id,$jobseeker_login_id,'Block','Blocked']);
+        return  array('message' => 'Done! You will no longer receive messages from this user.');
+        $stmt = null;
+    }
+    protected function have_blocked($company_login_id,$jobseeker_login_id){
+        $sql = " SELECT * FROM actions WHERE company_login_id=? AND jobseeker_login_id=? AND action=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$company_login_id,$jobseeker_login_id,'Blocked']);
+        $result = $stmt->fetch();
+
+        if(!$result ){
+            return false;
+            $stmt = null;
+        }else{
+            return  true;
+            $stmt = null;
+        } 
+    }
+    protected function account_removed($jobseeker_login_id){
+        $sql = " SELECT * FROM actions WHERE jobseeker_login_id=? AND action=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_login_id,'Removed']);
+        $result = $stmt->fetch();
+        
+        if(!$result ){
+            return false;
+            $stmt = null;
+        }else{
+            return  true;
+            $stmt = null;
+        } 
     }
 }

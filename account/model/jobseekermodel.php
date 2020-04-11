@@ -158,8 +158,11 @@ class Jobseeker extends Dbh{
         $stmt = null;
      }
     }
-    protected function send_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody){
-
+    protected function send_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody,$type=''){
+        
+        if($this->have_blocked($creator_id,$recipient_id)){
+            return  array('message' => 'You have been blocked by this company. Your message is not delivered.');
+        }
         $date = date('Y-m-d');
         if($parent_msg_id =='' || $parent_msg_id == null){
             $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date) VALUES (?, ?, ?, ?, ?,?)");
@@ -177,14 +180,15 @@ class Jobseeker extends Dbh{
             $stmt3 = $this->connect()->prepare("INSERT INTO message_recipient (recipient_id, message_id, is_read,delete_request) VALUES (?, ?, ?, ?)");
             $stmt3->execute([$recipient_id,$res['message_id'],0,0]);
     
-             return self::success;
+            if($type == 'forward') return  array('message' => 'Message has been successfully forwarded');
+            else return  array('message' => 'Message successfully sent.');
     }
     protected function forward_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,$message_id){
         $sql = " SELECT subject, message_body FROM message where message_id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$message_id]);
         $result = $stmt->fetch();
-        return $this->send_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,null,$result['subject'],$result['message_body']);
+        return $this->send_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,null,$result['subject'],$result['message_body'],'forward');
     }
     protected function delete_this_message($message_id)
     {
@@ -423,5 +427,19 @@ class Jobseeker extends Dbh{
         $stmt->execute([$name,$email,$subject,$message]);
         return self::success;
         $stmt = null;
+    }
+    protected function have_blocked($jobseeker_login_id,$company_login_id){
+        $sql = " SELECT * FROM actions WHERE company_login_id=? AND jobseeker_login_id=? AND action=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$company_login_id,$jobseeker_login_id,'Blocked']);
+        $result = $stmt->fetch();
+
+        if(!$result ){
+            return false;
+            $stmt = null;
+        }else{
+            return  true;
+            $stmt = null;
+        } 
     }
 }
