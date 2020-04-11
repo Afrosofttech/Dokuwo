@@ -12,6 +12,10 @@ class MessagesView extends Company{
       $allInboxMessages = $this->get_all_inbox_messages($recipient_id);
       return $allInboxMessages;
     }
+    public function get_message($msg_id){
+      $allInboxMessages = $this->get_this_message($msg_id);
+      return $allInboxMessages;
+    }
     public function read_messages($recipient_id){
        $res = $this->get_read_messages($recipient_id);
        return $res;

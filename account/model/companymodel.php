@@ -51,6 +51,14 @@ class Company extends Dbh{
         return  $result ;
         $stmt = null;
     }
+    protected function get_this_message($msg_id){
+        $sql = " SELECT * FROM message WHERE message_id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$msg_id]);
+        $result = $stmt->fetch();
+        return  $result ;
+        $stmt = null;
+    }
     protected function delete_this_message($message_id){
         $sql = " UPDATE message_recipient SET delete_request = ?  WHERE message_id = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -139,6 +147,13 @@ class Company extends Dbh{
         $stmt3->execute([$recipient_id,$res['message_id'],0,0]);
 
          return 200;
+    }
+    protected function forward_msg_to_a_jobseeker($creator_id,$creator_name,$_recipient_id,$recipient_name,$message_id){
+        $sql = " SELECT subject, message_body FROM message where message_id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$message_id]);
+        $result = $stmt->fetch();
+        return $this->send_msg_to_a_jobseeker($creator_id,$creator_name,$_recipient_id,$recipient_name,null,$result['subject'],$result['message_body']);
     }
     protected function get_categories_of_jobseekers(){
         //$seekersArray = array();

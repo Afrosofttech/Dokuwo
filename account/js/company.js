@@ -476,10 +476,10 @@ function contentMessage(){
             '</thead>'+
               '<tbody>';
               $.each(data, function( i, val ) {
-                let checkId = val.message_id+"checkbox";
-                //AMS-> am filtering the message body to get rid of all <p> tags
-                var filteredMsgBody = val.message_body.replace(/<[\/]{0,1}(p)[^><]*>/ig,"");
-                // onclick="viewMessage(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');"
+                let checkId =  val.message_id+"checkbox";
+                //ams-> am filtering the message body to get rid of all tags
+                var filteredMsgBody = $("<div>").html(val.message_body).text();
+                //onclick="viewMessage(\''+val[0].message_id+'\',\''+val[0].creator_id+'\',\''+val[0].creator_name+'\',\''+val[0].subject+'\',\''+val[0].message_body+'\',\''+val[0].create_date+'\',\''+val[0].parent_message_id+'\');"
                 conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
                             '<td>'+
                               '<div class="icheck-primary">'+
@@ -523,7 +523,7 @@ function contentMessage(){
           var id = $(this).attr('id');
           $.each(data, function( i, val ) {
            if(val.message_id === id){
-            viewMessage(val.message_id,val.creator_id,val.creator_name,val.subject,val.message_body,val.create_date,val.parent_message_id);
+            viewMessage(val.message_id);
            }
           });
           //return false;
@@ -562,96 +562,103 @@ function redirectToMessageFromNotification(message_id,creator_id,creator_name,su
         // });
          
 }
-function viewMessage(msg_id,creator_id,creator_name,msg_subject,msg_body,created_date,parent_msg_id,jobseeker_name,jobseeker_id){
-//ams: both jobseeker_name and jobseeker_id are optional and only set when viewing sent messages
-console.log('amadou sarjo')
-  let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
-    '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
-      '<h3 class="card-title">Read Message</h3>'+
+function viewMessage(msg_id,jobseeker_name,jobseeker_id){
+ //ams: both jobseeker_name and jobseeker_id are optional and only set when viewing sent messages
+ // i now need to do the check here to know what message to retrieve
+ $.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/company/get_message",
+  data: {"msg_id" : msg_id},
+  success: function(data){
+     console.log(data);
+    let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
+        '<h3 class="card-title">Read Message</h3>'+
 
-      '<div class="card-tools">';
-      (jobseeker_id === undefined)?temp += '<button class="btn btn-primary btn-icon-split" onclick="contentMessage();">':temp +='<button class="btn btn-primary btn-icon-split" onclick="sentMessages();">';
-      
-      temp +='<span class="icon text-white-50">'+
-        '<i class="fas fa-arrow-left"></i>'+
-      '</span>'+
-      '<span class="text">Back</span>'+
-    '</button>'+
-      '</div>'+
-    '</div>'+
-    '<!-- /.card-header -->'+
-    '<div class="card-body p-2 justify-content-between msgBodyViewed">'+
-      '<div class="mailbox-read-info">'+
-        '<h5><b>'+msg_subject+'</b></h5>'+
-        '<h6><p id="'+msg_id+'">From: '+creator_name+'</p>'+
-          '<span class="mailbox-read-time float-right">'+created_date+'</span></h6>'+
-      '</div>'+
-      '<!-- /.mailbox-read-info -->'+
-      '<div class="mailbox-controls  text-center">'+
-      '<hr>'+
-        '<div class="btn-group">'+
-          '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete" onclick="DeleteMessage(\''+msg_id+'\',\''+jobseeker_id+'\');">'+
-          '<i class="far fa-trash-alt"></i></button>'+
-
-          '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply" onclick="ReplyMsg(\''+msg_id+'\',\''+creator_id+'\',\''+creator_name+'\',\''+msg_subject+'\',\''+jobseeker_id+'\');">'+
-            '<i class="fas fa-reply"></i></button>'+
-          '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward" onclick="selectAJobseekerToForward(\''+msg_subject+'\',\''+msg_body+'\');">'+
-            '<i class="fas fa-share"></i></button>'+
+        '<div class="card-tools">';
+        (jobseeker_id === undefined)?temp += '<button class="btn btn-primary btn-icon-split" onclick="contentMessage();">':temp +='<button class="btn btn-primary btn-icon-split" onclick="sentMessages();">';
+        
+        temp +='<span class="icon text-white-50">'+
+          '<i class="fas fa-arrow-left"></i>'+
+        '</span>'+
+        '<span class="text">Back</span>'+
+      '</button>'+
         '</div>'+
-        '<!-- /.btn-group -->'+
-        '<button type="button" class="btn btn-default btn-sm printbtn" data-toggle="tooltip" title="Print">'+
-          '<i class="fas fa-print"></i></button>'+
       '</div>'+
-      '<hr>'+
-      '<!-- /.mailbox-controls -->'+
-      '<div class="mailbox-read-message">'+
-         '<p>'+msg_body+'</p>'+
-        //'<p class="msgBodyViewed">This is a static text to be removed</p>'+
-        // '<p>'+creator_name+'</p>'+
+      '<!-- /.card-header -->'+
+      '<div class="card-body p-2 justify-content-between msgBodyViewed">'+
+        '<div class="mailbox-read-info">'+
+          '<h5><b>'+data.subject+'</b></h5>'+
+          '<h6><p id="'+data.message_id+'">From: '+data.creator_name+'</p>'+
+            '<span class="mailbox-read-time float-right">'+data.create_date+'</span></h6>'+
+        '</div>'+
+        '<!-- /.mailbox-read-info -->'+
+        '<div class="mailbox-controls  text-center">'+
+        '<hr>'+
+          '<div class="btn-group">'+
+            '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete" onclick="DeleteMessage(\''+msg_id+'\',\''+jobseeker_id+'\');">'+
+            '<i class="far fa-trash-alt"></i></button>'+
+
+            '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply" onclick="ReplyMsg(\''+msg_id+'\',\''+data.creator_id+'\',\''+data.creator_name+'\',\''+data.subject+'\',\''+jobseeker_id+'\');">'+
+              '<i class="fas fa-reply"></i></button>'+
+            '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward" onclick="selectAJobseekerToForward(\''+msg_id+'\');">'+
+              '<i class="fas fa-share"></i></button>'+
+          '</div>'+
+          '<!-- /.btn-group -->'+
+          '<button type="button" class="btn btn-default btn-sm printbtn" data-toggle="tooltip" title="Print">'+
+            '<i class="fas fa-print"></i></button>'+
+        '</div>'+
+        '<hr>'+
+        '<!-- /.mailbox-controls -->'+
+        '<div class="mailbox-read-message">'+
+          '<p>'+data.message_body+'</p>'+
+          //'<p class="msgBodyViewed">This is a static text to be removed</p>'+
+          // '<p>'+creator_name+'</p>'+
+        '</div>'+
+        '<!-- /.mailbox-read-message -->'+
       '</div>'+
-      '<!-- /.mailbox-read-message -->'+
+      '<!-- /.card-footer -->'+
+      '<div class="card-footer">'+
+        '<div class="float-right">'+
+          '<button type="button" class="btn btn-default" onclick="ReplyMsg(\''+msg_id+'\',\''+data.creator_id+'\',\''+data.creator_name+'\',\''+data.subject+'\',\''+jobseeker_id+'\');"><i class="fas fa-reply"></i> Reply</button>'+
+          '<button type="button" class="btn btn-default" onclick="selectAJobseekerToForward(\''+msg_id+'\')"><i class="fas fa-share"></i> Forward</button>'+
+        '</div>'+
+      '<button type="button" class="btn btn-default" onclick="DeleteMessage(\''+data.message_id+'\',\''+jobseeker_id+'\');"><i class="far fa-trash-alt"></i> Delete</button>'+
+      ''+((jobseeker_id === undefined)?('<button type="button" class="btn btn-default"><i class="fas fa-ban"></i> Block user</button>'):'')+''+
+      '<button type="button" class="btn btn-default printbtn"><i class="fas fa-print"></i> Print</button>'+
+      '</div>'+
+      '<!-- /.card-footer -->'+
     '</div>'+
-    '<!-- /.card-footer -->'+
-    '<div class="card-footer">'+
-      '<div class="float-right">'+
-        '<button type="button" class="btn btn-default" onclick="ReplyMsg(\''+msg_id+'\',\''+creator_id+'\',\''+creator_name+'\',\''+msg_subject+'\',\''+jobseeker_id+'\');"><i class="fas fa-reply"></i> Reply</button>'+
-        '<button type="button" class="btn btn-default" onclick="selectAJobseekerToForward(\''+msg_subject+'\',\''+msg_body+'\')"><i class="fas fa-share"></i> Forward</button>'+
-      '</div>'+
-    '<button type="button" class="btn btn-default" onclick="DeleteMessage(\''+msg_id+'\',\''+jobseeker_id+'\');"><i class="far fa-trash-alt"></i> Delete</button>'+
-    ''+((jobseeker_id === undefined)?('<button type="button" class="btn btn-default"><i class="fas fa-ban"></i> Block user</button>'):'')+''+
-    '<button type="button" class="btn btn-default printbtn"><i class="fas fa-print"></i> Print</button>'+
-    '</div>'+
-    '<!-- /.card-footer -->'+
-  '</div>'+
-  '<!-- /.card -->'+
-'</div>';
+    '<!-- /.card -->'+
+  '</div>';
 
 $('.contentMessage').empty().append(temp);
 
 $(document).ready(function (){
-  if(jobseeker_id){
-    $('#'+msg_id).html('To: '+jobseeker_name+'');
-  }
-  //Print a message
-  $(".printbtn").click(function(){
+if(jobseeker_id){
+  $('#'+msg_id).html('To: '+jobseeker_name+'');
+}
+//Print a message
+$(".printbtn").click(function(){
 
-    var mode = 'iframe'; //popup
-    var close = mode == "popup";
-    var options = { mode : mode, popClose : close};
-    $("div.msgBodyViewed").printArea( options );
+var mode = 'iframe'; //popup
+var close = mode == "popup";
+var options = { mode : mode, popClose : close};
+$("div.msgBodyViewed").printArea( options );
 
- });
+});
 
-  $("p").on("copy cut", function (e) {
-    $.notify('copying disabled for good reasons','warning');
-    e.preventDefault();
-    return false;
+$("p").on("copy cut", function (e) {
+  $.notify('copying disabled for good reasons','warning');
+  e.preventDefault();
+  return false;
 });
 $('p').mousedown(function(e) { 
-  if (e.button == 2) { 
-      e.preventDefault(); 
-      $.notify('right-click is disabled!','warning'); 
-  }
+if (e.button == 2) { 
+    e.preventDefault(); 
+    $.notify('right-click is disabled!','warning'); 
+}
 })
 
 if(jobseeker_id === undefined){
@@ -670,243 +677,248 @@ if(jobseeker_id === undefined){
     error: function(err){
     //
     }
-  })
- }
-})
+   })
+  }
+ })
 
-}
-function newMsgNotification(){  
-  //ams->am using this func to update the topBar message center notification
-  let temp = '';
-  $.ajax({
-    method: "GET",
-    dataType: 'json',
-    url: "get.php/company/new_unread_messages",
-    data: {"login_id" : session_id},
-    success: function(data){
-      if(data != 400){
-      temp += '<h6 class="dropdown-header">'+
-        'Message Center'+
-      '</h6>';
-      $.each(data, function(i,val){
-        temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="redirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
-        '<div class="font-weight-bold">'+
-          '<div class="text-truncate">'+val.subject+'</div>'+
-          '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
-        '</div>'+
-      '</a>';
-      })
-
-      temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
-      $('.NewMsgNotificationsCount').empty().html(data.length);
-      $('.NewMsgNotifications').empty().append(temp);
-      }
-    }
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+   }
   });
 }
-function selectAJobseekerToForward(msg_subject,msg_body){
-  let conMessage ='';
-  $.ajax({
-    method: "GET",
-    dataType: 'json',
-    url: "get.php/company/retreive_all_jobseekers",
-    success: function(data){
+function newMsgNotification(){  
+//ams->am using this func to update the topBar message center notification
+let temp = '';
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/company/new_unread_messages",
+  data: {"login_id" : session_id},
+  success: function(data){
+    if(data != 400){
+    temp += '<h6 class="dropdown-header">'+
+      'Message Center'+
+    '</h6>';
+    $.each(data, function(i,val){
+      temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="redirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
+      '<div class="font-weight-bold">'+
+        '<div class="text-truncate">'+val.subject+'</div>'+
+        '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+      '</div>'+
+    '</a>';
+    })
 
-   conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
-        '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-          '<h4 class="card-title">Select a recipient</h4>'+
-
-        '</div>'+
-        '<!-- /.card-header -->'+
-        '<div class="card-body p-1">'+
-          '<div class="table-responsive mailbox-messages">'+
-            '<table class="table table-hover" id="mySelector">'+
-            '<thead>'+
-             ' <th>id</th>'+
-             '<th>img</th>'+
-            ' <th>FullName</th>'+
-            ' <th>Country</th>'+
-            ' <th>Skills</th>'+
-            '</thead>'+
-              '<tbody>';
-             if(data === 0){
-
-             }else{
-
-              $.each(data, function( i, val ) {
-                conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="forwardMsgTo(\''+val.login_id+'\',\''+val.fullName+'\',\''+msg_subject+'\',\''+msg_body+'\');">'+
-                            '<td>'+
-                                '<input type="hidden" value="" id="'+val.login_id+'">'+
-                            '</td>'+
-                            '<td class="img-link"><img class=" rounded-circle" src="'+((val.image == null)?"https://ui-avatars.com/api/?name="+val.fullName.replace(/ /g, '+'):'uploads/'+val.image)+'" style="height: auto;width: 5rem;" alt="'+val.fullName+'"/>'+
-                            '<div class="status-indicator bg-success"></div>'+
-                            '</td>'+
-                            '<td class="full-name"><b>'+val.fullName+'</b></td>'+
-                            '<td class="country-name">'+val.country+'</td>'+
-                            '<td class="Skills">'+val.skills.replace(',',' /')+'</td>'+
-                          '</tr>';
-              });
-             }
-
-            conMessage +=  '</tbody>'+
-                            '</table>'+
-                            '<!-- /.table -->'+
-                          '</div>'+
-                          '<!-- /.mail-box-messages -->'+
-                        '</div>'+
-                        '<!-- /.card-body -->'+
-
-                        '</div>'+
-
-                      '</div>';
-
-       $('.contentMessage').empty().append(conMessage);
-
-       $(document).ready( function () {
-        $('#mySelector').DataTable({
-          "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
-          "oLanguage": {
-            "sLengthMenu": "Display _MENU_ job seekers",
-            "sEmptyTable":     "No message available"
-          },
-          fnDrawCallback: function() {
-            $("#mySelector thead").remove();
-          }
-        });
-        });
-
-      },
-      error: function(err){
-       $.notify(err.responseText,'error');
-      }
-     });
+    temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
+    $('.NewMsgNotificationsCount').empty().html(data.length);
+    $('.NewMsgNotifications').empty().append(temp);
+    }
+  }
+});
 }
-function forwardMsgTo(login_id,fullName,msg_subject,msg_body){
-      $.ajax({
-        method: "POST",
-        // dataType: 'html',
-        url: "post.php/company/send_msg_to_jobseeker",
-        data: {"creator_id" : session_id, "fullname": session_fullname, "jobseeker_login_id" : login_id, "Name" : fullName,"parent_msg_id": null, "Subject" : msg_subject, "messageBody" : msg_body},
-        success: function(data){
-           if(data == 200){
-            $.notify('Message has been successfully forwarded','success'); 
-            contentMessage();
-          }
-        },
-        error: function(err){
-          //
-        }
-      });
-}
-function ReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,jobseeker_id){
-  //@ams-> jobseeker_id is basically not necessary here. But since we are using the same function for viewing messages,
-  //we are using it to differentiate btw sent and received messages as we wont support reply on sent messages
+function selectAJobseekerToForward(msg_id){
+let conMessage ='';
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/company/retreive_all_jobseekers",
+  success: function(data){
 
-  if(jobseeker_id !== 'undefined'){
-    $.notify('You can\'t reply to your own sent messages!','warning');
-    return;
-  }else{
-    let temp =' <div class="card card-primary card-outline">'+
-    '<div class="card-header">'+
-      '<h3 class="card-title">Compose New Message</h3>'+
-    '</div>'+
-    '<!-- /.card-header -->'+
-    '<div class="card-body">'+
-      '<form id="ComposeNewMsg">'+
-      '<div class="form-group input-group">'+
-      '<span class="input-group-addon" style="padding: 6px 3px; border: 1px solid lightgrey; border-radius: 5px 0px 0px 5px">'+
-      '<i class="fa fa-user"></i>'+
-      '</span>'+
-      '<input class="form-control" type="text" name="recipient" id="replyToName" value="'+recipient_name+'" readonly>'+
-      '</div>'+
-      '<div class="form-group">'+
-        '<input class="form-control" id="replyToSubject" value="'+msg_subject+'">'+
-      '</div>'+
-      '<div class="form-group">'+
-       '<div id="summernote" class="message_body_info"></div>'+
-      '</div>'+
-    '</div>'+
-    '<!-- /.card-body -->'+
-    '<div class="card-footer">'+
-      '<div class="float-right">'+
-        '<button type="submit" name="submit" id="newreplymsg" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
-      '</div>'+
-      // '</form>'+
-      '<button type="reset" class="btn btn-default" onclick="contentMessage();"><i class="fas fa-times"></i> Discard</button>'+
-    '</div>'+
-    '</form>';
-  
-  $('.contentMessage').empty().append(temp);
-  $(document).ready(function() {
-    var trap = false;
-    $('#summernote').summernote({
-      height: 300,
-      lineHeight: 1,
-      toolbar: [
-        [ 'style', [ 'style' ] ],
-        [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear'] ],
-        [ 'fontname', [ 'fontname' ] ],
-        [ 'fontsize', [ 'fontsize' ] ],
-        [ 'color', [ 'color' ] ],
-        [ 'para', [ 'ol', 'ul', 'height' ] ],
-        [ 'insert', [ 'link'] ],
-        [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
-      ],
-      callbacks: {
-        onPaste: function (e) {
-            if (document.queryCommandSupported("insertText")) {
-                var text = $(e.currentTarget).html();
-                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+  conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+        '<h4 class="card-title">Select a recipient</h4>'+
 
-                setTimeout(function () {
-                    document.execCommand('insertText', false, bufferText);
-                }, 10);
-                e.preventDefault();
-            } else { //IE
-                var text = window.clipboardData.getData("text")
-                if (trap) {
-                    trap = false;
-                } else {
-                    trap = true;
-                    setTimeout(function () {
-                        document.execCommand('paste', false, text);
-                    }, 10);
-                    e.preventDefault();
-                }
+      '</div>'+
+      '<!-- /.card-header -->'+
+      '<div class="card-body p-1">'+
+        '<div class="table-responsive mailbox-messages">'+
+          '<table class="table table-hover" id="mySelector">'+
+          '<thead>'+
+            ' <th>id</th>'+
+            '<th>img</th>'+
+          ' <th>FullName</th>'+
+          ' <th>Country</th>'+
+          ' <th>Skills</th>'+
+          '</thead>'+
+            '<tbody>';
+            if(data === 0){
+
+            }else{
+
+            $.each(data, function( i, val ) {
+              conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="forwardMsgTo(\''+val.login_id+'\',\''+val.fullName+'\',\''+msg_id+'\');">'+
+                          '<td>'+
+                              '<input type="hidden" value="" id="'+val.login_id+'">'+
+                          '</td>'+
+                          '<td class="img-link"><img class=" rounded-circle" src="'+((val.image == null)?"https://ui-avatars.com/api/?name="+val.fullName.replace(/ /g, '+'):'uploads/'+val.image)+'" style="height: auto;width: 5rem;" alt="'+val.fullName+'"/>'+
+                          '<div class="status-indicator bg-success"></div>'+
+                          '</td>'+
+                          '<td class="full-name"><b>'+val.fullName+'</b></td>'+
+                          '<td class="country-name">'+val.country+'</td>'+
+                          '<td class="Skills">'+val.skills.replace(',',' /')+'</td>'+
+                        '</tr>';
+            });
             }
 
+          conMessage +=  '</tbody>'+
+                          '</table>'+
+                          '<!-- /.table -->'+
+                        '</div>'+
+                        '<!-- /.mail-box-messages -->'+
+                      '</div>'+
+                      '<!-- /.card-body -->'+
+
+                      '</div>'+
+
+                    '</div>';
+
+      $('.contentMessage').empty().append(conMessage);
+
+      $(document).ready( function () {
+      $('#mySelector').DataTable({
+        "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+        "oLanguage": {
+          "sLengthMenu": "Display _MENU_ job seekers",
+          "sEmptyTable":     "No message available"
+        },
+        fnDrawCallback: function() {
+          $("#mySelector thead").remove();
         }
+      });
+      });
+
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
     }
     });
-
-  //on submit
-  $('#newreplymsg').click(function(e){
-    e.preventDefault();
-    if($('#replyToName').val() ===''){
-      $.notify('Message receiver name cannot be empty','error');
-    }else if($('#replyToSubject').val() === ''){
-      $.notify('Subject field cannot be empty','error');
-    }else{
-
+}
+function forwardMsgTo(login_id,fullName,msg_id){
     $.ajax({
       method: "POST",
-      // dataType: 'json',
-      url: "post.php/company/reply_jobseeker",
-      data:{"creator_id": session_id,"creator_name": session_fullname,"recipient_id": recipient_id,"recipient_name": recipient_name,"parent_msg_id": msg_id,"subject": $('#replyToSubject').val(),"msg_body": $('.message_body_info').summernote('code')},
+      // dataType: 'html',
+      url: "post.php/company/forward_msg_to_jobseeker",
+      data: {"creator_id" : session_id, "fullname": session_fullname, "jobseeker_login_id" : login_id, "Name" : fullName,"message_id": msg_id},
       success: function(data){
-        console.log(data);
-        if(data == 200){
-          $.notify('Message has been sent successfully','success');
+          if(data == 200){
+          $.notify('Message has been successfully forwarded','success'); 
           contentMessage();
         }
       },
       error: function(err){
-     //
+        //
       }
     });
+}
+function ReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,jobseeker_id){
+//@ams-> jobseeker_id is basically not necessary here. But since we are using the same function for viewing messages,
+//we are using it to differentiate btw sent and received messages as we wont support reply on sent messages
+
+if(jobseeker_id !== 'undefined'){
+  $.notify('You can\'t reply to your own sent messages!','warning');
+  return;
+}else{
+  let temp =' <div class="card card-primary card-outline">'+
+  '<div class="card-header">'+
+    '<h3 class="card-title">Compose New Message</h3>'+
+  '</div>'+
+  '<!-- /.card-header -->'+
+  '<div class="card-body">'+
+    '<form id="ComposeNewMsg">'+
+    '<div class="form-group input-group">'+
+    '<span class="input-group-addon" style="padding: 6px 3px; border: 1px solid lightgrey; border-radius: 5px 0px 0px 5px">'+
+    '<i class="fa fa-user"></i>'+
+    '</span>'+
+    '<input class="form-control" type="text" name="recipient" id="replyToName" value="'+recipient_name+'" readonly>'+
+    '</div>'+
+    '<div class="form-group">'+
+      '<input class="form-control" id="replyToSubject" value="'+msg_subject+'">'+
+    '</div>'+
+    '<div class="form-group">'+
+      '<div id="summernote" class="message_body_info"></div>'+
+    '</div>'+
+  '</div>'+
+  '<!-- /.card-body -->'+
+  '<div class="card-footer">'+
+    '<div class="float-right">'+
+      '<button type="submit" name="submit" id="newreplymsg" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
+    '</div>'+
+    // '</form>'+
+    '<button type="reset" class="btn btn-default" onclick="contentMessage();"><i class="fas fa-times"></i> Discard</button>'+
+  '</div>'+
+  '</form>';
+
+$('.contentMessage').empty().append(temp);
+$(document).ready(function() {
+  var trap = false;
+  $('#summernote').summernote({
+    height: 300,
+    lineHeight: 1,
+    toolbar: [
+      [ 'style', [ 'style' ] ],
+      [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear'] ],
+      [ 'fontname', [ 'fontname' ] ],
+      [ 'fontsize', [ 'fontsize' ] ],
+      [ 'color', [ 'color' ] ],
+      [ 'para', [ 'ol', 'ul', 'height' ] ],
+      [ 'insert', [ 'link'] ],
+      [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+    ],
+    callbacks: {
+      onPaste: function (e) {
+          if (document.queryCommandSupported("insertText")) {
+              var text = $(e.currentTarget).html();
+              var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+              setTimeout(function () {
+                  document.execCommand('insertText', false, bufferText);
+              }, 10);
+              e.preventDefault();
+          } else { //IE
+              var text = window.clipboardData.getData("text")
+              if (trap) {
+                  trap = false;
+              } else {
+                  trap = true;
+                  setTimeout(function () {
+                      document.execCommand('paste', false, text);
+                  }, 10);
+                  e.preventDefault();
+              }
+          }
+
+      }
   }
-   });
   });
+
+//on submit
+$('#newreplymsg').click(function(e){
+  e.preventDefault();
+  if($('#replyToName').val() ===''){
+    $.notify('Message receiver name cannot be empty','error');
+  }else if($('#replyToSubject').val() === ''){
+    $.notify('Subject field cannot be empty','error');
+  }else{
+
+  $.ajax({
+    method: "POST",
+    // dataType: 'json',
+    url: "post.php/company/reply_jobseeker",
+    data:{"creator_id": session_id,"creator_name": session_fullname,"recipient_id": recipient_id,"recipient_name": recipient_name,"parent_msg_id": msg_id,"subject": $('#replyToSubject').val(),"msg_body": $('.message_body_info').summernote('code')},
+    success: function(data){
+      console.log(data);
+      if(data == 200){
+        $.notify('Message has been sent successfully','success');
+        contentMessage();
+      }
+    },
+    error: function(err){
+    //
+    }
+  });
+ }
+  });
+ });
  }
 }
 function selectAJobseekerToMsg(){
@@ -1099,84 +1111,82 @@ function discardMsg(id){
 $('.'+id).empty();
 }
 function sentMessages(){
-    let temp = '';
-    $.ajax({
-      method: "GET",
-      dataType: 'json',
-      url: "get.php/company/all_sent_messages",
-      data: {"login_id" : session_id},
-      success: function(data){
-        temp +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
-        '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-          '<h4 class="card-title">Sent Messages</h4>'+
+  let temp = '';
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/company/all_sent_messages",
+    data: {"login_id" : session_id},
+    success: function(data){
+      temp +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+        '<h4 class="card-title">Sent Messages</h4>'+
 
-        '</div>'+
-        '<!-- /.card-header -->'+
-        '<div class="card-body p-1">'+
-          '<div class="table-responsive mailbox-messages">'+
-            '<table class="table table-hover" id="myt">'+
-            '<thead>'+
-            ' <th></th>'+
-            ' <th></th>'+
-            ' <th></th>'+
-            ' <th></th>'+
-            '</thead>'+
-              '<tbody>';
-  
-                $.each(data, function( i, val ) {
-                  let checkId = val.message_id+"checkbox";
-                  // console.log(val.message_body);
-                  //ams-> am filtering the message body to get rid of all <p> tags
-                 // var filteredMsgBody = $("<p>").html(val.message_body).text(); // use this to solve the issue
-                  // console.log(filteredMsgBody);
-                  var filteredMsgBody = val.message_body.replace(/<[^>]+>/g, '');
-         temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\',\''+val.fullName+'\',\''+val.recipient_id+'\');">'+
-                       '<td>'+
-                         '<div class="icheck-primary">'+
-                           '<input type="checkbox" value="" id="'+checkId+'">'+
-                           '<label for="check1"></label>'+
-                         '</div>'+
-                       '</td>'+
-                       // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
-                       '<td class="mailbox-name">'+val.fullName+'</td>'+
-                       '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
-                       '</td>'+
-                       // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
-                       '<td class="mailbox-date">'+val.create_date+'</td>'+
-                     '</tr>';
-                });
-                temp +=  '</tbody>'+
-                      '</table>'+
-                      '<!-- /.table -->'+
-                    '</div>'+
-                    '<!-- /.mail-box-messages -->'+
-                  '</div>'+
-                  '<!-- /.card-body -->'+
-                  '<div class="card-footer p-0">'+
-                '</div>'+
-                '</div>'+
-              '</div>';
+      '</div>'+
+      '<!-- /.card-header -->'+
+      '<div class="card-body p-1">'+
+        '<div class="table-responsive mailbox-messages">'+
+          '<table class="table table-hover" id="myt">'+
+          '<thead>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          '</thead>'+
+            '<tbody>';
 
-                $('.contentMessage').empty().append(temp);
-
-                $(document).ready( function () {
-                $('#myt').DataTable({
-                "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
-                "oLanguage": {
-                "sLengthMenu": "Display _MENU_ messages",
-                "sEmptyTable":     "No message available"
-                },
-                "bDestroy": true,
-                fnDrawCallback: function() {
-                $("#myt thead").remove();
-                }
+              $.each(data, function( i, val ) {
+                let checkId = val.message_id+"checkbox";
+                // console.log(val.message_body);
+                //ams-> am filtering the message body to get rid of all <p> tags
+                var filteredMsgBody = $("<div>").html(val.message_body).text();
+        temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val.message_id+'\',\''+val.fullName+'\',\''+val.recipient_id+'\');">'+
+                      '<td>'+
+                        '<div class="icheck-primary">'+
+                          '<input type="checkbox" value="" id="'+checkId+'">'+
+                          '<label for="check1"></label>'+
+                        '</div>'+
+                      '</td>'+
+                      // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
+                      '<td class="mailbox-name">'+val.fullName+'</td>'+
+                      '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                      '</td>'+
+                      // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
+                      '<td class="mailbox-date">'+val.create_date+'</td>'+
+                    '</tr>';
               });
+              temp +=  '</tbody>'+
+                    '</table>'+
+                    '<!-- /.table -->'+
+                  '</div>'+
+                  '<!-- /.mail-box-messages -->'+
+                '</div>'+
+                '<!-- /.card-body -->'+
+                '<div class="card-footer p-0">'+
+              '</div>'+
+              '</div>'+
+            '</div>';
+
+              $('.contentMessage').empty().append(temp);
+
+              $(document).ready( function () {
+              $('#myt').DataTable({
+              "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+              "oLanguage": {
+              "sLengthMenu": "Display _MENU_ messages",
+              "sEmptyTable":     "No message available"
+              },
+              "bDestroy": true,
+              fnDrawCallback: function() {
+              $("#myt thead").remove();
+              }
             });
-        },
-        error: function(err){
-         $.notify(err.responseText,'error');
-        }
-       });
+          });
+      },
+      error: function(err){
+        $.notify(err.responseText,'error');
+      }
+      });
 }
 function DeleteMessage(msg_id,jobseeker_id){
 $.ajax({
