@@ -859,7 +859,7 @@ $.ajax({
 function forwardMsgTo(login_id,fullName,msg_id){
     $.ajax({
       method: "POST",
-      // dataType: 'html',
+      dataType: 'json',
       url: "post.php/company/forward_msg_to_jobseeker",
       data: {"creator_id" : session_id, "fullname": session_fullname, "jobseeker_login_id" : login_id, "Name" : fullName,"message_id": msg_id},
       success: function(data){
@@ -1139,7 +1139,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
     }else{
       $.ajax({
         method: "POST",
-        // dataType: 'html',
+        dataType: 'json',
         url: "post.php/company/send_msg_to_jobseeker",
         data: {"creator_id" : session_id, "fullname": session_fullname, "jobseeker_login_id" : login_id, "Name" : $('#thefullname').val(),"parent_msg_id": null, "Subject" : $('#theSubject').val(), "messageBody" : $('.message_info').summernote('code')},
         success: function(data){
