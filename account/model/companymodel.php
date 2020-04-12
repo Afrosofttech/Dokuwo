@@ -144,16 +144,31 @@ class Company extends Dbh{
         $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date,$parent_msg_id]);
     }
         //AMS: this query is not efficient although it is working. I should be using lastInsertId()
-        //but due to some unknown reasons, it is not working. so i will revise it later
-        $stmt2 = $this->connect()->prepare("SELECT message_id FROM message WHERE creator_id = ? AND creator_name = ? AND subject = ? AND create_date = ?");
-        $stmt2->execute([$creator_id,$creator_name,$Subject,$date]);
-        $res = $stmt2->fetch();
+        //but due to some unknown reasons, it is not working. so i will revise it later.
+        $res = $this->last_inserted_message_id($creator_id,$creator_name,$Subject,$date);
 
         $stmt3 = $this->connect()->prepare("INSERT INTO message_recipient (recipient_id, message_id, is_read,delete_request) VALUES (?, ?, ?, ?)");
         $stmt3->execute([$recipient_id,$res['message_id'],0,0]);
 
          if($type == 'forward') return  array('message' => 'Message has been successfully forwarded');
          else return  array('message' => 'Message successfully sent.');
+    }
+    protected function last_inserted_message_id($creator_id,$creator_name,$Subject,$date){
+        $stmt = $this->connect()->prepare("SELECT message_id FROM message WHERE creator_id = ? AND creator_name = ? AND subject = ? AND create_date = ?");
+        $stmt->execute([$creator_id,$creator_name,$Subject,$date]);
+        $res = $stmt->fetchAll();
+        foreach($res as $key => $value){
+            $stmt1 = $this->connect()->prepare("SELECT * FROM message_recipient WHERE message_id = ?");
+            $stmt1->execute([$value['message_id']]);
+            $result = $stmt1->fetch();
+            if(!$result ){
+                return $value;
+                $stmt1 = null;
+            }else{
+                $stmt1 = null;
+            }
+        }
+        $stmt = null;
     }
     protected function forward_msg_to_a_jobseeker($creator_id,$creator_name,$_recipient_id,$recipient_name,$message_id){
         $sql = " SELECT subject, message_body FROM message where message_id = ?;";
