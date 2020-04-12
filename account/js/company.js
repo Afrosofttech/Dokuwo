@@ -623,6 +623,7 @@ function viewMessage(msg_id,jobseeker_name,jobseeker_id){
         '</div>'+
       '<button type="button" class="btn btn-default" onclick="DeleteMessage(\''+data.message_id+'\',\''+jobseeker_id+'\');"><i class="far fa-trash-alt"></i> Delete</button>'+
       ''+((jobseeker_id === undefined)?('<button type="button" class="btn btn-default" onclick="blockJobseeker(\''+data.creator_id+'\')"><i class="fas fa-ban"></i> Block user</button>'):'')+''+
+      ''+((jobseeker_id === undefined)?('<button type="button" class="btn btn-default" onclick="reportJobseeker(\''+data.creator_id+'\')"><i class="fas fa-user-times"></i> Report user</button>'):'')+''+
       '<button type="button" class="btn btn-default printbtn"><i class="fas fa-print"></i> Print</button>'+
       '</div>'+
       '<!-- /.card-footer -->'+
@@ -697,6 +698,79 @@ $.ajax({
     $.notify(err.responseText,'error');
   }
  });
+
+}
+function reportJobseeker(jobseeker_login_id){
+
+  let temp ='<div class="card text-center card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+    '<div class="card-header">'+
+      'Ready to report?'+
+    '</div>'+
+     '<div class="card-body p-0 text-dark">'+
+       '<div class="form-group form-group-sm">'+
+        '<label for="exampleInputEmail1">Reason</label>'+
+        '<input type="email" class="form-control input-sm" id="report-reason" aria-describedby="Help" required>'+
+        '<small id="emailHelp" class="form-text text-muted">keep it short and precise.</small>'+
+       '</div>'+
+       '<div class="card-footer text-muted d-flex justify-content-between">'+
+        '<button class="btn btn-secondary" type="button" onclick="sidebarMessage();">Cancel</button>'+
+        '<button type="submit" name="submit" id="reportButton" class="btn btn-primary" href="authentication.php">Submit</button>'+
+       '</div>'+
+      '</div>'+
+    '</div>';
+
+$('.sidebarMessage').empty().append(temp);
+//on submit
+$('#reportButton').click(function(e){
+  e.preventDefault();
+  let reason = $('#report-reason').val();
+  if (reason == ''){
+    sidebarMessage();
+    swal('Reason!','Reason cannot be empty','error','Cool');
+    return;
+  }
+  if (reason.length > 50) {
+    sidebarMessage();
+    swal('Invalid Reason!','Please keep the reason short and precise','error','Cool');
+    return;
+  }
+  $.ajax({
+    method: "POST",
+    dataType: 'json',
+    url: "post.php/company/report_jobseeker",
+    data: {"company_login_id" : session_id,"jobseeker_login_id": jobseeker_login_id,"reason":reason},
+    success: function(data){
+      sidebarMessage();
+      $.notify(data.message,'success');
+    },
+    error: function(error){
+      $.notify(err.responseText,'error');
+    }
+   });
+});
+
+}
+function report(){
+  let temp ='  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'+
+  '<div class="modal-dialog" role="document">'+
+    '<div class="modal-content">'+
+      '<div class="modal-header">'+
+        '<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>'+
+        '<button class="close" type="button" data-dismiss="modal" aria-label="Close">'+
+          '<span aria-hidden="true">×</span>'+
+        '</button>'+
+      '</div>'+
+      '<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>'+
+      '<div class="modal-footer">'+
+        '<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>'+
+        '<a class="btn btn-primary" href="authentication.php">Logout</a>'+
+      '</div>'+
+    '</div>'+
+  '</div>'+
+'</div>';
+
+$('#logoutModal').modal('show');
+$('#wrapper').append(temp);
 
 }
 function newMsgNotification(){  

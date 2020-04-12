@@ -508,4 +508,31 @@ class Company extends Dbh{
             $stmt = null;
         } 
     }
+    protected function report_this_jobseeker($company_login_id,$jobseeker_login_id,$reason){
+        if($this->have_reported($company_login_id,$jobseeker_login_id)){
+            return  array('message' => 'You have already reported this user.');
+        }
+        if($this->account_removed($jobseeker_login_id)){
+            return  array('message' => 'This user\'s account have already been removed after numerous reports.');
+        }
+        $sql = " INSERT INTO actions(company_login_id,jobseeker_login_id,request,reason,action) VALUES(?,?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$company_login_id,$jobseeker_login_id,'Report',$reason,'Pending']);
+        return  array('message' => 'Done! Our team will review and act accordingly.');
+        $stmt = null;
+    }
+    protected function have_reported($company_login_id,$jobseeker_login_id){
+        $sql = " SELECT * FROM actions WHERE company_login_id=? AND jobseeker_login_id=? AND request=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$company_login_id,$jobseeker_login_id,'Report']);
+        $result = $stmt->fetch();
+
+        if(!$result ){
+            return false;
+            $stmt = null;
+        }else{
+            return  true;
+            $stmt = null;
+        } 
+    }
 }
