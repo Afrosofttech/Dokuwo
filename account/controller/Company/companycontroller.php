@@ -6,6 +6,9 @@ class CompanyController extends Company{
         $res =$this->block_this_jobseeker($company_login_id,$jobseeker_login_id);
         return $res;
     }
-
+    public function report_jobseeker($company_login_id,$jobseeker_login_id,$reason){
+        $res =$this->report_this_jobseeker($company_login_id,$jobseeker_login_id,$reason);
+        return $res;
+    }
     
 }

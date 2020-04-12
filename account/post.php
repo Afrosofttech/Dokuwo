@@ -103,6 +103,10 @@ $contr =  $urlParts[sizeof($urlParts)-2];
         $response = (new CompanyController())->block_jobseeker($_POST['company_login_id'],$_POST['jobseeker_login_id']);
         echo json_encode($response);
        break;
+       case "report_jobseeker":
+        $response = (new CompanyController())->report_jobseeker($_POST['company_login_id'],$_POST['jobseeker_login_id'],$_POST['reason']);
+        echo json_encode($response);
+       break;
        default:
        break;
     }
