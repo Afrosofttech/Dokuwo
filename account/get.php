@@ -234,6 +234,10 @@ if($view == 'company'){
         $res = $result->all_hires($_GET['jobseeker_id']);
         echo json_encode($res);
       break;
+      case "doing_freelance":
+        $response = (new JobseekerView())->doing_freelance($_GET['jobseeker_id']);
+        echo json_encode($response);
+      break;
       case "search_jobs":
         $result = new JobseekerJobsView();
         $res = $result->search_jobs($_GET['job'],$_GET['location']);

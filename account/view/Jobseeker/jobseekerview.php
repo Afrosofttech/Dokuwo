@@ -26,7 +26,10 @@ class JobseekerView extends Jobseeker{
         $allHires = $this->get_all_hires($jobseeker_id);
         return $allHires;
     }
-    
+    public function doing_freelance($jobseeker_id){
+        $res = $this->is_doing_freelance($jobseeker_id);
+        return $res;
+    }
     public function categories_of_jobs(){
         $categories = $this->get_categories_of_jobs();
         return $categories;

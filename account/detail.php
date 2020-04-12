@@ -235,26 +235,33 @@
                 '</select>'+
               '</div>'+
               '<div class="form-group">'+
+                '<select class="form-control" id="interest" name="interest">'+
+                  '<option value="" selected hidden>What are you looking for?</option>'+
+                  '<option value="Job">Only job</option>'+
+                  '<option value="Freelance">Job and / or Freelance work</option>'+
+                '</select>'+
+              '</div>'+
+              '<div class="form-group">'+
                 '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" placeholder="choose the tag to appear on your profile">'+
-                '</div>'+
-                '<div class="form-group">'+
+              '</div>'+
+              '<div class="form-group">'+
                 '<input type="hidden" class="form-control form-control-user" name="id" id="Jobseeker_id" value="'+entity.login_id+'" >'+
-                '</div>'+
-                '<div class="form-group">'+
+              '</div>'+
+              '<div class="form-group">'+
                   '<div class="custom-file">'+
                   '<input type="file" class="form-control form-control-user custom-file-input" name="image" id="image" placeholder="image">'+
                   '<label class="custom-file-label" for="image">upload image</label>'+
                   '</div>'+
-                '</div>'+
-                '<div class="form-group">'+
-                '<div class="custom-file">'+
+              '</div>'+
+              '<div class="form-group">'+
+               '<div class="custom-file">'+
                 '<input type="file" class="form-control form-control-user custom-file-input" name="CV" id="CV" placeholder="CV">'+
                 '<label class="custom-file-label" for="image">upload CV</label>'+
-                '</div>'+
-                '</div>'+
-                '<div class="text-center">'+
+               '</div>'+
+              '</div>'+
+              '<div class="text-center">'+
                 '<button class="btn btn-primary btn-user btn-block" id="submit">Submit</button>'+
-                '</div>'+
+              '</div>'+
               '</form>'+
               '</div>'+
             '</div>'+
@@ -268,6 +275,7 @@ $(document).ready(function(){
     var lname = $('#lastname').val();
     var dob = $('#dateofbirth').val();
     var category =$('#category').val();
+    var interest = $('#interest').val();
     var tag_line =$('#tag_line').val();
     var errors = [];
 
@@ -290,7 +298,11 @@ $(document).ready(function(){
     if(category == 'Select your job category of interest'){
         swal('Invalid Job Category!','Please select a job category','error','Cool');
         return;
-       }
+    }
+    if(category == 'What are you looking for?'){
+        swal('Invalid interest!','Please indicate what interests you on Dokuwo','error','Cool');
+        return;
+    }
     if(tag_line == '' || tag_line == null){
     swal('Invalid tag_line!','Please select a tag_line','error','Cool');
     return;
@@ -305,7 +317,6 @@ $(document).ready(function(){
           processData: false,
           cache:false,
           success:function(response){
-            console.log(response);
             if(response == 200){
               window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
             }else if( response == "Invalid Image"){

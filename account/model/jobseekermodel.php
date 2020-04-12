@@ -7,7 +7,7 @@ class Jobseeker extends Dbh{
     const fail = 400;
     protected function get_jobseeker_profile_details($login_id)
     {
-        $sql="SELECT login.email,login.password,job_seeker.login_id,fname,lname,fullName,phone, category, skills,tag_line,education_level,address,address,dob,country ,image,CV FROM login INNER JOIN job_seeker ON login.login_id = job_seeker.login_id WHERE login.login_id=?;";
+        $sql="SELECT login.email,login.password,job_seeker.* FROM login INNER JOIN job_seeker ON login.login_id = job_seeker.login_id WHERE login.login_id=?;";
         $stmt =$this->connect()->prepare($sql);
         $stmt->execute([$login_id]);
         $result=$stmt->fetchAll();
@@ -25,26 +25,26 @@ class Jobseeker extends Dbh{
         return $result;
         $stmt = null;
     }
-    protected function update_jobseeker_profile($login_id,$fName,$lName,$email,$phone,$country,$address,$password,$dob,$category,$skills,$tag_line,$education_level,$dateofbirth,$final_image,$final_cv)
+    protected function update_jobseeker_profile($login_id,$fName,$lName,$email,$phone,$country,$address,$password,$dob,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$dateofbirth,$final_image,$final_cv)
     {
         $fullname = $fName.' '.$lName;
         if(($final_image == "" || $final_image == null) && ($final_cv == "" || $final_cv == null)){
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=? WHERE login_id=?;";
         }else if($final_cv == "" || $final_cv == null){
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=? WHERE login_id=?;";
         }else if($final_image == "" || $final_image ==  null){
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,CV=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,CV=? WHERE login_id=?;";
         }else{
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=?,CV=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=?,CV=? WHERE login_id=?;";
         }
         if(($final_image == "" || $final_image == null) && ($final_cv == "" || $final_cv == null)){
-            $det = [$fName,$lName,$fullname,$phone,$category,$skills,$tag_line,$education_level,$address,$dob,$country,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$login_id];
         }else if($final_image == "" || $final_image == null){
-            $det = [$fName,$lName,$fullname,$phone,$category,$skills,$tag_line,$education_level,$address,$dob,$country,$final_cv,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_cv,$login_id];
         }else if($final_cv == "" || $final_cv == null){
-            $det = [$fName,$lName,$fullname,$phone,$category,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$login_id];
         }else{
-            $det = [$fName,$lName,$fullname,$phone,$category,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$final_cv,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$final_cv,$login_id];
         }
         
         $stmt = $this->connect()->prepare($sql);
@@ -244,6 +244,15 @@ class Jobseeker extends Dbh{
         if(!$result) return self::fail;
         return $result;
         $stmt = null; 
+    }
+    public function is_doing_freelance($jobseeker_id){
+        $sql = "SELECT interest FROM job_seeker WHERE jobseeker_id = ?;";
+        $stmt =$this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_id]);
+        $result = $stmt->fetch();
+        if($result['interest'] == 'Freelance') return true;
+        else return false;
+        $stmt = null;
     }
     protected function delete_this_hire($hire_id)
     {

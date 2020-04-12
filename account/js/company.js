@@ -750,29 +750,6 @@ $('#reportButton').click(function(e){
 });
 
 }
-function report(){
-  let temp ='  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'+
-  '<div class="modal-dialog" role="document">'+
-    '<div class="modal-content">'+
-      '<div class="modal-header">'+
-        '<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>'+
-        '<button class="close" type="button" data-dismiss="modal" aria-label="Close">'+
-          '<span aria-hidden="true">×</span>'+
-        '</button>'+
-      '</div>'+
-      '<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>'+
-      '<div class="modal-footer">'+
-        '<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>'+
-        '<a class="btn btn-primary" href="authentication.php">Logout</a>'+
-      '</div>'+
-    '</div>'+
-  '</div>'+
-'</div>';
-
-$('#logoutModal').modal('show');
-$('#wrapper').append(temp);
-
-}
 function newMsgNotification(){  
 //ams->am using this func to update the topBar message center notification
 let temp = '';
@@ -1529,230 +1506,260 @@ let profile =
 
   $('.profileInner').empty().append(profile);
 }
-//@ams->Company settings
-function settings(){
-// <!-- Content Wrapper. Contains page content -->
-let temp='<div class="content-wrapper">'+
-  '<!-- Content Header (Page header) -->'+
+ //@ams->Company settings
+ function settings(){
+ // <!-- Content Wrapper. Contains page content -->
+ let temp='<div class="content-wrapper">'+
+'<!-- Content Header (Page header) -->'+
 
- ' <!-- Main content -->'+
-  '<section class="content">'+
-  
-  '  <div class="container-fluid">'+
-     ' <div class="row">';
-     $.ajax({
-      method: "GET",
-      dataType: 'json',
-      url: "get.php/company/company_profile",
-      data: {"login_id" : session_id},
-      success: function(data){
-     if(data !== 400 ){
-        temp += ' <div class="col-md-4">'+
-        ' <!-- Profile Image -->'+
-        ' <div class="card card-primary card-outline" style="border-top: 3px solid #007bff;">'+
-          ' <div class="card-body box-profile">'+
-             '<div class="text-center">'+
-               '<img class="img-fluid img-circle img-thumbnail" src="uploads/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'" style="width:100%;height:150px" alt="User profile picture">'+
-             '</div>'+
-              '<h4 class="profile-username text-center">'+data.company_name+'</h4>'+
-             '<ul class="list-group list-group-unbordered mb-3">'+
-               '<li class="list-group-item">'+
-                 '<i class="fas fa-lg fa-envelope"></i><b> Email</b> <a class="float-right">'+data.email+'</a>'+
-               '</li>'+
-               '<li class="list-group-item">'+
-                '<i class="fas fa-lg fa-phone"></i><b> Phone</b> <a class="float-right">'+data.company_phone+'</a>'+
-              ' </li>'+
-               '<li class="list-group-item">'+
-                 '<i class="fas fa-lg fa-globe"></i><b> Country</b> <a class="float-right">'+data.country+'</a>'+
-               '</li>'+
-               '<li class="list-group-item">'+
-               '<i class="fas fa-lg fa-building"></i><b> Address</b> <a class="float-right">'+data.company_address+'</a>'+
-             '</li>'+
-             '</ul>'+
-             '<a href="javascript:void(0);" class="btn btn-primary btn-block"><b>Profile</b></a>'+
-           '</div>'+
-           '<!-- /.card-body -->'+
-         '</div>'+
-        ' <!-- /.card -->'+
-       '</div>'+
-       '<!-- /.col -->'+
-       '<div class="col-md-8">'+
-         '<div class="card" style="border-top: 3px solid #007bff;">'+
-           '<div class="card-header p-2">'+
-             '<ul class="nav nav-pills">'+
-               '<li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>'+
-               '</ul>'+
-             '</div><!-- /.card-header -->'+
-             '<div class="card-body">'+
-              ' <div class="tab-content">'+
- 
-                 '<div class="active tab-pane" id="settings">'+
-                   '<form class="form-horizontal" method="POST" id="editCompany" enctype="multipart/form-data" autocomplete="off">'+
-                   '<div class="form-group row">'+
-                      '<div class="col-sm-10">'+
-                        '<input type="hidden" class="form-control" name="login_id" id="login_id" value="'+data.login_id+'">'+
-                      '</div>'+
-                   '</div>'+  
-                   '<div class="form-group row">'+
-                       '<label for="inputName" class="col-sm-2 col-form-label">Name</label>'+
-                       '<div class="col-sm-10">'+
-                         '<input type="text" class="form-control" name="name" id="inputName" value="'+data.company_name+'">'+
-                       '</div>'+
-                     '</div>'+
-                     '<div class="form-group row">'+
-                       '<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>'+
-                       '<div class="col-sm-10">'+
-                         '<input type="email" class="form-control" name="email" id="inputEmail" value="'+data.email+'">'+
-                       '</div>'+
-                     '</div>'+
-                     '<div class="form-group row">'+
-                       '<label for="phone" class="col-sm-2 col-form-label">Phone</label>'+
-                       '<div class="col-sm-10">'+
-                         '<input type="text" placeholder="5336171" pattern="[0-9]+" class="form-control" name="phone" id="phone" value="'+data.company_phone+'">'+
-                       '</div>'+
-                     '</div>'+
-                     '<div class="form-group row">'+
-                     '<label for="country" class="col-sm-2 col-form-label">Country</label>'+
-                     '<div class="col-sm-10">'+
-                       '<input type="text" class="form-control" name="country" id="country">'+
-                     '</div>'+
-                   '</div>'+
-                     '<div class="form-group row">'+
-                       '<label for="address" class="col-sm-2 col-form-label">Address</label>'+
-                       '<div class="col-sm-10">'+
-                         '<textarea class="form-control" name="address" id="address" >'+data.company_address+'</textarea>'+
-                       '</div>'+
-                    ' </div>'+
-                     '<div class="form-group row">'+
-                       '<label for="password" class="col-sm-2 col-form-label">Password</label>'+
-                      ' <div class="col-sm-10">'+
-                         '<input type="password" class="form-control" name="password" id="password" placeholder="Enter new password">'+
-                       '</div>'+
-                     '</div>'+
-                     '<div class="form-group row">'+
-                     '<label for="currency" class="col-sm-2 col-form-label">Currency</label>'+
-                    ' <div class="col-sm-10">'+
-                    '<select class="form-control" name="currency" id="currency">'+
-                      ''+countries.map((currency,index) =>  '<option value = "'+currency.value+'" id="'+currency.value+'">'+currency.name+'</option>')+''+
-                       '</select>'+
-                       '</div>'+
-                   '</div>'+
-                   '<div class="form-group row">'+
-                     '<label for="code" class="col-sm-2 col-form-label">Postal Code</label>'+
-                   ' <div class="col-sm-10">'+
-                       '<input type="text" class="form-control" name="code" placeholder="00000" pattern="[0-9]+" maxlength="5" id="code" value="'+postalCodeFormatter(data.postal_code)+'">'+
-                     '</div>'+
-                   '</div>'+
-                   ' <div class="form-group row">'+
-                   ' <label for="exampleInputFile" class="col-sm-2 col-form-label">Logo</label>'+
-                      '<div class="col-sm-10">'+
-                       ' <input type="file" id="exampleInputFile" name="logo" onchange="readURL(this);">'+
-                     ' </div>'+
-                  '</div>'+
-                     '<div class="form-group row">'+
-                       '<div class="offset-sm-2 col-sm-10">'+
-                         '<button type="submit" class="btn btn-success float-right">Update</button>'+
-                       '</div>'+
-                     '</div>'+
-                   '</form>'+
-                 '</div>'+
-                 '<!-- /.tab-pane -->'+
+' <!-- Main content -->'+
+'<section class="content">'+
 
-               '</div>'+
-              ' <!-- /.tab-content -->'+
-             '</div><!-- /.card-body -->'+
-
-           '</div>'+
-           '<!-- /.nav-tabs-custom -->'+
-         '</div>'+
-         ' <!-- /.col -->'+
+'  <div class="container-fluid">'+
+    ' <div class="row">';
+    $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/company/company_profile",
+    data: {"login_id" : session_id},
+    success: function(data){
+    if(data !== 400 ){
+      temp += ' <div class="col-md-4">'+
+      ' <!-- Profile Image -->'+
+      ' <div class="card card-primary card-outline" style="border-top: 3px solid #007bff;">'+
+        ' <div class="card-body box-profile">'+
+            '<div class="text-center">'+
+              '<img class="img-fluid img-circle img-thumbnail" src="uploads/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'" style="width:100%;height:150px" alt="User profile picture">'+
+            '</div>'+
+            '<h4 class="profile-username text-center">'+data.company_name+'</h4>'+
+            '<ul class="list-group list-group-unbordered mb-3">'+
+              '<li class="list-group-item">'+
+                '<i class="fas fa-lg fa-envelope"></i><b> Email</b> <a class="float-right">'+data.email+'</a>'+
+              '</li>'+
+              '<li class="list-group-item">'+
+              '<i class="fas fa-lg fa-phone"></i><b> Phone</b> <a class="float-right">'+data.company_phone+'</a>'+
+            ' </li>'+
+              '<li class="list-group-item">'+
+                '<i class="fas fa-lg fa-globe"></i><b> Country</b> <a class="float-right">'+data.country+'</a>'+
+              '</li>'+
+              '<li class="list-group-item">'+
+              '<i class="fas fa-lg fa-building"></i><b> Address</b> <a class="float-right">'+data.company_address+'</a>'+
+            '</li>'+
+            '</ul>'+
+            '<a href="javascript:void(0);" class="btn btn-primary btn-block"><b>Profile</b></a>'+
+          '</div>'+
+          '<!-- /.card-body -->'+
         '</div>'+
-        ' <!-- /.row -->'+
-        '</div><!-- /.container-fluid -->'+
-  
-      '</section>'+
-      '<!-- /.content -->'+
-  
-    '</div>'+
-    '<!-- /.content-wrapper -->';
+      ' <!-- /.card -->'+
+      '</div>'+
+      '<!-- /.col -->'+
+      '<div class="col-md-8">'+
+        '<div class="card" style="border-top: 3px solid #007bff;">'+
+          '<div class="card-header p-2">'+
+            '<ul class="nav nav-pills">'+
+              '<li class="nav-item"><a class="nav-link active" href="#profile" data-toggle="tab">Profile</a></li>'+
+              '<li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>'+
+              '</ul>'+
+            '</div><!-- /.card-header -->'+
+            '<div class="card-body">'+
+            ' <div class="tab-content">'+
 
-    $('#content').empty().append(temp);
+                '<div class="active tab-pane" id="profile">'+
+                  '<form class="form-horizontal" method="POST" id="editCompany" enctype="multipart/form-data" autocomplete="off">'+
+                  '<div class="form-group row">'+
+                    '<div class="col-sm-10">'+
+                      '<input type="hidden" class="form-control" name="login_id" id="login_id" value="'+data.login_id+'">'+
+                    '</div>'+
+                  '</div>'+  
+                  '<div class="form-group row">'+
+                      '<label for="inputName" class="col-sm-2 col-form-label">Name</label>'+
+                      '<div class="col-sm-10">'+
+                        '<input type="text" class="form-control" name="name" id="inputName" value="'+data.company_name+'">'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
+                      '<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>'+
+                      '<div class="col-sm-10">'+
+                        '<input type="email" class="form-control" name="email" id="inputEmail" value="'+data.email+'">'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
+                      '<label for="phone" class="col-sm-2 col-form-label">Phone</label>'+
+                      '<div class="col-sm-10">'+
+                        '<input type="text" placeholder="5336171" pattern="[0-9]+" class="form-control" name="phone" id="phone" value="'+data.company_phone+'">'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
+                    '<label for="country" class="col-sm-2 col-form-label">Country</label>'+
+                    '<div class="col-sm-10">'+
+                      '<input type="text" class="form-control" name="country" id="country">'+
+                    '</div>'+
+                  '</div>'+
+                    '<div class="form-group row">'+
+                      '<label for="address" class="col-sm-2 col-form-label">Address</label>'+
+                      '<div class="col-sm-10">'+
+                        '<textarea class="form-control" name="address" id="address" >'+data.company_address+'</textarea>'+
+                      '</div>'+
+                  ' </div>'+
+                    '<div class="form-group row">'+
+                      '<label for="password" class="col-sm-2 col-form-label">Password</label>'+
+                    ' <div class="col-sm-10">'+
+                        '<input type="password" class="form-control" name="password" id="password" placeholder="Enter new password">'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
+                    '<label for="currency" class="col-sm-2 col-form-label">Currency</label>'+
+                  ' <div class="col-sm-10">'+
+                  '<select class="form-control" name="currency" id="currency">'+
+                    ''+countries.map((currency,index) =>  '<option value = "'+currency.value+'" id="'+currency.value+'">'+currency.name+'</option>')+''+
+                      '</select>'+
+                      '</div>'+
+                  '</div>'+
+                  '<div class="form-group row">'+
+                    '<label for="code" class="col-sm-2 col-form-label">Postal Code</label>'+
+                  ' <div class="col-sm-10">'+
+                      '<input type="text" class="form-control" name="code" placeholder="00000" pattern="[0-9]+" maxlength="5" id="code" value="'+postalCodeFormatter(data.postal_code)+'">'+
+                    '</div>'+
+                  '</div>'+
+                  ' <div class="form-group row">'+
+                  ' <label for="exampleInputFile" class="col-sm-2 col-form-label">Logo</label>'+
+                    '<div class="col-sm-10">'+
+                      ' <input type="file" id="exampleInputFile" name="logo" onchange="readURL(this);">'+
+                    ' </div>'+
+                '</div>'+
+                    '<div class="form-group row">'+
+                      '<div class="offset-sm-2 col-sm-10">'+
+                        '<button type="submit" class="btn btn-success float-right">Update</button>'+
+                      '</div>'+
+                    '</div>'+
+                  '</form>'+
+                '</div>'+
+                '<!-- /.tab-pane -->'+
+                '<div class="tab-pane" id="settings">'+
+                '<form class="form-horizontal">'+
+                  '<div class="form-group row">'+
+                    '<label for="package" class="col-sm-2 col-form-label">Package</label>'+
+                    '<div class="col-sm-10">'+
+                    '<select class="custom-select" id="package" name="package">'+
+                    '<option value="None">None</option>'+
+                    '<option value="One-time">post 1 job @D3000</option>'+
+                    '<option value="Month">post unlimited jobs for 1 month @D18000</option>'+
+                    '<option value="Half-year">post unlimited jobs for 6 months @D45000</option>'+
+                    '</select>'+
+                    '</div>'+
+                  '</div>'+
+                  '<div class="form-group row">'+
+                    '<div class="offset-sm-2 col-sm-10">'+
+                      '<div class="">'+
+                        '<label>'+
+                          '<p> Select a package and it will be activated within 24hrs.</p>'+
+                        '</label>'+
+                      '</div>'+
+                    '</div>'+
+                  '</div>'+
+                  '<div class="form-group row">'+
+                    '<div class="offset-sm-2 col-sm-10">'+
+                      '<button type="submit" class="btn btn-success">Activate</button>'+
+                    '</div>'+
+                  '</div>'+
+                '</form>'+
+              '</div>'+
+              '<!-- /.tab-pane -->'+
+              '</div>'+
+            ' <!-- /.tab-content -->'+
+            '</div><!-- /.card-body -->'+
 
-    $("#country").countrySelect();
-    $("#country").countrySelect("setCountry",""+data.country+"");
-    //@ams->countries actually refers to the currency of countries
-     $.each(countries, function(index,currencyVals){
-     if(currencyVals.value == data.currency){
-       $("#currency option[value="+data.currency+"]").attr('selected', 'selected');
-     }
-    }) 
-  $(document).ready(function(){
-    $('#editCompany').submit(function(e) {
-    e.preventDefault();
-    var name = $('#inputName').val();
-    var email = $('#inputEmail').val();
-    var password = $('#password').val();
-    var errors = [];
- 
-    if (email.length < 1) {
-      swal('Invalid Email!','Email cannot be empty','error','Cool');
-      errors.push('email_error');
-      return;
-    } else {
-      if (!validEmail(email)) {
-         swal('Invalid Email!','Please enter a valid email!','error','Cool');
-         errors.push('email_error');
-         return;
-      }
-    }
-    if (name.length < 1) {
-      swal('Invalid Name!','Name cannot be empty!','error','Cool');
-      errors.push('name_error');
-      return;
-    }
-    if(password !== '' && password.length < 8){
-      swal('Invalid password!','password must at least be 8 characters!','error','Cool');
-      errors.push('password_error');
-      return;
-    }
+          '</div>'+
+          '<!-- /.nav-tabs-custom -->'+
+        '</div>'+
+        ' <!-- /.col -->'+
+      '</div>'+
+      ' <!-- /.row -->'+
+      '</div><!-- /.container-fluid -->'+
 
-    if(errors.length < 1){
-        $.ajax({
-          method:'POST',
-          url: 'post.php/company/update_company',
-          data: new FormData(this),
-          contentType: false,
-          processData: false,
-          cache:false,
-          success:function(response){
-            console.log(response);
-            if(response == 200){
-              swal('Update Successful!','Profile successfully updated','success','cool');
-              settings();
-            }else if( response == "Invalid"){
-                swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
-            }
-          },
-          error: function(err){
-            $.notify(err.responseText,'error');
-          } 
-        });
-      }else{
-          return;
-      }
-    //
-    })
-    });
-  }else{
-  $('#content').empty().append('<div>ERROR: This account doesn\'t exist. You should access here</div>');
-  }
+    '</section>'+
+    '<!-- /.content -->'+
 
-  },
-  error: function(err){
-    $.notify(err.responseText,'error');
-  }
-});
+  '</div>'+
+  '<!-- /.content-wrapper -->';
+
   $('#content').empty().append(temp);
+
+  $("#country").countrySelect();
+  $("#country").countrySelect("setCountry",""+data.country+"");
+  //@ams->countries actually refers to the currency of countries
+    $.each(countries, function(index,currencyVals){
+    if(currencyVals.value == data.currency){
+      $("#currency option[value="+data.currency+"]").attr('selected', 'selected');
+    }
+  }) 
+$(document).ready(function(){
+  $('#editCompany').submit(function(e) {
+  e.preventDefault();
+  var name = $('#inputName').val();
+  var email = $('#inputEmail').val();
+  var password = $('#password').val();
+  var errors = [];
+
+  if (email.length < 1) {
+    swal('Invalid Email!','Email cannot be empty','error','Cool');
+    errors.push('email_error');
+    return;
+  } else {
+    if (!validEmail(email)) {
+        swal('Invalid Email!','Please enter a valid email!','error','Cool');
+        errors.push('email_error');
+        return;
+    }
+  }
+  if (name.length < 1) {
+    swal('Invalid Name!','Name cannot be empty!','error','Cool');
+    errors.push('name_error');
+    return;
+  }
+  if(password !== '' && password.length < 8){
+    swal('Invalid password!','password must at least be 8 characters!','error','Cool');
+    errors.push('password_error');
+    return;
+  }
+
+  if(errors.length < 1){
+      $.ajax({
+        method:'POST',
+        url: 'post.php/company/update_company',
+        data: new FormData(this),
+        contentType: false,
+        processData: false,
+        cache:false,
+        success:function(response){
+          console.log(response);
+          if(response == 200){
+            swal('Update Successful!','Profile successfully updated','success','cool');
+            settings();
+          }else if( response == "Invalid"){
+              swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
+          }
+        },
+        error: function(err){
+          $.notify(err.responseText,'error');
+        } 
+      });
+    }else{
+        return;
+    }
+  //
+  })
+  });
+}else{
+$('#content').empty().append('<div>ERROR: This account doesn\'t exist. You should access here</div>');
+}
+
+},
+error: function(err){
+  $.notify(err.responseText,'error');
+}
+});
+$('#content').empty().append(temp);
 }
 function readURL(input) {
   if (input.files && input.files[0]) {
