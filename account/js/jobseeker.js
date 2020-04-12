@@ -43,7 +43,7 @@ function jobseekerSideBar(){
     '</li>'+
     
     '<li class="nav-item">'+
-    '<a class="nav-link" style="cursor: pointer;" onclick="hires();">'+
+    '<a class="nav-link" style="cursor: pointer;" onclick="doesFreelance();">'+
       '<i class="fas fa-fw fa-briefcase"></i>'+
       '<span>Hires</span></a>'+
     '</li>'+
@@ -1381,7 +1381,8 @@ error: function(err){
 }
 });
 }
-function hires(){
+ function hires($res){
+   if($res){
     let temp =      ' <!-- Begin Page Content -->'+
     '<div class="container-fluid">'+
 
@@ -1459,336 +1460,415 @@ function hires(){
     error: function(err){
       $.notify(err.responseText,'error');
     }
-});
-
-}
-function delHire(hire_id){  
+  });
+  }else{
+    let temp = '<div class="container-fluid">'+
+      '<div class="card shadow mb-4 card-outline" style="border-top: 3px solid #007bff;"">'+
+        '<div class="card-header py-3">'+
+          '<h6 class="m-0 font-weight-bold text-primary text-center">Ooops!</h6>'+
+        '</div>'+
+        '<div class="card-body">'+
+        '<div>You need to indicate interest in doing <strong>freelance work</strong> so as to be <strong>hired</strong>. Click on <strong>Settings</strong> on the sidebar  and whilst on the <strong>Profile</strong> tab, change the <strong>interest</strong> field from <strong>"Only job"</strong> to <strong>"Job and / or Freelance work"</strong> and then click <strong>update</strong>.</div>'+
+        '</div>'+
+      '</div>'+
+     '</div>';
+    $('#content').empty().append(temp);
+  }
+ }
+ function doesFreelance(){
   $.ajax({
-    method: "POST",
+    method: "GET",
     dataType: 'json',
-    url: "post.php/jobseeker/delete_hire",
-    data: {"hire_id" : hire_id},
+    url: "get.php/jobseeker/doing_freelance",
+    data: {"jobseeker_id" : session_user_id},
     success: function(response){
-      $.notify('Deleted','success');
-      hires();
+      hires(response);
     },
     error: function(err){
       $.notify(err.responseText,'error');
     }
-  });
-}
+  })
+ }
+ function delHire(hire_id){  
+    $.ajax({
+      method: "POST",
+      dataType: 'json',
+      url: "post.php/jobseeker/delete_hire",
+      data: {"hire_id" : hire_id},
+      success: function(response){
+        console.log(response)
+        $.notify('Deleted','success');
+        hires();
+      },
+      error: function(err){
+        $.notify(err.responseText,'error');
+      }
+    });
+ }
 //ams-> Settings
 function jsettings(){
-  // <!-- Content Wrapper. Contains page content -->
-  let temp='<div class="content-wrapper">'+
-    '<!-- Content Header (Page header) -->'+
+// <!-- Content Wrapper. Contains page content -->
+let temp='<div class="content-wrapper">'+
+  '<!-- Content Header (Page header) -->'+
+
+  ' <!-- Main content -->'+
+  '<section class="content">'+
   
-   ' <!-- Main content -->'+
-    '<section class="content">'+
-    
-    '  <div class="container-fluid">'+
-       ' <div class="row">';
-       $.ajax({
-        method: "GET",
-        dataType: "json",
-        url: "get.php/jobseeker/jobseeker_profile",
-        data: {"login_id" : session_id},
-        success: function(data){
-       if(data !== 400 ){
-          temp += ' <div class="col-md-4">'+
-          ' <!-- Profile Image -->'+
-          ' <div class="card card-primary card-outline mb-3" style="border-top: 3px solid #007bff;">'+
-            ' <div class="card-body box-profile">'+
-               '<div class="text-center">'+
-                 '<img class="img-fluid img-circle img-thumbnail" src="uploads/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'" style="width:100%;height:150px" alt="User profile picture">'+
-               '</div>'+
-                '<h4 class="profile-username text-center">'+data[0].fullName+'</h4>'+
-               '<ul class="list-group list-group-unbordered mb-3">'+
-                 '<li class="list-group-item">'+
-                   '<i class="fas fa-lg fa-envelope"></i><b> Email</b> <a class="float-right">'+data[0].email+'</a>'+
-                 '</li>'+
-                 '<li class="list-group-item">'+
-                  '<i class="fas fa-lg fa-phone"></i><b> Phone</b> <a class="float-right">'+data[0].phone+'</a>'+
-                ' </li>'+
-                 '<li class="list-group-item">'+
-                   '<i class="fas fa-lg fa-globe"></i><b> Country</b> <a class="float-right">'+data[0].country+'</a>'+
-                 '</li>'+
-                 '<li class="list-group-item">'+
-                 '<i class="fas fa-lg fa-building"></i><b> Address</b> <a class="float-right">'+data[0].address+'</a>'+
-               '</li>'+
-               '</ul>'+
-               '<a href="uploads/'+data[0].CV+'" target="_blank" class="btn btn-primary btn-block"><b>View CV</b></a>'+
-             '</div>'+
-             '<!-- /.card-body -->'+
-           '</div>'+
-          ' <!-- /.card -->'+
-          ' <!-- About Me Box -->'+
-           '<div class="card card-primary">'+
-            ' <div class="card-header bg-primary">'+
-               '<h3 class="card-title text-white">About Me</h3>'+
-             '</div>'+
-             '<!-- /.card-header -->'+
-             '<div class="card-body">'+
-             '<strong><i class="fas fa-info mr-1"></i> tag_line</strong>'+
-             '<p class="text-muted">'+data[0].tag_line+'</p>'+
-             '<hr>'+
-             '<strong><i class="fas fa-book mr-1"></i> Education</strong>'+
-             '<p class="text-muted">'+
-             ''+data[0].education_level+''+
-             '</p>'+
-             '<hr>'+
-               '<strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>'+
-               '<p class="text-muted">'+
-                 '<span class="tag tag-danger">'+data[0].skills+'</span>'+
-               '</p>'+
-               '<hr>'+
-               '<strong><i class="far fa-file-alt mr-1"></i> Date of Birth</strong>'+
-               '<p class="text-muted">'+data[0].dob+'</p>'+
-             '</div>'+
-             '<!-- /.card-body -->'+
-           '</div>'+
-           '<!-- /.card -->'+
-         '</div>'+
-         '<!-- /.col -->'+
-         '<div class="col-md-8">'+
-           '<div class="card" style="border-top: 3px solid #007bff;">'+
-             '<div class="card-header p-2">'+
-               '<ul class="nav nav-pills">'+
-                 '<li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>'+
-                 '</ul>'+
-               '</div><!-- /.card-header -->'+
-               '<div class="card-body">'+
-                ' <div class="tab-content">'+
-                   '<div class="active tab-pane" id="settings">'+
-                     '<form class="form-horizontal" method="POST" id="editJobseeker" enctype="multipart/form-data" autocomplete="off">'+
-                     '<div class="form-group row">'+
+  '  <div class="container-fluid">'+
+      ' <div class="row">';
+      $.ajax({
+      method: "GET",
+      dataType: "json",
+      url: "get.php/jobseeker/jobseeker_profile",
+      data: {"login_id" : session_id},
+      success: function(data){
+      if(data !== 400 ){
+      console.log(data);
+        temp += ' <div class="col-md-4">'+
+        ' <!-- Profile Image -->'+
+        ' <div class="card card-primary card-outline mb-3" style="border-top: 3px solid #007bff;">'+
+          ' <div class="card-body box-profile">'+
+              '<div class="text-center">'+
+                '<img class="img-fluid img-circle img-thumbnail" src="uploads/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'" style="width:100%;height:150px" alt="User profile picture">'+
+              '</div>'+
+              '<h4 class="profile-username text-center">'+data[0].fullName+'</h4>'+
+              '<ul class="list-group list-group-unbordered mb-3">'+
+                '<li class="list-group-item">'+
+                  '<i class="fas fa-lg fa-envelope"></i><b> Email</b> <a class="float-right">'+data[0].email+'</a>'+
+                '</li>'+
+                '<li class="list-group-item">'+
+                '<i class="fas fa-lg fa-phone"></i><b> Phone</b> <a class="float-right">'+data[0].phone+'</a>'+
+              ' </li>'+
+                '<li class="list-group-item">'+
+                  '<i class="fas fa-lg fa-globe"></i><b> Country</b> <a class="float-right">'+data[0].country+'</a>'+
+                '</li>'+
+                '<li class="list-group-item">'+
+                '<i class="fas fa-lg fa-building"></i><b> Address</b> <a class="float-right">'+data[0].address+'</a>'+
+              '</li>'+
+              '</ul>'+
+              '<a href="uploads/'+data[0].CV+'" target="_blank" class="btn btn-primary btn-block"><b>View CV</b></a>'+
+            '</div>'+
+            '<!-- /.card-body -->'+
+          '</div>'+
+        ' <!-- /.card -->'+
+        ' <!-- About Me Box -->'+
+          '<div class="card card-primary">'+
+          ' <div class="card-header bg-primary">'+
+              '<h3 class="card-title text-white">About Me</h3>'+
+            '</div>'+
+            '<!-- /.card-header -->'+
+            '<div class="card-body">'+
+            '<strong><i class="fas fa-info mr-1"></i> tag_line</strong>'+
+            '<p class="text-muted">'+data[0].tag_line+'</p>'+
+            '<hr>'+
+            '<strong><i class="fas fa-book mr-1"></i> Education</strong>'+
+            '<p class="text-muted">'+
+            ''+data[0].education_level+''+
+            '</p>'+
+            '<hr>'+
+              '<strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>'+
+              '<p class="text-muted">'+
+                '<span class="tag tag-danger">'+data[0].skills+'</span>'+
+              '</p>'+
+              '<hr>'+
+              '<strong><i class="far fa-file-alt mr-1"></i> Date of Birth</strong>'+
+              '<p class="text-muted">'+data[0].dob+'</p>'+
+            '</div>'+
+            '<!-- /.card-body -->'+
+          '</div>'+
+          '<!-- /.card -->'+
+        '</div>'+
+        '<!-- /.col -->'+
+        '<div class="col-md-8">'+
+          '<div class="card" style="border-top: 3px solid #007bff;">'+
+            '<div class="card-header p-2">'+
+              '<ul class="nav nav-pills">'+
+                '<li class="nav-item"><a class="nav-link active" href="#profile" data-toggle="tab">Profile</a></li>'+
+                '<li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>'+
+                '</ul>'+
+              '</div><!-- /.card-header -->'+
+              '<div class="card-body">'+
+              ' <div class="tab-content">'+
+                '<!-- tab-pane-->'+
+                  '<div class="active tab-pane" id="profile">'+
+                    '<form class="form-horizontal" method="POST" id="editJobseeker" enctype="multipart/form-data" autocomplete="off">'+
+                    '<div class="form-group row">'+
+                      '<div class="col-sm-10">'+
+                        '<input type="hidden" class="form-control" name="login_id" id="login_id" value="'+data[0].login_id+'">'+
+                      '</div>'+
+                    '</div>'+  
+                    '<div class="form-group row">'+
+                        '<label for="fName" class="col-sm-2 col-form-label">First Name</label>'+
                         '<div class="col-sm-10">'+
-                          '<input type="hidden" class="form-control" name="login_id" id="login_id" value="'+data[0].login_id+'">'+
+                          '<input type="text" class="form-control" name="fName" id="fName" value="'+data[0].fname+'">'+
                         '</div>'+
-                     '</div>'+  
-                     '<div class="form-group row">'+
-                         '<label for="fName" class="col-sm-2 col-form-label">First Name</label>'+
-                         '<div class="col-sm-10">'+
-                           '<input type="text" class="form-control" name="fName" id="fName" value="'+data[0].fname+'">'+
-                         '</div>'+
-                       '</div>'+
-                       '<div class="form-group row">'+
-                       '<label for="lName" class="col-sm-2 col-form-label">Last Name</label>'+
-                       '<div class="col-sm-10">'+
-                         '<input type="text" class="form-control" name="lName" id="lName" value="'+data[0].lname+'">'+
-                       '</div>'+
-                     '</div>'+
-                     '<div class="form-group row">'+
-                      '<label for="tag_line" class="col-sm-2 col-form-label">tag_line</label>'+
-                      '<div class="col-sm-10">'+
-                        '<input type="text" class="form-control" name="tag_line" id="tag_line" value="'+data[0].tag_line+'">'+
                       '</div>'+
-                     '</div>'+
-                     '<div class="form-group row">'+
-                      '<label for="skills" class="col-sm-2 col-form-label">skills</label>'+
-                      '<div class="col-sm-10">'+
-                        '<input type="text" class="form-control" name="skills" id="skills" value="'+data[0].skills+'">'+
-                      '</div>'+
-                     '</div>'+
-                       '<div class="form-group row">'+
-                         '<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>'+
-                         '<div class="col-sm-10">'+
-                           '<input type="email" class="form-control" name="email" id="inputEmail" value="'+data[0].email+'">'+
-                         '</div>'+
-                       '</div>'+
-                       '<div class="form-group row">'+
-                         '<label for="phone" class="col-sm-2 col-form-label">Phone</label>'+
-                         '<div class="col-sm-10">'+
-                           '<input type="text" placeholder="5336171" pattern="[0-9]+" class="form-control" name="phone" id="phone" value="'+data[0].phone+'">'+
-                         '</div>'+
-                       '</div>'+
-                       '<div class="form-group row">'+
-                       '<label for="country" class="col-sm-2 col-form-label">Country</label>'+
-                       '<div class="col-sm-10">'+
-                         '<input type="text" class="form-control" name="country" id="country">'+
-                       '</div>'+
-                     '</div>'+
-                       '<div class="form-group row">'+
-                         '<label for="address" class="col-sm-2 col-form-label">Address</label>'+
-                         '<div class="col-sm-10">'+
-                           '<textarea class="form-control" name="address" id="address" >'+data[0].address+'</textarea>'+
-                         '</div>'+
-                      ' </div>'+
                       '<div class="form-group row">'+
-                       '<label for="dateofbirth" class="col-sm-2 col-form-label">Date of Birth</label>'+
-                       '<div class="col-sm-10">'+
-                       '<input type="text" class="form-control form-control-user" name="dateofbirth" id="dateofbirth" placeholder="Date of Birth..." value="'+data[0].dob+'">'+
+                      '<label for="lName" class="col-sm-2 col-form-label">Last Name</label>'+
+                      '<div class="col-sm-10">'+
+                        '<input type="text" class="form-control" name="lName" id="lName" value="'+data[0].lname+'">'+
                       '</div>'+
                     '</div>'+
-                      '<div class="form-group row" name="category">'+
-                      '<label class="col-sm-2 col-form-label" for="category">Category</label>'+
+                    '<div class="form-group row">'+
+                    '<label for="tag_line" class="col-sm-2 col-form-label">tag_line</label>'+
+                    '<div class="col-sm-10">'+
+                      '<input type="text" class="form-control" name="tag_line" id="tag_line" value="'+data[0].tag_line+'">'+
+                    '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
+                    '<label for="skills" class="col-sm-2 col-form-label">skills</label>'+
+                    '<div class="col-sm-10">'+
+                      '<input type="text" class="form-control" name="skills" id="skills" value="'+data[0].skills+'">'+
+                    '</div>'+
+                    '</div>'+
+                      '<div class="form-group row">'+
+                        '<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>'+
+                        '<div class="col-sm-10">'+
+                          '<input type="email" class="form-control" name="email" id="inputEmail" value="'+data[0].email+'">'+
+                        '</div>'+
+                      '</div>'+
+                      '<div class="form-group row">'+
+                        '<label for="phone" class="col-sm-2 col-form-label">Phone</label>'+
+                        '<div class="col-sm-10">'+
+                          '<input type="text" placeholder="5336171" pattern="[0-9]+" class="form-control" name="phone" id="phone" value="'+data[0].phone+'">'+
+                        '</div>'+
+                      '</div>'+
+                      '<div class="form-group row">'+
+                      '<label for="country" class="col-sm-2 col-form-label">Country</label>'+
                       '<div class="col-sm-10">'+
-                        '<select class="custom-select" id="category" name="category">'+
-                        '<option value="Finance">Finance</option>'+
-                        '<option value="IT & Engineering">IT & Engineering</option>'+
-                        '<option value="Education/Training">Education/Training</option>'+
-                        '<option value="Art/Design">Art/Design</option>'+
-                        '<option value="Sale/Markting">Sale/Markting</option>'+
-                        '<option value="Healthcare">Healthcare</option>'+
-                        '<option value="Science">Science</option>'+
-                        '<option value="Food Services">Food Services</option>'+
-                        '<option value="Others">Others</option>'+
+                        '<input type="text" class="form-control" name="country" id="country">'+
+                      '</div>'+
+                    '</div>'+
+                      '<div class="form-group row">'+
+                        '<label for="address" class="col-sm-2 col-form-label">Address</label>'+
+                        '<div class="col-sm-10">'+
+                          '<textarea class="form-control" name="address" id="address" >'+data[0].address+'</textarea>'+
+                        '</div>'+
+                    ' </div>'+
+                    '<div class="form-group row">'+
+                      '<label for="dateofbirth" class="col-sm-2 col-form-label">Date of Birth</label>'+
+                      '<div class="col-sm-10">'+
+                      '<input type="text" class="form-control form-control-user" name="dateofbirth" id="dateofbirth" placeholder="Date of Birth..." value="'+data[0].dob+'">'+
+                    '</div>'+
+                  '</div>'+
+                  '<div class="form-group row" name="interest">'+
+                  '<label class="col-sm-2 col-form-label" for="interest">Interest</label>'+
+                  '<div class="col-sm-10">'+
+                    '<select class="custom-select" id="interest" name="interest">'+
+                    '<option value="Job">Only job</option>'+
+                    '<option value="Freelance">Job and / or Freelance work</option>'+
+                    '</select>'+
+                    '</div>'+
+                  '</div>'+
+                  '<div class="form-group row" name="seeksJob">'+
+                  '<label class="col-sm-2 col-form-label" for="seeksJob">Seeking Job</label>'+
+                  '<div class="col-sm-10">'+
+                    '<select class="custom-select" id="seeksJob" name="seeksJob">'+
+                    '<option value="yes">YES</option>'+
+                    '<option value="no">NO</option>'+
+                    '</select>'+
+                    '</div>'+
+                  '</div>'+
+                    '<div class="form-group row" name="category">'+
+                    '<label class="col-sm-2 col-form-label" for="category">Category</label>'+
+                    '<div class="col-sm-10">'+
+                      '<select class="custom-select" id="category" name="category">'+
+                      '<option value="Finance">Finance</option>'+
+                      '<option value="IT & Engineering">IT & Engineering</option>'+
+                      '<option value="Education/Training">Education/Training</option>'+
+                      '<option value="Art/Design">Art/Design</option>'+
+                      '<option value="Sale/Markting">Sale/Markting</option>'+
+                      '<option value="Healthcare">Healthcare</option>'+
+                      '<option value="Science">Science</option>'+
+                      '<option value="Food Services">Food Services</option>'+
+                      '<option value="Others">Others</option>'+
+                      '</select>'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
+                      '<label class="col-sm-2 col-form-label" for="edu_level">Education Level</label>'+
+                      '<div class="col-sm-10">'+
+                        '<select class="custom-select" id="edu_level" name="education_level">'+
+                        '<option value="High school diploma or equivalent">High school diploma or equivalent</option>'+
+                        '<option value="Associate degree or equivalent">Associate degree or equivalent</option>'+
+                        '<option value="Bachelors degree or equivalent">Bachelor\'s degree or equivalent</option>'+
+                        '<option value="Masters degree or equivalent">Master\'s degree or equivalent</option>'+
+                        '<option value="Doctoral degree or equivalent">Doctoral degree or equivalent</option>'+
                         '</select>'+
                         '</div>'+
                       '</div>'+
                       '<div class="form-group row">'+
-                        '<label class="col-sm-2 col-form-label" for="edu_level">Education Level</label>'+
-                        '<div class="col-sm-10">'+
-                          '<select class="custom-select" id="edu_level" name="education_level">'+
-                          '<option value="High school diploma or equivalent">High school diploma or equivalent</option>'+
-                          '<option value="Associate degree or equivalent">Associate degree or equivalent</option>'+
-                          '<option value="Bachelors degree or equivalent">Bachelor\'s degree or equivalent</option>'+
-                          '<option value="Masters degree or equivalent">Master\'s degree or equivalent</option>'+
-                          '<option value="Doctoral degree or equivalent">Doctoral degree or equivalent</option>'+
-                          '</select>'+
-                          '</div>'+
+                        '<label for="password" class="col-sm-2 col-form-label">Password</label>'+
+                      ' <div class="col-sm-10">'+
+                          '<input type="password" class="form-control" name="password" id="password" placeholder="Enter new password">'+
                         '</div>'+
-                       '<div class="form-group row">'+
-                         '<label for="password" class="col-sm-2 col-form-label">Password</label>'+
-                        ' <div class="col-sm-10">'+
-                           '<input type="password" class="form-control" name="password" id="password" placeholder="Enter new password">'+
-                         '</div>'+
-                       '</div>'+
-                     ' <div class="form-group row">'+
-                     ' <label for="Image" class="col-sm-2 col-form-label">Image</label>'+
-                        '<div class="col-sm-10">'+
-                         ' <input type="file" id="Image" name="Imgage" onchange="readURL(this);">'+
-                       ' </div>'+
-                    '</div>'+
+                      '</div>'+
                     ' <div class="form-group row">'+
-                    ' <label for="CV" class="col-sm-2 col-form-label">CV</label>'+
-                       '<div class="col-sm-10">'+
-                        ' <input type="file" id="CV" name="CV">'+
+                    ' <label for="Image" class="col-sm-2 col-form-label">Image</label>'+
+                      '<div class="col-sm-10">'+
+                        ' <input type="file" id="Image" name="Imgage" onchange="readURL(this);">'+
                       ' </div>'+
-                   '</div>'+
-                       '<div class="form-group row">'+
-                         '<div class="offset-sm-2 col-sm-10">'+
-                           '<button type="submit" class="btn btn-success float-right">Update</button>'+
-                         '</div>'+
-                       '</div>'+
-                     '</form>'+
-                   '</div>'+
-                   '<!-- /.tab-pane -->'+
-                 '</div>'+
-                ' <!-- /.tab-content -->'+
-               '</div><!-- /.card-body -->'+
-             '</div>'+
-             '<!-- /.nav-tabs-custom -->'+
-           '</div>'+
-           ' <!-- /.col -->'+
+                  '</div>'+
+                  ' <div class="form-group row">'+
+                  ' <label for="CV" class="col-sm-2 col-form-label">CV</label>'+
+                      '<div class="col-sm-10">'+
+                      ' <input type="file" id="CV" name="CV">'+
+                    ' </div>'+
+                  '</div>'+
+                      '<div class="form-group row">'+
+                        '<div class="offset-sm-2 col-sm-10">'+
+                          '<button type="submit" class="btn btn-success float-right">Update</button>'+
+                        '</div>'+
+                      '</div>'+
+                    '</form>'+
+                  '</div>'+
+                  '<!-- /.tab-pane -->'+
+                  '<div class="tab-pane" id="settings">'+
+                  '<form class="form-horizontal">'+
+                    '<div class="form-group row">'+
+                      '<label for="package" class="col-sm-2 col-form-label">Package</label>'+
+                      '<div class="col-sm-10">'+
+                      '<select class="custom-select" id="package" name="package">'+
+                      '<option value="None">None</option>'+
+                      '<option value="Month">Monthly @D100</option>'+
+                      '<option value="Year">Annually @D1000</option>'+
+                      '</select>'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
+                      '<div class="offset-sm-2 col-sm-10">'+
+                        '<div class="">'+
+                          '<label>'+
+                            '<p> Select a Freelancer package and it will be activated within 24hrs.</p>'+
+                          '</label>'+
+                        '</div>'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
+                      '<div class="offset-sm-2 col-sm-10">'+
+                        '<button type="submit" class="btn btn-success">Activate</button>'+
+                      '</div>'+
+                    '</div>'+
+                  '</form>'+
+                '</div>'+
+                '<!-- /.tab-pane -->'+
+                '</div>'+
+              ' <!-- /.tab-content -->'+
+              '</div><!-- /.card-body -->'+
+            '</div>'+
+            '<!-- /.nav-tabs-custom -->'+
           '</div>'+
-          ' <!-- /.row -->'+
-          '</div><!-- /.container-fluid -->'+
-        '</section>'+
-        '<!-- /.content -->'+
-      '</div>'+
-      '<!-- /.content-wrapper -->';
-  
-      $('#content').empty().append(temp);
-  
-      $(document).ready(function(){
+          ' <!-- /.col -->'+
+        '</div>'+
+        ' <!-- /.row -->'+
+        '</div><!-- /.container-fluid -->'+
+      '</section>'+
+      '<!-- /.content -->'+
+    '</div>'+
+    '<!-- /.content-wrapper -->';
 
-      $("#country").countrySelect();
-      $("#country").countrySelect("setCountry",""+data[0].country+"");
-      $("#edu_level option[value='"+data[0].education_level+"']").attr('selected', 'selected');
-      $("#category option[value='"+data[0].category+"']").attr('selected', 'selected');
-
-      $('#skills').tokenfield({
-        autocomplete: {
-          source: [],
-          delay: 100
-        },
-        showAutocompleteOnFocus: true
-      });
-      $(function() { 
-        $( "#dateofbirth" ).datepicker({
-          dateFormat: "yy-mm-dd",
-          yearRange: "-100:+0",
-          changeMonth: true,
-          changeYear: true,
-        }); 
-      });   
-
-      $('#editJobseeker').submit(function(e) {
-      e.preventDefault();
-      var fName = $('#fName').val();
-      var lName = $('#lName').val();
-      var email = $('#inputEmail').val();
-      var password = $('#password').val();
-      var errors = [];
-   
-      if (email.length < 1) {
-        swal('Invalid Email!','Email cannot be empty','error','Cool');
-        errors.push('email_error');
-        return;
-      } else {
-        if (!validEmail(email)) {
-           swal('Invalid Email!','Please enter a valid email!','error','Cool');
-           errors.push('email_error');
-           return;
-        }
-      }
-      if (fName.length < 1) {
-        swal('Invalid Name!','First Name cannot be empty!','error','Cool');
-        errors.push('name_error');
-        return;
-      }
-      if (lName.length < 1) {
-        swal('Invalid Last Name!','Last Name cannot be empty!','error','Cool');
-        errors.push('name_error');
-        return;
-      }
-      if(password !== '' && password.length < 8){
-        swal('Invalid password!','password must at least be 8 characters!','error','Cool');
-        errors.push('password_error');
-        return;
-      }
-  
-      if(errors.length < 1){
-        var formData = new FormData(this);
-        formData.append("category", $("#category").val());
-        formData.append("education_level", $("#edu_level").val());
-          $.ajax({
-            method:'POST',
-            url: 'post.php/jobseeker/update_jobseeker',
-            data: formData,
-            contentType: false,
-            processData: false,
-            cache:false,
-            success:function(response){
-              console.log(response);
-              if(response == 200){
-                swal('Update Successful!','Profile successfully updated','success','cool');
-                jsettings();
-              }else if( response == "Invalid Image"){
-                  swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
-              }else if( response == "Invalid CV"){
-                swal('Invalid CV type!','You can only upload jpeg, jpg, png, pdf, doc or ppt','error','Cool');
-            }
-            },
-            error: function(err){
-              $.notify(err.responseText,'error');
-            } 
-          });
-        }else{
-            return;
-        }
-      //
-      })
-      });
-    }else{
-    $('#content').empty().append('<div>ERROR: This account doesn\'t exist. You should access here</div>');
-    }
-  
-    },
-    error: function(err){
-      $.notify(err.responseText,'error');
-    }
-  });
     $('#content').empty().append(temp);
+
+    $(document).ready(function(){
+
+    $("#country").countrySelect();
+    $("#country").countrySelect("setCountry",""+data[0].country+"");
+    $("#edu_level option[value='"+data[0].education_level+"']").attr('selected', 'selected');
+    $("#category option[value='"+data[0].category+"']").attr('selected', 'selected');
+    $("#interest option[value='"+data[0].interest+"']").attr('selected', 'selected');
+    $("#seeksJob option[value='"+data[0].seeksJob+"']").attr('selected', 'selected');
+
+    $('#skills').tokenfield({
+      autocomplete: {
+        source: [],
+        delay: 100
+      },
+      showAutocompleteOnFocus: true
+    });
+    $(function() { 
+      $( "#dateofbirth" ).datepicker({
+        dateFormat: "yy-mm-dd",
+        yearRange: "-100:+0",
+        changeMonth: true,
+        changeYear: true,
+      }); 
+    });   
+
+    $('#editJobseeker').submit(function(e) {
+    e.preventDefault();
+    var fName = $('#fName').val();
+    var lName = $('#lName').val();
+    var email = $('#inputEmail').val();
+    var password = $('#password').val();
+    var errors = [];
+  
+    if (email.length < 1) {
+      swal('Invalid Email!','Email cannot be empty','error','Cool');
+      errors.push('email_error');
+      return;
+    } else {
+      if (!validEmail(email)) {
+          swal('Invalid Email!','Please enter a valid email!','error','Cool');
+          errors.push('email_error');
+          return;
+      }
+    }
+    if (fName.length < 1) {
+      swal('Invalid Name!','First Name cannot be empty!','error','Cool');
+      errors.push('name_error');
+      return;
+    }
+    if (lName.length < 1) {
+      swal('Invalid Last Name!','Last Name cannot be empty!','error','Cool');
+      errors.push('name_error');
+      return;
+    }
+    if(password !== '' && password.length < 8){
+      swal('Invalid password!','password must at least be 8 characters!','error','Cool');
+      errors.push('password_error');
+      return;
+    }
+
+    if(errors.length < 1){
+      var formData = new FormData(this);
+      formData.append("category", $("#category").val());
+      formData.append("education_level", $("#edu_level").val());
+        $.ajax({
+          method:'POST',
+          url: 'post.php/jobseeker/update_jobseeker',
+          data: formData,
+          contentType: false,
+          processData: false,
+          cache:false,
+          success:function(response){
+            console.log(response);
+            if(response == 200){
+              swal('Update Successful!','Profile successfully updated','success','cool');
+              jsettings();
+            }else if( response == "Invalid Image"){
+                swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
+            }else if( response == "Invalid CV"){
+              swal('Invalid CV type!','You can only upload jpeg, jpg, png, pdf, doc or ppt','error','Cool');
+          }
+          },
+          error: function(err){
+            $.notify(err.responseText,'error');
+          } 
+        });
+      }else{
+          return;
+      }
+    //
+    })
+    });
+  }else{
+  $('#content').empty().append('<div>error: This account doesn\'t exist. You should access here</div>');
   }
+
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+});
+  $('#content').empty().append(temp);
+}
