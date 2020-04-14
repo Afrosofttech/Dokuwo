@@ -321,7 +321,7 @@ function footer(){
               '<div class="widget">'+
                 '<div class="footer-logo"><img src="assets/img/logo-footer.png" alt=""></div>'+
                 '<div class="textwidget">'+
-                  '<p>Sed consequat sapien faus quam bibendum convallis quis in nulla. Pellentesque volutpat odio eget diam cursus semper.</p>'+
+                  '<p>Our mission is to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt.</p>'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -345,7 +345,7 @@ function footer(){
             '<div class="col-lg-3 col-md-4 col-xs-12">'+
               '<div class="widget">'+
                 '<h3 class="block-title">Subscribe Now</h3>'+
-                '<p>Sed consequat sapien faus quam bibendum convallis.</p> '+
+                '<p>Subscribe to receive our newsletters!.</p> '+
                 '<form method="post" id="subscribe-form" name="subscribe-form" class="validate">'+
                   '<div class="form-group is-empty">'+
                     '<input type="email" value="" name="Email" class="form-control" id="EMAIL" placeholder="Enter Email..." required="">'+
@@ -371,7 +371,7 @@ function footer(){
           '<div class="row">'+
             '<div class="col-md-12">'+
               '<div class="site-info text-center">'+
-                '<p>Powered By Afrika Software Technologies</p>'+
+                '<p>Proudly Powered By Afrika Software Technologies</p>'+
               '</div>'+     
             '</div>'+
           '</div>'+
@@ -2733,15 +2733,15 @@ function displayEmployers(start,finish){
                 '<div class="icon">'+
                   '<i class="lni-rocket"></i>'+
                 '</div>'+
-                '<h2>Professional</h2>'+
+                '<h2>One-time</h2>'+
                 '<ul>'+
                   '<li>Post 1 Job</li>'+
-                  '<li>No Featured Job</li>'+
                   '<li>Edit Your Job Listing</li>'+
-                  '<li>Manage Application</li>'+
-                  '<li>30-day Expired</li>'+
+                  '<li>Manage Applications</li>'+
+                  '<li>Message Jobseekers</li>'+
+                  '<li>View Jobseekers Profiles</li>'+
                 '</ul>'+
-                '<div class="price"><span>$</span>0<span>/Month</span></div>'+
+                '<div class="price"><span>GMD</span>3000<span>/Job</span></div>'+
               '</div>'+
               
             '</div>'+
@@ -2755,13 +2755,13 @@ function displayEmployers(start,finish){
                 '</div>'+
                 '<h2>Advance</h2>'+
                 '<ul>'+
-                 ' <li>Post 1 Job</li>'+
-                  '<li>No Featured Job</li>'+
-                  '<li>Edit Your Job Listing</li>'+
-                  '<li>Manage Application</li>'+
-                  '<li>30-day Expired</li>'+
+                 ' <li>Post Unlimited Jobs</li>'+
+                  '<li>Edit Your Job Listings</li>'+
+                  '<li>Manage Applications</li>'+
+                  '<li>Message Jobseekers</li>'+
+                  '<li>View Jobseekers Profiles</li>'+
                 '</ul>'+
-                '<div class="price"><span>$</span>20<span>/Month</span></div>'+
+                '<div class="price"><span>GMD</span>15000<span>/Month</span></div>'+
               '</div>'+
               
             '</div>'+
@@ -2775,36 +2775,38 @@ function displayEmployers(start,finish){
                 '</div>'+
                 '<h2>Premium</h2>'+
                 '<ul>'+
-                  '<li>Post 1 Job</li>'+
-                  '<li>No Featured Job</li>'+
-                  '<li>Edit Your Job Listing</li>'+
-                  '<li>Manage Application</li>'+
-                  '<li>30-day Expired</li>'+
+                ' <li>Post Unlimited Jobs</li>'+
+                '<li>Edit Your Job Listings</li>'+
+                '<li>Manage Applications</li>'+
+                '<li>Message Jobseekers</li>'+
+                '<li>View Jobseekers Profiles</li>'+
                 '</ul>'+
-                '<div class="price"><span>$</span>40<span>/Month</span></div>'+
+                '<div class="price"><span>GMD</span>49000<span>/6 Month</span></div>'+
               '</div>'+
               
             '</div>'+
           '</div>'+
           '<div class="col-lg-12 col-md-12 col-xs-12 section-header">'+
-            '<h2 class="section-title text-center margin-price-card">Jobseekers</h2>'+
+            '<h2 class="section-title text-center margin-price-card">Freelancers</h2>'+
           '</div>'+
 
           '<div class="col-lg-4 col-md-4 col-xs-12">'+
             '<div class="pricing-table border-color-defult">'+
               '<div class="pricing-details">'+
                 '<div class="icon">'+
-                  '<i class="lni-briefcase"></i>'+
+                  '<i class="lni-free"></i>'+
                 '</div>'+
                 '<h2>Free</h2>'+
                 '<ul>'+
-                  '<li>Post 1 Job</li>'+
-                  '<li>No Featured Job</li>'+
-                  '<li>Edit Your Job Listing</li>'+
-                  '<li>Manage Application</li>'+
-                  '<li>30-day Expired</li>'+
+                  '<li>Apply for Jobs</li>'+
+                  '<li>use Messaging</li>'+
+                  '<li>Get hired for Freelance Work</li>'+
+                  '<li>Get Displayed on Landing Page</li>'+
+                  '<li></li>'+
+                  '<li></li>'+
+                  '<li></li>'+
                 '</ul>'+
-                '<div class="price"><span>$</span>40<span>/Month</span></div>'+
+                '<div class="price"><span>GMD</span>0<span></span></div>'+
               '</div>'+
               
             '</div>'+
@@ -2814,17 +2816,18 @@ function displayEmployers(start,finish){
             '<div class="pricing-table border-color-red">'+
               '<div class="pricing-details">'+
                 '<div class="icon">'+
-                  '<i class="lni-briefcase"></i>'+
+                  '<i class="lni-rocket"></i>'+
                 '</div>'+
-                '<h2>Standard</h2>'+
+                '<h2>Professional</h2>'+
                 '<ul>'+
-                  '<li>Post 1 Job</li>'+
-                  '<li>No Featured Job</li>'+
-                  '<li>Edit Your Job Listing</li>'+
-                  '<li>Manage Application</li>'+
+                  '<li>Free Plan Plus</li>'+
+                  '<li>Get Rated</li>'+
+                  '<li>Get Reviewed</li>'+
+                  '<li>Add Portfolio</li>'+
                   '<li>30-day Expired</li>'+
+                  '<li></li>'+
                 '</ul>'+
-                '<div class="price"><span>$</span>40<span>/Month</span></div>'+
+                '<div class="price"><span>GMD</span>125<span>/Month</span></div>'+
               '</div>'+
               
             '</div>'+
@@ -2834,17 +2837,22 @@ function displayEmployers(start,finish){
             '<div class="pricing-table border-color-green">'+
               '<div class="pricing-details">'+
                 '<div class="icon">'+
-                  '<i class="lni-briefcase"></i>'+
+                  '<i class="lni-drop"></i>'+
                 '</div>'+
-                '<h2>Single</h2>'+
+                '<h2>Advance</h2>'+
                 '<ul>'+
-                  '<li>Post 1 Job</li>'+
-                  '<li>No Featured Job</li>'+
-                  '<li>Edit Your Job Listing</li>'+
-                  '<li>Manage Application</li>'+
-                  '<li>30-day Expired</li>'+
+                  '<li>Professional Plan Plus</li>'+
+                  '<li>1-year Expired</li>'+
+                  '<li></li>'+
+                  '<li></li>'+
+                  '<li></li>'+
+                  '<li></li>'+
+                  '<li></li>'+
+                  '<li></li>'+
+                  '<li></li>'+
+                  '<li></li>'+
                 '</ul>'+
-                '<div class="price"><span>$</span>40<span>/Month</span></div>'+
+                '<div class="price"><span>GMD</span>1000<span>/Year</span></div>'+
               '</div>'+
               
             '</div>'+
