@@ -1730,7 +1730,7 @@ let temp='<div class="content-wrapper">'+
                       '<div class="col-sm-10">'+
                       '<select class="custom-select" id="package" name="package">'+
                       '<option value="None">None</option>'+
-                      '<option value="Month">Monthly @D100</option>'+
+                      '<option value="Month">Monthly @D125</option>'+
                       '<option value="Year">Annually @D1000</option>'+
                       '</select>'+
                       '</div>'+

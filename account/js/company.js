@@ -1643,8 +1643,8 @@ let profile =
                     '<select class="custom-select" id="package" name="package">'+
                     '<option value="None">None</option>'+
                     '<option value="One-time">post 1 job @D3000</option>'+
-                    '<option value="Month">post unlimited jobs for 1 month @D18000</option>'+
-                    '<option value="Half-year">post unlimited jobs for 6 months @D45000</option>'+
+                    '<option value="Month">post unlimited jobs for 1 month @D15000</option>'+
+                    '<option value="Half-year">post unlimited jobs for 6 months @D49000</option>'+
                     '</select>'+
                     '</div>'+
                   '</div>'+

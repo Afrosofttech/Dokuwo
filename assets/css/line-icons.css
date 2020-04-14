@@ -711,6 +711,9 @@
 .lni-rocket:before {
   content: "\e9e4";
 }
+.lni-free:before {
+  content:"\e967";
+}
 .lni-rss-feed:before {
   content: "\e9e5";
 }
