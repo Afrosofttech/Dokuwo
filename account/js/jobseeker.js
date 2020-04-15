@@ -13,276 +13,282 @@ $(document).ready(function(){
 })
 
 function jobseekerSideBar(){
-    return '<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">'+
-        
-    '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">'+
-      '<div class="sidebar-brand-icon rotate-n-15">'+
-        '<i><img src="assets/img/icon.png" class="rounded-circle" alt="Dokuwo" style="width: 50%; height: auto;"></i>'+
-      '</div>'+
-      '<div class="sidebar-brand-text mr-3">Dokuwo</div>'+
-    '</a>'+
-  
-    '<hr class="sidebar-divider my-0">'+
-  
-    '<li class="nav-item active">'+
-      '<a class="nav-link" href="index.php">'+
-        '<i class="fas fa-fw fa-tachometer-alt"></i>'+
-        '<span>Dashboard</span></a>'+
-    '</li>'+
-  
-    '<li class="nav-item">'+
-      '<a class="nav-link" style="cursor: pointer;" onclick="jobs();">'+
-        '<i class="fas fa-fw fa-briefcase"></i>'+
-        '<span>Jobs</span></a>'+
-    '</li>'+
-
-    '<li class="nav-item">'+
-      '<a class="nav-link" style="cursor: pointer;" onclick="jMessagesCenter();">'+
-       '<i class="fas fa-fw fa-envelope"></i>'+
-       '<span>Messages</span></a>'+
-    '</li>'+
-    
-    '<li class="nav-item">'+
-    '<a class="nav-link" style="cursor: pointer;" onclick="doesFreelance();">'+
-      '<i class="fas fa-fw fa-briefcase"></i>'+
-      '<span>Hires</span></a>'+
-    '</li>'+
-
-    '<li class="nav-item">'+
-      '<a class="nav-link" style="cursor: pointer;" onclick="jsettings();">'+
-        '<i class="fas fa-fw fa-cog""></i>'+
-        '<span>Settings</span></a>'+
-    '</li>'+
-
-    '<hr class="sidebar-divider d-none d-md-block">'+
-  
-    '<div class="text-center d-none d-md-inline">'+
-      '<button class="rounded-circle border-0" id="sidebarToggle" onclick="sidebarToggle(this)"></button>'+
+  return '<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">'+
+      
+  '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">'+
+    '<div class="sidebar-brand-icon rotate-n-15">'+
+      '<i><img src="assets/img/icon.png" class="rounded-circle" alt="Dokuwo" style="width: 50%; height: auto;"></i>'+
     '</div>'+
+    '<div class="sidebar-brand-text mr-3">Dokuwo</div>'+
+  '</a>'+
 
-  '</ul>';
+  '<hr class="sidebar-divider my-0">'+
+
+  '<li class="nav-item active">'+
+    '<a class="nav-link" href="index.php">'+
+      '<i class="fas fa-fw fa-tachometer-alt"></i>'+
+      '<span>Dashboard</span></a>'+
+  '</li>'+
+
+  '<li class="nav-item">'+
+    '<a class="nav-link" style="cursor: pointer;" onclick="jobs();">'+
+      '<i class="fas fa-fw fa-briefcase"></i>'+
+      '<span>Jobs</span></a>'+
+  '</li>'+
+
+  '<li class="nav-item">'+
+    '<a class="nav-link" style="cursor: pointer;" onclick="jMessagesCenter();">'+
+      '<i class="fas fa-fw fa-envelope"></i>'+
+      '<span>Messages</span></a>'+
+  '</li>'+
+  
+  '<li class="nav-item">'+
+  '<a class="nav-link" style="cursor: pointer;" onclick="doesFreelance();">'+
+    '<i class="fas fa-fw fa-briefcase"></i>'+
+    '<span>Hires</span></a>'+
+  '</li>'+
+
+  '<li class="nav-item">'+
+  '<a class="nav-link" style="cursor: pointer;" onclick="portfolio();">'+
+    '<i class="fas fa-fw fa-id-badge"></i>'+
+    '<span>Portfolio/Services</span></a>'+
+  '</li>'+
+
+  '<li class="nav-item">'+
+    '<a class="nav-link" style="cursor: pointer;" onclick="jsettings();">'+
+      '<i class="fas fa-fw fa-cog""></i>'+
+      '<span>Settings</span></a>'+
+  '</li>'+
+
+  '<hr class="sidebar-divider d-none d-md-block">'+
+
+  '<div class="text-center d-none d-md-inline">'+
+    '<button class="rounded-circle border-0" id="sidebarToggle" onclick="sidebarToggle(this)"></button>'+
+  '</div>'+
+
+'</ul>';
 }
 function jobseekerDashBoardheader(){
-let header = '<div class="container-fluid">'+
-    '<div class="row">'+
-            '<div class="col-xl-4 col-md-6 mb-4">'+
-            '<div class="card border-left-primary shadow h-100 py-2">'+
-                '<div class="card-body">'+
-                '<div class="row no-gutters align-items-center">'+
-                    '<div class="col mr-2">'+
-                    '<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jobs Available</div>'+
-                    '<div class="h5 mb-0 font-weight-bold text-gray-800" id="jobsAvailable">0</div>'+
-                    '</div>'+
-                    '<div class="col-auto">'+
-                    '<i class="fas fa-briefcase fa-2x text-gray-300"></i>'+
-                    '</div>'+
-                '</div>'+
-                '</div>'+
-            '</div>'+
-            '</div>'+
+ let header = '<div class="container-fluid">'+
+  '<div class="row">'+
+          '<div class="col-xl-4 col-md-6 mb-4">'+
+          '<div class="card border-left-primary shadow h-100 py-2">'+
+              '<div class="card-body">'+
+              '<div class="row no-gutters align-items-center">'+
+                  '<div class="col mr-2">'+
+                  '<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jobs Available</div>'+
+                  '<div class="h5 mb-0 font-weight-bold text-gray-800" id="jobsAvailable">0</div>'+
+                  '</div>'+
+                  '<div class="col-auto">'+
+                  '<i class="fas fa-briefcase fa-2x text-gray-300"></i>'+
+                  '</div>'+
+              '</div>'+
+              '</div>'+
+          '</div>'+
+          '</div>'+
 
-            '<div class="col-xl-4  col-md-6 mb-4">'+
-            '<div class="card border-left-info shadow h-100 py-2">'+
-                '<div class="card-body">'+
-                '<div class="row no-gutters align-items-center">'+
-                    '<div class="col mr-2">'+
-                    '<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Profile(Completion)</div>'+
-                    '<div class="row no-gutters align-items-center">'+
-                        '<div class="col-auto">'+
-                        '<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="profileVal">50%</div>'+
-                        '</div>'+
-                        '<div class="col">'+
-                        '<div class="progress progress-sm mr-2">'+
-                            '<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="profileBar"></div>'+
-                        '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="col-auto">'+
-                    '<i class="fas fa-user fa-2x text-gray-300"></i>'+
-                    '</div>'+
-                '</div>'+
-                '</div>'+
-            '</div>'+
-            '</div>'+
+          '<div class="col-xl-4  col-md-6 mb-4">'+
+          '<div class="card border-left-info shadow h-100 py-2">'+
+              '<div class="card-body">'+
+              '<div class="row no-gutters align-items-center">'+
+                  '<div class="col mr-2">'+
+                  '<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Profile(Completion)</div>'+
+                  '<div class="row no-gutters align-items-center">'+
+                      '<div class="col-auto">'+
+                      '<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="profileVal">50%</div>'+
+                      '</div>'+
+                      '<div class="col">'+
+                      '<div class="progress progress-sm mr-2">'+
+                          '<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="profileBar"></div>'+
+                      '</div>'+
+                      '</div>'+
+                  '</div>'+
+                  '</div>'+
+                  '<div class="col-auto">'+
+                  '<i class="fas fa-user fa-2x text-gray-300"></i>'+
+                  '</div>'+
+              '</div>'+
+              '</div>'+
+          '</div>'+
+          '</div>'+
 
-            '<div class="col-xl-4 col-md-6 mb-4">'+
-            '<div class="card border-left-warning shadow h-100 py-2">'+
-                '<div class="card-body">'+
-                '<div class="row no-gutters align-items-center">'+
-                    '<div class="col mr-2">'+
-                    '<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">companies</div>'+
-                    '<div class="h5 mb-0 font-weight-bold text-gray-800" id="noOfCompanies">5</div>'+
-                    '</div>'+
-                    '<div class="col-auto">'+
-                    '<i class="fas fa-building fa-2x text-gray-300"></i>'+
-                    '</div>'+
-                '</div>'+
-                '</div>'+
-            '</div>'+
-            '</div>'+
-        '</div>'+
-
+          '<div class="col-xl-4 col-md-6 mb-4">'+
+          '<div class="card border-left-warning shadow h-100 py-2">'+
+              '<div class="card-body">'+
+              '<div class="row no-gutters align-items-center">'+
+                  '<div class="col mr-2">'+
+                  '<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">companies</div>'+
+                  '<div class="h5 mb-0 font-weight-bold text-gray-800" id="noOfCompanies">5</div>'+
+                  '</div>'+
+                  '<div class="col-auto">'+
+                  '<i class="fas fa-building fa-2x text-gray-300"></i>'+
+                  '</div>'+
+              '</div>'+
+              '</div>'+
+          '</div>'+
+          '</div>'+
       '</div>'+
-    '</div>';
-    $('#content').empty().append(header);
-    $.ajax({
-      method: "GET",
-      url: "get.php/jobseeker/dashboard_header_info",
-      data: {"login_id" : session_id},
-      dataType: 'json',
-      success: function(data){
-        $('#jobsAvailable' ).html(data.noOfJobsAvailable);
-        $('#profileVal').html(data.isProfileComplete+"%");
-        $('#profileBar').css('width',''+data.isProfileComplete+'%');
-       $('#noOfCompanies' ).html(data.noOfCompanies);
-     //@ams->now calling the dashboard content
-     jdashBoardContent();
-    },
-    error: function(err){
-      $.notify(err.responseText,'error');
-    }
-    });
+
+    '</div>'+
+  '</div>';
+  $('#content').empty().append(header);
+  $.ajax({
+    method: "GET",
+    url: "get.php/jobseeker/dashboard_header_info",
+    data: {"login_id" : session_id},
+    dataType: 'json',
+    success: function(data){
+      $('#jobsAvailable' ).html(data.noOfJobsAvailable);
+      $('#profileVal').html(data.isProfileComplete+"%");
+      $('#profileBar').css('width',''+data.isProfileComplete+'%');
+      $('#noOfCompanies' ).html(data.noOfCompanies);
+    //@ams->now calling the dashboard content
+    jdashBoardContent();
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+  });
 }
 function loadJobseekerDashboard(){
-    let sidebar = jobseekerSideBar();
-    let foot = footer();
-    jtopBar();
-    //let dbcontent = jobseekerDashBoardheader();
-   $('#wrapper').prepend(sidebar);
-   $('#content-wrapper').append(foot);
+  let sidebar = jobseekerSideBar();
+  let foot = footer();
+  jtopBar();
+  //let dbcontent = jobseekerDashBoardheader();
+  $('#wrapper').prepend(sidebar);
+  $('#content-wrapper').append(foot);
 }
-function jtopBar(){
-  let jtopBar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">'+
-        '<ul class="navbar-nav ml-auto">'+
-        '<!-- Nav Item - Alerts -->'+
-        '<li class="nav-item dropdown no-arrow mx-1">'+
-          '<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-            '<i class="fas fa-bell fa-fw"></i>'+
-            '<!-- Counter - Alerts -->'+
-           ' <span class="badge badge-danger badge-counter">3+</span>'+
-          '</a>'+
-          '<!-- Dropdown - Alerts -->'+
-         ' <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">'+
-            '<h6 class="dropdown-header">'+
-             ' Alerts Center'+
-            '</h6>'+
-            '<a class="dropdown-item d-flex align-items-center" href="#">'+
-              '<div class="mr-3">'+
-               ' <div class="icon-circle bg-primary">'+
-                  '<i class="fas fa-file-alt text-white"></i>'+
-                '</div>'+
+ function jtopBar(){
+ let jtopBar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">'+
+      '<ul class="navbar-nav ml-auto">'+
+      '<!-- Nav Item - Alerts -->'+
+      '<li class="nav-item dropdown no-arrow mx-1">'+
+        '<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+          '<i class="fas fa-bell fa-fw"></i>'+
+          '<!-- Counter - Alerts -->'+
+          ' <span class="badge badge-danger badge-counter">3+</span>'+
+        '</a>'+
+        '<!-- Dropdown - Alerts -->'+
+        ' <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">'+
+          '<h6 class="dropdown-header">'+
+            ' Alerts Center'+
+          '</h6>'+
+          '<a class="dropdown-item d-flex align-items-center" href="#">'+
+            '<div class="mr-3">'+
+              ' <div class="icon-circle bg-primary">'+
+                '<i class="fas fa-file-alt text-white"></i>'+
               '</div>'+
-              '<div>'+
-               ' <div class="small text-gray-500">December 12, 2019</div>'+
-                '<span class="font-weight-bold">A new monthly report is ready to download!</span>'+
-             ' </div>'+
-            '</a>'+
-            '<a class="dropdown-item d-flex align-items-center" href="#">'+
-              '<div class="mr-3">'+
-                '<div class="icon-circle bg-success">'+
-                  '<i class="fas fa-donate text-white"></i>'+
-                '</div>'+
-              '</div>'+
-              '<div>'+
-                '<div class="small text-gray-500">December 7, 2019</div>'+
-                '$290.29 has been deposited into your account!'+
-              '</div>'+
-            '</a>'+
-            '<a class="dropdown-item d-flex align-items-center" href="#">'+
-              '<div class="mr-3">'+
-                '<div class="icon-circle bg-warning">'+
-                  '<i class="fas fa-exclamation-triangle text-white"></i>'+
-                '</div>'+
-             ' </div>'+
-              '<div>'+
-                '<div class="small text-gray-500">December 2, 2019</div>'+
-               ' Spending Alert: We\'ve noticed unusually high spending for your account.'+
-              '</div>'+
-           ' </a>'+
-            '<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>'+
-          '</div>'+
-       ' </li>'+
-          '<li class="nav-item dropdown no-arrow mx-1">'+
-            '<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-              '<i class="fas fa-envelope fa-fw"></i>'+
-              '<!-- Counter - Messages -->'+
-              '<span class="badge badge-danger badge-counter NewMsgNotificationsCount">0</span>'+
-            '</a>'+
-             '<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in NewMsgNotifications" aria-labelledby="messagesDropdown">'+
-              //add messages here@ams-target this div
-            '</div>'+ 
-          '</li>'+
-          '<div class="topbar-divider d-none d-sm-block"></div>'+
-          '<li class="nav-item dropdown no-arrow userProfile">'+
-          //user Profile
-            '</li>'+
-        '</ul>'+
-      '</nav>'; 
-      $('#content-wrapper').prepend(jtopBar);
-      let temp = '';
-      $.ajax({
-        method: "GET",
-        dataType: 'json',
-        url: "get.php/jobseeker/new_unread_messages",
-        data: {"login_id" : session_id},
-        success: function(data){
-          if(data != 400){
-          temp += '<h6 class="dropdown-header">'+
-            'Message Center'+
-          '</h6>';
-          $.each(data, function(i,val){
-            temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="jredirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
-            '<div class="font-weight-bold">'+
-              '<div class="text-truncate">'+val.subject+'</div>'+
-              '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
             '</div>'+
-          '</a>';
-          })
-    
-          temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
-          $('.NewMsgNotificationsCount').empty().html(data.length);
-          $('.NewMsgNotifications').empty().append(temp);
-          }
-          let profile = '';
-          $.ajax({
-            method: "GET",
-            dataType: "JSON",
-            url: "get.php/jobseeker/jobseeker_profile",
-            data: {"login_id" : session_id},
-            success: function(data){
-             if(data != 400){
-              profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-              '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+data[0].fullName+'</span>'+
-              '<img class="img-profile rounded-circle" src="uploads/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'">'+
+            '<div>'+
+              ' <div class="small text-gray-500">December 12, 2019</div>'+
+              '<span class="font-weight-bold">A new monthly report is ready to download!</span>'+
+            ' </div>'+
+          '</a>'+
+          '<a class="dropdown-item d-flex align-items-center" href="#">'+
+            '<div class="mr-3">'+
+              '<div class="icon-circle bg-success">'+
+                '<i class="fas fa-donate text-white"></i>'+
+              '</div>'+
+            '</div>'+
+            '<div>'+
+              '<div class="small text-gray-500">December 7, 2019</div>'+
+              '$290.29 has been deposited into your account!'+
+            '</div>'+
+          '</a>'+
+          '<a class="dropdown-item d-flex align-items-center" href="#">'+
+            '<div class="mr-3">'+
+              '<div class="icon-circle bg-warning">'+
+                '<i class="fas fa-exclamation-triangle text-white"></i>'+
+              '</div>'+
+            ' </div>'+
+            '<div>'+
+              '<div class="small text-gray-500">December 2, 2019</div>'+
+              ' Spending Alert: We\'ve noticed unusually high spending for your account.'+
+            '</div>'+
+          ' </a>'+
+          '<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>'+
+        '</div>'+
+      ' </li>'+
+        '<li class="nav-item dropdown no-arrow mx-1">'+
+          '<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+            '<i class="fas fa-envelope fa-fw"></i>'+
+            '<!-- Counter - Messages -->'+
+            '<span class="badge badge-danger badge-counter NewMsgNotificationsCount">0</span>'+
+          '</a>'+
+            '<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in NewMsgNotifications" aria-labelledby="messagesDropdown">'+
+            //add messages here@ams-target this div
+          '</div>'+ 
+        '</li>'+
+        '<div class="topbar-divider d-none d-sm-block"></div>'+
+        '<li class="nav-item dropdown no-arrow userProfile">'+
+        //user Profile
+          '</li>'+
+      '</ul>'+
+    '</nav>'; 
+    $('#content-wrapper').prepend(jtopBar);
+    let temp = '';
+    $.ajax({
+      method: "GET",
+      dataType: 'json',
+      url: "get.php/jobseeker/new_unread_messages",
+      data: {"login_id" : session_id},
+      success: function(data){
+        if(data != 400){
+        temp += '<h6 class="dropdown-header">'+
+          'Message Center'+
+        '</h6>';
+        $.each(data, function(i,val){
+          temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="jredirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
+          '<div class="font-weight-bold">'+
+            '<div class="text-truncate">'+val.subject+'</div>'+
+            '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+          '</div>'+
+        '</a>';
+        })
+  
+        temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
+        $('.NewMsgNotificationsCount').empty().html(data.length);
+        $('.NewMsgNotifications').empty().append(temp);
+        }
+        let profile = '';
+        $.ajax({
+          method: "GET",
+          dataType: "JSON",
+          url: "get.php/jobseeker/jobseeker_profile",
+          data: {"login_id" : session_id},
+          success: function(data){
+            if(data != 400){
+            profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+            '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+data[0].fullName+'</span>'+
+            '<img class="img-profile rounded-circle" src="uploads/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'">'+
+          '</a>'+
+
+          '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
+            '<a class="dropdown-item" href="#" onclick="jsettings();">'+
+              '<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>'+
+              'Settings'+
             '</a>'+
-  
-            '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
-              '<a class="dropdown-item" href="#" onclick="jsettings();">'+
-                '<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>'+
-                'Settings'+
-              '</a>'+
-              '<div class="dropdown-divider"></div>'+
-              '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" onclick="logout();">'+
-                '<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
-                'Logout'+
-              '</a>'+
-            '</div>';
-              $('.userProfile').append(profile);
-              jobseekerDashBoardheader();
-             }
-  
-            },
-            error: function(err){
-                 $.notify(err.responseText,'error');
+            '<div class="dropdown-divider"></div>'+
+            '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" onclick="logout();">'+
+              '<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
+              'Logout'+
+            '</a>'+
+          '</div>';
+            $('.userProfile').append(profile);
+            jobseekerDashBoardheader();
             }
-           })
-  
-         },
-         error: function(err){
-          $.notify(err.responseText,'error');
-       }
-      });
+
+          },
+          error: function(err){
+                $.notify(err.responseText,'error');
+          }
+          })
+
+        },
+        error: function(err){
+        $.notify(err.responseText,'error');
+      }
+    });
   }
 function  jdashBoardContent(){
   let temp ='<div class="container-fluid"><div class="row dbInner"></div></div>';
