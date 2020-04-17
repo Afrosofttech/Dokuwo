@@ -268,7 +268,27 @@ if($view == 'company'){
         $res = $result->search_jobs_in_category($_GET['category'],$_GET['job'],$_GET['location']);
         echo json_encode($res);
       break;
-       default:
+      case "freelancer_services":
+        $result = new JobseekerView();
+        $res = $result->freelancer_services($_GET['jobseeker_id']);
+        echo json_encode($res);
+      break;
+      case "get_service":
+        $result = new JobseekerView();
+        $res = $result->get_service($_GET['service_id']);
+        echo json_encode($res);
+      break;
+      case "freelancer_portfolio":
+        $result = new JobseekerView();
+        $res = $result->freelancer_portfolio($_GET['jobseeker_id']);
+        echo json_encode($res);
+      break;
+      case "get_portfolio":
+        $result = new JobseekerView();
+        $res = $result->get_portfolio($_GET['portfolio_id']);
+        echo json_encode($res);
+      break;
+      default:
           break;
    }
  }else{

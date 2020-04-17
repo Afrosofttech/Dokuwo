@@ -148,26 +148,61 @@ $contr =  $urlParts[sizeof($urlParts)-2];
           $res = $result->send_msg_to_company($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']);
           echo json_encode($res);
           break;
-       case "send_application":
+        case "send_application":
           $result = new JobseekerJobsController();
           $res = $result->send_application($_POST['jobseeker_id'],$_POST['job_id'],$_POST['company_id']);
           echo $res;
           break;
-       case "delete_hire":
+        case "delete_hire":
           $result = new JobseekerController();
           $res = $result->delete_hire($_POST['hire_id']);
           echo $res;
           break;
-          case "hire_jobseeker":
-            $result = new JobseekerJobsController();
-            $res = $result->hire_a_jobseeker();
-            echo $res;
-            break;
-          case "contact_admin":
-            $result = new JobseekerJobsController();
-            $res = $result->contact();
-            echo $res;
-            break;
+        case "hire_jobseeker":
+          $result = new JobseekerJobsController();
+          $res = $result->hire_a_jobseeker();
+          echo $res;
+          break;
+        case "contact_admin":
+          $result = new JobseekerJobsController();
+          $res = $result->contact();
+          echo $res;
+          break;
+        case "request_to_activate_package":
+          $result = new JobseekerController();
+          $res = $result->request_to_activate_package($_POST['login_id'],$_POST['package']);
+          echo json_encode($res);
+        break;
+        case "add_service":
+          $result = new JobseekerController();
+          $res = $result->add_service($_POST['jobseeker_id'],$_POST['price'],$_POST['name']);
+          echo json_encode($res);
+        break;
+        case "delete_service":
+          $result = new JobseekerController();
+          $res = $result->delete_service($_POST['service_id']);
+          echo json_encode($res);
+        break;
+        case "update_service":
+          $result = new JobseekerController();
+          $res = $result->update_service($_POST['service_id'],$_POST['price'],$_POST['name']);
+          echo json_encode($res);
+        break;
+        case "add_portfolio":
+          $result = new JobseekerController();
+          $res = $result->add_portfolio($_POST['jobseeker_id'],$_POST['url_link'],$_POST['description'],$_POST['type']);
+          echo json_encode($res);
+        break;
+        case "update_portfolio":
+          $result = new JobseekerController();
+          $res = $result->update_portfolio($_POST['portfolio_id'],$_POST['url_link'],$_POST['description'],$_POST['type']);
+          echo json_encode($res);
+        break;
+        case "delete_portfolio":
+          $result = new JobseekerController();
+          $res = $result->delete_portfolio($_POST['portfolio_id']);
+          echo json_encode($res);
+        break;
         default:
            break;
     }

@@ -2,7 +2,11 @@
 include_once 'dbhmodel.php';
 
 class Auth extends Dbh {
-   
+   private $packs = array(
+                            1 => 'Month',
+                            2 => 'Year'
+                        );
+
     public function create_account($email,$passwd, $hash, $usertype, $status){
         $sql = " INSERT INTO login (email,password, user_type, hash, status) VALUES(?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
@@ -97,5 +101,32 @@ class Auth extends Dbh {
         return 200;
         $stmt = null;
     }
-
+    public function get_freelancer_package_info($login_id){
+        $sql = " SELECT * FROM package WHERE login_id=? AND status=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,'Active']);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return array('package' => 'None');
+            $stmt = null;
+        }else{
+            if($result['validUntil'] >= date('Y-m-d')){
+                return  array('package' => $result['type']);
+                $stmt = null;
+            }
+            else{
+                return $this->deactivate_pack($result['package_id']);
+            }
+        }
+    }
+    protected function deactivate_pack($package_id){
+        $sql = " UPDATE package SET status = ?  WHERE package_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(['Inactive',$package_id]);
+        return array('package' => 'None');
+        $stmt = null;
+    }
+    // protected function get_recruiter_package_info($user['login_id']){
+        
+    // }
 }

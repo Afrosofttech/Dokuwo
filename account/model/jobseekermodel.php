@@ -466,4 +466,128 @@ class Jobseeker extends Dbh{
             $stmt = null;
         } 
     }
+    //packaging
+    protected function requesting_this_package($login_id,$package){
+        // if($package)
+        $res = $this->is_any_package_active_pending($login_id);
+        if($res['status'] == 'Pending') return array('message' => 'Your request to activate a package is pending. You can\'t request for two packages.');
+        else if($res['status'] == 'Active') return array('message' => 'Your current package is still active. You have to wait until the current package expires.');
+        else return $this->request_to_activate_this_pack($login_id,$package);
+    }
+    protected function is_any_package_active_pending($login_id){
+        $sql= "SELECT * FROM package  WHERE login_id=? AND status IN (?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,'Pending','Active']);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return false;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        }
+    }
+    protected function request_to_activate_this_pack($login_id,$package){
+        $validFrom = date('Y-m-d');
+        $sql= "INSERT INTO package (login_id,validFrom,validUntil,status,type) VALUES (?,?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,$validFrom,($package == 'Month')?date('Y-m-d',strtotime('+30 days',strtotime($validFrom))):
+        date('Y-m-d',strtotime('+1 year',strtotime($validFrom))),'Pending',$package]);
+        return  array('message' => 'We will get back to you soonest and activate your requested package.');
+        $stmt = null;
+    }
+    protected function get_freelancer_services($jobseeker_id){
+        $sql= "SELECT * FROM services  WHERE jobseeker_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_id]);
+        $result = $stmt->fetchAll();
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        }
+    }
+    protected function get_this_service($service_id){
+        $sql= "SELECT * FROM services  WHERE service_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$service_id]);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        }
+    }
+    protected function add_this_service($jobseeker_id,$price,$name){
+        $sql= "INSERT INTO services (jobseeker_id,name,price) VALUES (?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_id,$name,$price]);
+        return  array('message' => 'Service successfully added!');
+        $stmt = null;
+    }
+    protected function update_this_service($service_id,$price,$name){
+        $sql= "UPDATE services SET name=?,price=? WHERE service_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$name,$price,$service_id]);
+        return  array('message' => 'Service successfully updated!');
+        $stmt = null;
+    }
+    protected function delete_this_service($service_id){
+        $sql= "DELETE FROM services  WHERE service_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$service_id]);
+        return  array('message' => 'Service successfully deleted!');
+        $stmt = null;
+    }
+    protected function get_freelancer_portfolio($jobseeker_id){
+        $sql= "SELECT * FROM portfolio  WHERE jobseeker_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_id]);
+        $result = $stmt->fetchAll();
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        }
+    }
+    protected function get_this_portfolio($portfolio_id){
+        $sql= "SELECT * FROM portfolio  WHERE portfolio_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$portfolio_id]);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        }
+    }
+    protected function add_this_portfolio($jobseeker_id,$url_link,$description,$type){
+        $sql= "INSERT INTO portfolio (jobseeker_id,url_link,description,type) VALUES (?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_id,$url_link,$description,$type]);
+        return  array('message' => 'Portfolio successfully added!');
+        $stmt = null;
+    }
+    public function update_this_portfolio($portfolio_id,$url_link,$description,$type){
+        $sql= "UPDATE portfolio SET url_link=?,description=?,type=? WHERE portfolio_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$url_link,$description,$type,$portfolio_id]);
+        return  array('message' => 'Portfolio successfully updated!');
+        $stmt = null;
+    }
+    protected function delete_this_portfolio($portfolio_id){
+        $sql= "DELETE FROM portfolio  WHERE portfolio_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$portfolio_id]);
+        return  array('message' => 'Portfolio successfully deleted!');
+        $stmt = null;
+    }
 }
