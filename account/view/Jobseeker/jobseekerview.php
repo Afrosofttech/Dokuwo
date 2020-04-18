@@ -51,8 +51,8 @@ class JobseekerView extends Jobseeker{
         $res = $this->get_freelancer_portfolio($jobseeker_id);
         return $res;
     }
-    public function get_portfolio($service_id){
-        $res = $this->get_this_portfolio($service_id);
+    public function get_portfolio($portfolio_id){
+        $res = $this->get_this_portfolio($portfolio_id);
         return $res;
     }
 }
