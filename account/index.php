@@ -18,8 +18,9 @@ if(!isset($_SESSION['email'])){
   <meta name="author" content="Afrika Software Technologies">
 
   <!-- jquery CDN -->
- <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+  <script src="js/plugins/jquery.js"></script>
   
   <!--jquery printArea -->
     <script src="js/printArea/jquery-ui-1.10.4.custom.min.js"></script>
@@ -66,6 +67,7 @@ if(!isset($_SESSION['email'])){
   let session_fullname ='<?php if(isset($_SESSION['name'])) echo $_SESSION['name']; ?>';
   let session_user_id ='<?php if(isset($_SESSION['_id'])) echo $_SESSION['_id'];?>';
   let session_curr ='<?php if(isset($_SESSION['Currency'])) echo $_SESSION['Currency'];?>';
+  let session_adminType ='<?php if(isset($_SESSION['role'])) echo $_SESSION['role'];?>';
 </script>
 
 
@@ -101,6 +103,7 @@ if(!isset($_SESSION['email'])){
   <!--Custom scripts-->
   <script src="js/core/jobseeker_categories.js"></script>
   <script src="js/career.js"></script>
+  <script src="js/common.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/company.js"></script>
   <script src="js/jobseeker.js"></script>

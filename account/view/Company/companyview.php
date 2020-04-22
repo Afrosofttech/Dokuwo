@@ -77,4 +77,21 @@ class CompanyView extends Company{
         $details = $this->recruiter_details($recruiter_id);
         return $details;
     }
+    public function get_admin_blogs($admin_id){
+        $result = $this->get_blog_by_admin($admin_id);
+        return $result;
+    }
+
+    public function get_all_recruiters_accounts(){
+        $result = $this->get_recruiter_accounts();
+        return $result;  
+    }
+    public function get_all_jobseeker_accounts(){
+        $result = $this->get_jobseeker_accounts();
+        return $result;  
+    }
+    public function get_all_admin_accounts(){
+        $result = $this->get_admin_accounts();
+        return $result;  
+    }
 }

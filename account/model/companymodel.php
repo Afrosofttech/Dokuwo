@@ -550,4 +550,118 @@ class Company extends Dbh{
             $stmt = null;
         } 
     }
+// admin DAO @Biran
+    protected function get_blog_by_admin($admin_id){
+        $sql = "SELECT * FROM blog where admin_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$admin_id]);
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+
+    protected function create_new_blog($admin_id,$title,$publisher,$category,$tags,$content,$image){
+        $date = date('Y-m-d');$date = date('Y-m-d');
+        $sql = " INSERT INTO blog(admin_id,blog_title,date_posted,blog_publisher,category,tags,blog_content,blog_image) VALUES(?,?,?,?,?,?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$admin_id,$title,$date,$publisher,$category,$tags,$content,$image]);
+        return  self::success;
+        $stmt = null;
+    }
+
+    protected function updateBlog($title,$category,$tags,$image,$blog_id){
+        $sql = " UPDATE blog SET blog_title=?,category=?,tags=?,blog_image=? WHERE blog_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$title,$category,$tags,$image,$blog_id]);
+        return  self::success;
+        $stmt = null;
+    }
+
+    protected function deleteBlog($blog_id){
+        $sql = " DELETE FROM blog WHERE blog_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$blog_id]);
+        return  self::success;
+        $stmt = null; 
+    }
+
+    protected function get_recruiter_accounts(){
+        $sql = "SELECT email,status, company.company_name FROM login INNER JOIN company ON login.login_id = company.login_id GROUP BY login.login_id";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+
+    protected function get_jobseeker_accounts(){
+        $sql = "SELECT login.login_id,login.email,login.status, job_seeker.fullName FROM login INNER JOIN job_seeker ON login.login_id = job_seeker.login_id GROUP BY login.login_id";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+
+    protected function get_admin_accounts(){
+        $sql = "SELECT login.login_id,login.email,login.status, admin.admin_name,admin.role FROM login INNER JOIN admin ON login.login_id = admin.login_id GROUP BY login.login_id";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }    
+    }
+    
+    protected function activateAccount($login_id){
+        $status = 1;
+        $sql = "UPDATE login SET status = ? WHERE login_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$status,$login_id]);
+        $result = $stmt->fetchAll();
+        return  self::success;
+        $stmt = null;  
+    }
+
+    protected function deactivateAccount($login_id){
+        $status = 0;
+        $sql = "UPDATE login SET status = ? WHERE login_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$status,$login_id]);
+        $result = $stmt->fetchAll();
+        return  self::success;   
+    }
+
+    protected function deleteAccount($login_id){
+        $sql = " DELETE FROM login WHERE login_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id]);
+        return  self::success;
+        $stmt = null; 
+    }
+
+
 }

@@ -51,6 +51,16 @@ class Auth extends Dbh {
         $stmt = null;
     }
 
+    public function get_admin_login($login_id){
+    
+        $sql = " SELECT * FROM admin WHERE login_id=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id]);
+        $data = $stmt->fetch();
+        return $data;
+        $stmt = null;
+    }
+
     public function get_login_info($email,$hash){
         $sql = " SELECT * FROM login WHERE email=? and hash=?";
         $stmt = $this->connect()->prepare($sql);
@@ -95,6 +105,26 @@ class Auth extends Dbh {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([1,$login_id]);
         return 200;
+        $stmt = null;
+    }
+
+    // get latest login_id to be able to insert into admin table
+
+    public function get_latest_login_id(){
+        $sql = " SELECT login_id FROM login ORDER BY login_id DESC LIMIT 1";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetch();
+        return  $data;
+        $stmt = null;
+    }
+
+    // fill admin info into admin table
+
+    public function fill_admin_details($login_id,$admin_name,$role){
+        $sql = " INSERT INTO admin (login_id,admin_name,role) VALUES(?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,$admin_name, $role]);
         $stmt = null;
     }
 

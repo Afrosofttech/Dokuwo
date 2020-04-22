@@ -1990,6 +1990,7 @@ function displayEmployers(start,finish){
                     '</div>';
                     if($.trim(val.blog_content).length > 100){
                       let subcontent = val.blog_content.substring(0,100);
+                      console.log(subcontent);
                       posts +='<p>'+subcontent+'...</p>';
                     }
                     else{

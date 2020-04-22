@@ -171,6 +171,26 @@ if($view == 'company'){
           $response = $result->recruiter_details($_GET['recruiter_id']);
           echo json_encode($response);
         break;
+        case "manage_blogs":
+          $result = new CompanyView();
+          $response = $result->get_admin_blogs($_GET['admin_id']);
+          echo json_encode($response);
+        break;
+        case "retrieve_recruiter_accounts":
+          $result = new CompanyView();
+          $response = $result->get_all_recruiter_accounts();
+          echo json_encode($response);
+        break;
+        case "retrieve_jobseeker_accounts":
+          $result = new CompanyView();
+          $response = $result->get_all_jobseeker_accounts();
+          echo json_encode($response);
+        break;
+        case "retrieve_admin_accounts":
+          $result = new CompanyView();
+          $response = $result->get_all_admin_accounts();
+          echo json_encode($response);
+        break;
        default:
        break;
    }

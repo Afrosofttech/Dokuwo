@@ -39,6 +39,11 @@ $contr =  $urlParts[sizeof($urlParts)-2];
             $result = $auth->companydetails();
             echo $result;
             break;
+      case "create_admin_account":
+            $auth = new AuthController();
+            $result = $auth->create_admin_account();
+            echo $result;
+            break;
       default:
             break;
    }
@@ -106,6 +111,36 @@ $contr =  $urlParts[sizeof($urlParts)-2];
        case "report_jobseeker":
         $response = (new CompanyController())->report_jobseeker($_POST['company_login_id'],$_POST['jobseeker_login_id'],$_POST['reason']);
         echo json_encode($response);
+       break;
+       case "create_blog":
+        $result = new JobsController();
+        $response = $result->create_blog();
+        echo $response;
+       break;
+       case "update_blog":
+        $result = new JobsController();
+        $response = $result->update_blog();
+        echo $response;
+       break;
+       case "delete_blog":
+        $result = new JobsController();
+        $response = $result->delete_blog($_POST['blog_id']);
+        echo $response;
+       break;
+       case "activateAccount":
+        $result = new JobsController();
+        $response = $result->activate_account($_POST['login_id']);
+        echo $response;
+       break;
+       case "deactivateAccount":
+        $result = new JobsController();
+        $response = $result->deactivate_account($_POST['login_id']);
+        echo $response;
+       break;
+       case "delete_account":
+        $result = new JobsController();
+        $response = $result->delete_account($_POST['login_id']);
+        echo $response;
        break;
        default:
        break;

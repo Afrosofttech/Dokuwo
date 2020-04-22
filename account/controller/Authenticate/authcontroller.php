@@ -32,6 +32,18 @@ class AuthController extends Auth{
         $validated_data = self::validate_data();
         $user = $this->login($validated_data['email']);
         if($user != null){
+         if($user['user_type'] === 'admin' && $user['password'] == $validated_data['password']){
+            $admin = $this->get_admin_login($user['login_id']);
+            $_SESSION['login_id'] = $user['login_id'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['usertype'] = $user['user_type'];
+            $_SESSION['status'] = $user['status'];
+            $_SESSION['name'] = $admin['admin_name'];
+            $_SESSION['_id'] = $admin['admin_id'];
+            $_SESSION['role'] = $admin['role'];
+            return 200;
+         }
+         
         $pass_verif = password_verify($validated_data['password'], $user['password']);
 
         if ($user && $pass_verif){
@@ -128,6 +140,23 @@ class AuthController extends Auth{
             return 'duplicate';
         }
     }
+
+   //  admin account creation by super admin
+    public function create_admin_account(){
+      $validated_data = self::validate_data();
+      $verify_email = $this->verify_email($validated_data['email']);
+      if($verify_email == null){
+          $hash = md5(rand(0,1000));
+          $password = password_hash($validated_data['password'], PASSWORD_DEFAULT);
+          $company_account = $this->create_account($validated_data['email'],$password,$hash,'admin',0);
+          $latest_login_id = $this->get_latest_login_id();
+          $admin = $this->fill_admin_details($latest_login_id,$_POST['adminName'],$_POST['role']);
+          return "success";
+      }else{
+          return "duplicate";
+      }
+  }
+
     function validate_jobseeker(){
         require "gump.class.php";
        
