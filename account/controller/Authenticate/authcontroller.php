@@ -55,15 +55,22 @@ class AuthController extends Auth{
            if($user['user_type'] == 'company')
            {
               $company = $this->get_company_login($user['login_id']);
+            //   $info = $this->get_recruiter_package_info($user['login_id']);
               $_SESSION['name'] = $company['company_name'];
               $_SESSION['_id'] = $company['company_id'];
               $_SESSION['Currency'] = $company['currency'];
+              // these are dummy values for now
+              $_SESSION['package'] = 'None';
+              $_SESSION['trial_activation'] = 'false';
            }
            if($user['user_type'] == 'jobseeker')
            {
               $jobseeker = $this->get_jobseeker_login($user['login_id']);
+              $info = $this->get_freelancer_package_info($user['login_id']);
               $_SESSION['name'] = $jobseeker['fullName'];
               $_SESSION['_id'] = $jobseeker['jobseeker_id'];
+              $_SESSION['package'] = $info['package'];
+              $_SESSION['trial_activation'] = 'false';
            }
            return 200;
         } else {

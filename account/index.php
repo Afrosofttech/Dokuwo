@@ -68,6 +68,8 @@ if(!isset($_SESSION['email'])){
   let session_user_id ='<?php if(isset($_SESSION['_id'])) echo $_SESSION['_id'];?>';
   let session_curr ='<?php if(isset($_SESSION['Currency'])) echo $_SESSION['Currency'];?>';
   let session_adminType ='<?php if(isset($_SESSION['role'])) echo $_SESSION['role'];?>';
+  let package ='<?php if(isset($_SESSION['package'])) echo $_SESSION['package'];?>';
+  let trial_activation ='<?php if(isset($_SESSION['trial_activation'])) echo $_SESSION['trial_activation'];?>';
 </script>
 
 

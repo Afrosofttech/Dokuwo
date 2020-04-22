@@ -138,6 +138,8 @@ function jobseekerDashBoardheader(){
     data: {"login_id" : session_id},
     dataType: 'json',
     success: function(data){
+      package = data.package;
+      trial_activation = data.trial_activation;
       $('#jobsAvailable' ).html(data.noOfJobsAvailable);
       $('#profileVal').html(data.isProfileComplete+"%");
       $('#profileBar').css('width',''+data.isProfileComplete+'%');
@@ -954,7 +956,6 @@ $.ajax({
   url: "get.php/jobseeker/get_message",
   data: {"msg_id" : msg_id},
   success: function(data){
-     console.log(data);
   let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
     '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
       '<h3 class="card-title">Read Message</h3>'+
@@ -1502,7 +1503,6 @@ error: function(err){
       url: "post.php/jobseeker/delete_hire",
       data: {"hire_id" : hire_id},
       success: function(response){
-        console.log(response)
         $.notify('Deleted','success');
         hires();
       },
@@ -1511,6 +1511,575 @@ error: function(err){
       }
     });
  }
+ function portfolio(){
+if(package != 'None'){
+  let  temp = '<div class="container-fluid">'+
+  '<div class="d-sm-flex align-items-center justify-content-between mb-4">'+
+  '<div class="h3 mb-0"></div>'+
+ '<div class="dropdown">'+
+  '<button class=" dropdown-toggle d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+    'add new'+
+  '</button>'+
+  '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">'+
+    '<a class="dropdown-item" onclick="addService();" style="cursor: pointer;">Service</a>'+
+    '<a class="dropdown-item" onclick="addPortfolio();" style="cursor: pointer;">Portfolio</a>'+
+  '</div>'+
+ '</div>'+
+'</div>'+
+'<div class="row"><div class="col-md-6 services"></div><div class="col-md-6 portfolio"></div></div></div>';
+$('#content').empty().append(temp);
+services();
+my_portfolio();
+}else{
+  let temp = '<div class="container-fluid">'+
+  '<div class="card shadow mb-4 card-outline" style="border-top: 3px solid #007bff;"">'+
+    '<div class="card-header py-3">'+
+      '<h6 class="m-0 font-weight-bold text-primary text-center">Ooops!</h6>'+
+    '</div>'+
+    '<div class="card-body">'+
+    '<div>You need to subscribe to a <strong>package</strong> so as to be able to add or edit your <strong>services</strong> and <strong>portfolio</strong>. Click on <strong>Settings</strong> on the sidebar and then click on the <strong>Settings</strong> tab, choose a  <strong>package</strong> and then click <strong>update</strong>.</div>'+
+    '</div>'+
+  '</div>'+
+ '</div>';
+$('#content').empty().append(temp);
+}
+ }
+ function services(){ 
+  let services = '';
+  services+=
+  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+    '<h4 class="card-title">Services</h4>'+
+  '</div>'+
+  '<!-- /.card-header -->'+
+  '<div class="card-body p-1">'+
+  '<table class="table table-striped projects">'+
+  '<thead>'+
+      '<tr>'+
+          '<th style="width: 40%">Name</th>'+
+          '<th style="width: 30%">Price</th>'+
+          '<th></th>'+
+      '</tr>'+
+  '</thead>'+
+  '<tbody>';
+  $.ajax({
+    url: 'get.php/jobseeker/freelancer_services',
+    method: 'GET',
+    dataType: 'json',
+    data: {'jobseeker_id':session_user_id},
+    success: function(data){
+    if(data !== 400){
+      $.each(data, function( i, val ) {
+        services +='<tr>'+
+        '<td>'+val.name.substring(0, 25)+'</td>'+
+        '<td>GMD'+currencyFormat(val.price)+'</td>'+
+        '<td class="project-actions text-right text-white">'+
+            '<a class="btn btn-info btn-sm" onclick="editService(\''+val.service_id+'\')">'+
+                '<i class="fas fa-pencil-alt"></i>Edit'+
+            '</a>'+
+            '<a class="btn btn-danger btn-sm" onclick="deleteService(\''+val.service_id+'\')">'+
+                '<i class="fas fa-trash"></i>Delete'+
+           ' </a>'+
+        '</td>'+
+    '</tr>';
+      });
+    }
+      '</tbody>'+
+      '</table>'+
+    '</div>'+
+  '<!-- /.card-body -->'+
+  '</div>'+
+  '<!-- /.card -->';
+  $('.services').empty().append(services);
+
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  });
+
+  }
+   
+  function my_portfolio(){
+    let portfolio = '';
+    portfolio+=
+    '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+    '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+      '<h4 class="card-title">Portfolio</h4>'+
+    '</div>'+
+    '<!-- /.card-header -->'+
+    '<div class="card-body p-1">'+
+    '<table class="table table-striped projects">'+
+    '<thead>'+
+        '<tr>'+
+            '<th style="width: 40%">Work/portfolio Desc.</th>'+
+            '<th style="width: 30%">Url</th>'+
+            '<th></th>'+
+        '</tr>'+
+    '</thead>'+
+    '<tbody>';
+    $.ajax({
+      method: 'GET',
+      url: 'get.php/jobseeker/freelancer_portfolio',
+      dataType: 'json',
+      data: {'jobseeker_id':session_user_id},
+      success: function(data){
+      if(data !== 400){
+        $.each(data, function( i, val ) {
+          portfolio +='<tr>'+
+            '<td>'+val.description+'</td>'+
+            '<td>'+val.url_link.substring(0, 20)+'</td>'+
+            '<td class="project-actions text-right text-white">'+
+                '<a class="btn btn-info btn-sm" onclick="editPortfolio(\''+val.portfolio_id+'\')">'+
+                    '<i class="fas fa-pencil-alt"></i>Edit'+
+                '</a>'+
+                '<a class="btn btn-danger btn-sm" onclick="deletePortfolio(\''+val.portfolio_id+'\')">'+
+                    '<i class="fas fa-trash"></i>Delete'+
+               ' </a>'+
+            '</td>'+
+        '</tr>';
+      });
+    }
+  portfolio += '</tbody>'+
+      '</table>'+
+    '</div>'+
+  '<!-- /.card-body -->'+
+  '</div>'+
+  '<!-- /.card -->';
+  $('.portfolio').empty().append(portfolio);
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+  });
+}
+function addService(){
+  let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12 jobsposted">'+
+  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+    '<h4 class="card-title">New Service</h4>'+
+  '</div>'+
+  '<!-- /.card-header -->'+
+  '<div class="card-body p-2">'+
+  '<div class="table-responsive">'+
+  '<form method="POST" id="createService" autocomplete="off">'+
+  '<div class="row p-3">'+
+  '<div class="col-md-12 col-sm-6">'+
+  '<div class="input-group mb-3">'+
+  '<div class="input-group-prepend">'+
+    '<span class="input-group-text">Name</span>'+
+  '</div>'+
+  '<input type="text" class="form-control" id="serviceName" value="" placeholder="eg. web design">'+
+  '</div>'+
+  '<div class="input-group mb-3">'+
+  '<div class="input-group-prepend">'+
+    '<span class="input-group-text">Price</span>'+
+  '</div>'+
+  '<input type="number" class="form-control" id="Price" value="">'+
+  '</div>'+
+  '</div>'+
+  '<!-- /.col-md-6 col-sm-4-->'+
+ ' <!-- Force next columns to break to new line at md breakpoint and up -->'+
+  '<div class="w-100 d-none d-md-block"></div>'+
+  '<div class="col-md-6 col-sm-4 py-2 d-flex justify-content-between">'+
+  '<button type="button" class="btn btn-danger" style="cursor: pointer;" onclick="portfolio();"><i class="fas fa-lg fa-arrow-left"></i> Cancel</button>'+
+  '<button type="submit" name="submit" id="addNewService" class="btn btn-success" style="cursor: pointer;">Create <i class="fas fa-lg fa-arrow-right"></i></button>'+
+  '</div>'+
+  '<!-- /.col-md-6 col-sm-4-->'+
+  '</form>'+
+  '<!-- /.form-->'+
+    '</div>'+
+  '<!-- /.row p-2-->'+
+  '</div>'+
+  '<!-- /.mail-box-messages -->'+
+'</div>'+
+'<!-- /.card-body -->'+
+'</div>';
+  '</div></div></div>';
+  $('.services').empty().append(temp);
+  $(document).ready(function(){
+    $('#addNewService').click(function(e){
+      e.preventDefault();
+      let serviceName = $('#serviceName').val();
+      let Price = $('#Price').val();
+
+      if (serviceName == ''){
+        swal('Invalid !','Name field cannot be empty','error','Cool');
+        return;
+      }
+      if (Price == ''){
+       swal('Invalid!','Price field cannot be empty','error','Cool');
+       return;
+      }
+
+      if(Price == 0){
+        swal('Invalid Price!','Please enter the price for the service','error','Cool');
+        return;
+       }else if(Price.length < 1){
+        swal('Invalid Price!','Please enter the price for the service','error','Cool');
+        return;
+       }else{
+        var regEx = new RegExp('^[0-9]+$');
+        var validPrice = regEx.test(Price);
+        if(!validPrice){
+          swal('Invalid Price!','Please enter a valid price for the service','error','Cool');
+          return;
+        }
+      }
+
+      $.ajax({
+        method: "POST",
+        dataType: 'json',
+        url: "post.php/jobseeker/add_service",
+        data: {"jobseeker_id": session_user_id,"price" : Price,"name": serviceName},
+        success: function(response){
+          swal('Success!',response.message,'success','Cool');
+          portfolio();
+        },
+        error: function(err){
+          $.notify(err.responseText,'error');
+        }
+      })
+  });
+});
+}
+function editService(service_id){
+  let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12 jobsposted">'+
+  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+    '<h4 class="card-title">Edit Service</h4>'+
+  '</div>'+
+  '<!-- /.card-header -->'+
+  '<div class="card-body p-2">'+
+  '<div class="table-responsive">';
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/jobseeker/get_service",
+    data: {"service_id": service_id,},
+    success: function(response){
+      if(response != 400){
+         temp +=   '<form method="POST" id="createService" autocomplete="off">'+
+         '<div class="row p-3">'+
+         '<div class="col-md-12 col-sm-6">'+
+         '<div class="input-group mb-3">'+
+         '<div class="input-group-prepend">'+
+           '<span class="input-group-text">Name</span>'+
+         '</div>'+
+         '<input type="text" class="form-control" id="serviceName" value="'+response.name+'">'+
+         '</div>'+
+         '<div class="input-group mb-3">'+
+         '<div class="input-group-prepend">'+
+           '<span class="input-group-text">Price</span>'+
+         '</div>'+
+         '<input type="number" class="form-control" id="Price" value="'+response.price+'">'+
+         '</div>'+
+         '</div>'+
+         '<!-- /.col-md-6 col-sm-4-->'+
+        ' <!-- Force next columns to break to new line at md breakpoint and up -->'+
+         '<div class="w-100 d-none d-md-block"></div>'+
+         '<div class="col-md-6 col-sm-4 py-2 d-flex justify-content-between">'+
+         '<button type="button" class="btn btn-danger" style="cursor: pointer;" onclick="portfolio();"><i class="fas fa-lg fa-arrow-left"></i> Cancel</button>'+
+         '<button type="submit" name="submit" id="updateService" class="btn btn-success" style="cursor: pointer;">Update <i class="fas fa-lg fa-arrow-up"></i></button>'+
+         '</div>'+
+         '<!-- /.col-md-6 col-sm-4-->'+
+         '</form>';
+      }
+
+  temp+='<!-- /.form-->'+
+    '</div>'+
+  '<!-- /.row p-2-->'+
+  '</div>'+
+  '<!-- /.mail-box-messages -->'+
+'</div>'+
+'<!-- /.card-body -->'+
+'</div>';
+  '</div></div></div>';
+  $('.services').empty().append(temp);
+
+  $(document).ready(function(){
+    $('#updateService').click(function(e){
+      e.preventDefault();
+      let serviceName = $('#serviceName').val();
+      let Price = $('#Price').val();
+
+      if (serviceName == ''){
+        swal('Invalid !','Name field cannot be empty','error','Cool');
+        return;
+      }
+      if (Price == ''){
+       swal('Invalid!','Price field cannot be empty','error','Cool');
+       return;
+      }
+
+      if(Price == 0){
+        swal('Invalid Price!','Please enter the price for the service','error','Cool');
+        return;
+       }else if(Price.length < 1){
+        swal('Invalid Price!','Please enter the price for the service','error','Cool');
+        return;
+       }else{
+        var regEx = new RegExp('^[0-9]+$');
+        var validPrice = regEx.test(Price);
+        if(!validPrice){
+          swal('Invalid Price!','Please enter a valid price for the service','error','Cool');
+          return;
+        }
+      }
+        $.ajax({
+        method: "POST",
+        dataType: 'json',
+        url: "post.php/jobseeker/update_service",
+        data: {"service_id": service_id,"price" : Price,"name": serviceName},
+        success: function(response){
+          swal('Success!',response.message,'success','Cool');
+          portfolio();
+        },
+        error: function(err){
+          $.notify(err.responseText,'error');
+        }
+      })
+    });
+  });
+},
+error: function(err){
+  $.notify(err.responseText,'error');
+}
+})
+
+}
+function deleteService(service_id){
+  $.ajax({
+    method: "POST",
+    dataType: 'json',
+    url: "post.php/jobseeker/delete_service",
+    data: {"service_id" : service_id},
+    success: function(response){
+      swal('Success!',response.message,'success','Cool');
+      portfolio();
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  })
+}
+function addPortfolio(){
+  let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12 jobsposted">'+
+  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+    '<h4 class="card-title">New Portfolio</h4>'+
+  '</div>'+
+  '<!-- /.card-header -->'+
+  '<div class="card-body p-2">'+
+  '<div class="table-responsive">'+
+  '<form method="POST" id="createPortfolio" autocomplete="off">'+
+  '<div class="row p-3">'+
+  '<div class="col-md-12 col-sm-6">'+
+  '<div class="input-group mb-3">'+
+  '<div class="input-group-prepend">'+
+    '<span class="input-group-text">Url link</span>'+
+  '</div>'+
+  '<input type="text" class="form-control" id="url" value="">'+
+  '</div>'+
+  '<div class="input-group mb-3">'+
+  '<div class="input-group-prepend">'+
+    '<span class="input-group-text">Description</span>'+
+  '</div>'+
+  '<input type="text" class="form-control" id="description" value="" placeholder="eg. aayfo logo">'+
+  '</div>'+
+ '<div class="input-group mb-3">'+
+ '<div class="input-group-prepend">'+
+   '<label class="input-group-text" for="Type">Type</label>'+
+  '</div>'+
+    '<select class="custom-select" id="Type">'+
+      '<option selected>Choose...</option>'+
+      '<option value="Work">Work</option>'+
+      '<option value="Website">Personal Website</option>'+
+    '</select>'+
+  '</div>'+
+  '</div>'+
+  '<!-- /.col-md-6 col-sm-4-->'+
+ ' <!-- Force next columns to break to new line at md breakpoint and up -->'+
+  '<div class="w-100 d-none d-md-block"></div>'+
+  '<div class="col-md-6 col-sm-4 py-2 d-flex justify-content-between">'+
+  '<button type="button" class="btn btn-danger" style="cursor: pointer;" onclick="portfolio();"><i class="fas fa-lg fa-arrow-left"></i> Cancel</button>'+
+  '<button type="submit" name="submit" id="addNewPortfolio" class="btn btn-success" style="cursor: pointer;">Create <i class="fas fa-lg fa-arrow-right"></i></button>'+
+  '</div>'+
+  '<!-- /.col-md-6 col-sm-4-->'+
+  '</form>'+
+  '<!-- /.form-->'+
+    '</div>'+
+  '<!-- /.row p-2-->'+
+  '</div>'+
+  '<!-- /.mail-box-messages -->'+
+'</div>'+
+'<!-- /.card-body -->'+
+'</div>';
+  '</div></div></div>';
+  $('.portfolio').empty().append(temp);
+  $(document).ready(function(){
+    $('#addNewPortfolio').click(function(e){
+      e.preventDefault();
+      let url = $('#url').val();
+      let description = $('#description').val();
+      let Type = $('#Type').val();
+      if (url == ''){
+        swal('Invalid !','URL field cannot be empty','error','Cool');
+        return;
+      }
+      if (description == ''){
+       swal('Invalid!','Description field cannot be empty','error','Cool');
+       return;
+      }
+      if (description.length > 20){
+        swal('Invalid!','Description Should be short and precise','error','Cool');
+        return;
+       }
+      if (Type == 'Choose...'){
+        swal('Invalid!','Type field must be selected','error','Cool');
+        return;
+       }
+
+      $.ajax({
+        method: "POST",
+        dataType: 'json',
+        url: "post.php/jobseeker/add_portfolio",
+        data: {"jobseeker_id": session_user_id,"url_link" : url,"description": description,"type": Type},
+        success: function(response){
+          swal('Success!',response.message,'success','Cool');
+          portfolio();
+        },
+        error: function(err){
+          $.notify(err.responseText,'error');
+        }
+      })
+  });
+});
+}
+function editPortfolio(portfolio_id){
+  let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12 jobsposted">'+
+  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+    '<h4 class="card-title">Edit Portfolio</h4>'+
+  '</div>'+
+  '<!-- /.card-header -->'+
+  '<div class="card-body p-2">'+
+  '<div class="table-responsive">';
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/jobseeker/get_portfolio",
+    data: {"portfolio_id": portfolio_id,},
+    success: function(response){
+      if(response != 400){
+         temp += '<form method="POST" id="formPortfolio" autocomplete="off">'+
+         '<div class="row p-3">'+
+         '<div class="col-md-12 col-sm-6">'+
+         '<div class="input-group mb-3">'+
+         '<div class="input-group-prepend">'+
+           '<span class="input-group-text">Url link</span>'+
+         '</div>'+
+         '<input type="text" class="form-control" id="url" value="'+response.url_link+'">'+
+         '</div>'+
+         '<div class="input-group mb-3">'+
+         '<div class="input-group-prepend">'+
+           '<span class="input-group-text">Description</span>'+
+         '</div>'+
+         '<input type="text" class="form-control" id="description" value="'+response.description+'">'+
+         '</div>'+
+        '<div class="input-group mb-3">'+
+        '<div class="input-group-prepend">'+
+          '<label class="input-group-text" for="Type">Type</label>'+
+         '</div>'+
+           '<select class="custom-select" id="Type">'+
+             '<option selected>Choose...</option>'+
+             '<option value="Work">Work</option>'+
+             '<option value="Website">Personal Website</option>'+
+           '</select>'+
+         '</div>'+
+         '</div>'+
+         '<!-- /.col-md-6 col-sm-4-->'+
+        ' <!-- Force next columns to break to new line at md breakpoint and up -->'+
+         '<div class="w-100 d-none d-md-block"></div>'+
+         '<div class="col-md-6 col-sm-4 py-2 d-flex justify-content-between">'+
+         '<button type="button" class="btn btn-danger" style="cursor: pointer;" onclick="portfolio();"><i class="fas fa-lg fa-arrow-left"></i> Cancel</button>'+
+         '<button type="submit" name="submit" id="updatePortfolio" class="btn btn-success" style="cursor: pointer;">Update <i class="fas fa-lg fa-arrow-up"></i></button>'+
+         '</div>'+
+         '<!-- /.col-md-6 col-sm-4-->'+
+         '</form>';
+      }
+
+  temp+='<!-- /.form-->'+
+    '</div>'+
+  '<!-- /.row p-2-->'+
+  '</div>'+
+  '<!-- /.mail-box-messages -->'+
+'</div>'+
+'<!-- /.card-body -->'+
+'</div>';
+  '</div></div></div>';
+  $('.portfolio').empty().append(temp);
+
+  $(document).ready(function(){
+    $("#Type option[value='"+response.type+"']").attr('selected', 'selected');
+    $('#updatePortfolio').click(function(e){
+      e.preventDefault();
+      let url = $('#url').val();
+      let description = $('#description').val();
+      let Type = $('#Type').val();
+      if (url == ''){
+        swal('Invalid !','URL field cannot be empty','error','Cool');
+        return;
+      }
+      if (description == ''){
+       swal('Invalid!','Description field cannot be empty','error','Cool');
+       return;
+      }
+      if (description.length > 20){
+        swal('Invalid!','Description Should be short and precise','error','Cool');
+        return;
+       }
+      if (Type == 'Choose...'){
+        swal('Invalid!','Type field must be selected','error','Cool');
+        return;
+       }
+        $.ajax({
+        method: "POST",
+        dataType: 'json',
+        url: "post.php/jobseeker/update_portfolio",
+        data: {"portfolio_id": portfolio_id,"url_link" : url,"description": description,"type": Type},
+        success: function(response){
+          swal('Success!',response.message,'success','Cool');
+          portfolio();
+        },
+        error: function(err){
+          $.notify(err.responseText,'error');
+        }
+      })
+    });
+  });
+},
+error: function(err){
+  $.notify(err.responseText,'error');
+}
+})
+
+}
+function deletePortfolio(portfolio_id){
+  $.ajax({
+    method: "POST",
+    dataType: 'json',
+    url: "post.php/jobseeker/delete_portfolio",
+    data: {"portfolio_id" : portfolio_id},
+    success: function(response){
+      swal('Success!',response.message,'success','Cool');
+      portfolio();
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  })
+}
 //ams-> Settings
 function jsettings(){
 // <!-- Content Wrapper. Contains page content -->
@@ -1529,7 +2098,6 @@ let temp='<div class="content-wrapper">'+
       data: {"login_id" : session_id},
       success: function(data){
       if(data !== 400 ){
-      console.log(data);
         temp += ' <div class="col-md-4">'+
         ' <!-- Profile Image -->'+
         ' <div class="card card-primary card-outline mb-3" style="border-top: 3px solid #007bff;">'+
@@ -1730,14 +2298,14 @@ let temp='<div class="content-wrapper">'+
                   '</div>'+
                   '<!-- /.tab-pane -->'+
                   '<div class="tab-pane" id="settings">'+
-                  '<form class="form-horizontal">'+
+                  '<form class="form-horizontal" method="POST" id="selectPackage">'+
                     '<div class="form-group row">'+
                       '<label for="package" class="col-sm-2 col-form-label">Package</label>'+
                       '<div class="col-sm-10">'+
                       '<select class="custom-select" id="package" name="package">'+
                       '<option value="None">None</option>'+
                       '<option value="Month">Monthly @D125</option>'+
-                      '<option value="Year">Annually @D1000</option>'+
+                      '<option value="Year">Annual @D1000</option>'+
                       '</select>'+
                       '</div>'+
                     '</div>'+
@@ -1752,7 +2320,7 @@ let temp='<div class="content-wrapper">'+
                     '</div>'+
                     '<div class="form-group row">'+
                       '<div class="offset-sm-2 col-sm-10">'+
-                        '<button type="submit" class="btn btn-success">Activate</button>'+
+                        '<button  type="submit" class="btn btn-success">Activate</button>'+
                       '</div>'+
                     '</div>'+
                   '</form>'+
@@ -1776,13 +2344,13 @@ let temp='<div class="content-wrapper">'+
     $('#content').empty().append(temp);
 
     $(document).ready(function(){
-
     $("#country").countrySelect();
     $("#country").countrySelect("setCountry",""+data[0].country+"");
     $("#edu_level option[value='"+data[0].education_level+"']").attr('selected', 'selected');
     $("#category option[value='"+data[0].category+"']").attr('selected', 'selected');
     $("#interest option[value='"+data[0].interest+"']").attr('selected', 'selected');
     $("#seeksJob option[value='"+data[0].seeksJob+"']").attr('selected', 'selected');
+    $("#package option[value='"+package+"']").attr('selected', 'selected');
 
     $('#skills').tokenfield({
       autocomplete: {
@@ -1847,7 +2415,6 @@ let temp='<div class="content-wrapper">'+
           processData: false,
           cache:false,
           success:function(response){
-            console.log(response);
             if(response == 200){
               swal('Update Successful!','Profile successfully updated','success','cool');
               jsettings();
@@ -1866,6 +2433,31 @@ let temp='<div class="content-wrapper">'+
       }
     //
     })
+
+    // subscribe to a package
+    $('#selectPackage').submit(function(e) {
+      e.preventDefault();
+      let package = $('#package').val();
+      if(package == 'None'){
+        swal('Invalid package!','You can\'t select none!','error','Cool');
+        return;
+      }
+      $.ajax({
+        method:'POST',
+        dataType:'json',
+        url: 'post.php/jobseeker/request_to_activate_package',
+        data: {'login_id':session_id,'package':package},
+        success:function(response){
+            swal('package!',response.message,'success','cool');
+            jsettings();
+        },
+        error: function(err){
+          $.notify(err.responseText,'error');
+        } 
+      });
+  
+    });
+    // ./subscribe to a package
     });
   }else{
   $('#content').empty().append('<div>error: This account doesn\'t exist. You should access here</div>');
