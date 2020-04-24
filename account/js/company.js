@@ -267,6 +267,8 @@ function dashBoardContentheader(){
       data: {"login_id" : session_id},
       dataType: 'json',
       success: function(data){
+        package = data.package;
+        trial_activation = data.trial_activation;
         $('#jobsPublished' ).html(data.noOfJobsPublished);
         $('#profileVal').html(data.isProfileComplete+"%");
         $('#profileBar').css('width',''+data.isProfileComplete+'%');
@@ -780,6 +782,7 @@ $.ajax({
 });
 }
 function selectAJobseekerToForward(msg_id){
+if(package !== 'None'){
 let conMessage ='';
 $.ajax({
   method: "GET",
@@ -855,6 +858,9 @@ $.ajax({
       $.notify(err.responseText,'error');
     }
     });
+  }else{
+    swal('No Package!','Activate a package to be able to forward messages','error','Cool');
+  }
 }
 function forwardMsgTo(login_id,fullName,msg_id){
     $.ajax({
@@ -874,7 +880,7 @@ function forwardMsgTo(login_id,fullName,msg_id){
 function ReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,jobseeker_id){
 //@ams-> jobseeker_id is basically not necessary here. But since we are using the same function for viewing messages,
 //we are using it to differentiate btw sent and received messages as we wont support reply on sent messages
-
+if(package !== 'None'){
 if(jobseeker_id !== 'undefined'){
   $.notify('You can\'t reply to your own sent messages!','warning');
   return;
@@ -978,8 +984,12 @@ $('#newreplymsg').click(function(e){
   });
  });
  }
+}else{
+  swal('No Package!','Activate a package to be able to reply messages','error','Cool');
+}
 }
 function selectAJobseekerToMsg(){
+  if(package !== 'None'){
   let conMessage ='';
   $.ajax({
     method: "GET",
@@ -1056,6 +1066,9 @@ function selectAJobseekerToMsg(){
        $.notify(err.responseText,'error');
       }
      });
+  }else{
+    swal('No Package!','Activate a package to be able to compose messages','error','Cool');
+  }
 }
 function composeNewMessage(login_id,fullName,divToClear){
 let temp =' <div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
@@ -1451,6 +1464,7 @@ $.ajax({
 
 }
 function viewProfile(profile_id,profile_log_id,profile_fname,profile_lname,profile_fullname,profile_email,profile_phone,profile_skills, profile_tag_line,profile_edu_level,profile_address,profile_dob,profile_country,profile_image,profile_cv,category){
+if(package !== 'None'){
 let temp ='<div class="container-fluid"><div class="row"><div class="col-xl-6 col-lg-7 profileInner"></div><div class="col-xl-6 col-lg-5 contentMessage"></div></div></div>';
 
 $('#content').empty().append(temp);
@@ -1505,6 +1519,9 @@ let profile =
 '</div>';
 
   $('.profileInner').empty().append(profile);
+}else{
+  swal('No package!','Activate a package to be able to view this profile','error','Cool');
+}
 }
  //@ams->Company settings
  function settings(){
@@ -1636,7 +1653,7 @@ let profile =
                 '</div>'+
                 '<!-- /.tab-pane -->'+
                 '<div class="tab-pane" id="settings">'+
-                '<form class="form-horizontal">'+
+                '<form class="form-horizontal" method="POST" id="selectPackage">'+
                   '<div class="form-group row">'+
                     '<label for="package" class="col-sm-2 col-form-label">Package</label>'+
                     '<div class="col-sm-10">'+
@@ -1749,6 +1766,30 @@ $(document).ready(function(){
     }
   //
   })
+  // subscribe to a package
+  $('#selectPackage').submit(function(e) {
+    e.preventDefault();
+    let package = $('#package').val();
+    if(package == 'None'){
+      swal('Invalid package!','You can\'t select none!','error','Cool');
+      return;
+    }
+    $.ajax({
+      method:'POST',
+      dataType:'json',
+      url: 'post.php/company/request_to_activate_package',
+      data: {'login_id':session_id,'package':package},
+      success:function(response){
+          swal('package!',response.message,'success','cool');
+          settings();
+      },
+      error: function(err){
+        $.notify(err.responseText,'error');
+      } 
+    });
+
+  });
+  // ./subscribe to a package
   });
 }else{
 $('#content').empty().append('<div>ERROR: This account doesn\'t exist. You should access here</div>');
@@ -1923,6 +1964,7 @@ function show_posted_jobs(){
     }
 
    function CreateNewJob(){
+     if(package != 'None'){
       let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12 jobsposted">'+
       '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
       '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
@@ -2127,14 +2169,16 @@ function show_posted_jobs(){
        $.ajax({
         url: 'post.php/company/create_job',
         method: 'POST',
-        data: {'company_id':session_user_id,'jobName': $('#jobName').val(),'jobLocation':$('#jobLocation').val(),'jobType':$('#jobType').val(),
+        dataType: 'json',
+        data: {'login_id':session_id,'company_id':session_user_id,'jobName': $('#jobName').val(),'jobLocation':$('#jobLocation').val(),'jobType':$('#jobType').val(),
         'jobCategory':$('#jobCategory').val(),'requirements':$('#summernote').summernote('code'),'salary':$('#salary').val(),
         'email':$('#contactEmail').val(),'phone':$('#contactPhone').val()},
         success: function(response){
-          if(response == 200){
-            $.notify('Job successfully created!','success');
-            ShowJobsInfo();
-          }
+          console.log(response);
+          if(response.status == 200) swal('Done!',response.message,'success','Cool');
+          else if(response.status == 402) swal('Sorry!',response.message,'error','Cool');
+          else  swal('Sorry!',response.message,'error','Cool');
+          ShowJobsInfo();
         },
         error: function(err){
           $.notify(err.responseText,'error');
@@ -2144,8 +2188,10 @@ function show_posted_jobs(){
       })
 
     })
-
-    }
+  }else{
+    swal('No Package!','Activate a package to be able to create a job','error','Cool');  
+  }
+}
 
     function viewJob(job_id){
       $.ajax({
@@ -2313,6 +2359,10 @@ function show_posted_jobs(){
           let contactEmail = $('#contactEmail').val();
           let contactPhone = $('#contactPhone').val();
           let salary = $('#salary').val();
+          if(package == 'None'){
+            swal('No Package!','Activate a package to be able to update this job','error','Cool');
+            return;
+          }
           if (jobName == ''){
             swal('Invalid Job Position!','Job position cannot be empty','error','Cool');
             return;
@@ -2506,8 +2556,8 @@ function jobApplicants(job_id,job_status){
 
 }
 function viewApplicant(job_id,login_id,status,job_status){
-console.log(job_status);
 //@ams->am using the job_status to know if a job is already closed. It is the status of a job whilst status is the status of the application 
+if(package != 'None'){
 let profile_cv ='';
 let applicant = '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
     '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
@@ -2568,7 +2618,9 @@ applicant += '<div class="col col-lg-4">'+
       $.notify(err.responseText,'error');
     }
   });
-
+}else{
+  swal('No Package!','Activate a package to be able to view applicant','error','Cool');
+}
 }
 function acceptApplication(jobseeker_id,fullName,job_id,login_id){
   $.ajax({

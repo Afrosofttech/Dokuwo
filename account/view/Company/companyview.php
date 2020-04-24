@@ -3,7 +3,7 @@
 //namespace view\Company
 
 include_once 'model/companymodel.php';
-
+include_once 'model/auth.php';
 class CompanyView extends Company{
     
     public function dashboard_header_info($login_id){
@@ -23,6 +23,9 @@ class CompanyView extends Company{
        $noOfJobseekers = $this->get_no_of_job_seekers();
        if($company == 400) $noOfJobseekers = 0; 
        $dbContentArray['noOfJobseekers'] = $noOfJobseekers;
+       $res= (new Auth())->get_recruiter_package_info($login_id);
+       $dbContentArray['package'] = $res['package'];
+       $dbContentArray['trial_activation'] = $res['trial_activation'];
        return $dbContentArray;
     }
     public function get_profile($login_id){ //to be merged with  get_company_profile

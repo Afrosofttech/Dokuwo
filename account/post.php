@@ -96,8 +96,8 @@ $contr =  $urlParts[sizeof($urlParts)-2];
        break;
        case "create_job":
          $result = new JobsController();
-         $response = $result->create_job($_POST['company_id'],$_POST['jobName'],$_POST['jobLocation'],$_POST['jobType'],$_POST['jobCategory'],$_POST['requirements'],$_POST['salary'],$_POST['email'],$_POST['phone']);
-         echo $response;
+         $response = $result->create_job($_POST['login_id'],$_POST['company_id'],$_POST['jobName'],$_POST['jobLocation'],$_POST['jobType'],$_POST['jobCategory'],$_POST['requirements'],$_POST['salary'],$_POST['email'],$_POST['phone']);
+         echo json_encode($response);
        break;
        case "block_jobseeker":
         $response = (new CompanyController())->block_jobseeker($_POST['company_login_id'],$_POST['jobseeker_login_id']);
@@ -107,6 +107,10 @@ $contr =  $urlParts[sizeof($urlParts)-2];
         $response = (new CompanyController())->report_jobseeker($_POST['company_login_id'],$_POST['jobseeker_login_id'],$_POST['reason']);
         echo json_encode($response);
        break;
+       case "request_to_activate_package":
+        $response = (new CompanyController())->request_to_activate_package($_POST['login_id'],$_POST['package']);
+        echo json_encode($response);
+      break;
        default:
        break;
     }
