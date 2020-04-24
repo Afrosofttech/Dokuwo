@@ -339,13 +339,52 @@ class Company extends Dbh{
         return  self::success;
         $stmt = null;
     }
-    protected function create_this_job($company_id,$jobName,$jobLocation,$jobType,$jobCategory,$requirements,$salary,$email,$phone){
-        $date = date('Y-m-d');$date = date('Y-m-d');
+    protected function create_this_job($login_id,$company_id,$jobName,$jobLocation,$jobType,$jobCategory,$requirements,$salary,$email,$phone){
+        $res = $this->have_already_posted_a_job($login_id);
+        if($res['status'] == 400) return $res;
+        if($res['status'] == 402) return $res;
+        else{
+        $date = date('Y-m-d');
         $sql = " INSERT INTO job(company_id,job_name,job_type,job_cat,requirements,job_location,job_contact_email,job_contact_phone,salary,date_posted,status) VALUES(?,?,?,?,?,?,?,?,?,?,?);";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$company_id,$jobName,$jobType,$jobCategory,$requirements,$jobLocation,$email,$phone,$salary,$date,0]);
-        return  self::success;
+        return  array('message' => 'Job successfully created!','status' => 200);
         $stmt = null;
+      }
+    }
+    public function have_already_posted_a_job($login_id){
+        $res = $this->validity_period($login_id);
+        if(!$res) return array('message' => 'You have no active package. please activate a package to post a job!','status' => 400);
+        else{
+        $sql = "SELECT * FROM job WHERE date_posted BETWEEN :validFrom AND :validUntil";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(array(
+            ':validFrom' => $res['validFrom'],
+            ':validUntil' => $res['validUntil']));
+        $result = $stmt->fetch();
+
+        if(!$result ){
+            return array('status' => 200);
+            $stmt = null;
+        }else{
+            return  array('message' => 'You have already posted a job. You can only post one job with your current package!','status' => 402);
+            $stmt = null;
+        }
+      }  
+    }
+    protected function validity_period($login_id){
+        $sql = "SELECT validFrom, validUntil FROM package WHERE login_id=? AND status=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,'Active']);
+        $result = $stmt->fetch();
+
+        if(!$result ){
+            return false;
+            $stmt = null;
+        }else{
+            return  $result ;
+            $stmt = null;
+        }
     }
     protected function get_jobs_of_this_category($category){
         $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = ? GROUP BY job.job_id";
@@ -549,5 +588,55 @@ class Company extends Dbh{
             return  true;
             $stmt = null;
         } 
+    }
+    //packaging
+    protected function requesting_this_package($login_id,$package){
+        // if($package)
+        $res = $this->is_any_package_active_pending($login_id);
+        if($res['status'] == 'Pending') return array('message' => 'Your request to activate a package is pending. You can\'t request for two packages.');
+        else if($res['status'] == 'Active') return array('message' => 'Your current package is still active. You have to wait until the current package expires.');
+        else return $this->request_to_activate_this_pack($login_id,$package);
+    }
+    protected function is_any_package_active_pending($login_id){
+        $sql= "SELECT * FROM package  WHERE login_id=? AND status IN (?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,'Pending','Active']);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return false;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        }
+    }
+    protected function request_to_activate_this_pack($login_id,$package){
+        $validFrom = date('Y-m-d');
+        $sql= "INSERT INTO package (login_id,validFrom,validUntil,status,type) VALUES (?,?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        if($package == 'Trial')  $validUntil = date('Y-m-d',strtotime('+14 days',strtotime($validFrom)));
+        else if ($package == 'One-time')  $validUntil = date('Y-m-d',strtotime('+14 days',strtotime($validFrom)));
+        else if ($package == 'Month')  $validUntil = date('Y-m-d',strtotime('+30 days',strtotime($validFrom)));
+        else $validUntil = date('Y-m-d',strtotime('+6 months',strtotime($validFrom)));
+        $stmt->execute([$login_id,$validFrom,$validUntil,'Pending',$package]);
+        return  array('message' => 'We will get back to you soonest and activate your requested package.');
+        $stmt = null;
+    }
+    protected function has_the_trial_been_activated($login_id){
+        //use this function on the admin side of things when 
+        //activating a package to check if the recruiter ever actually activated their trial
+        //if not activated, then create an exired package b4 activating their requested package
+        //so that they cannot use the trial again
+        $sql= "SELECT * FROM package  WHERE login_id=? AND type=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,'Trial']);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return false;
+            $stmt = null;
+        }else{
+            return  true;
+            $stmt = null;
+        }
     }
 }
