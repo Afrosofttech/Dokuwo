@@ -1418,8 +1418,8 @@ $.ajax({
                 '<ul class="ml-4 mb-0 fa-ul text-muted">'+
                 '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-wrench"></i></span><b class="text-info">Skills: </b>'+individual.skills.replace(/,/g, "/")+'</li>'+
                 '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span><b class="text-info">Address: </b>'+individual.address+'</li>'+
-                '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b class="text-info">Phone #: </b>'+individual.phone+'</li>'+
-                '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b class="text-info">Email: </b>'+individual.email+'</li>'+
+                '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-briefcase"></i></span><b class="text-info">Interest: </b>'+((individual.interest == 'Job')?('Only Job'):('Job and/ Freelance Work'))+'</li>'+
+                '<li class="small mb-2"><span class="fa-li"><i class="fas fa-lg fa-info-circle"></i></span><b class="text-info">Status: </b>'+((individual.seeksJob == 'yes')?('Looking for job'):('Not looking for job'))+'</li>'+
               '</ul>'+
             '</div>'+
             '<div class="col-5 text-center">'+
