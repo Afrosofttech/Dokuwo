@@ -68,6 +68,7 @@
     <script src="assets/js/contact-form-script.js"></script>
     <script src="assets/js/main.js"></script>
     <!-- SweetAlert2 -->
+    <script src="account/js/plugins/rater.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="account/js/core/functions.js"></script>
     <script src="account/js/core/jobseeker_categories.js"></script>

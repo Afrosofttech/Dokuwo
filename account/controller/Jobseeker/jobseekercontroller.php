@@ -38,4 +38,12 @@ class JobseekerController extends Jobseeker{
         $res = $this->delete_this_portfolio($portfolio_id);   
         return $res;
     }
+    public function review_jobseeker($jobseeker_id,$name,$email,$rating,$content){
+        $res = $this->send_jobseeker_review($jobseeker_id,$name,$email,$rating,$content);   
+        return $res;
+    }
+    public function warn_jobseeker($login_id,$request){
+        $res = $this->warnJobseeker($login_id,$request);   
+        return $res;
+    }
 }

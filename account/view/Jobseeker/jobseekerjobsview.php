@@ -41,4 +41,10 @@ class JobseekerJobsView extends Jobseeker{
         $allemployers = $this->search_jobs_category($category,$job,$location);
         return $allemployers;
     }
+
+    public function search_blogs($title,$category)
+    {
+        $blogs = $this->searchBlogs($title,$category);
+        return $blogs;
+    }
 }

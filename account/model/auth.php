@@ -55,6 +55,16 @@ class Auth extends Dbh {
         $stmt = null;
     }
 
+    public function get_admin_login($login_id){
+    
+        $sql = " SELECT * FROM admin WHERE login_id=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id]);
+        $data = $stmt->fetch();
+        return $data;
+        $stmt = null;
+    }
+
     public function get_login_info($email,$hash){
         $sql = " SELECT * FROM login WHERE email=? and hash=?";
         $stmt = $this->connect()->prepare($sql);
@@ -101,6 +111,29 @@ class Auth extends Dbh {
         return 200;
         $stmt = null;
     }
+
+    // get latest login_id to be able to insert into admin table
+
+    public function get_latest_login_id($email){
+        $sql = " SELECT login_id FROM login WHERE email = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$email]);
+        $data = $stmt->fetch();
+        return  $data;
+        $stmt = null;
+    }
+
+    // fill admin info into admin table
+
+    public function fill_admin_details($admin_name,$role,$email){
+        $id = self::get_latest_login_id($email);
+        $sql = " INSERT INTO admin (login_id,admin_name,role) VALUES(?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id['login_id'],$admin_name,$role]);
+        return 200;
+        $stmt = null;
+    }
+
     public function get_freelancer_package_info($login_id){
         $sql = " SELECT * FROM package WHERE login_id=? AND status=?";
         $stmt = $this->connect()->prepare($sql);

@@ -171,6 +171,31 @@ if($view == 'company'){
           $response = $result->recruiter_details($_GET['recruiter_id']);
           echo json_encode($response);
         break;
+        case "manage_blogs":
+          $result = new CompanyView();
+          $response = $result->get_admin_blogs($_GET['admin_id']);
+          echo json_encode($response);
+        break;
+        case "retrieve_recruiter_accounts":
+          $result = new CompanyView();
+          $response = $result->get_all_recruiter_accounts();
+          echo json_encode($response);
+        break;
+        case "retrieve_jobseeker_accounts":
+          $result = new CompanyView();
+          $response = $result->get_all_jobseeker_accounts();
+          echo json_encode($response);
+        break;
+        case "retrieve_admin_accounts":
+          $result = new CompanyView();
+          $response = $result->get_all_admin_accounts();
+          echo json_encode($response);
+        break;
+        case "admin_profile":
+          $result = new CompanyView();
+          $admin = $result->get_admin_profile($_GET['login_id']);
+          echo json_encode($admin);
+        break;
        default:
        break;
    }
@@ -286,6 +311,16 @@ if($view == 'company'){
       case "get_portfolio":
         $result = new JobseekerView();
         $res = $result->get_portfolio($_GET['portfolio_id']);
+        echo json_encode($res);
+      break;
+      case "package_exists":
+        $result = new JobseekerView();
+        $res = $result->package_exists($_GET['login_id']);
+        echo json_encode($res);
+      break;
+      case "search_blogs":
+        $result = new JobseekerJobsView();
+        $res = $result->search_blogs($_GET['title'],$_GET['category']);
         echo json_encode($res);
       break;
       default:
