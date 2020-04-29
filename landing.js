@@ -752,7 +752,6 @@ function displayEmployers(start,finish){
       // Show latest jobs details function
     function show_job_details(job_id,company_name,currency,back,category){
       let temp = '';
-      // console.log('back: ',back,'currency: ',currency)
       $.ajax({
         method: "POST",
         url: "account/get.php/company/get_job_details",
@@ -861,14 +860,14 @@ function displayEmployers(start,finish){
                      ' <div class="col-lg-8 col-md-6 col-xs-12">'+
                         '<div class="breadcrumb-wrapper">'+
                           '<div class="img-wrapper">'+
-                            '<img src="account/uploads/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" class="logo-img" alt="'+data[0].fullName+'">'+
+                            '<img src="account/uploads/'+((data.details[0].image == "" || data.details[0].image == null)?"default.jpg":data.details[0].image)+'" class="logo-img" alt="'+data.details[0].fullName+'">'+
                           '</div>'+
                           '<div class="content">'+
-                            '<h3 class="product-title">'+ data[0].fullName +'</h3>'+
-                            '<p class="brand">'+ data[0].tag_line +'</p>'+
+                            '<h3 class="product-title">'+ data.details[0].fullName +'</h3>'+
+                            '<p class="brand">'+ data.details[0].tag_line +'</p>'+
                             '<div class="tags">' + 
-                              '<span><i class="lni-map-marker"></i>'+ data[0].address+'</span>'+  
-                              '<span><i class="lni-phone-handset"></i>'+ data[0].phone+'</span>'+  
+                              '<span><i class="lni-map-marker"></i>'+ data.details[0].address+'</span>'+  
+                              '<span><i class="lni-phone-handset"></i>'+ data.details[0].phone+'</span>'+  
                             '</div>'+
                           '</div>'+
                         '</div>'+
@@ -876,7 +875,7 @@ function displayEmployers(start,finish){
                       '<div class="col-lg-4 col-md-6 col-xs-12">'+
                         '<div class="month-price">'+
                           '<span class="year">Country</span>'+
-                          '<div class="price">'+ data[0].country +'</div>'+
+                          '<div class="price">'+ data.details[0].country +'</div>'+
                         '</div>'+
                       '</div>'+
                     '</div>'+
@@ -886,25 +885,19 @@ function displayEmployers(start,finish){
             
                 '<!-- Job Detail Section Start -->'+  
                 '<section class="job-detail section">'+
-                  '<div class="container">'+
+                  '<div class="container jobseeker-details-section">'+
                     '<div class="row justify-content-between jobseeker_details">'+
-                      '<div class="col-lg-6 col-md-12 col-xs-12">'+
+                      '<div class="col-lg-8 col-md-12 col-xs-12">'+
                         '<div class="content-area">'+
                         '<div class="job-company-logo">'+
-                        '<img src="account/uploads/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" alt="'+ data[0].fullName +'" style="width: 200px; height: 200px;display: inline-block;border-radius: 50%;margin-top: 5px;margin-bottom: 15px;">'+
+                        '<img src="account/uploads/'+((data.details[0].image == "" || data.details[0].image == null)?"default.jpg":data.details[0].image)+'" alt="'+ data.details[0].fullName +'" style="width: 200px; height: 200px;display: inline-block;border-radius: 50%;margin-top: 5px;margin-bottom: 15px;">'+
                         '</div>'+
                           '<h5>Category</h5>'+
-                          '<p>'+ data[0].category +'</p>'+  
+                          '<p>'+ data.details[0].category +'</p>'+  
                           '<h5>Education Level</h5>'+
-                          '<p><i class="lni-graduation"></i> '+ data[0].education_level +'</p>';
-                           let skill = data[0].skills.split(',');
-                           temp +=
+                          '<p><i class="lni-graduation"></i> '+ data.details[0].education_level +'</p>'+
                            '<h5>Skills</h5>'+
-                          '<ul>';
-                          for(i=0;i<skill.length;i++){
-                            temp +='<li>-'+ skill[i] +'</li>';
-                          }
-                          temp +='</ul>'+
+                            '<p>'+ data.details[0].skills +'</p>'+
                           '<a href="#" class="btn btn-common" data-toggle="modal" data-target="#hireModal">Hire</a>'+
                           '<a href="#" class="btn btn-danger float-right" onclick="displayJobseekers(\''+beg+'\',\''+end+'\')">Back</a>'+
                           ' <!-- Modal -->'+
@@ -920,7 +913,7 @@ function displayEmployers(start,finish){
                             '<div class="modal-body">'+
           
                                 '<div class="contact-block">'+
-                                  '<h2 class="text-center">'+ data[0].fullName +'</h2>'+
+                                  '<h2 class="text-center">'+ data.details[0].fullName +'</h2>'+
                                   '<form id="contactForm1">'+
                                     '<div class="row">'+
                                       '<div class="col-md-6">'+
@@ -955,12 +948,15 @@ function displayEmployers(start,finish){
                             '</div>'+
                             '<div class="modal-footer">'+
                               '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
-                              '<button type="button" class="btn btn-primary" onclick="hire_jobseeker(\''+jobseeker_id+'\',\''+data[0].fullName+'\');">Hire</button>'+
+                              '<button type="button" class="btn btn-primary" onclick="hire_jobseeker(\''+jobseeker_id+'\',\''+data.details[0].fullName+'\');">Hire</button>'+
                             '</div>'+
                           '</div>'+
                         '</div>'+
                       '</div>'+
                         '</div>'+
+                      '</div>'+
+                      '</div>'+
+                    
                       '</div>'+
                 '</section>'+
                 '<!-- Job Detail Section End -->';
@@ -969,6 +965,7 @@ function displayEmployers(start,finish){
                   $('header .intro-landing').remove();
                   $('.content-section').empty().append(temp);
                   $('.jobseeker_details').append(show_featured_jobseekers());
+                  (data.details[0].package != 400 && data.details[0].package == "Active")?display_review_rating(data.reviews,jobseeker_id,beg,end):"No Active package";
                 });
               },
               error: function(err){
@@ -976,6 +973,156 @@ function displayEmployers(start,finish){
               }
              });
       
+          }
+
+          function display_review_rating(reviews,jobseeker_id,beg,end){
+            let temp = '';
+            avg_rating = Math.round((parseInt(reviews[0].total_rates)/parseInt(reviews[0].num_rates)));
+      
+            temp +='<div class="col-lg-10">'+
+
+              '<div class="card card-outline-secondary my-4">'+
+                '<div class="card-header">'+
+                  'Reviews'+
+                  '<span class="text-warning float-right">';
+                  for(i=1;i<=avg_rating;i++){temp +='&#9733; ';}
+                  temp += avg_rating+'.0 stars'+'</span>'+
+                '</div>'+
+                '<div class="card-body">';
+                $.each(reviews,function(i,val){
+                  temp+='<p>'+val.review_content +'</p>'+
+                  '<small class="text-muted">Posted By '+ val.reviewer_name +'</small>'+
+                  '<hr>';
+                });
+                  
+                  temp +='<a href="#" class="btn btn-success" onclick = "reviewJobseeker(\''+jobseeker_id+'\',\''+beg+'\',\''+end+'\');"">Leave a Review</a>'+
+                '</div>'+
+              '</div>'+
+              '<!-- /.card -->'+
+
+            '</div>'+
+            '<!-- /.col-lg-9 --></div>';
+
+            $('.jobseeker-details-section').append(temp);
+          }
+
+          function reviewJobseeker(jobseeker_id,beg,end){
+            let temp = '';
+
+            temp +='<div class="container mt-2">'+
+                    '<h5 class="mt-2 mb-2">REVIEW</h5>'+
+                    '<form method="POST" id="reviewJobseeker" enctype="multipart/form-data" autocomplete="off">'+
+                    '<div class="form-group row">'+
+                    '<label for="" class="col-sm-2 col-form-label">Rate</label>'+
+                    '<div class="col-sm-10">'+
+                      '<div class="rating" data-rate-value=5 style="font-size:200%;"></div>'+
+                    '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
+                      '<div class="col-sm-6 mb-3 mb-sm-0">'+
+                        '<input type="text" class="form-control" name="reviewerName" id="reviewerName" placeholder="Name">'+
+                      '</div>'+
+                      '<div class="col-sm-6">'+
+                        '<input type="text" class="form-control form-control-user" name="reviewerEmail" id="reviewerEmail" placeholder="Email">'+
+                    '</div>'+
+                    '</div>'+
+                    
+                    '<div class="form-group row">'+
+                      '<div class="col-sm-10">'+
+                        '<textarea class="form-control" name="reviewContent" rows="8" id="reviewContent" placeholder="Review Message"></textarea>'+
+                      '</div>'+
+                  ' </div>'+
+                
+                    '<div class="form-group row">'+
+                      '<div class="offset-sm-2 col-sm-10">'+
+                        '<button type="submit" class="btn btn-success">Send</button>'+
+                      '</div>'+
+                    '</div>'+
+                  '</form>'+
+                  '</div>';
+
+                  
+                  $('.jobseeker-details-section').append(temp);
+
+                  var options = {
+                    max_value: 5,
+                    step_size: 1,
+                    symbols : {
+                      utf8_star: {
+                          base: '\u2606',
+                          hover: '\u2605',
+                          selected: '\u2605',
+                      },
+                      utf8_hexagon: {
+                          base: '\u2B21',
+                          hover: '\u2B22',
+                          selected: '\u2B22',
+                      },
+                      hearts: '♥',
+                      fontawesome_star: {
+                          base: '',
+                          hover: '',
+                          selected: '',
+                      },
+                      utf32_emoticons: {
+                          base: [0x1F625, 0x1F613, 0x1F612, 0x1F604],
+                          hover: [0x1F625, 0x1F613, 0x1F612, 0x1F604],
+                          selected: [0x1F625, 0x1F613, 0x1F612, 0x1F604],
+                      }
+                  },
+                  selected_symbol_type: 'utf8_star',
+                  // convert_to_utf8: true
+                };
+                $(".rating").rate(options);
+
+                        //on submit
+                        $('#reviewJobseeker').submit(function(e){
+                          e.preventDefault();
+                          let name = $('#reviewerName').val();
+                          let email = $('#reviewerEmail').val();
+                          let rating = $(".rating").rate("getValue");
+                          let reviewContent = $('#reviewContent').val();
+                          var errors = [];
+                          
+                          if (name == ''){
+                            swal('Invalid Title!','Blog title cannot be empty','error','Cool');
+                            errors.push('title_error');
+                            return;
+                          }
+                          if (email.length < 1) {
+                            swal('Invalid Email!','Email cannot be empty','error','Cool');
+                            return;
+                           }else {
+                            if (!validEmail(email)) {
+                               swal('Invalid Email!','Please enter a valid email!','error','Cool');
+                               return;
+                            }
+                           }
+        
+                          if(errors.length < 1){
+                            
+                            $.ajax({
+                              method: 'POST',
+                              url: 'account/post.php/jobseeker/review_jobseeker',
+                              data:{'name':name,'email':email,'rating':rating,'jobseeker_id':jobseeker_id,'reviewContent':reviewContent},
+                              success: function(response){
+                                if(response == 200){
+                                  // swal('Review Sucessfully sent','Thanks for Reviewing!','success','close');
+                                  $.notify('Thanks for Reviewing!','success');
+                                  show_jobseeker_details(jobseeker_id,beg,end); 
+                                }
+                              },
+                              error: function(err){
+                                console.log('error sending review...');
+                                $.notify(err.responseText,'error');
+                              }
+                            });
+                          }else{
+                            return;
+                          }
+                  
+                        });
+            
           }
         
     
@@ -2871,7 +3018,7 @@ function displayEmployers(start,finish){
     }
 
     function show_featured_jobseekers(){
-      return '<div class="col-lg-6 col-md-12 col-xs-12">'+
+      return '<div class="col-lg-4 col-md-12 col-xs-12">'+
       '<div class="job-alerts-item candidates">'+
         '<h3 class="alerts-title">Featured Freelancers</h3>'+
         '<div class="manager-resumes-item">'+

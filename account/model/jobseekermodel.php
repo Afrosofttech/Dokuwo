@@ -590,4 +590,78 @@ class Jobseeker extends Dbh{
         return  array('message' => 'Portfolio successfully deleted!');
         $stmt = null;
     }
+
+    protected function get_jobseeker_package($login_id){
+        $sql= "SELECT login_id,status FROM package WHERE login_id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id]);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        }
+    }
+
+    protected function send_jobseeker_review($jobseeker_id,$name,$email,$rating,$content){
+        $sql= "INSERT INTO review_link (jobseeker_id,reviewer_name,reviewer_email,rating,review_content) VALUES(?,?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_id,$name,$email,$rating,$content]);
+        return  self::success;
+        $stmt = null;
+        
+    }
+
+    protected function warnJobseeker($jobseeker_login_id,$request){
+        if($request == "warning"){
+            $sql= "UPDATE  actions SET action = ? WHERE jobseeker_login_id = ? AND action = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(['warned',$jobseeker_login_id,'Pending']);
+            return  self::success;
+            $stmt = null; 
+        }
+        else{
+            $sql= "UPDATE  actions SET action = ? WHERE jobseeker_login_id = ? AND action = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(['blocked',$jobseeker_login_id,'Pending']);
+            $block = self::blockAccount($jobseeker_login_id);
+            return  $block;
+            $stmt = null;
+        } 
+        
+    }
+
+    protected function blockAccount($login_id){
+        $sql = "UPDATE login SET status = ? WHERE login_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([2,$login_id]);
+        $result = $stmt->fetchAll();
+        return  self::success;   
+    }
+
+    protected function searchBlogs($title,$category)
+    {
+        if($title == ''){
+        $sql="SELECT * FROM blog WHERE category like :search;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(array(
+            ':search' => '%' . $category . '%'));
+        }else if($category == ''){
+            $sql="SELECT * FROM blog WHERE blog_title like :search;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(array(
+                ':search' => '%' . $title . '%'));
+        }else{
+            $sql="SELECT * FROM blog WHERE blog_title like :title AND category LIKE :category;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(array(
+            ':title' => '%' . $title . '%',
+            ':category' => '%'. $category . '%'));
+        }
+        $result = $stmt->fetchAll();
+        return $result;
+        $stmt = null;
+    }
 }

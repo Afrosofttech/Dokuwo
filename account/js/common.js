@@ -57,3 +57,12 @@ function footer(){
   '</div>'+
 '</footer>';
 }
+
+function gotoHomepage(){
+  var now = new Date();
+  now.setTime(now.getTime() + (15 * 60 * 1000));
+  var expires = "expires="+ now.toUTCString();
+  document.cookie ="cookie_usertype =" + session_usertype + ";" + expires + ";path=/Career/index.php";
+  document.cookie ="cookie_user_id =" + session_user_id + ";" + expires + ";path=/Career/index.php";
+  window.location.replace('../../Career/index.php');
+}

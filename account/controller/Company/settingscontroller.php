@@ -29,6 +29,12 @@ class SettingsController extends Company{
         $res = $this->update_company_profile($v_data['login_id'],$v_data['name'],$v_data['email'],$v_data['phone'],$v_data['country'],$v_data['address'],$password,$v_data['currency'],$v_data['code'],$final_image);
         return $res;
     }
+
+    public function update_admin(){
+      $v_data = self::validate_data();
+      $res = $this->updateAdmin($v_data['name'],$v_data['email'],$v_data['password'],$v_data['login_id']);
+      return $res;
+    }
     function validate_company(){
         //@ams->both company signup and update company profile are using this.To be changed
          require "gump.class.php";
@@ -54,4 +60,32 @@ class SettingsController extends Company{
             return $company_data; // validation successful
          }
         }
+
+        function validate_data(){
+         require "gump.class.php";
+         
+         $gump = new GUMP();
+     
+         $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
+     
+         $gump->validation_rules(array(
+            'name'        => 'required|alpha_space|max_len,100',
+            'email'       => 'required|valid_email',
+            'password'    => 'max_len,100|min_len,8',
+         ));
+     
+         $gump->filter_rules(array(
+            'name'     => 'trim|sanitize_string',
+            'email'    => 'trim|sanitize_email',
+            'password' => 'trim',
+         ));
+     
+         $validated_data = $gump->run($_POST);
+     
+         if($validated_data === false) {
+            return $gump->get_readable_errors(true);
+         } else {
+            return $validated_data; // validation successful
+         }
+     }
 }

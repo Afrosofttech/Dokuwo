@@ -20,7 +20,7 @@ if(!isset($_SESSION['email'])){
   <!-- jquery CDN -->
  <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-  <script src="js/plugins/jquery.js"></script>
+  <script src="vendor/jquery/jquery.js"></script>
   
   <!--jquery printArea -->
     <script src="js/printArea/jquery-ui-1.10.4.custom.min.js"></script>
@@ -31,6 +31,8 @@ if(!isset($_SESSION['email'])){
   <!-- Datatables CDN-->
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
   <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+
+
 
 
   <!-- include summernote css/js -->

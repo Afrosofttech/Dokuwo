@@ -142,6 +142,21 @@ $contr =  $urlParts[sizeof($urlParts)-2];
         $response = $result->delete_account($_POST['login_id']);
         echo $response;
        break;
+       case "activate_package":
+        $result = new JobsController();
+        $response = $result->activate_package($_POST['login_id']);
+        echo $response;
+       break;
+       case "update_admin_info":
+        $result = new  SettingsController();
+        $response =$result->update_admin();
+        echo $response;
+      break;
+      case "delete_report":
+        $result = new JobsController();
+        $response = $result->delete_report($_POST['action_id']);
+        echo $response;
+       break;
        default:
        break;
     }
@@ -236,6 +251,16 @@ $contr =  $urlParts[sizeof($urlParts)-2];
         case "delete_portfolio":
           $result = new JobseekerController();
           $res = $result->delete_portfolio($_POST['portfolio_id']);
+          echo json_encode($res);
+        break;
+        case "review_jobseeker":
+          $result = new JobseekerController();
+          $res = $result->review_jobseeker($_POST['jobseeker_id'],$_POST['name'],$_POST['email'],$_POST['rating'],$_POST['reviewContent']);
+          echo json_encode($res);
+        break;
+        case "warn_jobseeker":
+          $result = new JobseekerController();
+          $res = $result->warn_jobseeker($_POST['login_id'],$_POST['request']);
           echo json_encode($res);
         break;
         default:

@@ -95,4 +95,13 @@ class JobsController extends Company{
         $response = $this->deleteAccount($login_id);
         return $response;
     }
+    public function activate_package($login_id){
+        $response = $this->activatePackage($login_id);
+        return $response;
+    }
+
+    public function delete_report($action_id){
+        $response = $this->deleteReport($action_id);
+        return $response;
+    }
 }

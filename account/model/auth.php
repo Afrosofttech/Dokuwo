@@ -114,10 +114,10 @@ class Auth extends Dbh {
 
     // get latest login_id to be able to insert into admin table
 
-    public function get_latest_login_id(){
-        $sql = " SELECT login_id FROM login ORDER BY login_id DESC LIMIT 1";
+    public function get_latest_login_id($email){
+        $sql = " SELECT login_id FROM login WHERE email = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([$email]);
         $data = $stmt->fetch();
         return  $data;
         $stmt = null;
@@ -125,10 +125,12 @@ class Auth extends Dbh {
 
     // fill admin info into admin table
 
-    public function fill_admin_details($login_id,$admin_name,$role){
-        $sql = " INSERT INTO admin (login_id,admin_name,role) VALUES(?,?,?)";
+    public function fill_admin_details($admin_name,$role,$email){
+        $id = self::get_latest_login_id($email);
+        $sql = " INSERT INTO admin (login_id,admin_name,role) VALUES(?,?,?);";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$login_id,$admin_name, $role]);
+        $stmt->execute([$id['login_id'],$admin_name,$role]);
+        return 200;
         $stmt = null;
     }
 

@@ -55,4 +55,8 @@ class JobseekerView extends Jobseeker{
         $res = $this->get_this_portfolio($portfolio_id);
         return $res;
     }
+    public function package_exists($login_id){
+        $res = $this->get_jobseeker_package($login_id);
+        return $res;
+    }
 }

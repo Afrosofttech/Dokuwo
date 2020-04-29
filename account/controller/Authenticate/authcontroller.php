@@ -156,9 +156,9 @@ class AuthController extends Auth{
           $hash = md5(rand(0,1000));
           $password = password_hash($validated_data['password'], PASSWORD_DEFAULT);
           $company_account = $this->create_account($validated_data['email'],$password,$hash,'admin',0);
-          $latest_login_id = $this->get_latest_login_id();
-          $admin = $this->fill_admin_details($latest_login_id,$_POST['adminName'],$_POST['role']);
-          return "success";
+          $admin = $this->fill_admin_details($validated_data['adminName'],'admin',$validated_data['email']);
+
+          return $admin;
       }else{
           return "duplicate";
       }

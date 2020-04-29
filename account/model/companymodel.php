@@ -469,7 +469,17 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            return  $result ;
+            $package = self::package_exists($result[0]['login_id']);
+            if($package != 400)
+            {
+                $result[0]['package'] = $package['status'];
+                $reviews = self::getReviews($result[0]['jobseeker_id']);
+                return array('details' => $result, 'reviews' => $reviews);
+            }
+            else{
+                $result[0]['package'] = $package;
+                return array('details' => $result);
+            }
             $stmt = null;
         }    
     }
@@ -592,7 +602,7 @@ class Company extends Dbh{
     }
 
     protected function get_recruiter_accounts(){
-        $sql = "SELECT email,status, company.company_name FROM login INNER JOIN company ON login.login_id = company.login_id GROUP BY login.login_id";
+        $sql = "SELECT login.login_id,email,status, company.company_name FROM login INNER JOIN company ON login.login_id = company.login_id GROUP BY login.login_id";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -601,13 +611,22 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            return  $result ;
+            foreach ($result as &$val) {
+                $status = self::package_exists($val['login_id']);
+                if($status == 400){
+                    $val['package'] = "No Package";
+                }
+                else{
+                    $val['package'] = $status['status']; 
+                }
+            }
+            return array("accounts" => $result);
             $stmt = null;
         }    
     }
 
     protected function get_jobseeker_accounts(){
-        $sql = "SELECT login.login_id,login.email,login.status, job_seeker.fullName FROM login INNER JOIN job_seeker ON login.login_id = job_seeker.login_id GROUP BY login.login_id";
+        $sql = "SELECT login.login_id,login.email,login.status, job_seeker.fullName,job_seeker.jobseeker_id FROM login INNER JOIN job_seeker ON login.login_id = job_seeker.login_id GROUP BY login.login_id";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -616,7 +635,23 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            return  $result ;
+            foreach ($result as &$val) {
+                $status = self::package_exists($val['login_id']);
+                $actions = self::getJobseekerActions($val['login_id']);
+                if($status == 400){
+                    $val['package'] = "No Package";
+                }
+                else{
+                    $val['package'] = $status['status']; 
+                }
+                if($actions != 400){
+                    $val['actions'] = $actions;
+                }
+                else{
+                    $val['actions'] = 'None'; 
+                }
+            }
+            return array("accounts" => $result);
             $stmt = null;
         }    
     }
@@ -662,6 +697,105 @@ class Company extends Dbh{
         return  self::success;
         $stmt = null; 
     }
+
+    protected function deleteReport($action_id){
+        $sql = " DELETE FROM actions WHERE action_id=?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$action_id]);
+        return  self::success;
+        $stmt = null; 
+    }
+
+    protected function package_exists($login_id){
+        $sql= "SELECT status FROM package WHERE login_id = ? AND status IN (?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,'Pending','Active']);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        }
+    }
+
+    protected function activatePackage($login_id){
+        $sql = " UPDATE package SET status = ?  WHERE login_id = ? AND status = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(['Active',$login_id,'Pending']);
+        return  self::success;
+        $stmt = null; 
+    }
+
+    protected function getReviews($jobseeker_id){
+        $sql= "SELECT review_id,reviewer_name,(SELECT COUNT(rating) FROM review_link WHERE jobseeker_id = ?) AS num_rates,(SELECT SUM(rating) FROM review_link WHERE jobseeker_id = ?) AS total_rates,review_content FROM review_link WHERE jobseeker_id = ? GROUP BY review_id ORDER BY review_id DESC";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_id,$jobseeker_id,$jobseeker_id]);
+        $result = $stmt->fetchAll();
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        } 
+    }
+
+    protected function getJobseekerActions($jobseeker_login_id){
+        $sql= "SELECT action_id,request,reason,action,(SELECT COUNT(action) FROM actions WHERE jobseeker_login_id = ? AND action = ? GROUP BY jobseeker_login_id) AS totalWarnings,(SELECT COUNT(action) FROM actions WHERE jobseeker_login_id = ? AND action = ? GROUP BY jobseeker_login_id) AS totalPending FROM actions WHERE jobseeker_login_id = ? AND request = ? GROUP BY action_id ORDER BY action_id ASC";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$jobseeker_login_id,"warned",$jobseeker_login_id,"Pending",$jobseeker_login_id,"Report"]);
+        $result = $stmt->fetchAll();
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            return  $result;
+            $stmt = null;
+        } 
+    }
+
+    protected function get_admin($login_id){
+        $sql = " SELECT admin.admin_name,login.email from admin INNER JOIN login ON admin.login_id=login.login_id WHERE admin.login_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id]);
+        $result = $stmt->fetch();
+        if(!$result) return self::fail;
+        return  $result ;
+        $stmt = null;
+    }
+
+    protected function update_admin_login($email,$password,$login_id){
+        if($password == ""){
+            $sql = "UPDATE login SET email = ? WHERE login_id = ?";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$email,$login_id]);
+            return self::success;
+            $stmt = null;
+        }
+        else{
+            $passwd = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "UPDATE login SET email = ?,password = ? WHERE login_id = ?";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$email,$passwd,$login_id]);
+            return self::success;
+            $stmt = null; 
+        }
+    }
+
+    protected function updateAdmin($name,$email,$password,$login_id){
+        
+            $sql = "UPDATE admin SET admin_name = ? WHERE login_id = ?";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$name,$login_id]);
+            $update = self::update_admin_login($email,$password,$login_id);
+            return $update;
+            $stmt = null;
+       
+        
+    }
+    
 
 
 }

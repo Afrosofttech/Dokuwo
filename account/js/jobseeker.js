@@ -266,6 +266,11 @@ function loadJobseekerDashboard(){
           '</a>'+
 
           '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
+            '<a class="dropdown-item" href="#" onclick="gotoHomepage();">'+
+                '<i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
+                'Homepage'+
+              '</a>'+
+              '<div class="dropdown-divider"></div>'+
             '<a class="dropdown-item" href="#" onclick="jsettings();">'+
               '<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>'+
               'Settings'+

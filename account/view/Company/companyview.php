@@ -82,7 +82,7 @@ class CompanyView extends Company{
         return $result;
     }
 
-    public function get_all_recruiters_accounts(){
+    public function get_all_recruiter_accounts(){
         $result = $this->get_recruiter_accounts();
         return $result;  
     }
@@ -93,5 +93,9 @@ class CompanyView extends Company{
     public function get_all_admin_accounts(){
         $result = $this->get_admin_accounts();
         return $result;  
+    }
+    public function get_admin_profile($login_id){
+        $admin = $this->get_admin($login_id);
+        return $admin;
     }
 }
