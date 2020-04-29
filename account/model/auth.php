@@ -156,10 +156,47 @@ class Auth extends Dbh {
         $sql = " UPDATE package SET status = ?  WHERE package_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(['Inactive',$package_id]);
-        return array('package' => 'None');
+        return array('package' => 'None','trial_activation' => 'True');
         $stmt = null;
+        //@ams:the reason i set trial_activated to True is because we are deacting a package, so that must mean that
+        //it is either the trial or someother package, either case, the trial has already been activated
     }
-    // protected function get_recruiter_package_info($user['login_id']){
-        
-    // }
+    public function get_recruiter_package_info($login_id){
+        $sql = " SELECT * FROM package WHERE login_id=? AND status=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,'Active']);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return $this->has_trial_been_activated($login_id);
+            $stmt = null;
+        }else{
+            if($result['validUntil'] >= date('Y-m-d')){
+                if($result['type'] == 'Trial') return  array('package' => $result['type'],'trial_activation' => 'True');
+                else return  array('package' => $result['type'],'trial_activation' => 'False');
+                $stmt = null;
+            }
+            else{
+                return $this->deactivate_pack($result['package_id']);
+            }
+        }
+    }
+    protected function has_trial_been_activated($login_id){
+        $sql = " SELECT * FROM package WHERE login_id=? AND type=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,'Trial']);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return array(
+                        'package' => 'None',
+                        'trial_activation' => 'False'
+                    );
+            $stmt = null;
+        }else{
+            return array(
+                        'package' => 'None',
+                        'trial_activation' => 'True'
+                    );
+            $stmt = null;
+        }
+    }
 }

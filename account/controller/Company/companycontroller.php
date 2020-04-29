@@ -10,5 +10,8 @@ class CompanyController extends Company{
         $res =$this->report_this_jobseeker($company_login_id,$jobseeker_login_id,$reason);
         return $res;
     }
-    
+    public function request_to_activate_package($login_id,$package){
+        $res = $this->requesting_this_package($login_id,$package);   
+        return $res;
+    }
 }
