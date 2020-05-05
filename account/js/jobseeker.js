@@ -240,7 +240,7 @@ function loadJobseekerDashboard(){
           'Message Center'+
         '</h6>';
         $.each(data, function(i,val){
-          temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="jredirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
+          temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="jMessagesCenter(\''+val.message_id+'\');">'+
           '<div class="font-weight-bold">'+
             '<div class="text-truncate">'+val.subject+'</div>'+
             '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
@@ -248,7 +248,7 @@ function loadJobseekerDashboard(){
         '</a>';
         })
   
-        temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
+        temp += '<a class="dropdown-item text-center small text-gray-500" style="cursor: pointer;" onclick="jMessagesCenter();">Read More Messages</a>'; 
         $('.NewMsgNotificationsCount').empty().html(data.length);
         $('.NewMsgNotifications').empty().append(temp);
         }
@@ -618,12 +618,14 @@ function sendApp(job_id,company_id){
     }
  })
 }
-function jMessagesCenter(){
-    let temp = '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>';
-    $('#content').empty().append(temp);
-    
-    jsidebarMessage();
-    jcontentMessage();
+function jMessagesCenter(message_id){
+//ams: am passing message_id here just to know if this is a call from the topbar i.e
+//Knowing if the user tried to view a message from the notification bar
+let temp = '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>';
+$('#content').empty().append(temp);
+
+jsidebarMessage();
+jcontentMessage(message_id);
 }
 function jsidebarMessage(){
   $.ajax({
@@ -674,113 +676,114 @@ function jsidebarMessage(){
    }
   });
 }
-function jcontentMessage(){
-  let conMessage ='';
-  $.ajax({
-    method: "GET",
-    dataType: 'json',
-    url: "get.php/jobseeker/all_inbox_messages",
-    data: {"login_id" : session_id},
-    success: function(data){
-   conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
-        '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-          '<h4 class="card-title">Received Messages</h4>'+
+function jcontentMessage(message_id){
+//ams:check messagesCenter to know why i passed message_id
+let conMessage ='';
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/jobseeker/all_inbox_messages",
+  data: {"login_id" : session_id},
+  success: function(data){
+  conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+        '<h4 class="card-title">Received Messages</h4>'+
 
-        '</div>'+
-        '<!-- /.card-header -->'+
-        '<div class="card-body p-1">'+
-          '<div class="table-responsive mailbox-messages">'+
-            '<table class="table table-hover" id="myTable">'+
-            '<thead>'+
-            ' <th></th>'+
-            ' <th></th>'+
-            ' <th></th>'+
-            ' <th></th>'+
-            '</thead>'+
-              '<tbody>';
+      '</div>'+
+      '<!-- /.card-header -->'+
+      '<div class="card-body p-1">'+
+        '<div class="table-responsive mailbox-messages">'+
+          '<table class="table table-hover" id="myTable">'+
+          '<thead>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          '</thead>'+
+            '<tbody>';
 
-              $.each(data, function( i, val ) {
-                let checkId = val.message_id+"checkbox";
-                //AMS-> am filtering the message body to get rid of all tags
-                var filteredMsgBody = $("<div>").html(val.message_body).text();
-                conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
-                            '<td>'+
-                              '<div class="icheck-primary">'+
-                                '<input type="checkbox" value="" id="'+checkId+'">'+
-                                '<label for="check1"></label>'+
-                              '</div>'+
-                            '</td>'+
-                            '<td class="mailbox-name">'+val.creator_name+'</td>'+
-                            '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
-                            '</td>'+
-                            '<td class="mailbox-date">'+val.create_date+'</td>'+
-                          '</tr>';
-              });
-            conMessage +=  '</tbody>'+
-                            '</table>'+
-                            '<!-- /.table -->'+
-                          '</div>'+
-                          '<!-- /.mail-box-messages -->'+
+            $.each(data, function( i, val ) {
+              let checkId = val.message_id+"checkbox";
+              //AMS-> am filtering the message body to get rid of all tags
+              var filteredMsgBody = $("<div>").html(val.message_body).text();
+              conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
+                          '<td>'+
+                            '<div class="icheck-primary">'+
+                              '<input type="checkbox" value="" id="'+checkId+'">'+
+                              '<label for="check1"></label>'+
+                            '</div>'+
+                          '</td>'+
+                          '<td class="mailbox-name">'+val.creator_name+'</td>'+
+                          '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                          '</td>'+
+                          '<td class="mailbox-date">'+val.create_date+'</td>'+
+                        '</tr>';
+            });
+          conMessage +=  '</tbody>'+
+                          '</table>'+
+                          '<!-- /.table -->'+
                         '</div>'+
-                        '<!-- /.card-body -->'+
+                        '<!-- /.mail-box-messages -->'+
+                      '</div>'+
+                      '<!-- /.card-body -->'+
 
-                        '</div>'+
+                      '</div>'+
 
-                      '</div>';
+                    '</div>';
 
-       $('.contentMessage').empty().append(conMessage);
+      $('.contentMessage').empty().append(conMessage);
 
-       $(document).ready( function () {
-        $('#myTable').DataTable({
-          "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
-          "oLanguage": {
-            "sLengthMenu": "Display _MENU_ messages",
-            "sEmptyTable":     "No message available"
-          },
-          fnDrawCallback: function() {
-            $("#myTable thead").remove();
+      $(document).ready( function () {
+      $('#myTable').DataTable({
+        "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+        "oLanguage": {
+          "sLengthMenu": "Display _MENU_ messages",
+          "sEmptyTable":     "No message available"
+        },
+        fnDrawCallback: function() {
+          $("#myTable thead").remove();
+        }
+      });
+
+      $("#myTable").on("click", ".test", function(e){
+        var id = $(this).attr('id');
+        $.each(data, function( i, val ) {
+          if(val.message_id === id){
+          jviewMessage(val.message_id);
           }
         });
-
-        $("#myTable").on("click", ".test", function(e){
-          var id = $(this).attr('id');
-          $.each(data, function( i, val ) {
-           if(val.message_id === id){
-            jviewMessage(val.message_id);
-           }
-          });
-          //return false;
-        });
+        //return false;
+      });
 
 
-        });
+      });
 
-       jgeyOutReadMessages('myTable');
-      },
-      error: function(err){
-       $.notify(err.responseText,'error');
-      }
-     });
-}
-function jgeyOutReadMessages(param){  
-  $.ajax({
-    method: "GET",
-    dataType: 'json',
-    url: "get.php/jobseeker/read_messages",
-    data: {"login_id" : session_id},
-    success: function(data){
-      if(data != 0){
-        $.each(data, function(i,val){
-          var table = $('#'+param).DataTable();
-        table.$('tr#'+val.message_id).css({'background-color': 'gainsboro'});
-        });
-       
-      }
+      jgeyOutReadMessages('myTable',message_id);
     },
     error: function(err){
       $.notify(err.responseText,'error');
     }
-  })
+    });
+}
+function jgeyOutReadMessages(param,message_id){
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/jobseeker/read_messages",
+  data: {"login_id" : session_id},
+  success: function(data){
+    if(data != 0){
+      $.each(data, function(i,val){
+        var table = $('#'+param).DataTable();
+      table.$('tr#'+val.message_id).css({'background-color': 'gainsboro'});
+      });
+      if(message_id !== undefined)  jviewMessage(message_id); //ams:check messagesCenter to know why i passed message_id
+    }
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+})
 }
 function selectACompanyToMsg(){
   let conMessage ='';
