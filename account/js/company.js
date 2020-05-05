@@ -63,87 +63,87 @@ function sideBar(){
 }
 function topBar(){
 let topbar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">'+
-      '<ul class="navbar-nav ml-auto">'+
-        '<li class="nav-item dropdown no-arrow mx-1">'+
-          '<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-            '<i class="fas fa-envelope fa-fw"></i>'+
-            '<!-- Counter - Messages -->'+
-            '<span class="badge badge-danger badge-counter NewMsgNotificationsCount">0</span>'+
-          '</a>'+
-           '<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in NewMsgNotifications" aria-labelledby="messagesDropdown">'+
-            //add messages here@ams-target this div
-          '</div>'+ 
-        '</li>'+
-        '<div class="topbar-divider d-none d-sm-block"></div>'+
-        '<li class="nav-item dropdown no-arrow userProfile">'+
-        //user Profile
-        '</li>'+
-      '</ul>'+
-    '</nav>'; 
-    $('#content-wrapper').prepend(topbar);
-    let temp = '';
-    $.ajax({
-      method: "GET",
-      dataType: 'json',
-      url: "get.php/company/new_unread_messages",
-      data: {"login_id" : session_id},
-      success: function(data){
-        if(data != 400){
-        temp += '<h6 class="dropdown-header">'+
-          'Message Center'+
-        '</h6>';
-        $.each(data, function(i,val){
-          temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="redirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
-          '<div class="font-weight-bold">'+
-            '<div class="text-truncate">'+val.subject+'</div>'+
-            '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
-          '</div>'+
-        '</a>';
-        })
-  
-        temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
-        $('.NewMsgNotificationsCount').empty().html(data.length);
-        $('.NewMsgNotifications').empty().append(temp);
-        }
-        let profile = '';
-        $.ajax({
-          method: "GET",
-          dataType: "json",
-          url: "get.php/company/profile",
-          data: {"login_id" : session_id},
-          success: function(data){
-           if(data != 400){
-            profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-            '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+data.company_name+'</span>'+
-            '<img class="img-profile rounded-circle" src="uploads/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'">'+
-          '</a>'+
+    '<ul class="navbar-nav ml-auto">'+
+      '<li class="nav-item dropdown no-arrow mx-1">'+
+        '<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+          '<i class="fas fa-envelope fa-fw"></i>'+
+          '<!-- Counter - Messages -->'+
+          '<span class="badge badge-danger badge-counter NewMsgNotificationsCount">0</span>'+
+        '</a>'+
+          '<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in NewMsgNotifications" aria-labelledby="messagesDropdown">'+
+          //add messages here@ams-target this div
+        '</div>'+ 
+      '</li>'+
+      '<div class="topbar-divider d-none d-sm-block"></div>'+
+      '<li class="nav-item dropdown no-arrow userProfile">'+
+      //user Profile
+      '</li>'+
+    '</ul>'+
+  '</nav>'; 
+  $('#content-wrapper').prepend(topbar);
+  let temp = '';
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/company/new_unread_messages",
+    data: {"login_id" : session_id},
+    success: function(data){
+      if(data != 400){
+      temp += '<h6 class="dropdown-header">'+
+        'Message Center'+
+      '</h6>';
+      $.each(data, function(i,val){
+        temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="MessagesCenter(\''+val.message_id+'\');">'+
+        '<div class="font-weight-bold">'+
+          '<div class="text-truncate">'+val.subject+'</div>'+
+          '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+        '</div>'+
+      '</a>';
+      })
 
-          '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
-            '<a class="dropdown-item" href="#" onclick="settings();">'+
-              '<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>'+
-              'Settings'+
-            '</a>'+
-            '<div class="dropdown-divider"></div>'+
-            '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" onclick="logout();">'+
-              '<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
-              'Logout'+
-            '</a>'+
-          '</div>';
-            $('.userProfile').append(profile);
-            dashBoardContentheader();
-           }
+      temp += '<a class="dropdown-item text-center small text-gray-500" style="cursor: pointer;" onclick="MessagesCenter();">Read More Messages</a>'; 
+      $('.NewMsgNotificationsCount').empty().html(data.length);
+      $('.NewMsgNotifications').empty().append(temp);
+      }
+      let profile = '';
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        url: "get.php/company/profile",
+        data: {"login_id" : session_id},
+        success: function(data){
+          if(data != 400){
+          profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+          '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+data.company_name+'</span>'+
+          '<img class="img-profile rounded-circle" src="uploads/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'">'+
+        '</a>'+
 
-          },
-          error: function(err){
-               $.notify(err.responseText,'error');
+        '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
+          '<a class="dropdown-item" href="#" onclick="settings();">'+
+            '<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>'+
+            'Settings'+
+          '</a>'+
+          '<div class="dropdown-divider"></div>'+
+          '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" onclick="logout();">'+
+            '<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
+            'Logout'+
+          '</a>'+
+        '</div>';
+          $('.userProfile').append(profile);
+          dashBoardContentheader();
           }
-         })
 
-       },
-       error: function(err){
-        $.notify(err.responseText,'error');
-     }
-    });
+        },
+        error: function(err){
+              $.notify(err.responseText,'error');
+        }
+        })
+
+      },
+      error: function(err){
+      $.notify(err.responseText,'error');
+    }
+  });
 }
 function alertNotification(){
   //@ams->this is not being used. I will use it for jobseekers. To be rm
@@ -283,11 +283,11 @@ function dashBoardContentheader(){
 }
 function loadCompanyDashboard(){
  
-  let sidebar = sideBar();
-   $('#wrapper').prepend(sidebar);
-   let foot = footer();
-   $('#content-wrapper').append(foot);
-    topBar();
+let sidebar = sideBar();
+  $('#wrapper').prepend(sidebar);
+  let foot = footer();
+  $('#content-wrapper').append(foot);
+  topBar();
 }
 function dashBoardContent(){
 
@@ -300,55 +300,55 @@ function dashBoardContent(){
 function dashboardProfile(){
 
 let profile = '';
-  $.ajax({
-    method: "GET",
-    dataType: "json",
-    url: "get.php/company/profile",
-    data: {"login_id" : session_id},
-    success: function(data){
- 
-    profile += '<div class="col-xl-6 col-lg-7">'+
-     '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
-       '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
-         '<h6 class="m-0 font-weight-bold text-primary">Profile</h6>'+
-       '</div>'+
-       '<div class="card-body">'+
-         '<div class="container">'+
-         '<div class="row justify-content-md-center mb-4">'+
-           '<div class="col col-lg-2">'+
-           '</div>'+
-           '<div class="col-md-auto">'+
-             '<img src="uploads/'+((data.logo == "" || data.logo == null)?"default.jpg":data.logo)+'" class="card-img-top rounded-circle img-thumbnail" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
-           '</div>'+
-           '<div class="col col-lg-2">'+
-           '</div>'+
-         '</div>'+
-         '<div class="row justify-content-md-center mb-2">'+
-           '<h3 class="card-title font-weight-bolder text-primary">'+((data.company_name=="" || data.company_name==null)?"NA":data.company_name)+'</h3>'+
-         '</div>'+
-         '<div class="row">'+
-           '<div class="col col-lg-6">'+
-             '<i class="fas fa-home"> '+((data.company_address=="" || data.company_address==null)?"NA":data.company_address)+'</i><br>'+
-             '<i class="fas fa-map-marker"> '+((data.country=="" || data.country==null)?"NA":data.country)+'</i>'+
-           '</div>'+
-           '<div class="col col-lg-6">'+
-             '<i class="fas fa-envelope"> '+((data.company_email=="" || data.company_email==null)?"NA":data.company_email)+'</i><br>'+
-             '<i class="fas fa-phone"> '+((data.company_phone=="" || data.company_phone==null)?"NA":data.company_phone)+'</i><br>'+
-           '</div>'+
-         '</div>'+
-       '</div>'+
-       '</div>'+
-     '</div>'+
-   '</div>';
+$.ajax({
+  method: "GET",
+  dataType: "json",
+  url: "get.php/company/profile",
+  data: {"login_id" : session_id},
+  success: function(data){
 
-   $('.dbInner').append(profile);
-    jobStatistics();
+  profile += '<div class="col-xl-6 col-lg-7">'+
+    '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'+
+        '<h6 class="m-0 font-weight-bold text-primary">Profile</h6>'+
+      '</div>'+
+      '<div class="card-body">'+
+        '<div class="container">'+
+        '<div class="row justify-content-md-center mb-4">'+
+          '<div class="col col-lg-2">'+
+          '</div>'+
+          '<div class="col-md-auto">'+
+            '<img src="uploads/'+((data.logo == "" || data.logo == null)?"default.jpg":data.logo)+'" class="card-img-top rounded-circle img-thumbnail" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+          '</div>'+
+          '<div class="col col-lg-2">'+
+          '</div>'+
+        '</div>'+
+        '<div class="row justify-content-md-center mb-2">'+
+          '<h3 class="card-title font-weight-bolder text-primary">'+((data.company_name=="" || data.company_name==null)?"NA":data.company_name)+'</h3>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col col-lg-6">'+
+            '<i class="fas fa-home"> '+((data.company_address=="" || data.company_address==null)?"NA":data.company_address)+'</i><br>'+
+            '<i class="fas fa-map-marker"> '+((data.country=="" || data.country==null)?"NA":data.country)+'</i>'+
+          '</div>'+
+          '<div class="col col-lg-6">'+
+            '<i class="fas fa-envelope"> '+((data.company_email=="" || data.company_email==null)?"NA":data.company_email)+'</i><br>'+
+            '<i class="fas fa-phone"> '+((data.company_phone=="" || data.company_phone==null)?"NA":data.company_phone)+'</i><br>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
 
-   },
-   error: function(err){
-    $.notify(err.responseText,'error');
-   }
-  });
+  $('.dbInner').append(profile);
+  jobStatistics();
+
+  },
+  error: function(err){
+  $.notify(err.responseText,'error');
+  }
+});
 
 }
 function jobStatistics(){
@@ -394,174 +394,154 @@ $('.dbInner').append(job_statistics);
 
 }
 //Message center by @ams
-function MessagesCenter(){
+function MessagesCenter(message_id){
+//ams: am passing message_id here just to know if this is a call from the topbar i.e
+//Knowing if the user tried to view a message from the notification bar
 let temp = '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>';
 $('#content').empty().append(temp);
 
-sidebarMessage();
-contentMessage();
+  sidebarMessage();
+  contentMessage(message_id);
 
 }
 function sidebarMessage(){
-  $.ajax({
-    method: "GET",
-    dataType: 'json',
-    url: "get.php/company/no_of_new_messages",
-    data: {"login_id" : session_id},
-    success: function(data){
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/company/no_of_new_messages",
+  data: {"login_id" : session_id},
+  success: function(data){
 
-      let sbMessage =  '<a style="cursor: pointer;" class="btn btn-primary btn-block mb-3 text-white" onclick="selectAJobseekerToMsg();">Compose</a>'+
+    let sbMessage =  '<a style="cursor: pointer;" class="btn btn-primary btn-block mb-3 text-white" onclick="selectAJobseekerToMsg();">Compose</a>'+
 
-      '<div class="card-body p-0 text-dark">'+
-        '<ul class="nav nav-pills flex-column text-dark">'+
-          '<li class="nav-item active text-dark">'+
-            '<a class="nav-link" style="cursor: pointer;" onclick="contentMessage();">'+
-              '<i class="fas fa-inbox text-dark"></i> Unread'+
-              '<span class="badge bg-info float-right">'+data+'</span>'+
-            '</a>'+
-          '</li>'+
-          '<li class="nav-item">'+
-            '<a style="cursor: pointer;" class="nav-link" onclick="sentMessages();">'+
-              '<i class="far fa-envelope"></i> Sent'+
-            '</a>'+
-          '</li>'+
-          '<li class="nav-item">'+
-          '<a href="#" class="nav-link">'+
-            '<i class="far fa-file-alt"></i> Drafts'+
+    '<div class="card-body p-0 text-dark">'+
+      '<ul class="nav nav-pills flex-column text-dark">'+
+        '<li class="nav-item active text-dark">'+
+          '<a class="nav-link" style="cursor: pointer;" onclick="contentMessage();">'+
+            '<i class="fas fa-inbox text-dark"></i> Unread'+
+            '<span class="badge bg-info float-right">'+data+'</span>'+
           '</a>'+
         '</li>'+
         '<li class="nav-item">'+
-          '<a href="#" class="nav-link">'+
-            '<i class="fas fa-filter"></i> Junk'+
-            '<span class="badge bg-warning float-right">0</span>'+
+          '<a style="cursor: pointer;" class="nav-link" onclick="sentMessages();">'+
+            '<i class="far fa-envelope"></i> Sent'+
           '</a>'+
         '</li>'+
         '<li class="nav-item">'+
-          '<a href="#" class="nav-link">'+
-            '<i class="far fa-trash-alt"></i> Trash'+
-          '</a>'+
-        '</li>'+
-        '</ul>'+
-      '</div>';
+        '<a href="#" class="nav-link">'+
+          '<i class="far fa-file-alt"></i> Drafts'+
+        '</a>'+
+      '</li>'+
+      '<li class="nav-item">'+
+        '<a href="#" class="nav-link">'+
+          '<i class="fas fa-filter"></i> Junk'+
+          '<span class="badge bg-warning float-right">0</span>'+
+        '</a>'+
+      '</li>'+
+      '<li class="nav-item">'+
+        '<a href="#" class="nav-link">'+
+          '<i class="far fa-trash-alt"></i> Trash'+
+        '</a>'+
+      '</li>'+
+      '</ul>'+
+    '</div>';
 
-      $('.sidebarMessage').empty().append(sbMessage);
-       //contentMessage();
-   },
-   error: function(err){
-    $.notify(err.responseText,'error');
-   }
-  });
+    $('.sidebarMessage').empty().append(sbMessage);
+      //contentMessage();
+  },
+  error: function(err){
+  $.notify(err.responseText,'error');
+  }
+});
+
 }
-function contentMessage(){
-  let conMessage ='';
-  $.ajax({
-    method: "GET",
-    dataType: 'json',
-    url: "get.php/company/all_inbox_messages",
-    data: {"login_id" : session_id},
-    success: function(data){
+function contentMessage(message_id){
+//ams:check messagesCenter to know why i passed message_id
+let conMessage ='';
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/company/all_inbox_messages",
+  data: {"login_id" : session_id},
+  success: function(data){
 
-   conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
-        '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-          '<h4 class="card-title">Received Messages</h4>'+
+  conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+        '<h4 class="card-title">Received Messages</h4>'+
 
-        '</div>'+
-        '<!-- /.card-header -->'+
-        '<div class="card-body p-1">'+
-          '<div class="table-responsive mailbox-messages">'+
-            '<table class="table table-hover" id="myTable">'+
-            '<thead>'+
-            ' <th></th>'+
-            ' <th></th>'+
-            ' <th></th>'+
-            ' <th></th>'+
-            '</thead>'+
-              '<tbody>';
-              $.each(data, function( i, val ) {
-                let checkId =  val.message_id+"checkbox";
-                //ams-> am filtering the message body to get rid of all tags
-                var filteredMsgBody = $("<div>").html(val.message_body).text();
-                conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
-                            '<td>'+
-                              '<div class="icheck-primary">'+
-                                '<input type="checkbox" value="" id="'+checkId+'">'+
-                                '<label for="check1"></label>'+
-                              '</div>'+
-                            '</td>'+
-                            '<td class="mailbox-name">'+val.creator_name+'</td>'+
-                            '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
-                            '</td>'+
-                            '<td class="mailbox-date">'+val.create_date+'</td>'+
-                          '</tr>';
-              });
-            conMessage +=  '</tbody>'+
-                            '</table>'+
-                            '<!-- /.table -->'+
-                          '</div>'+
-                          '<!-- /.mail-box-messages -->'+
+      '</div>'+
+      '<!-- /.card-header -->'+
+      '<div class="card-body p-1">'+
+        '<div class="table-responsive mailbox-messages">'+
+          '<table class="table table-hover" id="myTable">'+
+          '<thead>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          '</thead>'+
+            '<tbody>';
+            $.each(data, function( i, val ) {
+              let checkId =  val.message_id+"checkbox";
+              //ams-> am filtering the message body to get rid of all tags
+              var filteredMsgBody = $("<div>").html(val.message_body).text();
+              conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
+                          '<td>'+
+                            '<div class="icheck-primary">'+
+                              '<input type="checkbox" value="" id="'+checkId+'">'+
+                              '<label for="check1"></label>'+
+                            '</div>'+
+                          '</td>'+
+                          '<td class="mailbox-name">'+val.creator_name+'</td>'+
+                          '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                          '</td>'+
+                          '<td class="mailbox-date">'+val.create_date+'</td>'+
+                        '</tr>';
+            });
+          conMessage +=  '</tbody>'+
+                          '</table>'+
+                          '<!-- /.table -->'+
                         '</div>'+
-                        '<!-- /.card-body -->'+
+                        '<!-- /.mail-box-messages -->'+
+                      '</div>'+
+                      '<!-- /.card-body -->'+
 
-                        '</div>'+
+                      '</div>'+
 
-                      '</div>';
+                    '</div>';
 
-       $('.contentMessage').empty().append(conMessage);
+      $('.contentMessage').empty().append(conMessage);
 
-       $(document).ready( function () {
-        $('#myTable').DataTable({
-          "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
-          "oLanguage": {
-            "sLengthMenu": "Display _MENU_ messages",
-            "sEmptyTable":     "No message available"
-          },
-          fnDrawCallback: function() {
-            $("#myTable thead").remove();
+      $(document).ready( function () {
+      $('#myTable').DataTable({
+        "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+        "oLanguage": {
+          "sLengthMenu": "Display _MENU_ messages",
+          "sEmptyTable":     "No message available"
+        },
+        fnDrawCallback: function() {
+          $("#myTable thead").remove();
+        }
+      });
+
+      $("#myTable").on("click", ".test", function(e){
+        var id = $(this).attr('id');
+        $.each(data, function( i, val ) {
+          if(val.message_id === id){
+          viewMessage(val.message_id);
           }
         });
+        //return false;
+      });
 
-        $("#myTable").on("click", ".test", function(e){
-          var id = $(this).attr('id');
-          $.each(data, function( i, val ) {
-           if(val.message_id === id){
-            viewMessage(val.message_id);
-           }
-          });
-          //return false;
-        });
+      });
 
-        });
-
-       geyOutReadMessages('myTable');
-      },
-      error: function(err){
-       $.notify(err.responseText,'error');
-      }
-     });
-}
-function redirectToMessageFromNotification(message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,fullName,login_id){
-         //to be implemented
-        //  MessagesCenter().promise().done(function() {
-        //   console.log('======AMS=====');
-        // });
-        // $.when(  MessagesCenter() ).done(function() {
-        //   console.log('======AMS=====');
-        //   viewMessage(message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,fullName,login_id);
-        // });
-        //Check callbacks
-       // MessagesCenter( ()=>{ viewMessage(message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,fullName,login_id)});
-
-        //MessagesCenter();
-        // var deferred = $.Deferred();
-        // deferred
-        // .done(function(){
-        //   MessagesCenter();
-        // })
-        // .then(function(){
-        //   viewMessage(message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,fullName,login_id);
-
-        // });
-         
+      geyOutReadMessages('myTable',message_id);
+    },
+    error: function(err){
+      $.notify(err.responseText,'error');
+    }
+    });
 }
 function viewMessage(msg_id,jobseeker_name,jobseeker_id){
  //ams: both jobseeker_name and jobseeker_id are optional and only set when viewing sent messages
@@ -766,7 +746,7 @@ $.ajax({
       'Message Center'+
     '</h6>';
     $.each(data, function(i,val){
-      temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="redirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
+      temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="MessagesCenter(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
       '<div class="font-weight-bold">'+
         '<div class="text-truncate">'+val.subject+'</div>'+
         '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
@@ -1271,7 +1251,8 @@ function DeleteMessage(msg_id,jobseeker_id){
     }
   });
 }
-function geyOutReadMessages(param){
+function geyOutReadMessages(param,message_id){
+//ams:check messagesCenter to know why i passed message_id
 $.ajax({
   method: "GET",
   dataType: 'json',
@@ -1283,7 +1264,7 @@ $.ajax({
         var table = $('#'+param).DataTable();
       table.$('tr#'+val.mess_rec_id).css({'background-color': 'gainsboro'});
       });
-      
+    if(message_id !== undefined) viewMessage(message_id);
     }
   },
   error: function(err){
