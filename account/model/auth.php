@@ -156,9 +156,9 @@ class Auth extends Dbh {
         $sql = " UPDATE package SET status = ?  WHERE package_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(['Inactive',$package_id]);
-        return array('package' => 'None','trial_activation' => 'True');
+        return array('package' => 'None','trial_activation' => true);
         $stmt = null;
-        //@ams:the reason i set trial_activated to True is because we are deacting a package, so that must mean that
+        //@ams:the reason i set trial_activated to true is because we are deactivating a package, so that must mean that
         //it is either the trial or someother package, either case, the trial has already been activated
     }
     public function get_recruiter_package_info($login_id){
@@ -171,8 +171,8 @@ class Auth extends Dbh {
             $stmt = null;
         }else{
             if($result['validUntil'] >= date('Y-m-d')){
-                if($result['type'] == 'Trial') return  array('package' => $result['type'],'trial_activation' => 'True');
-                else return  array('package' => $result['type'],'trial_activation' => 'False');
+                if($result['type'] == 'Trial') return  array('package' => $result['type'],'trial_activation' => true);
+                else return  array('package' => $result['type'],'trial_activation' => false);
                 $stmt = null;
             }
             else{
@@ -188,13 +188,13 @@ class Auth extends Dbh {
         if(!$result ){
             return array(
                         'package' => 'None',
-                        'trial_activation' => 'False'
+                        'trial_activation' => false
                     );
             $stmt = null;
         }else{
             return array(
                         'package' => 'None',
-                        'trial_activation' => 'True'
+                        'trial_activation' => true
                     );
             $stmt = null;
         }

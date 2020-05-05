@@ -856,8 +856,6 @@ class Company extends Dbh{
         
     }
     
-
-
     protected function request_to_activate_this_pack($login_id,$package){
         $validFrom = date('Y-m-d');
         $sql= "INSERT INTO package (login_id,validFrom,validUntil,status,type) VALUES (?,?,?,?,?);";
@@ -866,7 +864,8 @@ class Company extends Dbh{
         else if ($package == 'One-time')  $validUntil = date('Y-m-d',strtotime('+14 days',strtotime($validFrom)));
         else if ($package == 'Month')  $validUntil = date('Y-m-d',strtotime('+30 days',strtotime($validFrom)));
         else $validUntil = date('Y-m-d',strtotime('+6 months',strtotime($validFrom)));
-        $stmt->execute([$login_id,$validFrom,$validUntil,'Pending',$package]);
+        $stmt->execute([$login_id,$validFrom,$validUntil,($package == 'Trial')?'Active':'Pending',$package]);
+        if($package == 'Trial') return  array('message' => 'Your free trial has been activated!');
         return  array('message' => 'We will get back to you soonest and activate your requested package.');
         $stmt = null;
     }
