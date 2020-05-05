@@ -269,6 +269,9 @@ function dashBoardContentheader(){
       success: function(data){
         package = data.package;
         trial_activation = data.trial_activation;
+        console.log('=====AMS=====');
+        console.log(package);
+        console.log(trial_activation);
         $('#jobsPublished' ).html(data.noOfJobsPublished);
         $('#profileVal').html(data.isProfileComplete+"%");
         $('#profileBar').css('width',''+data.isProfileComplete+'%');
@@ -391,8 +394,26 @@ function jobStatistics(){
   '</div>'+
 '</div>';
 $('.dbInner').append(job_statistics);
+//ams: this needs to change once charts are implemented so that this is only called upon completion of charts loading
+if(trial_activation === false) setTimeout(activate_trial, 2000);
 
 }
+//ams:trial activation prompt
+function activate_free_trial(){
+  $.ajax({
+    method: "POST",
+    dataType: "json",
+    url: "post.php/company/request_to_activate_package",
+    data: {"login_id" : session_id,"package": 'Trial'},
+    success: (response) => {
+      swalNotify(response.message,'success');
+      setTimeout(window.location.replace('index.php'), 3000);
+    },
+    error: (err)=>{
+      swal(err.responseText,'error');
+    }
+  });
+} 
 //Message center by @ams
 function MessagesCenter(message_id){
 //ams: am passing message_id here just to know if this is a call from the topbar i.e
@@ -1556,7 +1577,7 @@ let profile =
           '<div class="card-header p-2">'+
             '<ul class="nav nav-pills">'+
               '<li class="nav-item"><a class="nav-link active" href="#profile" data-toggle="tab">Profile</a></li>'+
-              '<li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>'+
+              '<li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Packages</a></li>'+
               '</ul>'+
             '</div><!-- /.card-header -->'+
             '<div class="card-body">'+
