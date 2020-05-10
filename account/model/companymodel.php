@@ -762,9 +762,21 @@ class Company extends Dbh{
     protected function requesting_this_package($login_id,$package){
         // if($package)
         $res = $this->is_any_package_active_pending($login_id);
-        if($res['status'] == 'Pending') return array('message' => 'Your request to activate a package is pending. You can\'t request for two packages.');
+        if($res['status'] == 'Pending' && $package == 'Trial') return $this->still_activate_package($res['package_id']); // consider if i request for a package and then again i try to activate trial when request is still pending
+        else if($res['status'] == 'Pending') return array('message' => 'Your request to activate a package is pending. You can\'t request for two packages.');
         else if($res['status'] == 'Active') return array('message' => 'Your current package is still active. You have to wait until the current package expires.');
         else return $this->request_to_activate_this_pack($login_id,$package);
+    }
+    protected function still_activate_package($package_id){
+    //ams: the reason for this function is the case when a person request for a paid package and then again tries to
+    //activate the free trial when the requested package has not been activated
+    $validFrom = date('Y-m-d');
+    $sql = " UPDATE package SET validFrom = ?, validUntil = ?, status = ?, type = ?  WHERE package_id = ?;";
+    $stmt = $this->connect()->prepare($sql);
+    $stmt->execute([$validFrom,date('Y-m-d',strtotime('+14 days',strtotime($validFrom))),'Active','Trial',$package_id]);
+    return  array('message' => 'Your free trial has been activated!');
+    $stmt = null; 
+
     }
     protected function is_any_package_active_pending($login_id){
         $sql= "SELECT * FROM package  WHERE login_id=? AND status IN (?,?);";
@@ -861,8 +873,6 @@ class Company extends Dbh{
         
     }
     
-
-
     protected function request_to_activate_this_pack($login_id,$package){
         $validFrom = date('Y-m-d');
         $sql= "INSERT INTO package (login_id,validFrom,validUntil,status,type) VALUES (?,?,?,?,?);";
@@ -871,7 +881,8 @@ class Company extends Dbh{
         else if ($package == 'One-time')  $validUntil = date('Y-m-d',strtotime('+14 days',strtotime($validFrom)));
         else if ($package == 'Month')  $validUntil = date('Y-m-d',strtotime('+30 days',strtotime($validFrom)));
         else $validUntil = date('Y-m-d',strtotime('+6 months',strtotime($validFrom)));
-        $stmt->execute([$login_id,$validFrom,$validUntil,'Pending',$package]);
+        $stmt->execute([$login_id,$validFrom,$validUntil,($package == 'Trial')?'Active':'Pending',$package]);
+        if($package == 'Trial') return  array('message' => 'Your free trial has been activated!');
         return  array('message' => 'We will get back to you soonest and activate your requested package.');
         $stmt = null;
     }
