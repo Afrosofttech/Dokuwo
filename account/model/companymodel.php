@@ -781,11 +781,16 @@ class Company extends Dbh{
     }
 
     protected function activatePackage($login_id){
-        $sql = " UPDATE package SET status = ?  WHERE login_id = ? AND status = ?;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(['Active',$login_id,'Pending']);
-        return  self::success;
-        $stmt = null; 
+        $check_trial = self::has_the_trial_been_activated($login_id);
+        if(!$check_trial){
+            $expired_trial = self::create_expired_trial_package($login_id);
+            $sql = " UPDATE package SET status = ?  WHERE login_id = ? AND status = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(['Active',$login_id,'Pending']);
+            return  self::success;
+            $stmt = null; 
+        }
+       
     }
 
     protected function getReviews($jobseeker_id){
@@ -886,5 +891,15 @@ class Company extends Dbh{
             return  true;
             $stmt = null;
         }
+    }
+
+    protected function create_expired_trial_package($login_id){
+        $validFrom = date('Y-m-d');
+        $validUntil = date('Y-m-d');
+        $sql= "INSERT INTO package (login_id,validFrom,validUntil,status,type) VALUES (?,?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,$validFrom,$validUntil,'Inactive','Trial']); 
+        return true;
+        $stmt = null;
     }
 }

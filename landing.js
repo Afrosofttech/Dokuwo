@@ -473,7 +473,7 @@ $.ajax({
                 '</div>'+
                 '</div>'+
                 '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                  '<span class="btn-full-time">'+val.job_type+'</span>'+
+                  '<span class="btn-full-time" style="color:#007bff;">'+val.job_type+'</span>'+
                 '</div>'+
                 '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
                   '<span class="btn-apply">View Job</span>'+
@@ -707,7 +707,7 @@ function displayEmployers(start,finish){
                     '</div>'+
                     '</div>'+
                     '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                        '<span class="btn-full-time">'+val.education_level+'</span>'+
+                        '<span class="btn-full-time" style="color:#007bff;">'+val.education_level+'</span>'+
                       '</div>'+
                     '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
                       '<span class="btn-apply">VIEW</span>'+
@@ -1284,7 +1284,7 @@ function displayEmployers(start,finish){
                       '</div>'+
                       '</div>'+
                       '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                        '<span class="btn-full-time">'+val.job_type+'</span>'+
+                        '<span class="btn-full-time" style="color:#007bff;">'+val.job_type+'</span>'+
                       '</div>'+
                       '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
                         '<span class="btn-apply">View Job</span>'+

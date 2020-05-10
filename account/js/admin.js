@@ -48,7 +48,7 @@ function adminSideBar(){
       
       aSidebar +='<li class="nav-item" onclick="adminSettings();" style="cursor: pointer;">'+
       '<a class="nav-link">'+
-        '<i class="fas fa-fw fa-cog""></i>'+
+        '<i class="fas fa-fw fa-user-edit""></i>'+
         '<span>Settings</span></a>'+
     '</li>'+
       
@@ -748,12 +748,12 @@ function getRecruiterAccounts(){
                         '<td>'+val.company_name+'</td>'+
                         '<td>'+val.email+'</td>';
                           temp +=(status == "Deactivated")?'<td><a class="btn btn-success btn-block btn-sm" href="#" style="cursor: pointer;" onclick="activate(\''+val.login_id+'\');">'+
-                          '<i class="fas fa-check">'+
+                          '<i class="fas fa-user-check">'+
                           '</i>'+
                           ' Activate'+
                           '</a></td>':
                           '<td><a class="btn btn-danger btn-block btn-sm" href="#" style="cursor: pointer;" onclick="deactivate(\''+val.login_id+'\');">'+
-                          '<i class="fas fa-times-circle">'+
+                          '<i class="fas fa-user-lock">'+
                           '</i>'+
                           ' Deactivate'+
                           '</a></td>';
@@ -885,7 +885,7 @@ function getAdminAccounts(){
     '</div>'+
       '<div class="card-header py-3 d-flex justify-content-around">'+
         '<h6 class="m-0 font-weight-bold text-primary mr-auto">Manage Administrators</h6>'+
-        '<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ml-auto" style="cursor: pointer;" onclick="CreateAdmin();"><i class="fas fa-users fa-sm text-white-50"></i>Add Admin</a>'+
+        '<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ml-auto" style="cursor: pointer;" onclick="CreateAdmin();"><i class="fas fa-user-plus fa-sm text-white-50"></i> Add Admin</a>'+
       '</div>'+
       '<div class="card-body">'+
         ' <div class="table-responsive">'+
@@ -907,22 +907,22 @@ function getAdminAccounts(){
                   '<td>';
                     if(status == "Deactivated"){
                       temp +='<a class="btn btn-success btn-block btn-sm" href="#" style="cursor: pointer;" onclick="activateAccount(\''+val.login_id+'\');">'+
-                      '<i class="fas fa-check">'+
+                      '<i class="fas fa-user-check">'+
                       '</i>'+
                       ' Activate'+
                       '</a>';
                     }
                     else{
                       temp +='<a class="btn btn-danger btn-block btn-sm" href="#" style="cursor: pointer;" onclick="deactivateAccount(\''+val.login_id+'\');">'+
-                      '<i class="fas fa-times-circle">'+
+                      '<i class="fas fa-user-lock">'+
                       '</i>'+
                       ' Deactivate'+
                       '</a>';
                     }
                     temp +='<td class="text-right"><a class="btn btn-danger btn-block btn-sm" href="#" style="cursor: pointer;" onclick="delAccount(\''+val.login_id+'\');">'+
-                  '<i class="fas fa-trash">'+
+                  '<i class="fas fa-user-minus">'+
                   '</i>'+
-                  ' Delete'+
+                  ' Remove'+
                   '</a></td>'+
                 '</tr>';
                 });
@@ -1055,7 +1055,7 @@ function activatePackage(login_id,caller){
         }
         },
         error: function(err){
-          console.log('error deleting blog...');
+          console.log('error activating package...');
           $.notify(err.responseText,'error');
         }
       });
@@ -1205,7 +1205,7 @@ function CreateAdmin(){
             url: 'post.php/authentication/create_admin_account',
             data:{'adminName':$('#adminName').val(),'email':email,'password':passwd},
             success: function(response){
-              if(response === 200){
+              if(response == 200){
                 $.notify('Account successfully created!','success');
                 getAdminAccounts();
               }else {
