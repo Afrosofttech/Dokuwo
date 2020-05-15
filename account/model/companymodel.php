@@ -178,20 +178,18 @@ class Company extends Dbh{
         return $this->send_msg_to_a_jobseeker($creator_id,$creator_name,$_recipient_id,$recipient_name,null,$result['subject'],$result['message_body'],'forward');
     }
     protected function get_categories_of_jobseekers(){
+        try {
         //$seekersArray = array();
         $sql = " SELECT category, COUNT(*) AS count FROM job_seeker GROUP BY category";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
-        
+        if(!$result)throw new Exception('No jobseekers');     
         return  $result;
         $stmt = null;
-        // $sql2 = "SELECT category,skills,COUNT(*) AS count FROM job_seeker GROUP BY category,skills";
-        // $stmt2 = $this->connect()->prepare($sql2);
-        // $stmt2->execute();
-        // $result2 = $stmt2->fetchAll();
-        // array_push($seekersArray,$result2);
-        //var_dump($result);
+        } catch(Exception $e) {
+            echo 'Message: ' .$e->getMessage();
+      }
     }
     protected function get_jobseekers_of_this_category($category){
         $sql = " SELECT job_seeker.*, login.email FROM job_seeker INNER JOIN login ON job_seeker.login_id = login.login_id where category = ?;";
