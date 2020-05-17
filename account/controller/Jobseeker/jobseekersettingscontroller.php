@@ -1,5 +1,5 @@
 <?php
-include_once 'model/jobseekermodel.php';
+require_once 'model/jobseekermodel.php';
 class JobseekerSettingsController extends Jobseeker{
     public function update_jobseeker(){
         $v_data = self::validate_jobseeker();

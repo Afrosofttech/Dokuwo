@@ -273,9 +273,26 @@ $contr =  $urlParts[sizeof($urlParts)-2];
 
  }else{
     switch ($method){
-        case "":
-           ;
-           break;
+        case "message_is_read":
+          echo ((new AdminMessagesController())->message_is_read($_POST['message_id']));
+        break;
+        case "delete_message":
+          echo (new AdminMessagesController())->delete_message($_POST['message_id']);
+        break;
+        case "delete_sent_message":
+          echo (new AdminMessagesController())->delete_sent_message($_POST['message_id']);
+        break;
+        case "reply_user":
+          $result = new AdminMessagesController();
+          echo json_encode($result->send_msg_to_user($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']));
+          break;
+        case "forward_msg_to_user":
+            $result = new AdminMessagesController();
+            echo json_encode($result->forward_msg_to_user($_POST['creator_id'],$_POST['fullname'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['message_id']));
+          break;
+          case "send_msg_to_user":
+            $result = new AdminMessagesController();
+            echo json_encode($result->send_msg_to_user($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['Subject'],$_POST['messageBody']));
        case "":
            ;
            break;

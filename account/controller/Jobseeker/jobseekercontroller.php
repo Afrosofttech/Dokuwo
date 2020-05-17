@@ -1,5 +1,5 @@
 <?php
-include_once 'model/jobseekermodel.php';
+require_once 'model/jobseekermodel.php';
 
 class JobseekerController extends Jobseeker{
     public function delete_hire($hire_id)
