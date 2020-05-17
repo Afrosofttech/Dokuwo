@@ -956,8 +956,12 @@ function jcomposeNewMessage(login_id,cName,divToClear){
       });
   });  
 }
+/**
+ * @param msg_id 
+ * @param jobseeker_name -> {optional and only set when viewing sent messages}
+ * @param jobseeker_id -> {optional and only set when viewing sent messages}
+ */
 function jviewMessage(msg_id,company_name,company_id){
-//AMS-> both company_name and company_id are optional and only set when viewing sent messages
 $.ajax({
   method: "GET",
   dataType: 'json',
@@ -1094,10 +1098,16 @@ function jDeleteMessage(msg_id,company_id){
     }
   });
 }
+/**
+ * 
+ * @param msg_id 
+ * @param recipient_id 
+ * @param recipient_name 
+ * @param msg_subject 
+ * @param company_id -> {company_id is basically not necessary here. But since we are using the same function for viewing messages,
+ *                       we are using it to differentiate btw sent and received messages as we wont support reply on sent messages}
+ */
 function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
-  //ams-> company_id is basically not necessary here. But since we are using the same function for viewing messages,
-  //we are using it to differentiate btw sent and received messages as we wont support reply on sent messages
-
   if(company_id !== 'undefined'){
     $.notify('You can\'t reply to your own sent messages!','warning');
     return;
@@ -1211,8 +1221,8 @@ function selectACompanyToForward(msg_id){
              ' <th>id</th>'+
              '<th>img</th>'+
             ' <th>FullName</th>'+
+            ' <th>Address</th>'+
             ' <th>Country</th>'+
-            ' <th>Skills</th>'+
             '</thead>'+
               '<tbody>';
              if(data === 0){
@@ -1281,8 +1291,10 @@ $.ajax({
   }
 });
 }
+/**
+ * {am using this func to update the topBar message center notification}
+ */
 function jnewMsgNotification(){  
-  //ams->am using this func to update the topBar message center notification
   let temp = '';
   $.ajax({
     method: "GET",

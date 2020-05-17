@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'model/companymodel.php';
+require_once 'model/companymodel.php';
 
 class JobsController extends Company{
     public function accept_application($jobseeker_id,$jobseeker_login_id,$fullName,$job_id){

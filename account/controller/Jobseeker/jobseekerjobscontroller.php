@@ -1,5 +1,5 @@
 <?php
-include_once 'model/jobseekermodel.php';
+require_once 'model/jobseekermodel.php';
 
 class JobseekerJobsController extends Jobseeker{
  public function send_application($jobseeker_id,$job_id,$company_id)

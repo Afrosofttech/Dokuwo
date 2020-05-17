@@ -26,8 +26,8 @@ function adminSideBar(){
           '<span>Blog</span></a>'+
       '</li>'+
     
-      '<li class="nav-item">'+
-        '<a class="nav-link" href="">'+
+      '<li class="nav-item" >'+
+        '<a class="nav-link" style="cursor: pointer;" onclick="AdminMessagesCenter();">'+
           '<i class="fas fa-fw fa-envelope"></i>'+
           '<span>Messages</span></a>'+
       '</li>';
@@ -100,70 +100,36 @@ function adminSideBar(){
             '</ul>'+
           '</nav>'; 
           $('#content-wrapper').prepend(topbar);
-          // let temp = '';
-          // $.ajax({
-          //   method: "GET",
-          //   dataType: 'json',
-          //   url: "get.php/company/new_unread_messages",
-          //   data: {"login_id" : session_id},
-          //   success: function(data){
-          //     if(data != 400){
-          //     temp += '<h6 class="dropdown-header">'+
-          //       'Message Center'+
-          //     '</h6>';
-          //     $.each(data, function(i,val){
-          //       temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="redirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
-          //       '<div class="font-weight-bold">'+
-          //         '<div class="text-truncate">'+val.subject+'</div>'+
-          //         '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
-          //       '</div>'+
-          //     '</a>';
-          //     })
+          let temp = '';
+          $.ajax({
+            method: "GET",
+            dataType: 'json',
+            url: "get.php/company/new_unread_messages",
+            data: {"login_id" : session_id},
+            success: function(data){
+              if(data != 400){
+              temp += '<h6 class="dropdown-header">'+
+                'Message Center'+
+              '</h6>';
+              $.each(data, function(i,val){
+                temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="AdminMessagesCenter(\''+val.message_id+'\');">'+
+                '<div class="font-weight-bold">'+
+                  '<div class="text-truncate">'+val.subject+'</div>'+
+                  '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+                '</div>'+
+              '</a>';
+              })
         
-          //     temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
-          //     $('.NewMsgNotificationsCount').empty().html(data.length);
-          //     $('.NewMsgNotifications').empty().append(temp);
-          //     }
+              temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
+              $('.NewMsgNotificationsCount').empty().html(data.length);
+              $('.NewMsgNotifications').empty().append(temp);
+              }
       
-          //    },
-          //    error: function(err){
-          //     $.notify(err.responseText,'error');
-          //  }
-          // });
-
-          // let profile = '';
-          // $.ajax({
-          //   method: "GET",
-          //   dataType: "json",
-          //   url: "get.php/company/profile",
-          //   data: {"login_id" : session_id},
-          //   success: function(data){
-          //    if(data != 400){
-          //     profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-          //     '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+session_fullname+'</span>'+
-          //     '<img class="img-profile rounded-circle" src="uploads/default.jpg">'+
-          //   '</a>'+
-  
-          //   '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
-          //     '<a class="dropdown-item" href="#" onclick="settings();">'+
-          //       '<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>'+
-          //       'Settings'+
-          //     '</a>'+
-          //     '<div class="dropdown-divider"></div>'+
-          //     '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" onclick="logout();">'+
-          //       '<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
-          //       'Logout'+
-          //     '</a>'+
-          //   '</div>';
-          //     $('.userProfile').append(profile);
-          //     // dashBoardContentheader();
-          //    }
-  
-          //   },
-          //   error: function(err){
-          //        $.notify(err.responseText,'error');
-          //   }
-          //  });
+             },
+             error: function(err){
+              $.notify(err.responseText,'error');
+           }
+          });
       }
 function loadAdminDashboard(){
     let sidebar = adminSideBar();
@@ -193,8 +159,7 @@ function getBlog(){
       }
       },
       error: function(err){
-       console.log("======Manage blogs========");
-       console.log(err.responseText);
+        $.notify(err.responseText,'error');
       }
      });
 }
@@ -483,7 +448,6 @@ function CreateNewBlog(){
             }
             },
             error: function(err){
-              console.log('error creating blog...');
               $.notify(err.responseText,'error');
             }
           });
@@ -674,7 +638,6 @@ function blog_details(blog_id){
                 }
                 },
                 error: function(err){
-                  console.log('error updating blog...');
                   $.notify(err.responseText,'error');
                 }
               });
@@ -685,7 +648,7 @@ function blog_details(blog_id){
           })
     },
     error: function(err){
-      console.log(err.responseText);
+      $.notify(err.responseText,'error');
     }
   });
 }
@@ -705,7 +668,6 @@ function deleteBlog(blog_id){
     }
     },
     error: function(err){
-      console.log('error deleting blog...');
       $.notify(err.responseText,'error');
     }
   });
@@ -781,7 +743,6 @@ function getRecruiterAccounts(){
                 }
   },
   error: function(err){
-    console.log('error retrieving recruiter accounts...');
     $.notify(err.responseText,'error');
   }
 });
@@ -860,7 +821,6 @@ function getJobseekerAccounts(){
        
             },
             error: function(err){
-              console.log('error retrieving jobseeker accounts...');
               $.notify(err.responseText,'error');
             }
           });
@@ -876,7 +836,6 @@ function getAdminAccounts(){
     url: "get.php/company/retrieve_admin_accounts",
     success: function(data){
     if(data !== 400 ){
-    console.log(data);
     temp +='<!-- Page Heading -->'+
     '<!-- DataTales Example -->'+
     '<div class="card shadow mb-4">'+
@@ -942,7 +901,6 @@ function getAdminAccounts(){
           });
         },
         error: function(err){
-          console.log('error retrieving admin accounts...');
           $.notify(err.responseText,'error');
         }
       });
@@ -1027,7 +985,6 @@ function warnOrBlockJobseeker(jobseeker_login_id,request){
       
     },
     error: function(err){
-      console.log('error warning jobseeker...');
       $.notify(err.responseText,'error');
     }
   });
@@ -1055,7 +1012,6 @@ function activatePackage(login_id,caller){
         }
         },
         error: function(err){
-          console.log('error activating package...');
           $.notify(err.responseText,'error');
         }
       });
@@ -1076,7 +1032,6 @@ function activateAccount(login_id){
           }
           },
           error: function(err){
-            console.log('error deleting blog...');
             $.notify(err.responseText,'error');
           }
         });
@@ -1097,7 +1052,6 @@ function deactivateAccount(login_id){
           }
           },
           error: function(err){
-            console.log('error deleting blog...');
             $.notify(err.responseText,'error');
           }
         });
@@ -1118,7 +1072,6 @@ function deleteReport(action_id){
     }
     },
     error: function(err){
-      console.log('error deleting report...');
       $.notify(err.responseText,'error');
     }
   });
@@ -1215,7 +1168,6 @@ function CreateAdmin(){
             }
             },
             error: function(err){
-              console.log('error creating admin account...');
               $.notify(err.responseText,'error');
             }
           });
@@ -1244,7 +1196,6 @@ function delAccount(login_id){
     }
     },
     error: function(err){
-      console.log('error deleting Account...');
       $.notify(err.responseText,'error');
     }
   });
@@ -1320,9 +1271,6 @@ function adminSettings(){
           let email = $('#adminEmail').val();
           let passwd = $('#adminPasswd').val();
           var errors = [];
-          
-         
-          
             $.ajax({
               method: 'POST',
               url: 'post.php/company/update_admin_info',
@@ -1337,7 +1285,6 @@ function adminSettings(){
               }
               },
               error: function(err){
-                console.log('error creating blog...');
                 $.notify(err.responseText,'error');
               }
             });
@@ -1350,9 +1297,750 @@ function adminSettings(){
       }
     },
     error: function(err){
-      console.log('error deleting Account...');
       $.notify(err.responseText,'error');
     }
   });
 }
+/** 
+ * @param message_id -> {am passing message_id here just to know if this is a call from the topbar i.e
+ * Knowing if the user tried to view a message from the notification bar}
+ */
+function AdminMessagesCenter(message_id){
+  let temp = '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>';
+  $('#content').empty().append(temp);
+  
+    adminSidebarMessage();
+    adminContentMessage(message_id);
+  
+  }
+  function adminSidebarMessage(){
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/admin/no_of_new_messages",
+    data: {"login_id" : session_id},
+    success: data => {
+  
+      let sbMessage =  '<a style="cursor: pointer;" class="btn btn-primary btn-block mb-3 text-white" onclick="selectAUserToMsgOrForward(\'null\',\'compose\');">Compose</a>'+
+  
+      '<div class="card-body p-0 text-dark">'+
+        '<ul class="nav nav-pills flex-column text-dark">'+
+          '<li class="nav-item active text-dark">'+
+            '<a class="nav-link" style="cursor: pointer;" onclick="adminContentMessage();">'+
+              '<i class="fas fa-inbox text-dark"></i> Unread'+
+              '<span class="badge bg-info float-right">'+data+'</span>'+
+            '</a>'+
+          '</li>'+
+          '<li class="nav-item">'+
+            '<a style="cursor: pointer;" class="nav-link" onclick="adminSentMessages();">'+
+              '<i class="far fa-envelope"></i> Sent'+
+            '</a>'+
+          '</li>'+
+          '<li class="nav-item">'+
+          '<a href="#" class="nav-link">'+
+            '<i class="far fa-file-alt"></i> Drafts'+
+          '</a>'+
+        '</li>'+
+        '<li class="nav-item">'+
+          '<a href="#" class="nav-link">'+
+            '<i class="fas fa-filter"></i> Junk'+
+            '<span class="badge bg-warning float-right">0</span>'+
+          '</a>'+
+        '</li>'+
+        '<li class="nav-item">'+
+          '<a href="#" class="nav-link">'+
+            '<i class="far fa-trash-alt"></i> Trash'+
+          '</a>'+
+        '</li>'+
+        '</ul>'+
+      '</div>';
+  
+      $('.sidebarMessage').empty().append(sbMessage);
+        //contentMessage();
+    },
+    error: err => {
+    $.notify(err.responseText,'error');
+    }
+  });
+  
+  }
+  /**
+   * @param message_id -> {check messagesCenter to know why i passed message_id}
+   */
+  function adminContentMessage(message_id){
+  let conMessage ='';
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/admin/all_inbox_messages",
+    data: {"login_id" : session_id},
+    success: data => {
+  
+    conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+        '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+          '<h4 class="card-title">Received Messages</h4>'+
+  
+        '</div>'+
+        '<!-- /.card-header -->'+
+        '<div class="card-body p-1">'+
+          '<div class="table-responsive mailbox-messages">'+
+            '<table class="table table-hover" id="myTable">'+
+            '<thead>'+
+            ' <th></th>'+
+            ' <th></th>'+
+            ' <th></th>'+
+            ' <th></th>'+
+            '</thead>'+
+              '<tbody>';
+              $.each(data, ( i, val ) => {
+                let checkId =  val.message_id+"checkbox";
+                //ams-> am filtering the message body to get rid of all tags
+                var filteredMsgBody = $("<div>").html(val.message_body).text();
+                conMessage+= '<tr id="'+val.message_id+'" class="test" style="cursor: pointer;" >'+
+                            '<td>'+
+                              '<div class="icheck-primary">'+
+                                '<input type="checkbox" value="" id="'+checkId+'">'+
+                                '<label for="check1"></label>'+
+                              '</div>'+
+                            '</td>'+
+                            '<td class="mailbox-name">'+val.creator_name+'</td>'+
+                            '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                            '</td>'+
+                            '<td class="mailbox-date">'+val.create_date+'</td>'+
+                          '</tr>';
+              });
+            conMessage +=  '</tbody>'+
+                            '</table>'+
+                            '<!-- /.table -->'+
+                          '</div>'+
+                          '<!-- /.mail-box-messages -->'+
+                        '</div>'+
+                        '<!-- /.card-body -->'+
+  
+                        '</div>'+
+  
+                      '</div>';
+  
+        $('.contentMessage').empty().append(conMessage);
+  
+        $(document).ready( function () {
+        $('#myTable').DataTable({
+          "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+          "oLanguage": {
+            "sLengthMenu": "Display _MENU_ messages",
+            "sEmptyTable":     "No message available"
+          },
+          fnDrawCallback: function() {
+            $("#myTable thead").remove();
+          }
+        });
+  
+        $("#myTable").on("click", ".test", function(e){
+          var id = $(this).attr('id');
+          $.each(data, ( i, val ) => {
+            if(val.message_id === id){
+            viewMessageByAdmin(val.message_id);
+            }
+          });
+          //return false;
+        });
+  
+        });
+  
+        greyOutReadMessagesByAdmin('myTable',message_id);
+      },
+      error: err => {
+        $.notify(err.responseText,'error');
+      }
+      });
+}
+/**
+ * @param param 
+ * @param message_id -> {check messagesCenter to know why i passed message_id}
+ */
+function greyOutReadMessagesByAdmin(param,message_id){
+    $.ajax({
+      method: "GET",
+      dataType: 'json',
+      url: "get.php/admin/read_messages",
+      data: {"login_id" : session_id},
+      success: data => {
+        if(data != 0){
+          $.each(data, (i,val) => {
+            var table = $('#'+param).DataTable();
+          table.$('tr#'+val.mess_rec_id).css({'background-color': 'gainsboro'});
+          });
+        if(message_id !== undefined) viewMessageByAdmin(message_id);
+        }
+      },
+      error: err => {
+        $.notify(err.responseText,'error');
+      }
+    });
+}
+/**
+ * @param msg_id 
+ * @param user_name -> {optional and only set when viewing sent messages}
+ * @param user_id -> {optional and only set when viewing sent messages}
+ */
+function viewMessageByAdmin(msg_id,user_name,user_id){
+  $.ajax({
+   method: "GET",
+   dataType: 'json',
+   url: "get.php/admin/get_message",
+   data: {"msg_id" : msg_id},
+   success: data => {
+     let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
+       '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
+         '<h3 class="card-title">Read Message</h3>'+
+ 
+         '<div class="card-tools">';
+         (user_id === undefined)?temp += '<button class="btn btn-primary btn-icon-split" onclick="adminContentMessage();">':temp +='<button class="btn btn-primary btn-icon-split" onclick="adminSentMessages();">';
 
+         temp +='<span class="icon text-white-50">'+
+           '<i class="fas fa-arrow-left"></i>'+
+         '</span>'+
+         '<span class="text">Back</span>'+
+       '</button>'+
+         '</div>'+
+       '</div>'+
+       '<!-- /.card-header -->'+
+       '<div class="card-body p-2 justify-content-between msgBodyViewed">'+
+         '<div class="mailbox-read-info">'+
+           '<h5><b>'+data.subject+'</b></h5>'+
+           '<h6><p id="'+data.message_id+'">From: '+data.creator_name+'</p>'+
+             '<span class="mailbox-read-time float-right">'+data.create_date+'</span></h6>'+
+         '</div>'+
+         '<!-- /.mailbox-read-info -->'+
+         '<div class="mailbox-controls  text-center">'+
+         '<hr>'+
+           '<div class="btn-group">'+
+             '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete" onclick="aDeleteMessage(\''+msg_id+'\',\''+user_id+'\');">'+
+             '<i class="far fa-trash-alt"></i></button>'+
+ 
+             '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply" onclick="aReplyMsg(\''+msg_id+'\',\''+data.creator_id+'\',\''+data.creator_name+'\',\''+data.subject+'\',\''+user_id+'\');">'+
+               '<i class="fas fa-reply"></i></button>'+
+             '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward" onclick="selectAUserToMsgOrForward(\''+msg_id+'\',\'forward\');">'+
+               '<i class="fas fa-share"></i></button>'+
+           '</div>'+
+           '<!-- /.btn-group -->'+
+           '<button type="button" class="btn btn-default btn-sm printbtn" data-toggle="tooltip" title="Print">'+
+             '<i class="fas fa-print"></i></button>'+
+         '</div>'+
+         '<hr>'+
+         '<!-- /.mailbox-controls -->'+
+         '<div class="mailbox-read-message">'+
+           '<p>'+data.message_body+'</p>'+
+           //'<p class="msgBodyViewed">This is a static text to be removed</p>'+
+           // '<p>'+creator_name+'</p>'+
+         '</div>'+
+         '<!-- /.mailbox-read-message -->'+
+       '</div>'+
+       '<!-- /.card-footer -->'+
+       '<div class="card-footer">'+
+         '<div class="float-right">'+
+           '<button type="button" class="btn btn-default" onclick="aReplyMsg(\''+msg_id+'\',\''+data.creator_id+'\',\''+data.creator_name+'\',\''+data.subject+'\',\''+user_id+'\');"><i class="fas fa-reply"></i> Reply</button>'+
+           '<button type="button" class="btn btn-default" onclick="selectAUserToMsgOrForward(\''+msg_id+'\',\'forward\')"><i class="fas fa-share"></i> Forward</button>'+
+         '</div>'+
+       '<button type="button" class="btn btn-default" onclick="aDeleteMessage(\''+data.message_id+'\',\''+user_id+'\');"><i class="far fa-trash-alt"></i> Delete</button>'+
+       '<button type="button" class="btn btn-default printbtn"><i class="fas fa-print"></i> Print</button>'+
+       '</div>'+
+       '<!-- /.card-footer -->'+
+     '</div>'+
+     '<!-- /.card -->'+
+   '</div>';
+ 
+ $('.contentMessage').empty().append(temp);
+ 
+ $(document).ready(function (){
+ if(user_id){
+   $('#'+msg_id).html('To: '+user_name+'');
+ }
+ //Print a message
+ $(".printbtn").click(function(){
+ 
+ var mode = 'iframe'; //popup
+ var close = mode == "popup";
+ var options = { mode : mode, popClose : close};
+ $("div.msgBodyViewed").printArea( options );
+ 
+ });
+ 
+ $("p").on("copy cut", function (e) {
+   $.notify('copying disabled for good reasons','warning');
+   e.preventDefault();
+   return false;
+ });
+ $('p').mousedown(function(e) { 
+ if (e.button == 2) { 
+     e.preventDefault(); 
+     $.notify('right-click is disabled!','warning'); 
+ }
+ })
+ 
+ if(user_id === undefined){
+   $.ajax({
+     method: "POST",
+     dataType: 'json',
+     url: "post.php/admin/message_is_read",
+     data: {"message_id" : msg_id},
+     success: data => {
+       if(data == 200){
+        adminSidebarMessage();
+         //$('.NewMsgNotificationsCount').empty().html(5);
+          adminNewMsgNotification();
+       }
+     },
+     error: err => {
+     //
+     }
+    })
+   }
+  })
+ 
+   },
+   error: err => {
+     $.notify(err.responseText,'error');
+    }
+   });
+ }
+ /**
+  *@function adminNewMsgNotification -> {updates the topBar message center notification}
+  */
+ function adminNewMsgNotification(){  
+  let temp = '';
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/admin/new_unread_messages",
+    data: {"login_id" : session_id},
+    success: data => {
+      if(data != 400){
+      temp += '<h6 class="dropdown-header">'+
+        'Message Center'+
+      '</h6>';
+      $.each(data, (i,val) => {
+        temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="AdminMessagesCenter(\''+val.message_id+'\');">'+
+        '<div class="font-weight-bold">'+
+          '<div class="text-truncate">'+val.subject+'</div>'+
+          '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+        '</div>'+
+      '</a>';
+      })
+
+      temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
+      $('.NewMsgNotificationsCount').empty().html(data.length);
+      $('.NewMsgNotifications').empty().append(temp);
+      }else{
+        temp += '<h6 class="dropdown-header">'+
+        'Message Center'+
+      '</h6>'+
+      '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
+      $('.NewMsgNotificationsCount').empty().html(0);
+      $('.NewMsgNotifications').empty().append(temp);
+      }
+    },
+    error: err => {
+      $.notify(err.responseText,'error');
+    }
+  });
+}
+/**
+ * @function adminSentMessages -> {}
+ */
+function adminSentMessages(){
+  let temp = '';
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/admin/all_sent_messages",
+    data: {"login_id" : session_id},
+    success: data => {
+      temp +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+        '<h4 class="card-title">Sent Messages</h4>'+
+
+      '</div>'+
+      '<!-- /.card-header -->'+
+      '<div class="card-body p-1">'+
+        '<div class="table-responsive mailbox-messages">'+
+          '<table class="table table-hover" id="myt">'+
+          '<thead>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          ' <th></th>'+
+          '</thead>'+
+            '<tbody>';
+
+              $.each(data, ( i, val ) => {
+                let checkId = val.message_id+"checkbox";
+                // console.log(val.message_body);
+                //ams-> am filtering the message body to get rid of all <p> tags
+                var filteredMsgBody = $("<div>").html(val.message_body).text();
+        temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessageByAdmin(\''+val.message_id+'\',\''+val.recipient_name+'\',\''+val.recipient_id+'\');">'+
+                      '<td>'+
+                        '<div class="icheck-primary">'+
+                          '<input type="checkbox" value="" id="'+checkId+'">'+
+                          '<label for="check1"></label>'+
+                        '</div>'+
+                      '</td>'+
+                      // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
+                      '<td class="mailbox-name">'+val.recipient_name+'</td>'+
+                      '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                      '</td>'+
+                      // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
+                      '<td class="mailbox-date">'+val.create_date+'</td>'+
+                    '</tr>';
+              });
+              temp +=  '</tbody>'+
+                    '</table>'+
+                    '<!-- /.table -->'+
+                  '</div>'+
+                  '<!-- /.mail-box-messages -->'+
+                '</div>'+
+                '<!-- /.card-body -->'+
+                '<div class="card-footer p-0">'+
+              '</div>'+
+              '</div>'+
+            '</div>';
+
+              $('.contentMessage').empty().append(temp);
+
+              $(document).ready( function () {
+              $('#myt').DataTable({
+              "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+              "oLanguage": {
+              "sLengthMenu": "Display _MENU_ messages",
+              "sEmptyTable":     "No message available"
+              },
+              "bDestroy": true,
+              fnDrawCallback: function() {
+              $("#myt thead").remove();
+              }
+            });
+          });
+      },
+      error: err => {
+        $.notify(err.responseText,'error');
+      }
+      });
+}
+/**
+ * 
+ * @param msg_id 
+ * @param jobseeker_id 
+ */
+function aDeleteMessage(msg_id,jobseeker_id){
+  $.ajax({
+    method: "POST",
+    dataType: 'json',
+    url: (jobseeker_id === 'undefined')? "post.php/admin/delete_message":"post.php/admin/delete_sent_message",
+    data: {"message_id" : msg_id},
+    success: data => {
+      if(data == 200){
+        $.notify('message successfully deleted','success');
+        (jobseeker_id === 'undefined')?adminContentMessage():adminSentMessages();
+      }else{
+        $.notify('message has not been deleted','error');
+      }
+    },
+    error: err => {
+      $.notify(err.responseText,'error');
+    }
+  });
+}
+/**
+ * 
+ * @param msg_id 
+ * @param recipient_id 
+ * @param recipient_name 
+ * @param msg_subject 
+ * @param user_id -> {user_id is basically not necessary here. But since we are using the same function for viewing messages,
+ *                       we are using it to differentiate btw sent and received messages as we wont support reply on sent messages}
+ */
+function aReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,user_id){
+  if(user_id !== 'undefined'){
+    $.notify('You can\'t reply to your own sent messages!','warning');
+    return;
+  }else{
+    let temp =' <div class="card card-primary card-outline">'+
+    '<div class="card-header">'+
+      '<h3 class="card-title">Compose New Message</h3>'+
+    '</div>'+
+    '<!-- /.card-header -->'+
+    '<div class="card-body">'+
+      '<form id="ComposeNewMsg">'+
+      '<div class="form-group input-group">'+
+      '<span class="input-group-addon" style="padding: 6px 3px; border: 1px solid lightgrey; border-radius: 5px 0px 0px 5px">'+
+      '<i class="fa fa-user"></i>'+
+      '</span>'+
+      '<input class="form-control" type="text" name="recipient" id="replyToName" value="'+recipient_name+'" readonly>'+
+      '</div>'+
+      '<div class="form-group">'+
+        '<input class="form-control" id="replyToSubject" value="'+msg_subject+'">'+
+      '</div>'+
+      '<div class="form-group">'+
+       '<div id="summernote" class="message_body_info"></div>'+
+      '</div>'+
+    '</div>'+
+    '<!-- /.card-body -->'+
+    '<div class="card-footer">'+
+      '<div class="float-right">'+
+        '<button type="submit" name="submit" id="newreplymsg" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
+      '</div>'+
+      '<button type="reset" class="btn btn-default" onclick="adminContentMessage();"><i class="fas fa-times"></i> Discard</button>'+
+    '</div>'+
+    '</form>';
+  
+  $('.contentMessage').empty().append(temp);
+  $(document).ready(function() {
+    var trap = false;
+    $('#summernote').summernote({
+      height: 300,
+      lineHeight: 1,
+      callbacks: {
+        onPaste: function (e) {
+            if (document.queryCommandSupported("insertText")) {
+                var text = $(e.currentTarget).html();
+                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+                setTimeout(function () {
+                    document.execCommand('insertText', false, bufferText);
+                }, 10);
+                e.preventDefault();
+            } else { //IE
+                var text = window.clipboardData.getData("text")
+                if (trap) {
+                    trap = false;
+                } else {
+                    trap = true;
+                    setTimeout(function () {
+                        document.execCommand('paste', false, text);
+                    }, 10);
+                    e.preventDefault();
+                }
+            }
+
+        }
+    }
+    });
+
+  //on submit
+$('#newreplymsg').click(function(e){
+  e.preventDefault();
+  if($('#replyToName').val() ===''){
+    $.notify('Message receiver name cannot be empty','error');
+  }else if($('#replyToSubject').val() === ''){
+    $.notify('Subject field cannot be empty','error');
+  }else{
+
+  $.ajax({
+    method: "POST",
+    dataType: 'json',
+    url: "post.php/admin/reply_user",
+    data:{"creator_id": session_id,"creator_name": session_fullname,"recipient_id": recipient_id,"recipient_name": recipient_name,"parent_msg_id": msg_id,"subject": $('#replyToSubject').val(),"msg_body": $('.message_body_info').summernote('code')},
+    success: data => {
+        $.notify(data.message,'success');
+        adminContentMessage();
+    },
+    error: err => {
+      $.notify(err.responseText,'error');
+    }
+  });
+}
+  });
+});
+}
+}
+/**
+ * 
+ * @param login_id 
+ * @param name 
+ */
+function acomposeNewMessage(login_id,name){
+  let temp =' <div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  // '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
+    '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+      '<h2 class="card-title text-primary">Compose New Message</h2>'+
+    '</div>'+
+    '<!-- /.card-header -->'+
+    '<div class="card-body">'+
+      '<form id="ComposeNewMsg">'+
+      '<div class="form-group input-group">'+
+      '<span class="input-group-addon" style="padding: 6px 3px; border: 1px solid lightgrey; border-radius: 5px 0px 0px 5px">'+
+      '<i class="fa fa-user"></i>'+
+      '</span>'+
+      '<input class="form-control" type="text" name="recipient" id="thefullname" value="'+name+'" readonly>'+
+      '</div>'+
+      '<div class="form-group">'+
+        '<input class="form-control" id="theSubject" placeholder="Subject:" value="">'+
+      '</div>'+
+      '<div class="form-group">'+
+       '<div id="summernote" class="message_info"></div>'+
+      '</div>'+
+    '</div>'+
+    '<!-- /.card-body -->'+
+    '<div class="card-footer">'+
+      '<div class="float-right">'+
+        '<button type="submit" name="submit" id="newmessage" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
+      '</div>'+
+      '<button type="reset" class="btn btn-default" onclick="selectAUserToMsgOrForward(\'null\',\'compose\')"><i class="fas fa-times"></i> Discard</button>'+
+    '</div>'+
+    '</form>';
+  
+    $('.contentMessage').empty().append(temp);
+    $(document).ready(function() {
+      $('#summernote').summernote({
+        height: 300,
+        lineHeight: 1,
+        callbacks: {
+          onPaste: function (e) {
+              if (document.queryCommandSupported("insertText")) {
+                  var text = $(e.currentTarget).html();
+                  var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+  
+                  setTimeout(function () {
+                      document.execCommand('insertText', false, bufferText);
+                  }, 10);
+                  e.preventDefault();
+              } else { //Internet Explorer
+                  var text = window.clipboardData.getData("text")
+                  if (trap) {
+                      trap = false;
+                  } else {
+                      trap = true;
+                      setTimeout(function () {
+                          document.execCommand('paste', false, text);
+                      }, 10);
+                      e.preventDefault();
+                  }
+              }
+  
+          }
+      }
+      });
+    //on submit
+    $('#newmessage').click(function(e){
+      e.preventDefault();
+      if($('#thefullname').val() ===''){
+        $.notify('Message receiver name cannot be empty','error');
+      }else if($('#theSubject').val() === ''){
+        $.notify('Subject field cannot be empty','error');
+      }else{
+        $.ajax({
+          method: "POST",
+          dataType: 'json',
+          url: "post.php/admin/send_msg_to_user",
+          data: {"creator_id" : session_id, "creator_name": session_fullname, "recipient_id" : login_id, "recipient_name" : $('#thefullname').val(),"parent_msg_id": null, "Subject" : $('#theSubject').val(), "messageBody" : $('.message_info').summernote('code')},
+          success: function(data){
+              $.notify(data.message,'success'); 
+              adminContentMessage();
+          },
+          error: function(err){
+            //
+          }
+        });
+  
+        }
+  
+      });
+  });  
+}
+/**
+ * @function selectAUserToMsgORForward -> {handles retrieving users for both composing a new message and sharing a message}
+ * @param msg_id
+ * @param type -> {either compose|forward} 
+ */
+function selectAUserToMsgOrForward(msg_id,type){
+  let conMessage ='';
+  $.ajax({
+    method: "GET",
+    dataType: 'json',
+    url: "get.php/admin/retreive_all_users",
+    success: function(data){
+  
+    conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+        '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+          '<h4 class="card-title">Select a recipient</h4>'+
+  
+        '</div>'+
+        '<!-- /.card-header -->'+
+        '<div class="card-body p-1">'+
+          '<div class="table-responsive mailbox-messages">'+
+            '<table class="table table-hover" id="mySelector">'+
+            '<thead>'+
+              ' <th>id</th>'+
+              '<th>img</th>'+
+              '<th>FullName</th>'+
+              '<th>Country</th>'+
+              '<th>Address</th>'+
+            '</thead>'+
+              '<tbody>';
+              if(data === 0){
+  
+              }else{
+  
+              $.each(data, ( i, val ) => {
+                conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="'+((type == 'compose')?"acomposeNewMessage(\'"+val.login_id+"\',\'"+val.name+"\')":"aforwardMsgTo(\'"+val.login_id+"\',\'"+val.name+"\',\'"+msg_id+"\')")+'">'+
+                            '<td>'+
+                                '<input type="hidden" value="" id="'+val.login_id+'">'+
+                            '</td>'+
+                            '<td class="img-link"><img class=" rounded-circle" src="'+((val.image == null)?"https://ui-avatars.com/api/?name="+val.name.replace(/ /g, '+'):'uploads/'+val.image)+'" style="height: auto;width: 5rem;" alt="'+val.name+'"/>'+
+                            '<div class="status-indicator bg-success"></div>'+
+                            '</td>'+
+                            '<td class="full-name"><b>'+val.name+'</b></td>'+
+                            '<td class="country-name">'+val.country+'</td>'+
+                            '<td class="Skills">'+val.address+'</td>'+
+                          '</tr>';
+              });
+              }
+  
+            conMessage +=  '</tbody>'+
+                            '</table>'+
+                            '<!-- /.table -->'+
+                          '</div>'+
+                          '<!-- /.mail-box-messages -->'+
+                        '</div>'+
+                        '<!-- /.card-body -->'+
+  
+                        '</div>'+
+  
+                      '</div>';
+  
+        $('.contentMessage').empty().append(conMessage);
+  
+        $(document).ready( function () {
+        $('#mySelector').DataTable({
+          "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+          "oLanguage": {
+            "sLengthMenu": "Display _MENU_ job seekers",
+            "sEmptyTable":     "No message available"
+          },
+          fnDrawCallback: function() {
+            $("#mySelector thead").remove();
+          }
+        });
+        });
+  
+      },
+      error: err => {
+        $.notify(err.responseText,'error');
+      }
+      });
+  }
+  function aforwardMsgTo(login_id,name,msg_id){
+      $.ajax({
+        method: "POST",
+        dataType: 'json',
+        url: "post.php/company/forward_msg_to_user",
+        data: {"creator_id" : session_id, "fullname": session_fullname, "recipient_id" : login_id, "recipient_name" : name,"message_id": msg_id},
+        success: function(data){
+            $.notify(data.message,'success'); 
+            adminContentMessage();
+        },
+        error: function(err){
+          $.notify(err.responseText,'error');
+        }
+      });
+  }

@@ -1,5 +1,5 @@
 <?php
-include_once 'model/companymodel.php';
+require_once 'model/companymodel.php';
 class SettingsController extends Company{
 
     public function update_company(){
