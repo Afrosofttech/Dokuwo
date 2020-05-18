@@ -118,7 +118,7 @@ if($view == 'company'){
        break;
        case "get_job_details":
         $result = new CompanyView();
-        $job_details = $result->job_details($_POST['job_id']);
+        $job_details = $result->job_details($_GET['job_id']);
         echo json_encode($job_details);       
         break;
         case "featured_jobs":

@@ -137,7 +137,7 @@ function jobCategory(){
     
    },
    error: function(err){
-    console.log(err.responseText);
+    $.notify(err.responseText,'error');
    }
   });
   
@@ -188,8 +188,7 @@ function featuredJobs(){
         latestJobs();
        },
        error: function(err){
-        console.log("======error function featured jobs========");
-        console.log(err.responseText);
+        $.notify(err.responseText,'error');
        }
       });
 
@@ -244,8 +243,7 @@ function latestJobs(){
     blog();
        },
        error: function(err){
-        console.log("======error function========");
-        console.log(err.responseText);
+        $.notify(err.responseText,'error');
        }
       });
     
@@ -304,7 +302,7 @@ function blog(){
       }
     },
     error: function(err){
-      console.log(err.responseText);
+      $.notify(err.responseText,'error');
     }
   });
     
@@ -510,8 +508,7 @@ $.ajax({
   
   },
   error: function(err){
-   console.log("======error function jobs by category========");
-   console.log(err.responseText);
+    $.notify(err.responseText,'error');
   }
  });
   
@@ -619,8 +616,7 @@ function displayEmployers(start,finish){
 
       },
       error: function(err){
-       console.log("======error function displayjobs========");
-       console.log(err.responseText);
+        $.notify(err.responseText,'error');
       }
      });
   
@@ -682,7 +678,6 @@ function displayEmployers(start,finish){
                 '</div>'+
                 '<div class="col-lg-12 col-md-12 col-xs-12">';
                 $.each(data.slice(beg,end),function(i,val){
-                  console.log('begin :',beg,'end :',end);
                   temp +='<a class="job-listings" onclick="show_jobseeker_details(\''+val.jobseeker_id+'\',\''+beg+'\',\''+end+'\');"  style="cursor: pointer;">'+
                   '<div class="row">'+
                     '<div class="col-lg-4 col-md-4 col-xs-12">'+
@@ -742,8 +737,7 @@ function displayEmployers(start,finish){
         
       },
       error: function(err){
-       console.log("======error function jobs by category========");
-       console.log(err.responseText);
+        $.notify(err.responseText,'error');
       }
      });
     }
@@ -753,12 +747,11 @@ function displayEmployers(start,finish){
     function show_job_details(job_id,company_name,currency,back,category){
       let temp = '';
       $.ajax({
-        method: "POST",
+        method: "GET",
         url: "account/get.php/company/get_job_details",
         dataType: "json",
         data:{'job_id':job_id},
         success: function(data){
-          console.log(data);
           temp +=' <!-- Page Header Start -->'+
           '<div class="page-header">'+
             '<div class="container">'+
@@ -837,8 +830,7 @@ function displayEmployers(start,finish){
           });
         },
         error: function(err){
-         console.log("======error function displayjobs========");
-         console.log(err.responseText);
+          $.notify(err.responseText,'error');
         }
        });
 
@@ -969,7 +961,7 @@ function displayEmployers(start,finish){
                 });
               },
               error: function(err){
-               console.log(err.responseText);
+                $.notify(err.responseText,'error');
               }
              });
       
@@ -1113,7 +1105,6 @@ function displayEmployers(start,finish){
                                 }
                               },
                               error: function(err){
-                                console.log('error sending review...');
                                 $.notify(err.responseText,'error');
                               }
                             });
@@ -1192,8 +1183,7 @@ function displayEmployers(start,finish){
                     });
                   },
                   error: function(err){
-                   console.log("======error function show employer details========");
-                   console.log(err.responseText);
+                    $.notify(err.responseText,'error');
                   }
                  });
           
@@ -1344,8 +1334,7 @@ function displayEmployers(start,finish){
           
         },
         error: function(err){
-         console.log("======error function jobs by category========");
-         console.log(err.responseText);
+          $.notify(err.responseText,'error');
         }
        });
 
@@ -1491,8 +1480,7 @@ function displayEmployers(start,finish){
           
         },
         error: function(err){
-         console.log("======error function jobs by category========");
-         console.log(err.responseText);
+          $.notify(err.responseText,'error');
         }
        });
 
@@ -1617,8 +1605,7 @@ function displayEmployers(start,finish){
           });
         },
         error: function(err){
-         console.log("======error function browse featured jobs========");
-         console.log(err.responseText);
+          $.notify(err.responseText,'error');
         }
        });
 
@@ -1742,7 +1729,7 @@ function displayEmployers(start,finish){
 
           },
           error: function(err){
-            console.log('errror searching: ', err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       }
@@ -1866,8 +1853,7 @@ function displayEmployers(start,finish){
           });
         },
         error: function(err){
-         console.log("======error function browse featured jobs========");
-         console.log(err.responseText);
+          $.notify(err.responseText,'error');
         }
        });
 
@@ -1875,7 +1861,6 @@ function displayEmployers(start,finish){
     }
 
     function latestJobSearch(start,finish){
-      console.log('searching latest jobs...');
       let beg ='';
       let end ='';
       let numberOfItems = '';
@@ -1993,7 +1978,7 @@ function displayEmployers(start,finish){
 
           },
           error: function(err){
-            console.log('errror searching: ', err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       }
@@ -2069,7 +2054,7 @@ function displayEmployers(start,finish){
           });
         },
         error: function(err){
-          console.log(err.responseText);
+          $.notify(err.responseText,'error');
         }
       });
 
@@ -2137,7 +2122,6 @@ function displayEmployers(start,finish){
                     '</div>';
                     if($.trim(val.blog_content).length > 100){
                       let subcontent = val.blog_content.substring(0,100);
-                      console.log(subcontent);
                       posts +='<p>'+subcontent+'...</p>';
                     }
                     else{
@@ -2181,7 +2165,7 @@ function displayEmployers(start,finish){
 
         },
         error: function(err){
-          console.log("Error blog posts :",err.responseText);
+          $.notify(err.responseText,'error');
           
         } 
       });
@@ -2195,7 +2179,6 @@ function displayEmployers(start,finish){
         dataType: "json",
         success: function(data){
           if(data != 400){
-            console.log("blog_cat :",data);
             blog_cat +='<!-- Categories Widget -->'+
                 '<div class="widget blog-cat">'+
                   '<h5 class="widget-title">Categories</h5>'+
@@ -2216,7 +2199,7 @@ function displayEmployers(start,finish){
          
         },
         error: function(err){
-          console.log("error blog_cat: ",err.responseText)
+          $.notify(err.responseText,'error');
         }
       });
       
@@ -2230,7 +2213,6 @@ function displayEmployers(start,finish){
         dataType: "json",
         success: function(data){
           if(data != 400){
-            console.log("blog_cat :",data);
             recent_posts +='<!-- Popular Posts widget -->'+
                 '<div class="widget">'+
                   '<h5 class="widget-title">Recent Post</h5>'+
@@ -2256,7 +2238,7 @@ function displayEmployers(start,finish){
          
         },
         error: function(err){
-          console.log("error recent posts: ",err.responseText)
+          $.notify(err.responseText,'error');
         }
       });
     }
@@ -2281,7 +2263,6 @@ function displayEmployers(start,finish){
         data: {'category':category},
         success: function(data){
           if(data != 400){
-            console.log("blog_cat :",data);
             numberOfItems = data.length;
             limitPerPage = 3;
             totalPages = Math.round(numberOfItems/limitPerPage);
@@ -2330,7 +2311,7 @@ function displayEmployers(start,finish){
           }         
         },
         error: function(err){
-          console.log("error POST_BY_CATEGORY: ",err.responseText)
+          $.notify(err.responseText,'error');
         }
       });
     }
@@ -2469,16 +2450,13 @@ function displayEmployers(start,finish){
             })
           },
           error: function(err){
-            console.log('error search jobs: ',err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       }
       
     }
-    // $('#searchEmployer').click(function(e){
-    //   // e.preventDefault();
-    //   console.log('searching for Employers triggered............');
-    // });
+
     function filterEmployers(start,finish,e){
       
       let temp = '';
@@ -2540,12 +2518,10 @@ function displayEmployers(start,finish){
             });
           },
           error: function(err){
-            console.log('error search jobs: ',err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       }
-
-      // console.log('inside the filter employers function .............');
       
     }
 
@@ -2562,7 +2538,6 @@ function displayEmployers(start,finish){
       if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else{ beg = 0; end = 6;}
       if($('#tagline').val() ==='' && $('#jobseeker_location').val() ===''){
         $.notify('There is nothing to search for','error');
-        console.log('empty values cant search');
       }else{
         $.ajax({
           data: {'tagline':$('#tag_line').val(),'address':$('#jobseeker_location').val()},
@@ -2613,7 +2588,7 @@ function displayEmployers(start,finish){
             });
           },
           error: function(err){
-            console.log('error search jobseekers: ',err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       }
@@ -2631,7 +2606,6 @@ function displayEmployers(start,finish){
           dataType: "json",
           data :{'job_id':job_id,'company_id':company_id,'jobseeker_id':cookie_user_id},
           success: function(data){
-            // console.log(data);
             if(data == 200){
               swal('Application sent','Your Application has been successfully sent','success','Close');
             }
@@ -2640,7 +2614,7 @@ function displayEmployers(start,finish){
             }
           },
           error: function(err){
-            console.log(err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       }
@@ -2694,7 +2668,7 @@ function displayEmployers(start,finish){
             }
           },
           error: function(err){
-            console.log(err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       
@@ -2803,7 +2777,7 @@ function displayEmployers(start,finish){
 
       $('#submit').click(function(e){
         e.preventDefault();
-        // console.log('trying to contact admin...............');
+        $.notify(err.responseText,'error');
         let name = $('#contact_name').val();
         let email = $('#contact_email').val();
         let msg_subject = $('#msg_subject').val();
@@ -2844,7 +2818,7 @@ function displayEmployers(start,finish){
             }
           },
           error: function(err){
-            console.log(err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       });

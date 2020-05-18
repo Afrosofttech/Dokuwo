@@ -395,213 +395,209 @@ function jJobStatistics(){
 '</div>';
 $('.dbInner').append(job_statistics);
 }
-function jobs(){
+function jobs(start,finish,filter){
+  // let jobs = '';
+  let beg ='';
+  let end ='';
+  let numberOfItems = '';
+  let totalPages = '';
+  let forward = '';
+  let Backward = '';
+  let Prev = '';
+  let Next = '';
+  let temp = '';
+  
+  if(start != undefined && finish != undefined){ beg = start; end = finish;}else{ beg = 0; end = 4;}
   $.ajax({
     method: "GET",
-    dataType: "json",
     url: "get.php/jobseeker/retreive_jobs",
-    success: function(data){
-      if(data != 400){
-        paginateJobs(data);
-      }else{
-       //
-      }
-    },
-    error: function(err){
-
-    }
-  })
-}
-function paginateJobs(data){
-    let jobs= '<!-- Page Header Start -->'+
-                '<div class="container">'+
-                  '<div class="row text-center">'+         
-                    '<div class="col-lg-12">'+
-                      '<div class="inner-header">'+
-                        '<h3>Browse Job</h3>'+
-                    ' </div>'+
-                    '</div>'+
-                  '</div>'+
-                '</div>'+
-              '<!-- Page Header End --> '+
-  
-              '<!-- Job Browse Section Start -->'+  
-              '<section class="job-browse section">'+
-                '<div class="container">'+
-                  '<div class="row">'+
-                    '<div class="col-lg-12 col-md-12 col-xs-12">'+
-                      '<div class="wrap-search-filter row">'+
-                       '<form class="col-lg-12 col-md-12 col-xs-12 d-flex content-space-between" method="POST" id="editJobseeker" autocomplete="off">'+
-                        '<div class="col-lg-5 col-md-5 col-xs-12">'+
-                          '<input type="text" class="form-control" name="job" id="job" placeholder="Keyword: Job Name">'+
-                        '</div>'+
-                        '<div class="col-lg-5 col-md-5 col-xs-12">'+
-                          '<input type="text" class="form-control" id="location" name="location" placeholder="Location: City, State">'+
-                        '</div>'+
-                        '<div class="col-lg-2 col-md-2 col-xs-12">'+
-                          '<button type="submit" name="filter" id="filter" class="btn btn-common btn-success btn-block float-right">Filter</button>'+
-                        '</div>'+
-                       '</form>'+
-                      '</div>'+
-                    '</div>'+
-                    '<div class="col-lg-12 col-md-12 col-xs-12 jobsContentArea">';
-                     $.each(data,function(index,val){
-                      jobs += '<a class="job-listings" style="cursor: pointer;" onclick="applyNow(\''+val.job_id+'\',\''+val.job_name+'\',\''+val.job_cat+'\',\''+val.job_type+'\',\''+val.requirements+'\',\''+val.job_location+'\',\''+val.date_posted+'\',\''+val.job_contact_email+'\',\''+val.job_contact_phone+'\',\''+val.salary+'\',\''+val.company_name+'\',\''+val.currency+'\',\''+val.logo+'\',\''+val.company_id+'\');">'+
-                      '<div class="row">'+
-                        '<div class="col-lg-4 col-md-4 col-xs-12">'+
-                          '<div class="job-company-logo">'+
-                            '<img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
-                          '</div>'+
-                          '<div class="job-details">'+
-                            '<h3>'+val.job_name+'</h3>'+
-                            '<span class="company-neme">'+
-                              ''+val.company_name+''+
-                            '</span>'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="col-lg-2 col-md-2 col-xs-12 text-center">'+
-                          '<span class="btn-open text-xs">'+
-                           ''+val.currency+currencyFormat(val.salary)+''+
-                          '</span>'+
-                        '</div>'+
-                        '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                         '<div class="location">'+
-                           '<i class="lni-map-marker"></i> '+val.job_location+''+
-                         '</div>'+
-                        '</div>'+
-                        '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                          '<span class="btn-full-time">'+val.job_type+'</span>'+
-                        '</div>'+
-                        '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                          '<span class="btn-apply" style="cursor: pointer;">Apply Now</span>'+
-                        '</div>'+
-                      '</div>'+
-                    '</a>';
-                     })
-
-                     jobs += '<!-- Start Pagination -->'+
-                      '<ul class="j-pagination" id="pagin">' +             
-  
-                      '</ul>'+
-                      '<!-- End Pagination -->'+
-  
-                    '</div> '+
-                 ' </div>'+
-                '</div>'+
-              '</section>'+
-              '<!-- Job Browse Section End -->';
-  
-    $('#content').empty().append(jobs);
-  
-    $(document).ready(function(e){
-      limitPerPage = 3;
+    dataType: "json",
+    success: data => {
+      if(filter == undefined || filter == 'undefined') ;
+      else  data = filter;
       numberOfItems = data.length;
-      let totalPages = Math.round(numberOfItems/limitPerPage);
-      let temp ='<li class="active"><a class="btn-prev btn-link  disabled"><i class="lni-angle-left"></i> prev</a></li>';
-  
-     for(i=0; i<totalPages; i++){
-       temp +='<li><a href="#" class="'+((i==0)?'current':'')+'"><i class="lni-angle-left"></i> '+(i+1)+'</a></li>';
-     }
-     temp +=' <li class="active"><a class="btn-next  btn-link  disabled">Next <i class="lni-angle-right"></i></a></li>';
-    $('.j-pagination').append(temp);
-      
-    showPage = function(page) {
-        $(".job-listings").hide();
-        $(".job-listings").each(function(n) {
-            if (n >= limitPerPage * (page - 1) && n < limitPerPage * page)
-                $(this).show();
-        });        
-    }
-        
-    showPage(1);
-  
-    $("#pagin li a").click(function() {
-        $("#pagin li a").removeClass("current");
-        $(this).addClass("current");
-        showPage(parseInt($(this).text())) 
-    });
-
-$('#filter').click(function(e){
-  e.preventDefault();
-  if($('#job').val() ==='' && $('#location').val() ===''){
-    $.notify('There is nothing to search for','error');
-  }else{
-    $.ajax({
-      method: "GET",
-      dataType: 'json',
-      url: "get.php/jobseeker/search_jobs",
-      data: {"job" : $('#job').val(), "location": $('#location').val()},
-      success: function(data){
-        if(data.length > 0){
-          paginateJobs(data);
-        }else{
-          $.notify('search result doesn\'t exist','error');
-        }
-      },
-      error: function(err){
-        $.notify(err.responseText,'error');
-      }
-  
-      })
-     }
-   })
- })
-}
-function applyNow(job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,company_name,currency,logo,company_id){
-// alert(job_id);
-//  let apply = '<!-- Job Browse Section Start -->'+  
-//  '<section class="job-browse section">'+
-//    '<div class="container">'+
-//      '<div class="row">'+
-//      '<div class="col-lg-12 col-md-12 col-xs-12 applyJobArea">'+
-//        '<p>Hello ams I hope you are doing well</p>'+
-//      '</div>'+
-//    '</div>'+
-//   '</div>'+
-//   '</section>';
-let apply = '<!-- Job Detail Section Start -->'  +
-'<section class="job-detail section">'+
-  '<div class="container">'+
-    '<div class="row justify-con+tent-between">'+
-      '<div class="col-lg-8 col-md-12 col-xs-12">'+
-      '<div class="content-area">  '+
-
-          '<div class="breadcrumb-wrapper">'+
-         ' <div class="img-wrapper">'+
-            '<img src="'+((logo == 'null')?"https://ui-avatars.com/api/?name="+company_name.replace(/ /g, '+'):'uploads/'+logo)+'" style="height: 5rem;width: 5rem;" alt="'+company_name+'">'+
-          '</div>'+
-          '<div class="content">'+
-            '<h3 class="product-title font-weight-bold">Hiring '+job_name+'</h3>'+
-            '<p class="brand">'+company_name+'</p>'+
-            '<div class="tags">'+  
-              '<span><i class="fa fa-map-marker mr-1"></i>'+job_location+'</span>  '+
-              '<span><i class="fa fa-calendar mr-1"></i> Posted '+date_posted+'</span>'+ 
-              '<div class="year">Monthly</div>'+
-              '<span class="price">'+currency+currencyFormat(salary)+'</span>'+
-              '<div class="year">'+job_type+'</div>'+ 
+      limitPerPage = 4;
+      totalPages = Math.round(numberOfItems/limitPerPage);
+      if(data != 400){
+        temp +='<!-- Page Header Start -->'+
+        '<div class="page-header">'+
+          '<div class="container">'+
+            '<div class="row">'+        
+              '<div class="col-lg-12">'+
+                '<div class="inner-header">'+
+                  '<h3>Browse Jobs</h3>'+
+                '</div>'+
+              '</div>'+
             '</div>'+
           '</div>'+
         '</div>'+
-
-          '<h4 class="font-weight-bold">Job Requirements</h4>'+
-          ''+requirements+''+
-          '<h5 class="font-weight-bold">Contact details</h5>'+
-          '<ul>'+
-            '<li><i class="fas fa-envelope mr-1"></i>- '+job_contact_email+'</li>'+
-            '<li><i class="fas fa-phone mr-1"></i>- '+job_contact_phone+'</li>'+
-          '</ul>'+
-          '<div class="d-flex justify-content-between">'+
-          '<a href="#" class="btn btn-success" style="cursor: pointer;" onclick="sendApp(\''+job_id+'\',\''+company_id+'\');">Apply job</a> '+
-          '<a href="#" class="btn btn-danger" style="cursor: pointer;" onclick="jobs();"><i class="fa fa-arrow-left"> Back </i></a>'
-          '</div>'
-        '</div>'
+        '<!-- Page Header End -->'+       
+  
+        '<!-- Job Browse Section Start -->'+  
+        '<section class="job-browse section">'+
+          '<div class="container">'+
+            '<div class="row">'+
+              '<div class="col-lg-12 col-md-12 col-xs-12">'+
+                '<div class="wrap-search-filter row">'+
+                  '<div class="col-lg-5 col-md-5 col-xs-12">'+
+                    '<input type="text" class="form-control" id="job" placeholder="Job Name">'+
+                  '</div>'+
+                  '<div class="col-lg-5 col-md-5 col-xs-12">'+
+                    '<input type="text" class="form-control" id="location" placeholder="location">'+
+                  '</div>'+
+                  '<div class="col-lg-2 col-md-2 col-xs-12">'+
+                    '<button type="submit" class="btn btn-common btn-success btn-block float-right" id="filter">Filter</button>'+
+                  '</div>'+
+                '</div>'+
+              '</div>'+
+              '<div class="col-lg-12 col-md-12 col-xs-12 jobs">';
+              $.each(data.slice(beg,end),function(i,val){
+                temp +='<a class="job-listings" onclick="applyNow(\''+val.job_id+'\',\''+val.company_name+'\',\''+val.currency+'\',\''+val.logo+'\',\''+val.company_id+'\');" style="cursor: pointer;">'+
+                '<div class="row">'+
+                  '<div class="col-lg-4 col-md-4 col-xs-12">'+
+                    '<div class="job-company-logo">'+
+                      '<img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
+                    '</div>'+
+                    '<div class="job-details">'+
+                      '<h3>'+val.job_name+'</h3>'+
+                      '<span class="company-neme">'+
+                        val.company_name+
+                      '</span>'+
+                    '</div>'+
+                  '</div>'+
+                  '<div class="col-lg-2 col-md-2 col-xs-12 text-center">'+
+                    '<span class="btn-open text-xs">'+
+                     val.currency+currencyFormat(val.salary) +
+                    '</span>'+
+                  '</div>'+
+                  '<div class="col-lg-2 col-md-2 col-xs-12 text-left">'+
+                  '<div class="location">'+
+                    '<i class="lni-map-marker"></i>'+ val.job_location +
+                  '</div>'+
+                  '</div>'+
+                  '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
+                    '<span class="btn-full-time" style="color:#007bff;">'+val.job_type+'</span>'+
+                  '</div>'+
+                  '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
+                    '<span class="btn-apply" style="cursor: pointer;">Apply Now</span>'+
+                  '</div>'+
+                '</div>'+
+              '</a>';
+              
+              });
+              
+        let begin = parseInt(beg);
+        let ending = parseInt(end);
+        let LastLast =  "jobs(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\',\'"+filter+"\')";
+        (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "jobs(\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\',\'"+filter+"\')"):(forward = "jobs(\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\',\'"+filter+"\')"); 
+        (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "jobs(\'"+(begin)+"\',\'"+(ending)+"\',\'"+filter+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "jobs(\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\',\'"+filter+"\')"): (Backward = "jobs(\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\',\'"+filter+"\')");
+                  temp +='<!-- Start Pagination -->'+
+                    '<ul class=" j-pagination">' +             
+                    ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" jobs(0,4,\''+filter+'\')"><i class="lni-angle-left"></i> First</a></li>'+
+                      '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
+                      '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
+                      '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
+                    '</ul>'+
+                    '<!-- End Pagination -->'+
+                
+            ' </div>'+
+            '</div>'+
+          '</div>'+
+        '</section>'+
+        '<!-- Job Browse Section End -->'; 
+      }
+      $(document).ready(()=>{
+        $('#content').empty().append(temp);
+        //filter search
+        $('#filter').click(function(e){
+          e.preventDefault();
+          if($('#job').val() ==='' && $('#location').val() ===''){
+            $.notify('There is nothing to search for','error');
+          }else{
+            $.ajax({
+              method: "GET",
+              dataType: 'json',
+              url: "get.php/jobseeker/search_jobs",
+              data: {"job" : $('#job').val(), "location": $('#location').val()},
+              success: data => {
+                if(data.length > 0){
+                  jobs(undefined,undefined,data);
+                }else{
+                  $.notify('search result doesn\'t exist','error');
+                }
+              },
+              error: err => {
+                $.notify(err.responseText,'error');
+              }
+          
+              })
+             }
+           })
+      });
+    
+    },
+    error: err => {
+      $.notify(err.responseText,'error');
+    }
+   });
+    
+  }
+function applyNow(job_id){
+let apply = '';
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/company/get_job_details",
+  data: {'job_id':job_id},
+  success: data => {
+    apply = '<!-- Job Detail Section Start -->'  +
+    '<section class="job-detail section">'+
+      '<div class="container">'+
+        '<div class="row justify-con+tent-between">'+
+          '<div class="col-lg-8 col-md-12 col-xs-12">'+
+          '<div class="content-area">  '+
+    
+              '<div class="breadcrumb-wrapper">'+
+             ' <div class="img-wrapper">'+
+                '<img src="'+((data.logo == 'null')?"https://ui-avatars.com/api/?name="+data.company_name.replace(/ /g, '+'):'uploads/'+data.logo)+'" style="height: 5rem;width: 5rem;" alt="'+data.company_name+'">'+
+              '</div>'+
+              '<div class="content">'+
+                '<h3 class="product-title font-weight-bold">Hiring '+data.job_name+'</h3>'+
+                '<p class="brand">'+data.company_name+'</p>'+
+                '<div class="tags">'+  
+                  '<span><i class="fa fa-map-marker mr-1"></i>'+data.job_location+'</span>  '+
+                  '<span><i class="fa fa-calendar mr-1"></i> Posted '+data.date_posted+'</span>'+ 
+                  '<div class="year">Monthly</div>'+
+                  '<span class="price">'+data.currency+currencyFormat(data.salary)+'</span>'+
+                  '<div class="year">'+data.job_type+'</div>'+ 
+                '</div>'+
+              '</div>'+
+            '</div>'+
+    
+              '<h4 class="font-weight-bold">Job Requirements</h4>'+
+              ''+data.requirements+''+
+              '<h5 class="font-weight-bold">Contact details</h5>'+
+              '<ul>'+
+                '<li><i class="fas fa-envelope mr-1"></i>- '+data.job_contact_email+'</li>'+
+                '<li><i class="fas fa-phone mr-1"></i>- '+data.job_contact_phone+'</li>'+
+              '</ul>'+
+              '<div class="d-flex justify-content-between">'+
+              '<a href="#" class="btn btn-success" style="cursor: pointer;" onclick="sendApp(\''+job_id+'\',\''+data.company_id+'\');">Apply job</a> '+
+              '<a href="#" class="btn btn-danger" style="cursor: pointer;" onclick="jobs();"><i class="fa fa-arrow-left"> Back </i></a>'
+              '</div>'
+            '</div>'
+          '</div>'+
+    
+        '</div>'+
       '</div>'+
-
-    '</div>'+
-  '</div>'+
-'</section>'+
-'<!-- Job Detail Section End -->';
-  $('#content').empty().append(apply);
+    '</section>'+
+    '<!-- Job Detail Section End -->';
+      $('#content').empty().append(apply);
+  },
+  error: function(err){
+    $.notify(err.responseText,'error');
+  }
+ });
 }
 function sendApp(job_id,company_id){  
   $.ajax({
