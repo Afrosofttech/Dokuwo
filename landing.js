@@ -140,7 +140,7 @@ function jobCategory(){
     
    },
    error: function(err){
-    console.log(err.responseText);
+    $.notify(err.responseText,'error');
    }
   });
   
@@ -191,8 +191,7 @@ function featuredJobs(){
         });
        },
        error: function(err){
-        console.log("======error function featured jobs========");
-        console.log(err.responseText);
+        $.notify(err.responseText,'error');
        }
       });
 
@@ -247,8 +246,7 @@ function latestJobs(){
     });
        },
        error: function(err){
-        console.log("======error function========");
-        console.log(err.responseText);
+        $.notify(err.responseText,'error');
        }
       });
     
@@ -359,7 +357,7 @@ function blog(){
       }
     },
     error: function(err){
-      console.log(err.responseText);
+      $.notify(err.responseText,'error');
     }
   });
     
@@ -541,7 +539,7 @@ if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else
                 '</div>'+
                 '</div>'+
                 '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                  '<span class="btn-full-time">'+val.job_type+'</span>'+
+                  '<span class="btn-full-time" style="color:#007bff;">'+val.job_type+'</span>'+
                 '</div>'+
                 '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
                   '<span class="btn-apply">View Job</span>'+
@@ -706,8 +704,7 @@ function displayEmployers(start,finish){
 
       },
       error: function(err){
-       console.log("======error function displayjobs========");
-       console.log(err.responseText);
+        $.notify(err.responseText,'error');
       }
      });
   
@@ -1146,7 +1143,6 @@ function displayEmployers(start,finish){
                                 }
                               },
                               error: function(err){
-                                console.log('error sending review...');
                                 $.notify(err.responseText,'error');
                               }
                             });
@@ -1377,8 +1373,7 @@ function displayEmployers(start,finish){
                     });
                   },
                   error: function(err){
-                   console.log("======error function show employer details========");
-                   console.log(err.responseText);
+                    $.notify(err.responseText,'error');
                   }
                  });
           
@@ -1469,7 +1464,7 @@ function displayEmployers(start,finish){
                       '</div>'+
                       '</div>'+
                       '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                        '<span class="btn-full-time">'+val.job_type+'</span>'+
+                        '<span class="btn-full-time" style="color:#007bff;">'+val.job_type+'</span>'+
                       '</div>'+
                       '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
                         '<span class="btn-apply">View Job</span>'+
@@ -1529,8 +1524,7 @@ function displayEmployers(start,finish){
           
         },
         error: function(err){
-         console.log("======error function jobs by category========");
-         console.log(err.responseText);
+          $.notify(err.responseText,'error');
         }
        });
 
@@ -1676,8 +1670,7 @@ function displayEmployers(start,finish){
           
         },
         error: function(err){
-         console.log("======error function jobs by category========");
-         console.log(err.responseText);
+          $.notify(err.responseText,'error');
         }
        });
 
@@ -2058,7 +2051,7 @@ function displayEmployers(start,finish){
           });
         },
         error: function(err){
-          console.log(err.responseText);
+          $.notify(err.responseText,'error');
         }
       });
 
@@ -2208,7 +2201,7 @@ function displayEmployers(start,finish){
           
         },
         error: function(err){
-          console.log("error blog_cat: ",err.responseText)
+          $.notify(err.responseText,'error');
         }
       });
       
@@ -2236,7 +2229,7 @@ function displayEmployers(start,finish){
               
         },
         error: function(err){
-          console.log("error recent posts: ",err.responseText)
+          $.notify(err.responseText,'error');
         }
       });
     }
@@ -2254,7 +2247,7 @@ function displayEmployers(start,finish){
           }        
         },
         error: function(err){
-          console.log("error POST_BY_CATEGORY: ",err.responseText)
+          $.notify(err.responseText,'error');
         }
       });
     }
@@ -2408,12 +2401,10 @@ function displayEmployers(start,finish){
             });
           },
           error: function(err){
-            console.log('error search jobs: ',err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       }
-
-      // console.log('inside the filter employers function .............');
       
     }
 
@@ -2428,7 +2419,6 @@ function displayEmployers(start,finish){
           dataType: "json",
           data :{'job_id':job_id,'company_id':company_id,'jobseeker_id':cookie_user_id},
           success: function(data){
-            // console.log(data);
             if(data == 200){
               swal('Application sent','Your Application has been successfully sent','success','Close');
             }
@@ -2437,7 +2427,7 @@ function displayEmployers(start,finish){
             }
           },
           error: function(err){
-            console.log(err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       }
@@ -2491,7 +2481,7 @@ function displayEmployers(start,finish){
             }
           },
           error: function(err){
-            console.log(err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       
@@ -2600,7 +2590,7 @@ function displayEmployers(start,finish){
 
       $('#submit').click(function(e){
         e.preventDefault();
-        // console.log('trying to contact admin...............');
+        $.notify(err.responseText,'error');
         let name = $('#contact_name').val();
         let email = $('#contact_email').val();
         let msg_subject = $('#msg_subject').val();
@@ -2641,7 +2631,7 @@ function displayEmployers(start,finish){
             }
           },
           error: function(err){
-            console.log(err.responseText);
+            $.notify(err.responseText,'error');
           }
         });
       });

@@ -118,7 +118,7 @@ if($view == 'company'){
        break;
        case "get_job_details":
         $result = new CompanyView();
-        $job_details = $result->job_details($_POST['job_id']);
+        $job_details = $result->job_details($_GET['job_id']);
         echo json_encode($job_details);       
         break;
         case "featured_jobs":
@@ -338,14 +338,29 @@ if($view == 'company'){
    }
  }else{
     switch ($method){
-        case "":
-           ;
-           break;
-       case "":
-           ;
-           break;
+        case "no_of_new_messages":
+          echo json_encode((new AdminMessagesView())->no_of_new_messages($_GET['login_id']));
+        break;
+       case "all_inbox_messages":
+          echo json_encode((new AdminMessagesView())->all_inbox_messages($_GET['login_id']));
+        break;
+       case "read_messages":
+          echo json_encode((new AdminMessagesView())->read_messages($_GET['login_id']));
+        break;
+       case "get_message":
+          echo json_encode((new AdminMessagesView())->get_message($_GET['msg_id']));
+        break;
+       case "new_unread_messages":
+          echo json_encode((new AdminMessagesView())->new_unread_messages($_GET['login_id']));
+        break;
+       case "all_sent_messages":
+          echo json_encode((new AdminMessagesView())->all_sent_messages($_GET['login_id']));
+        break;
+        case "retreive_all_users":
+          echo json_encode((new AdminMessagesView())->retreive_all_users());
+        break;
         default:
-           break;
+        break;
     }
  }
 

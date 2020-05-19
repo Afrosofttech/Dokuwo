@@ -564,8 +564,12 @@ $.ajax({
     }
     });
 }
+/**
+ * @param msg_id 
+ * @param jobseeker_name -> {optional and only set when viewing sent messages}
+ * @param jobseeker_id -> {optional and only set when viewing sent messages}
+ */
 function viewMessage(msg_id,jobseeker_name,jobseeker_id){
- //ams: both jobseeker_name and jobseeker_id are optional and only set when viewing sent messages
  $.ajax({
   method: "GET",
   dataType: 'json',
@@ -878,9 +882,16 @@ function forwardMsgTo(login_id,fullName,msg_id){
       }
     });
 }
+/**
+ * 
+ * @param msg_id 
+ * @param recipient_id 
+ * @param recipient_name 
+ * @param msg_subject 
+ * @param jobseeker_id -> {jobseeker_id is basically not necessary here. But since we are using the same function for viewing messages,
+ *                       we are using it to differentiate btw sent and received messages as we wont support reply on sent messages}
+ */
 function ReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,jobseeker_id){
-//@ams-> jobseeker_id is basically not necessary here. But since we are using the same function for viewing messages,
-//we are using it to differentiate btw sent and received messages as we wont support reply on sent messages
 if(package !== 'None'){
 if(jobseeker_id !== 'undefined'){
   $.notify('You can\'t reply to your own sent messages!','warning');

@@ -1,5 +1,5 @@
 <?php
-include_once 'model/jobseekermodel.php';
+require_once 'model/jobseekermodel.php';
 class JobseekerMessagesController extends Jobseeker{
     public function message_is_read($message_id)
     {

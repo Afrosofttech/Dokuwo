@@ -223,7 +223,7 @@ class Jobseeker extends Dbh{
     }
     protected function retreive_all_jobs()
     {
-        $sql = "SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE status=?";
+        $sql = "SELECT job.*,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE status=?";
         $stmt =$this->connect()->prepare($sql);
         $stmt->execute([0]);
         $result = $stmt->fetchAll();

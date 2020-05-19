@@ -178,20 +178,18 @@ class Company extends Dbh{
         return $this->send_msg_to_a_jobseeker($creator_id,$creator_name,$_recipient_id,$recipient_name,null,$result['subject'],$result['message_body'],'forward');
     }
     protected function get_categories_of_jobseekers(){
+        try {
         //$seekersArray = array();
         $sql = " SELECT category, COUNT(*) AS count FROM job_seeker GROUP BY category";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
-        
+        if(!$result)throw new Exception('No jobseekers');     
         return  $result;
         $stmt = null;
-        // $sql2 = "SELECT category,skills,COUNT(*) AS count FROM job_seeker GROUP BY category,skills";
-        // $stmt2 = $this->connect()->prepare($sql2);
-        // $stmt2->execute();
-        // $result2 = $stmt2->fetchAll();
-        // array_push($seekersArray,$result2);
-        //var_dump($result);
+        } catch(Exception $e) {
+            echo 'Message: ' .$e->getMessage();
+      }
     }
     protected function get_jobseekers_of_this_category($category){
         $sql = " SELECT job_seeker.*, login.email FROM job_seeker INNER JOIN login ON job_seeker.login_id = login.login_id where category = ?;";
@@ -793,11 +791,16 @@ class Company extends Dbh{
     }
 
     protected function activatePackage($login_id){
-        $sql = " UPDATE package SET status = ?  WHERE login_id = ? AND status = ?;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(['Active',$login_id,'Pending']);
-        return  self::success;
-        $stmt = null; 
+        $check_trial = self::has_the_trial_been_activated($login_id);
+        if(!$check_trial){
+            $expired_trial = self::create_expired_trial_package($login_id);
+            $sql = " UPDATE package SET status = ?  WHERE login_id = ? AND status = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(['Active',$login_id,'Pending']);
+            return  self::success;
+            $stmt = null; 
+        }
+       
     }
 
     protected function getReviews($jobseeker_id){
@@ -899,6 +902,7 @@ class Company extends Dbh{
         }
     }
 
+<<<<<<< HEAD
     protected function get_all_freelancers(){
         $sql = " SELECT * from job_seeker WHERE interest = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -911,5 +915,15 @@ class Company extends Dbh{
         return  $result ;
         $stmt = null;
      }
+=======
+    protected function create_expired_trial_package($login_id){
+        $validFrom = date('Y-m-d');
+        $validUntil = date('Y-m-d');
+        $sql= "INSERT INTO package (login_id,validFrom,validUntil,status,type) VALUES (?,?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$login_id,$validFrom,$validUntil,'Inactive','Trial']); 
+        return true;
+        $stmt = null;
+>>>>>>> dc48a43da6bb219c17d94f4078b9cd2b8ddfd803
     }
 }
