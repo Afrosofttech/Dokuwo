@@ -641,7 +641,7 @@ class Jobseeker extends Dbh{
         return  self::success;   
     }
 
-    protected function searchBlogs($title,$category)
+    protected function filterBlogs($title,$category)
     {
         if($title == ''){
         $sql="SELECT * FROM blog WHERE category like :search;";
@@ -663,5 +663,46 @@ class Jobseeker extends Dbh{
         $result = $stmt->fetchAll();
         return $result;
         $stmt = null;
+    }
+
+    protected function searchBlogs($params)
+    {
+        
+        $sql="SELECT * FROM blog WHERE category like :search;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(array(
+            ':search' => '%' . $params . '%'));
+            $result = $stmt->fetchAll();
+            if(!empty($result)){
+                return $result;
+                $stmt = null;
+            }
+            else{
+                $sql="SELECT * FROM blog WHERE blog_title like :search;";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute(array(
+                    ':search' => '%' . $params . '%'));
+                    $result = $stmt->fetchAll();
+                    if(!empty($result)){
+                        return $result;
+                        $stmt = null;
+                    }
+                    else{
+                        $sql="SELECT * FROM blog WHERE blog_publisher like :search;";
+                        $stmt = $this->connect()->prepare($sql);
+                        $stmt->execute(array(
+                        ':search' => '%'. $params . '%'));
+                        $result = $stmt->fetchAll();
+                        if(!empty($result)){
+                            return $result;
+                            $stmt = null;
+                        }
+                        else{
+                            return 400;
+                        }
+                    }
+            }
+        
+            
     }
 }

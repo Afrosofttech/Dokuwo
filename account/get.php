@@ -196,6 +196,11 @@ if($view == 'company'){
           $admin = $result->get_admin_profile($_GET['login_id']);
           echo json_encode($admin);
         break;
+        case "retrieve_all_freelancers":
+          $result = new CompanyView();
+          $response = $result->get_freelancers();
+          echo json_encode($response);
+        break;
        default:
        break;
    }
@@ -318,9 +323,14 @@ if($view == 'company'){
         $res = $result->package_exists($_GET['login_id']);
         echo json_encode($res);
       break;
-      case "search_blogs":
+      case "filter_blogs":
         $result = new JobseekerJobsView();
-        $res = $result->search_blogs($_GET['title'],$_GET['category']);
+        $res = $result->filter_blogs($_GET['title'],$_GET['category']);
+        echo json_encode($res);
+      break;
+      case "search_for_blogs":
+        $result = new JobseekerJobsView();
+        $res = $result->search_blogs($_GET['params']);
         echo json_encode($res);
       break;
       default:

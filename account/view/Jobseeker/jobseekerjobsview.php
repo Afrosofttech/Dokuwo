@@ -42,9 +42,14 @@ class JobseekerJobsView extends Jobseeker{
         return $allemployers;
     }
 
-    public function search_blogs($title,$category)
+    public function filter_blogs($title,$category)
     {
-        $blogs = $this->searchBlogs($title,$category);
+        $blogs = $this->filterBlogs($title,$category);
+        return $blogs;
+    }
+    public function search_blogs($params)
+    {
+        $blogs = $this->searchBlogs($params);
         return $blogs;
     }
 }

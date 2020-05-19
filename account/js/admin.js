@@ -188,18 +188,17 @@ $.ajax({
   data:{'admin_id':session_user_id},
   dataType: "json",
   success: function(data){
-    if(data != 400){
       manageBlog(data);
-    }
     },
-    error: function(err){
+  error: function(err){
      console.log("======Manage blogs========");
      console.log(err.responseText);
     }
    });
 }
 function manageBlog(data){
-let temp= '<!-- Page Header Start -->'+
+  let temp = '';
+ temp +='<!-- Page Header Start -->'+
 '<div class="container">'+
 '<div class="d-sm-flex align-items-center justify-content-between mb-4">'+
      '<div class="h3 mb-0"></div>'+
@@ -213,9 +212,9 @@ let temp= '<!-- Page Header Start -->'+
     '</div>'+
   '</div>'+
 '</div>'+
-'<!-- Page Header End --> '+
-
-'<!-- Job Browse Section Start -->'+  
+'<!-- Page Header End --> ';
+  if(data != 400){
+    temp +='<!-- Job Browse Section Start -->'+  
 '<section class="job-browse section">'+
 '<div class="container">'+
   '<div class="row">'+
@@ -280,11 +279,12 @@ let temp= '<!-- Page Header Start -->'+
 '</div>'+
 '</section>'+
 '<!-- Job Browse Section End -->';
+}
 
 
 $('#content').empty().append(temp);
 $(document).ready(function(e){
-  limitPerPage = 3;
+  limitPerPage = 4;
   numberOfItems = data.length;
   let totalPages = Math.round(numberOfItems/limitPerPage);
   let temp ='<li class="active"><a class="btn-prev btn-link  disabled"><i class="lni-angle-left"></i> prev</a></li>';
@@ -319,7 +319,7 @@ $.notify('There is nothing to search for','error');
 $.ajax({
   method: "GET",
   dataType: 'json',
-  url: "get.php/jobseeker/search_blogs",
+  url: "get.php/jobseeker/filter_blogs",
   data: {"title" : $('#title').val(), "category": $('#category').val()},
   success: function(data){
     if(data.length > 0){
@@ -360,7 +360,11 @@ let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12
     '<div class="input-group-prepend">'+
       '<span class="input-group-text">Category</span>'+
     '</div>'+
-    '<input type="text" class="form-control" id="blogCategory" name="blogCategory" value="">'+
+    '<select class="custom-select" id="blogCategory" name="blogCategory">'+
+        '<option selected>Choose...</option>'+
+        '<option value="Popular posts">Popular Posts</option>'+
+        '<option value="Productivity">Productivity</option>'+
+    '</select>'+
     '</div>'+
     '<div class="input-group mb-3">'+
     '<div class="input-group-prepend">'+
@@ -556,7 +560,12 @@ $.ajax({
                     '<div class="form-group row">'+
                     '<label for="sblogCategory" class="col-sm-2 col-form-label">Category</label>'+
                     '<div class="col-sm-10">'+
-                      '<input type="text" class="form-control" name="sblogCategory" id="sblogCategory" value="'+data[0].category+'">'+
+                      // '<input type="text" class="form-control" name="sblogCategory" id="sblogCategory" value="'+data[0].category+'">'+
+                      '<select class="custom-select" id="sblogCategory" name="sblogCategory">'+
+                        '<option>Choose...</option>'+
+                        '<option value="Popular posts">Popular Posts</option>'+
+                        '<option value="Productivity">Productivity</option>'+
+                      '</select>'+
                     '</div>'+
                   '</div>'+
                   '<div class="form-group row">'+
@@ -597,6 +606,8 @@ $.ajax({
     '<!-- End Content -->';       
     }
     $('.manageBlog').append(temp);
+    $(document).ready(function(){
+    $("#sblogCategory option[value='"+data[0].category+"']").attr('selected', 'selected');
     $('#summernote').summernote({
       height: 200,
       lineHeight: 1,
@@ -636,6 +647,7 @@ $.ajax({
         }
     }
     });
+  }); 
 
          //on submit
          $('#editBlog').submit(function(e){
@@ -687,7 +699,9 @@ $.ajax({
   error: function(err){
     console.log(err.responseText);
   }
+
 });
+
 }
 
 function deleteBlog(blog_id){
@@ -757,11 +771,11 @@ $.ajax({
                         '</i>'+
                         ' Deactivate'+
                         '</a></td>';
-                        temp += (val.package == "Pending")?`<td><a class="btn btn-success btn-block btn-sm" href="#" style="cursor: pointer;" onclick="activatePackage(${val.login_id},'recruiter');">`+
+                        temp +=(val.status == "1")?(val.package == "Pending")?`<td><a class="btn btn-success btn-block btn-sm" href="#" style="cursor: pointer;" onclick="activatePackage(${val.login_id},'recruiter');">`+
                         '<i class="fas fa-check">'+
                         '</i>'+
                         ' Activate'+
-                        '</a></td>':'<td>'+val.package+'</td>'+
+                        '</a></td>':'<td>'+val.package+'</td>':'<td></td>'
                         '</tr>';
               });
 
@@ -821,11 +835,11 @@ $.ajax({
                 temp += '<tr>'+
                 '<td>'+val.fullName+'</td>'+
                 '<td>'+val.email+'</td>';
-                temp += (val.package == "Pending")?`<td><a class="btn btn-success btn-sm" href="#" style="cursor: pointer;" onclick="activatePackage(${val.login_id},'jobseeker');">`+
+                temp +=(val.status == "1")?(val.package == "Pending")?`<td><a class="btn btn-success btn-sm" href="#" style="cursor: pointer;" onclick="activatePackage(${val.login_id},'jobseeker');">`+
                         '<i class="fas fa-check">'+
                         '</i>'+
                         ' Activate'+
-                        '</a></td>':'<td>'+val.package+'</td>';
+                        '</a></td>':'<td>'+val.package+'</td>':'<td></td>';
                 temp += (val.actions != "None")?(val.actions[0].totalWarnings < 3)?(val.actions[0].totalPending >= 1)?`<td><a class="btn btn-success btn-block btn-sm" href="#" style="cursor: pointer;" onclick='manageJobseekerActions(${JSON.stringify(val.actions)},${val.login_id});'>`+
                         '<i class="fas fa-info">'+
                         '</i>'+

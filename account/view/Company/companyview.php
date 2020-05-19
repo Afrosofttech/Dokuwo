@@ -101,4 +101,8 @@ class CompanyView extends Company{
         $admin = $this->get_admin($login_id);
         return $admin;
     }
+    public function get_freelancers(){
+        $admin = $this->get_all_freelancers();
+        return $admin;
+    }
 }

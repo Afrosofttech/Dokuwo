@@ -387,9 +387,9 @@ class Company extends Dbh{
         }
     }
     protected function get_jobs_of_this_category($category){
-        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = ? GROUP BY job.job_id";
+        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = ? AND job.status = ? GROUP BY job.job_id";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$category]);
+        $stmt->execute([$category,0]);
         $result = $stmt->fetchAll();
 
         if(!$result ){
@@ -401,9 +401,9 @@ class Company extends Dbh{
         }    
     }
     protected function get_featured_jobs(){
-        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE featured = 1 GROUP BY job.job_id";
+        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE featured = ? AND job.status = ? GROUP BY job.job_id";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([1,0]);
         $result = $stmt->fetchAll();
 
         if(!$result ){
@@ -415,9 +415,9 @@ class Company extends Dbh{
         }  
     }
     protected function get_latest_jobs(){
-        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id GROUP BY job.job_id ORDER BY date_posted DESC";
+        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE job.status = ? GROUP BY job.job_id ORDER BY date_posted DESC";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([0]);
         $result = $stmt->fetchAll();
 
         if(!$result ){
@@ -471,7 +471,7 @@ class Company extends Dbh{
         }    
     }
     protected function get_recent_posts(){
-        $sql = " SELECT * FROM blog ORDER BY date_posted DESC";
+        $sql = " SELECT * FROM blog ORDER BY date_posted DESC LIMIT 4";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -480,7 +480,7 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            return  $result ;
+            return  array("recentPosts" => $result) ;
             $stmt = null;
         }    
     }
@@ -897,5 +897,19 @@ class Company extends Dbh{
             return  true;
             $stmt = null;
         }
+    }
+
+    protected function get_all_freelancers(){
+        $sql = " SELECT * from job_seeker WHERE interest = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(['Freelance']);
+        $result = $stmt->fetchAll();
+        if(!$result ){
+            return 0;
+            $stmt = null;
+    }else{
+        return  $result ;
+        $stmt = null;
+     }
     }
 }

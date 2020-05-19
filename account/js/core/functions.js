@@ -42,3 +42,12 @@ function validEmail(email){
         var validEmail = regEx.test(email);
         return validEmail;
 }
+
+function formatMonth(month){
+        let Months = ["JAN","FEB","MAR","APR","MAY","JUNE","JULY","AUG","SEP","OCT","NOV","DEC"]
+        var filteredMonth = Months.filter(function(val,index){
+                if(index == month) return val;
+        });
+
+        return filteredMonth;
+}
