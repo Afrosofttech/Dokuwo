@@ -151,6 +151,7 @@ class Company extends Dbh{
         $stmt3->execute([$recipient_id,$res['message_id'],0,0]);
 
          if($type == 'forward') return  array('message' => 'Message has been successfully forwarded');
+         if($type = 'job_acceptance') return array('message' => 'Application accepted. Applicant will be notified!','status' => 'success');
          else return  array('message' => 'Message successfully sent.');
     }
     protected function last_inserted_message_id($creator_id,$creator_name,$Subject,$date){
@@ -297,11 +298,11 @@ class Company extends Dbh{
             $stmt = null;
         }
     }
-    protected function accept_and_change_app_status($jobseeker_id,$job_id){
-        $sql = " UPDATE application SET app_status=? WHERE job_id=? AND jobseeker_id=?;";
+    protected function accept_change_app_status_send_acceptance($jobseeker_id,$job_id,$information){
+        $sql = " UPDATE application SET app_status=?, decision_date=? WHERE job_id=? AND jobseeker_id=?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([1,$job_id,$jobseeker_id]);
-        return  self::success;
+        $stmt->execute([1,date('Y-m-d'),$job_id,$jobseeker_id]);
+        return $this->send_msg_to_a_jobseeker($information['creator_id'],$information['creator_name'],$information['recipient_id'],$information['recipient_name'],$information['parent_msg_id'],$information['Subject'],$information['messageBody'],'job_acceptance');
         $stmt = null;
     }
     protected function get_job_details($job_id){
@@ -317,11 +318,6 @@ class Company extends Dbh{
         $stmt->execute([$job_id]);
         $result = $stmt->fetch();
         return $result;
-    }
-    protected function send_this_to_applicant($information){
-        $res = $this->send_msg_to_a_jobseeker($information['creator_id'],$information['creator_name'],$information['recipient_id'],$information['recipient_name'],$information['parent_msg_id'],$information['Subject'],$information['messageBody']);
-        if($res == 200) return $res;
-        else return self::fail;
     }
     protected function close_this_job($job_id){
         $sql = " UPDATE job SET status=? WHERE job_id=?;";

@@ -4,21 +4,21 @@ require_once 'model/companymodel.php';
 
 class JobsController extends Company{
     public function accept_application($jobseeker_id,$jobseeker_login_id,$fullName,$job_id){
-        $response = $this->accept_and_change_app_status($jobseeker_id,$job_id);
         $job = $this->get_job_details($job_id);
-        $jobName = $job['job_name'];
+        /**
+        * @param creator_id -> {is the login_id of the super_admin}
+        */
         $message = array(
-         "creator_id" => $_SESSION['login_id'],
-         "creator_name" => $_SESSION['name'],
-         "recipient_id" => $jobseeker_login_id,
-         "recipient_name" => $fullName,
-         "parent_msg_id" => null,
-         "Subject" => $jobName,
-         "messageBody" =>"<p>Hello,</p><p>Congratulations! You have been accepted by ".$_SESSION['name']." for the position of ".$jobName.". You will be contacted soon.</p><p>Regards,</p><p>Dokuwo.</p>"
-         );
-         $result = $this->send_this_to_applicant($message);
-         if($result == 200) return $response;
-         else return 400; //check
+            "creator_id" => 38,
+            "creator_name" => 'Admin',
+            "recipient_id" => $jobseeker_login_id,
+            "recipient_name" => $fullName,
+            "parent_msg_id" => null,
+            "Subject" => $job['job_name'],
+            "messageBody" =>"<p>Hello,</p><p>Congratulations! You have been accepted by ".$_SESSION['name']." for the position of ".$job['job_name'].". You will be contacted soon.</p><p>Regards,</p><p>Dokuwo.</p>"
+            );
+        $response = $this->accept_change_app_status_send_acceptance($jobseeker_id,$job_id,$message);
+        return $response;
     }
     public function close_job($job_id){
         $response = $this->close_this_job($job_id);

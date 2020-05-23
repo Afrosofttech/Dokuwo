@@ -2639,10 +2639,11 @@ function acceptApplication(jobseeker_id,fullName,job_id,login_id){
   $.ajax({
     url: 'post.php/company/accept_application',
     method: 'POST',
+    dataType: 'json',
     data: {'jobseeker_id':jobseeker_id,'jobseeker_login_id':login_id,'fullName':fullName,'job_id':job_id},
     success: function(response){
-      if(response == 200){
-        $.notify('Application accepted. Applicant will be notified!','success');
+      if(response.status == 'success'){
+        $.notify(response.message,'success');
         jobApplicants(job_id);
         viewApplicant(job_id,login_id,1);
       }
