@@ -267,7 +267,7 @@ function loadJobseekerDashboard(){
 
           '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
             '<a class="dropdown-item" href="#" onclick="gotoHomepage();">'+
-                '<i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
+                '<i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>'+
                 'Homepage'+
               '</a>'+
               '<div class="dropdown-divider"></div>'+
