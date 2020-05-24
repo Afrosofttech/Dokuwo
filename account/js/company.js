@@ -516,7 +516,7 @@ $.ajax({
                           '<td class="mailbox-name">'+val.creator_name+'</td>'+
                           '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
                           '</td>'+
-                          '<td class="mailbox-date">'+val.create_date+'</td>'+
+                          '<td class="mailbox-date">'+moment(val.create_date).fromNow()+'</td>'+
                         '</tr>';
             });
           conMessage +=  '</tbody>'+
@@ -1228,7 +1228,7 @@ function sentMessages(){
                       '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
                       '</td>'+
                       // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
-                      '<td class="mailbox-date">'+val.create_date+'</td>'+
+                      '<td class="mailbox-date">'+moment(val.create_date).fromNow()+'</td>'+
                     '</tr>';
               });
               temp +=  '</tbody>'+
