@@ -163,7 +163,7 @@ class Jobseeker extends Dbh{
         if($this->have_blocked($creator_id,$recipient_id)){
             return  array('message' => 'You have been blocked by this company. Your message is not delivered.');
         }
-        $date = date('Y-m-d');
+        $date = date('Y-m-d H:i:sa');
         if($parent_msg_id =='' || $parent_msg_id == null){
             $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date) VALUES (?, ?, ?, ?, ?,?)");
             $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date]);

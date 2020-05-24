@@ -940,7 +940,7 @@ function jcomposeNewMessage(login_id,cName,divToClear){
           data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : $('#thefullname').val(),"parent_msg_id": null, "Subject" : $('#theSubject').val(), "messageBody" : $('.message_info').summernote('code')},
           success: function(data){
               $.notify(data.message,'success'); 
-              (divToClear == undefined)? contentMessage(): discardMsg(divToClear);
+              (divToClear == undefined)? jcontentMessage(): discardMsg(divToClear);
           },
           error: function(err){
             //
