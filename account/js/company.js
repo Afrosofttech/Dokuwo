@@ -102,7 +102,7 @@ let topbar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4
       })
 
       temp += '<a class="dropdown-item text-center small text-gray-500" style="cursor: pointer;" onclick="MessagesCenter();">Read More Messages</a>'; 
-      $('.NewMsgNotificationsCount').empty().html(data.length);
+      $('.NewMsgNotificationsCount').empty().html((data.length > 0)?data[0].count:0);
       $('.NewMsgNotifications').empty().append(temp);
       }
       let profile = '';
@@ -399,10 +399,10 @@ function activate_free_trial(){
     }
   });
 } 
-//Message center by @ams
+/**
+ * @message_id -> {passed to know if this is a call from the topbar i.e Knowing if the user tried to view a message from the notification bar}
+ */
 function MessagesCenter(message_id){
-//ams: am passing message_id here just to know if this is a call from the topbar i.e
-//Knowing if the user tried to view a message from the notification bar
 let temp = '<div class="container-fluid"><div class="row"><div class="col-md-3 sidebarMessage"></div><div class="col-md-9 contentMessage"></div></div></div>';
 $('#content').empty().append(temp);
 
@@ -461,8 +461,10 @@ $.ajax({
 });
 
 }
+/**
+ * @message_id -> {check messagesCenter to know why i passed message_id}
+ */
 function contentMessage(message_id){
-//ams:check messagesCenter to know why i passed message_id
 let conMessage ='';
 $.ajax({
   method: "GET",
@@ -765,7 +767,7 @@ $.ajax({
     })
 
     temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
-    $('.NewMsgNotificationsCount').empty().html(data.length);
+    $('.NewMsgNotificationsCount').empty().html((data.length > 0)?data[0].count:0);
     $('.NewMsgNotifications').empty().append(temp);
     }
   }
@@ -1268,8 +1270,12 @@ function DeleteMessage(msg_id,jobseeker_id){
     }
   });
 }
+/**
+ * 
+ * @param param -> {is the id of the table}
+ * @param message_id -> {check messagesCenter to know why i passed message_id}
+ */
 function geyOutReadMessages(param,message_id){
-//ams:check messagesCenter to know why i passed message_id
 $.ajax({
   method: "GET",
   dataType: 'json',

@@ -249,7 +249,7 @@ function loadJobseekerDashboard(){
         })
   
         temp += '<a class="dropdown-item text-center small text-gray-500" style="cursor: pointer;" onclick="jMessagesCenter();">Read More Messages</a>'; 
-        $('.NewMsgNotificationsCount').empty().html(data.length);
+        $('.NewMsgNotificationsCount').empty().html((data.length > 0)?data[0].count:0);
         $('.NewMsgNotifications').empty().append(temp);
         }
         let profile = '';
@@ -1301,7 +1301,7 @@ function jnewMsgNotification(){
       })
 
       temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
-      $('.NewMsgNotificationsCount').empty().html(data.length);
+      $('.NewMsgNotificationsCount').empty().html((data.length > 0)?data[0].count:0);
       $('.NewMsgNotifications').empty().append(temp);
       }else{
         temp += '<h6 class="dropdown-header">'+
