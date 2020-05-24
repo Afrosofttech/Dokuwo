@@ -243,7 +243,7 @@ function loadJobseekerDashboard(){
           temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="jMessagesCenter(\''+val.message_id+'\');">'+
           '<div class="font-weight-bold">'+
             '<div class="text-truncate">'+val.subject+'</div>'+
-            '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+            '<div class="small text-gray-500">'+val.creator_name+' · '+moment(val.create_date).fromNow()+'</div>'+
           '</div>'+
         '</a>';
         })
@@ -365,13 +365,13 @@ function jJobStatistics(){
         '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
           '<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>'+
         '</a>'+
-        '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'+
-          '<div class="dropdown-header">Dropdown Header:</div>'+
-          '<a class="dropdown-item" href="#">Action</a>'+
-          '<a class="dropdown-item" href="#">Another action</a>'+
-          '<div class="dropdown-divider"></div>'+
-          '<a class="dropdown-item" href="#">Something else here</a>'+
-        '</div>'+
+        // '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'+
+        //   '<div class="dropdown-header">Dropdown Header:</div>'+
+        //   '<a class="dropdown-item" href="#">Action</a>'+
+        //   '<a class="dropdown-item" href="#">Another action</a>'+
+        //   '<div class="dropdown-divider"></div>'+
+        //   '<a class="dropdown-item" href="#">Something else here</a>'+
+        // '</div>'+
      '</div>'+
     '</div>'+
 
@@ -379,17 +379,6 @@ function jJobStatistics(){
       // '<div class="chart-pie pt-4 pb-2">'+
       //   '<canvas id="myPieChart"></canvas>'+
       // '</div>'+
-      '<div class="mt-4 text-center small">'+
-        '<span class="mr-2">'+
-          '<i class="fas fa-circle text-primary"></i> Direct'+
-        '</span>'+
-        '<span class="mr-2">'+
-          '<i class="fas fa-circle text-success"></i> Social'+
-        '</span>'+
-        '<span class="mr-2">'+
-          '<i class="fas fa-circle text-info"></i> Referral'+
-        '</span>'+
-      '</div>'+
     '</div>'+
   '</div>'+
 '</div>';
@@ -1306,7 +1295,7 @@ function jnewMsgNotification(){
         temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="redirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
         '<div class="font-weight-bold">'+
           '<div class="text-truncate">'+val.subject+'</div>'+
-          '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+          '<div class="small text-gray-500">'+val.creator_name+' · '+moment(val.create_date).fromNow()+'</div>'+
         '</div>'+
       '</a>';
       })

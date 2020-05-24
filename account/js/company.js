@@ -96,7 +96,7 @@ let topbar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4
         temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="MessagesCenter(\''+val.message_id+'\');">'+
         '<div class="font-weight-bold">'+
           '<div class="text-truncate">'+val.subject+'</div>'+
-          '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+          '<div class="small text-gray-500">'+val.creator_name+' · '+moment(val.create_date).fromNow()+'</div>'+
         '</div>'+
       '</a>';
       })
@@ -269,9 +269,6 @@ function dashBoardContentheader(){
       success: function(data){
         package = data.package;
         trial_activation = data.trial_activation;
-        console.log('=====AMS=====');
-        console.log(package);
-        console.log(trial_activation);
         $('#jobsPublished' ).html(data.noOfJobsPublished);
         $('#profileVal').html(data.isProfileComplete+"%");
         $('#profileBar').css('width',''+data.isProfileComplete+'%');
@@ -365,13 +362,13 @@ function jobStatistics(){
         '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
           '<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>'+
         '</a>'+
-        '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'+
-          '<div class="dropdown-header">Dropdown Header:</div>'+
-          '<a class="dropdown-item" href="#">Action</a>'+
-          '<a class="dropdown-item" href="#">Another action</a>'+
-          '<div class="dropdown-divider"></div>'+
-          '<a class="dropdown-item" href="#">Something else here</a>'+
-        '</div>'+
+        // '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'+
+        //   '<div class="dropdown-header">Dropdown Header:</div>'+
+        //   '<a class="dropdown-item" href="#">Action</a>'+
+        //   '<a class="dropdown-item" href="#">Another action</a>'+
+        //   '<div class="dropdown-divider"></div>'+
+        //   '<a class="dropdown-item" href="#">Something else here</a>'+
+        // '</div>'+
      '</div>'+
     '</div>'+
 
@@ -379,22 +376,10 @@ function jobStatistics(){
       // '<div class="chart-pie pt-4 pb-2">'+
       //   '<canvas id="myPieChart"></canvas>'+
       // '</div>'+
-      '<div class="mt-4 text-center small">'+
-        '<span class="mr-2">'+
-          '<i class="fas fa-circle text-primary"></i> Direct'+
-        '</span>'+
-        '<span class="mr-2">'+
-          '<i class="fas fa-circle text-success"></i> Social'+
-        '</span>'+
-        '<span class="mr-2">'+
-          '<i class="fas fa-circle text-info"></i> Referral'+
-        '</span>'+
-      '</div>'+
     '</div>'+
   '</div>'+
 '</div>';
 $('.dbInner').append(job_statistics);
-//ams: this needs to change once charts are implemented so that this is only called upon completion of charts loading
 if(trial_activation === false) setTimeout(activate_trial, 2000);
 
 }
@@ -774,7 +759,7 @@ $.ajax({
       temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="MessagesCenter(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
       '<div class="font-weight-bold">'+
         '<div class="text-truncate">'+val.subject+'</div>'+
-        '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+        '<div class="small text-gray-500">'+val.creator_name+' · '+moment(val.create_date).fromNow()+'</div>'+
       '</div>'+
     '</a>';
     })
