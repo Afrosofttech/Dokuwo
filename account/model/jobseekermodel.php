@@ -59,15 +59,34 @@ class Jobseeker extends Dbh{
         $stmt = null;
     }
     protected function get_new_unread_messages($recipient_id){
-        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.is_read = ?;";
+        $count = $this->count_unread_messages($recipient_id);
+        if($count){
+            $sql = " SELECT message.* FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.is_read = ? ORDER BY create_date DESC LIMIT 4;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$recipient_id,0]);
+            $result = $stmt->fetchAll();
+            if(!$result ){
+                    return self::fail;
+                    $stmt = null;
+            }else{
+                foreach ($result as $key => $value) {
+                    $result[$key]['count'] = $count;
+                }
+                return  $result;
+                $stmt = null;
+            }
+        }else return self::fail;
+    }
+    protected function count_unread_messages($recipient_id){
+        $sql = " SELECT count(*) as unread_messages FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.is_read = ? AND message_recipient.delete_request = ?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$recipient_id,0]);
-        $result = $stmt->fetchAll();
+        $stmt->execute([$recipient_id,0,0]);
+        $result = $stmt->fetch();
        if(!$result ){
-                return self::fail;
+                return false;
                 $stmt = null;
         }else{
-            return  $result ;
+            return  $result['unread_messages'];
             $stmt = null;
         }
     }
