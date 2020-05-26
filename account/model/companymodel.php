@@ -103,15 +103,35 @@ class Company extends Dbh{
         $stmt = null;
     }
     protected function get_new_unread_messages($recipient_id){
-        $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.is_read = ? AND message_recipient.delete_request = ?;";
+        $count = $this->count_unread_messages($recipient_id);
+        if($count){
+            $sql = " SELECT message.* FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.is_read = ? AND message_recipient.delete_request = ? ORDER BY create_date DESC LIMIT 4;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$recipient_id,0,0]);
+            $result = $stmt->fetchAll();
+           if(!$result ){
+                    return self::fail;
+                    $stmt = null;
+            }else{
+                foreach ($result as $key => $value) {
+                    $result[$key]['count'] = $count;
+                }
+                return  $result;
+                $stmt = null;
+            }
+        }else return self::fail;
+
+    }
+    protected function count_unread_messages($recipient_id){
+        $sql = " SELECT count(*) as unread_messages FROM message INNER JOIN message_recipient ON message.message_id = message_recipient.message_id WHERE message_recipient.recipient_id = ? AND message_recipient.is_read = ? AND message_recipient.delete_request = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$recipient_id,0,0]);
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetch();
        if(!$result ){
-                return self::fail;
+                return false;
                 $stmt = null;
         }else{
-            return  $result ;
+            return  $result['unread_messages'];
             $stmt = null;
         }
     }
@@ -136,7 +156,7 @@ class Company extends Dbh{
     if($this->account_removed($recipient_id)){
         return  array('message' => 'This user\'s account have already been removed after numerous reports.');
     }
-    $date = date('Y-m-d');
+    $date = date('Y-m-d H:i:sa');
     if($parent_msg_id =='' || $parent_msg_id == null){
         $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name,subject,message_body,sender_delete_request,create_date) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date]);
@@ -152,6 +172,7 @@ class Company extends Dbh{
         $stmt3->execute([$recipient_id,$res['message_id'],0,0]);
 
          if($type == 'forward') return  array('message' => 'Message has been successfully forwarded');
+         if($type = 'job_acceptance') return array('message' => 'Application accepted. Applicant will be notified!','status' => 'success');
          else return  array('message' => 'Message successfully sent.');
     }
     protected function last_inserted_message_id($creator_id,$creator_name,$Subject,$date){
@@ -298,11 +319,11 @@ class Company extends Dbh{
             $stmt = null;
         }
     }
-    protected function accept_and_change_app_status($jobseeker_id,$job_id){
-        $sql = " UPDATE application SET app_status=? WHERE job_id=? AND jobseeker_id=?;";
+    protected function accept_change_app_status_send_acceptance($jobseeker_id,$job_id,$information){
+        $sql = " UPDATE application SET app_status=?, decision_date=? WHERE job_id=? AND jobseeker_id=?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([1,$job_id,$jobseeker_id]);
-        return  self::success;
+        $stmt->execute([1,date('Y-m-d'),$job_id,$jobseeker_id]);
+        return $this->send_msg_to_a_jobseeker($information['creator_id'],$information['creator_name'],$information['recipient_id'],$information['recipient_name'],$information['parent_msg_id'],$information['Subject'],$information['messageBody'],'job_acceptance');
         $stmt = null;
     }
     protected function get_job_details($job_id){
@@ -318,11 +339,6 @@ class Company extends Dbh{
         $stmt->execute([$job_id]);
         $result = $stmt->fetch();
         return $result;
-    }
-    protected function send_this_to_applicant($information){
-        $res = $this->send_msg_to_a_jobseeker($information['creator_id'],$information['creator_name'],$information['recipient_id'],$information['recipient_name'],$information['parent_msg_id'],$information['Subject'],$information['messageBody']);
-        if($res == 200) return $res;
-        else return self::fail;
     }
     protected function close_this_job($job_id){
         $sql = " UPDATE job SET status=? WHERE job_id=?;";

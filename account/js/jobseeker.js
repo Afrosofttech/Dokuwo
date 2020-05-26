@@ -243,13 +243,13 @@ function loadJobseekerDashboard(){
           temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="jMessagesCenter(\''+val.message_id+'\');">'+
           '<div class="font-weight-bold">'+
             '<div class="text-truncate">'+val.subject+'</div>'+
-            '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+            '<div class="small text-gray-500">'+val.creator_name+' · '+moment(val.create_date).fromNow()+'</div>'+
           '</div>'+
         '</a>';
         })
   
         temp += '<a class="dropdown-item text-center small text-gray-500" style="cursor: pointer;" onclick="jMessagesCenter();">Read More Messages</a>'; 
-        $('.NewMsgNotificationsCount').empty().html(data.length);
+        $('.NewMsgNotificationsCount').empty().html((data.length > 0)?data[0].count:0);
         $('.NewMsgNotifications').empty().append(temp);
         }
         let profile = '';
@@ -267,7 +267,7 @@ function loadJobseekerDashboard(){
 
           '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
             '<a class="dropdown-item" href="#" onclick="gotoHomepage();">'+
-                '<i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>'+
+                '<i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>'+
                 'Homepage'+
               '</a>'+
               '<div class="dropdown-divider"></div>'+
@@ -365,13 +365,13 @@ function jJobStatistics(){
         '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
           '<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>'+
         '</a>'+
-        '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'+
-          '<div class="dropdown-header">Dropdown Header:</div>'+
-          '<a class="dropdown-item" href="#">Action</a>'+
-          '<a class="dropdown-item" href="#">Another action</a>'+
-          '<div class="dropdown-divider"></div>'+
-          '<a class="dropdown-item" href="#">Something else here</a>'+
-        '</div>'+
+        // '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'+
+        //   '<div class="dropdown-header">Dropdown Header:</div>'+
+        //   '<a class="dropdown-item" href="#">Action</a>'+
+        //   '<a class="dropdown-item" href="#">Another action</a>'+
+        //   '<div class="dropdown-divider"></div>'+
+        //   '<a class="dropdown-item" href="#">Something else here</a>'+
+        // '</div>'+
      '</div>'+
     '</div>'+
 
@@ -379,17 +379,6 @@ function jJobStatistics(){
       // '<div class="chart-pie pt-4 pb-2">'+
       //   '<canvas id="myPieChart"></canvas>'+
       // '</div>'+
-      '<div class="mt-4 text-center small">'+
-        '<span class="mr-2">'+
-          '<i class="fas fa-circle text-primary"></i> Direct'+
-        '</span>'+
-        '<span class="mr-2">'+
-          '<i class="fas fa-circle text-success"></i> Social'+
-        '</span>'+
-        '<span class="mr-2">'+
-          '<i class="fas fa-circle text-info"></i> Referral'+
-        '</span>'+
-      '</div>'+
     '</div>'+
   '</div>'+
 '</div>';
@@ -717,7 +706,7 @@ $.ajax({
                           '<td class="mailbox-name">'+val.creator_name+'</td>'+
                           '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
                           '</td>'+
-                          '<td class="mailbox-date">'+val.create_date+'</td>'+
+                          '<td class="mailbox-date">'+moment(val.create_date).fromNow()+'</td>'+
                         '</tr>';
             });
           conMessage +=  '</tbody>'+
@@ -940,7 +929,7 @@ function jcomposeNewMessage(login_id,cName,divToClear){
           data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : $('#thefullname').val(),"parent_msg_id": null, "Subject" : $('#theSubject').val(), "messageBody" : $('.message_info').summernote('code')},
           success: function(data){
               $.notify(data.message,'success'); 
-              (divToClear == undefined)? contentMessage(): discardMsg(divToClear);
+              (divToClear == undefined)? jcontentMessage(): discardMsg(divToClear);
           },
           error: function(err){
             //
@@ -1306,13 +1295,13 @@ function jnewMsgNotification(){
         temp += '<a class="dropdown-item d-flex align-items-center" id="'+val.message_id+'" style="cursor: pointer;" onclick="redirectToMessageFromNotification(\''+val.message_id+'\',\''+val.creator_id+'\',\''+val.creator_name+'\',\''+val.subject+'\',\''+val.message_body+'\',\''+val.create_date+'\',\''+val.parent_message_id+'\');">'+
         '<div class="font-weight-bold">'+
           '<div class="text-truncate">'+val.subject+'</div>'+
-          '<div class="small text-gray-500">'+val.creator_name+' · unread</div>'+
+          '<div class="small text-gray-500">'+val.creator_name+' · '+moment(val.create_date).fromNow()+'</div>'+
         '</div>'+
       '</a>';
       })
 
       temp += '<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>'; 
-      $('.NewMsgNotificationsCount').empty().html(data.length);
+      $('.NewMsgNotificationsCount').empty().html((data.length > 0)?data[0].count:0);
       $('.NewMsgNotifications').empty().append(temp);
       }else{
         temp += '<h6 class="dropdown-header">'+
@@ -1368,7 +1357,7 @@ $.ajax({
                     '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
                     '</td>'+
                     // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
-                    '<td class="mailbox-date">'+val.create_date+'</td>'+
+                    '<td class="mailbox-date">'+moment(val.create_date).fromNow()+'</td>'+
                   '</tr>';
             });
         temp +=  '</tbody>'+

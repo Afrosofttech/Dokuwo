@@ -87,7 +87,7 @@ $contr =  $urlParts[sizeof($urlParts)-2];
        case "accept_application":
          $result = new JobsController();
          $response = $result->accept_application($_POST['jobseeker_id'],$_POST['jobseeker_login_id'],$_POST['fullName'],$_POST['job_id']);
-         echo $response;
+         echo json_encode($response);
        break;
        case "close_job":
          $result = new JobsController();
