@@ -1536,7 +1536,7 @@ function greyOutReadMessagesByAdmin(param,message_id){
         if(data != 0){
           $.each(data, (i,val) => {
             var table = $('#'+param).DataTable();
-          table.$('tr#'+val.mess_rec_id).css({'background-color': 'gainsboro'});
+          table.$('tr#'+val.message_id).css({'background-color': 'gainsboro'});
           });
         if(message_id !== undefined) viewMessageByAdmin(message_id);
         }
@@ -1755,7 +1755,7 @@ function adminSentMessages(){
                       '</td>'+
                       // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
                       '<td class="mailbox-name">'+val.recipient_name+'</td>'+
-                      '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                      '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 35).concat('...')+''+
                       '</td>'+
                       // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
                       '<td class="mailbox-date">'+moment(val.create_date).fromNow()+'</td>'+
