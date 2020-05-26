@@ -123,12 +123,12 @@ if($view == 'company'){
         break;
         case "featured_jobs":
         $result = new CompanyView();
-        $jobs_featured = $result->get_featured_job();
+        $jobs_featured = $result->get_featured_job($_GET['caller']);
         echo json_encode($jobs_featured);  
         break;
         case "latest_jobs":
         $result = new CompanyView();
-        $latest_jobs = $result->get_latest_job();
+        $latest_jobs = $result->get_latest_job($_GET['caller']);
         echo json_encode($latest_jobs); 
         break;
         case "retrieve_all_blogs":
@@ -158,7 +158,7 @@ if($view == 'company'){
         break;
         case "get_jobseeker_details":
         $result = new CompanyView();
-        $jobseeker_details = $result->jobseeker_details($_POST['jobseeker_id']);
+        $jobseeker_details = $result->jobseeker_details($_GET['jobseeker_id']);
         echo json_encode($jobseeker_details); 
         break;
         case "categories_of_jobs":
@@ -171,30 +171,15 @@ if($view == 'company'){
           $response = $result->recruiter_details($_GET['recruiter_id']);
           echo json_encode($response);
         break;
-        case "manage_blogs":
+        case "retrieve_all_freelancers":
           $result = new CompanyView();
-          $response = $result->get_admin_blogs($_GET['admin_id']);
+          $response = $result->get_freelancers();
           echo json_encode($response);
         break;
-        case "retrieve_recruiter_accounts":
+        case "get_featured_freelancers":
           $result = new CompanyView();
-          $response = $result->get_all_recruiter_accounts();
+          $response = $result->featured_freelancers();
           echo json_encode($response);
-        break;
-        case "retrieve_jobseeker_accounts":
-          $result = new CompanyView();
-          $response = $result->get_all_jobseeker_accounts();
-          echo json_encode($response);
-        break;
-        case "retrieve_admin_accounts":
-          $result = new CompanyView();
-          $response = $result->get_all_admin_accounts();
-          echo json_encode($response);
-        break;
-        case "admin_profile":
-          $result = new CompanyView();
-          $admin = $result->get_admin_profile($_GET['login_id']);
-          echo json_encode($admin);
         break;
        default:
        break;
@@ -275,7 +260,7 @@ if($view == 'company'){
       break;
       case "search_latest_jobs":
         $result = new JobseekerJobsView();
-        $res = $result->search_latest_job($_GET['job'],$_GET['location']);
+        $res = $result->search_latest_job($_GET['jobName'],$_GET['jobLocation']);
         echo json_encode($res);
       break;
       case "search_jobseekers":
@@ -318,9 +303,9 @@ if($view == 'company'){
         $res = $result->package_exists($_GET['login_id']);
         echo json_encode($res);
       break;
-      case "search_blogs":
+      case "search_for_blogs":
         $result = new JobseekerJobsView();
-        $res = $result->search_blogs($_GET['title'],$_GET['category']);
+        $res = $result->search_blogs($_GET['params']);
         echo json_encode($res);
       break;
       default:
@@ -348,6 +333,36 @@ if($view == 'company'){
         break;
         case "retreive_all_users":
           echo json_encode((new AdminMessagesView())->retreive_all_users());
+        break;
+        case "manage_blogs":
+          $result = new AdminView();
+          $response = $result->get_admin_blogs($_GET['admin_id']);
+          echo json_encode($response);
+        break;
+        case "filter_blogs":
+          $result = new AdminView();
+          $res = $result->filter_blogs($_GET['title'],$_GET['category']);
+          echo json_encode($res);
+        break;
+        case "retrieve_recruiter_accounts":
+          $result = new AdminView();
+          $response = $result->get_all_recruiter_accounts();
+          echo json_encode($response);
+        break;
+        case "retrieve_jobseeker_accounts":
+          $result = new AdminView();
+          $response = $result->get_all_jobseeker_accounts();
+          echo json_encode($response);
+        break;
+        case "retrieve_admin_accounts":
+          $result = new AdminView();
+          $response = $result->get_all_admin_accounts();
+          echo json_encode($response);
+        break;
+        case "admin_profile":
+          $result = new AdminView();
+          $admin = $result->get_admin_profile($_GET['login_id']);
+          echo json_encode($admin);
         break;
         default:
         break;

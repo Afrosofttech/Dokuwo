@@ -112,36 +112,6 @@ $contr =  $urlParts[sizeof($urlParts)-2];
         $response = (new CompanyController())->report_jobseeker($_POST['company_login_id'],$_POST['jobseeker_login_id'],$_POST['reason']);
         echo json_encode($response);
        break;
-       case "create_blog":
-        $result = new JobsController();
-        $response = $result->create_blog();
-        echo $response;
-       break;
-       case "update_blog":
-        $result = new JobsController();
-        $response = $result->update_blog();
-        echo $response;
-       break;
-       case "delete_blog":
-        $result = new JobsController();
-        $response = $result->delete_blog($_POST['blog_id']);
-        echo $response;
-       break;
-       case "activateAccount":
-        $result = new JobsController();
-        $response = $result->activate_account($_POST['login_id']);
-        echo $response;
-       break;
-       case "deactivateAccount":
-        $result = new JobsController();
-        $response = $result->deactivate_account($_POST['login_id']);
-        echo $response;
-       break;
-       case "delete_account":
-        $result = new JobsController();
-        $response = $result->delete_account($_POST['login_id']);
-        echo $response;
-       break;
        case "activate_package":
         $result = new JobsController();
         $response = $result->activate_package($_POST['login_id']);
@@ -152,11 +122,6 @@ $contr =  $urlParts[sizeof($urlParts)-2];
         $response =$result->update_admin();
         echo $response;
       break;
-      case "delete_report":
-        $result = new JobsController();
-        $response = $result->delete_report($_POST['action_id']);
-        echo $response;
-       break;
        case "request_to_activate_package":
         $response = (new CompanyController())->request_to_activate_package($_POST['login_id'],$_POST['package']);
         echo json_encode($response);
@@ -262,11 +227,6 @@ $contr =  $urlParts[sizeof($urlParts)-2];
           $res = $result->review_jobseeker($_POST['jobseeker_id'],$_POST['name'],$_POST['email'],$_POST['rating'],$_POST['reviewContent']);
           echo json_encode($res);
         break;
-        case "warn_jobseeker":
-          $result = new JobseekerController();
-          $res = $result->warn_jobseeker($_POST['login_id'],$_POST['request']);
-          echo json_encode($res);
-        break;
         default:
            break;
     }
@@ -293,8 +253,44 @@ $contr =  $urlParts[sizeof($urlParts)-2];
           case "send_msg_to_user":
             $result = new AdminMessagesController();
             echo json_encode($result->send_msg_to_user($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['Subject'],$_POST['messageBody']));
-       case "":
-           ;
+          break;
+        case "create_blog":
+            $result = new AdminController();
+            $response = $result->create_blog();
+            echo $response;
+          break;
+           case "update_blog":
+            $result = new AdminController();
+            $response = $result->update_blog();
+            echo $response;
+           break;
+           case "delete_blog":
+            $result = new AdminController();
+            $response = $result->delete_blog($_POST['blog_id']);
+            echo $response;
+           break;
+           case "warn_jobseeker":
+            $result = new AdminController();
+            $res = $result->warn_jobseeker($_POST['login_id'],$_POST['request']);
+            echo json_encode($res);
+          break;
+          case "activateAccount":
+            $result = new AdminController();
+            $response = $result->activate_account($_POST['login_id']);
+            echo $response;
+           break;
+           case "deactivateAccount":
+            $result = new AdminController();
+            $response = $result->deactivate_account($_POST['login_id']);
+            echo $response;
+           break;
+           case "delete_account":
+            echo (new AdminController())->delete_account($_POST['login_id']);
+           break;
+           case "delete_report":
+            $result = new AdminController();
+            $response = $result->delete_report($_POST['action_id']);
+            echo $response;
            break;
         default:
            break;

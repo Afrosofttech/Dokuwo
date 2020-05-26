@@ -1,5 +1,10 @@
 /* Custom css for landing page */
-
+.content-section{
+	width: 100%;
+	min-height: 80vh;
+	/* padding: 20px; */
+	/* margin: 15px; */
+}
 .logo-img{
     width: 64px; 
     height: 64px;
@@ -14,15 +19,668 @@
     height: 204px;
 }
 
-.employer-card{
+/* .employer-card{
     height: 165px;
-}
+} */
 
-.blog-thumb{
+.post-thumb a img{
     width: 730px;
     height: 344px;
 }
 
 .margin-price-card{
     margin-bottom: 20px;
+}
+
+.btn-full-time{
+	color: #00b7f4;
+	text-align: left !important;
+}
+
+.navbar-brand{
+	width: 200px;
+	height: 54px;
+}
+.navbar-brand img{
+	width: 100%;
+	height: 40px;
+}
+.dashboard-images img{
+	width: 689px;
+	height: 364px;
+}
+
+#apply .recruiter,#apply .jobseeker{
+	background: none;
+}
+#apply .item-box{
+	padding: 0;
+}
+/* Ui optimization css */
+
+.listpgWraper {
+	background: #fff;
+	padding: 50px 0;
+	min-height: 400px;
+}
+
+.job-header {
+	background: #fff;
+	box-shadow: 0px 0px 14px rgba(191, 191, 191, 0.24);
+	margin-bottom: 30px;
+}
+.job-header .jobinfo {
+	padding: 25px;
+	border-bottom: 1px solid #e4e4e4;
+}
+/*Candidate Info*/
+.job-header .jobinfo .candidateinfo .userPic {
+	float: left;
+	width: 100px;
+	height: 100px;
+	background: #cbcbcb;
+	margin-right: 20px;
+	border-radius: 50%;
+	border: 5px solid #4755a5;
+}
+.job-header .jobinfo .candidateinfo .userPic img{
+	border-radius: 50%;
+}
+.job-header .jobinfo .candidateinfo .title {
+	font-size: 24px;
+	color: #333;
+	font-weight: 500;
+}
+.job-header .jobinfo .candidateinfo .desi {
+	font-size: 20px;
+	color: #666;
+	margin-top: 10px;
+	font-style: italic;
+}
+.job-header .jobinfo .candidateinfo .loctext {
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 24px;
+	color: #555;
+	margin-top: 8px;
+}
+.job-header .jobinfo .candidateinfo .loctext i {
+	width: 20px;
+	color: #263bd6;
+}
+.job-header .jobinfo .candidateinfo .freelancer-location {
+	padding-left: 117px;
+}
+.cadsocial {
+	margin-top: 10px;
+}
+.cadsocial a {
+	color: #666;
+	font-size: 24px;
+	display: inline-block;
+	margin-right: 7px;
+}
+.cadsocial a:hover {
+	color: #263bd6;
+}
+/*Buttons*/
+.jobButtons {
+	padding: 20px 25px;
+}
+.jobButtons a {
+	background: #f0f0f0;
+	margin-right: 10px;
+	color: #333;
+	font-weight: 600;
+    font-size: 16px;
+}
+.jobButtons a.report {
+	background: #e01010;
+	color: #fff;
+}
+.jobButtons a.apply {
+	background: #0433b6;
+	color: #fff
+}
+.jobButtons a:hover {
+	background: #222;
+	color: #fff;
+}
+.jobButtons .btn {
+    border-radius: 0;
+}
+
+.job-header .contentbox {
+	padding: 35px;
+}
+.job-header .contentbox h3 {
+	font-size: 24px;
+	font-weight: 700;
+	color: #263bd6;
+	margin-bottom: 10px;
+}
+.job-header .contentbox p {
+	line-height: 24px;
+	color: #555;
+	margin-bottom: 20px;
+}
+.job-header .contentbox ul {
+	margin-bottom: 30px;
+}
+.job-header .contentbox ul li {
+	padding: 10px 0 10px 25px;
+	position: relative;
+	line-height: 24px;
+}
+.job-header .contentbox ul li:before {
+	content: '\f00c';
+	font-family: 'FontAwesome';
+	color: #a8d815;
+	position: absolute;
+	left: 0;
+}
+
+.jobdetail {
+	padding: 20px;
+}
+.jobdetail h3 {
+	font-size: 18px;
+	color: #263bd6;
+	font-weight: 700;
+}
+.jbdetail {
+	margin-top: 20px;
+}
+/*Form Panel*/
+.formpanel {
+	margin-top: 20px;
+}
+.formpanel .formrow {
+	margin-bottom: 15px;
+}
+.formpanel .form-control {
+	height: auto;
+	border-radius: 0;
+	padding: 10px 13px;
+	border-color: #ddd;
+}
+.formpanel select.form-control {
+	padding: 13px 12px;
+	border-radius:0;
+	line-height:45px;
+}
+.formpanel textarea.form-control {
+	height: 150px;
+}
+.formpanel .btn {
+	width: 100%;
+	background: #263bd6;
+	color: #fff;
+	border-radius: 0;
+	padding: 10px;
+	font-size: 16px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+.formpanel .btn:hover {
+	background: #222;
+}
+.featchoose li {
+	margin-bottom: 10px;
+}
+/*Education*/
+.educationList {
+	margin-bottom: 0 !important;
+}
+.educationList li {
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 30px !important;
+	padding-top: 0 !important;
+	padding-left: 0 !important;
+	margin-top: 30px;
+}
+.educationList li:hover {
+	border-bottom-color: #263bd6;
+}
+.educationList li:before {
+	display: none;
+}
+.educationList li:last-child {
+	border-bottom: 0;
+}
+.educationList li .date {
+	width: 90px;
+	height: 90px;
+	background: #888;
+	border-radius: 50%;
+	text-align: center;
+	font-weight: 700;
+	padding-top: 17px;
+	line-height: 18px;
+	float: left;
+	color: #fff;
+	margin-right: 20px;
+}
+.educationList li h4 {
+	font-size: 18px;
+	font-weight: 700;
+	color: #58c0ff;
+	margin-bottom: 5px;
+}
+.educationList li p {
+	margin-bottom: 0 !important;
+}
+.formpanel .rating{
+    font-size: 200%;
+    color:#f5e508e8;
+}
+
+/* =======================
+		Blog Listing
+======================= */
+.blogWraper {
+	margin-bottom: 40px;
+}
+
+.blogList {
+	list-style: none;
+}
+.blogList li {
+	background: #fff;
+	padding: 20px;
+	margin-bottom: 30px;
+	border: 1px solid #e4e4e4;
+}
+.blogList li:hover {
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	border-color: #263bd6;
+}
+.postimg {
+	position: relative;
+	display: inline-block;
+}
+
+.postimg img{
+	width: 688px;
+	height: 370px;
+}
+.postimg:before {
+	border: 1px solid #fff;
+	top: 10px;
+	right: 10px;
+	bottom: 10px;
+	left: 10px;
+	content: '';
+	position: absolute;
+	z-index: 10;
+	transition: 0.3s ease-in-out;
+	-webkit-transition: 0.3s ease-in-out;
+	-ms-transition: 0.3s ease-in-out;
+	-moz-transition: 0.3s ease-in-out;
+}
+.blogList li:hover .postimg:before {
+	background: rgba(255,255,255,0.4);
+}
+.postimg .date {
+	width: 60px;
+	height: 60px;
+	font-weight: bold;
+	font-size: 15px;
+	color: #fff;
+	padding: 7px 10px 0 10px;
+	text-align: center;
+	line-height: 20px;
+	background: #263bd6;
+	letter-spacing: 0.4px;
+	outline: 3px solid #263bd6;
+	border: 1px solid #fff;
+	position: absolute;
+	left: 14px;
+	top: 14px;
+	z-index: 12;
+}
+.post-header {
+	margin-bottom: 20px;
+	background: none;
+}
+.post-header h4 a {
+	font-size: 24px;
+	color: #263bd6;
+	font-weight: 600;
+}
+.post-header h4 a:hover {
+	color: #333;
+}
+.postmeta {
+	margin: 15px 0 20px 0; line-height:24px;
+}
+.postmeta span, .postmeta a {
+	color: #263bd6;
+}
+.blogList p, .blogGrid li p {
+	line-height: 24px;
+	color: #333;
+}
+.blogList .readmore, .blogGrid .readmore {
+	border-bottom: 1px dotted #00b1f1;
+	display: inline-block;
+	margin-top: 15px;
+	color: #000;
+	font-weight: 600;
+	padding-bottom: 5px;
+}
+.blogList .readmore:hover, .blogGrid .readmore:hover {
+	text-decoration: none;
+	color: #00b1f1;
+}
+
+/* =======================
+		Blog Detail
+======================= */
+.blogdetailbox {
+	background: #fff;
+	padding: 20px;
+	margin-bottom: 30px;
+	box-shadow: 0px 0px 14px rgba(191, 191, 191, 0.24);
+}
+
+/************************************************
+           == Sidebar css==
+*************************************************/
+.sidebar {
+	background: #fff;
+	box-shadow: 0px 0px 14px rgba(191, 191, 191, 0.24);
+	padding: 20px;
+	margin-bottom: 30px;
+}
+.sidebar .widget {
+	margin-bottom: 20px;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 20px;
+}
+.sidebar .widget-title {
+	font-size: 18px;
+	font-weight: 600;
+	color: #666;
+	margin-bottom: 20px;
+}
+
+/************************************************
+           ==Blog sidebar css==
+*************************************************/
+.search {
+	position: relative;
+	margin-bottom: 15px;
+}
+.search .form-control {
+	border-radius: 0;
+	height: auto;
+	padding: 10px 12px;
+	border-color: #ddd;
+}
+.search .btn {
+	position: absolute;
+	right: 0;
+	top: 0;
+	border-radius: 0;
+	background: none;
+	font-size: 20px;
+	color: #212529;
+    text-decoration: none;
+}
+
+.search .btn:hover{
+	color: #0d1ebd;
+    text-decoration: none;
+}
+
+
+/*categories*/
+.categories li {
+	margin-bottom: 15px;
+	position: relative;
+	padding-left: 20px;
+}
+.categories li a {
+	margin-top: 0;
+	color: #888;
+	font-weight: 600;
+}
+/* .categories li:before {
+	content: "\f0da ";
+	font-family: 'FontAwesome';
+	position: absolute;
+	left: 0px;
+	color: #00b1f1;
+	font-size: 12px;
+} */
+.categories li i {	
+	color: #00b1f1;
+	font-size: 12px;
+}
+.categories li a:hover{color:#00b1f1;}
+/*Archives*/
+.archive li {
+	line-height: 45px;
+}
+.archive li a {
+	margin-top: 0;
+	color: #888;
+	font-weight: 600;
+}
+.archive li span {
+	float: left;
+	height: 30px;
+	width: 30px;
+	text-align: center;
+	background: #f5f5f5;
+	border: 1px solid #fff;
+	outline: 3px solid #f5f5f5;
+	margin-right: 20px;
+	line-height: 26px;
+	font-size: 12px;
+	color: #777777;
+	margin-top: 10px;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+}
+.archive li a:hover span {
+	background: #263bd6;
+	color: #fff;
+}
+/*Popular Posts*/
+.papu-post {
+}
+.papu-post .media-left {
+	margin-right: 0px;
+	width: 95px;
+	height: 59px;
+}
+.papu-post .media-left img {
+	width: 100%;
+	height: 54px;
+}
+.papu-post .media-left a {
+	width: 80px;
+	height: 56px;
+	margin-top: 0;
+	margin-right: 5px;
+	display: inline-block;
+}
+.papu-post span {
+	color: #333;
+	letter-spacing: 0px;
+	font-size: 11px;
+}
+.papu-post li {
+	border-bottom: 1px solid #ececec;
+	padding: 20px 0;
+	margin: 0px;
+	display: flex;
+}
+.papu-post .media-heading {
+	display: inline-block;
+	width: 100%;
+	color: #00b1f1;
+	margin-top: 0px;
+	line-height: 20px;
+}
+.papu-post li:last-child {
+	border-bottom: 0;
+}
+/*Tags*/
+.tags:after {
+	display: table;
+	clear: both;
+	content: '';
+}
+.tags li {
+	display: inline-block;
+	float: left;
+}
+.tags a {
+	color: #969595;
+	border: 1px solid #dadada;
+	padding: 7px 10px;
+	display: inline-block;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	text-transform: uppercase;
+}
+.tags a:hover {
+	border: 1px solid #263bd6;
+	background: #263bd6;
+	color: #fff;
+	text-decoration: none;
+}
+/*Photo Streen*/
+.photo-steam {
+	margin: 0 -5px;
+}
+.photo-steam:after {
+	display: table;
+	clear: both;
+	content: '';
+}
+.photo-steam li {
+	float: left;
+	width: 25%;
+	padding: 0 5px;
+	margin-bottom: 10px;
+}
+
+/* Freelancer ui-optimization */
+
+.manager-resumes-item .manager-content .manager-info .manager-meta {
+    float: left;
+	text-align: left;
+}
+.manager-resumes-item i{
+	color: blue;
+}
+
+/*Portfolio*/
+.userPortfolio li {
+	padding: 0 15px !important;
+	margin-top: 30px;
+	border: 1px solid #f1f1f1;
+    border-radius: 4px;
+    box-shadow: 0px 0px 14px rgba(155, 154, 154, 0.24);
+    transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+}
+.userPortfolio li:before {
+	display: none;
+}
+.userPortfolio li .imgbox {
+	overflow: hidden;
+	position: relative
+}
+.userPortfolio li .itemHover {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(22,34,46,.9);
+	transform: scale(0);
+	transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-webkit-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	-o-transition: all .5s ease
+}
+.userPortfolio li:hover .itemHover {
+	transform: scale(1)
+}
+.userPortfolio li .zoombox {
+	display: table;
+	width: 100%;
+	height: 20%;
+	text-align: right
+}
+.userPortfolio li .item-zoom {
+	display: inline-block;
+	border: 2px solid #fff;
+	padding: 6px 12px;
+	margin: 15px 15px 0 0;
+	color: #fff
+}
+.userPortfolio li .item-zoom:hover {
+	background: #2079f2
+}
+.userPortfolio li .infoItem {
+	display: table;
+	width: 100%;
+	height: 70%;
+	text-align: center
+}
+.userPortfolio li .itemtitle {
+	vertical-align: bottom;
+	padding: 0 15px 15px;
+	position: relative;
+	display: table-cell;
+}
+.userPortfolio li .itemtitle h5 {
+	color: #fff;
+	font-size: 18px;
+	margin: 0 0 5px
+}
+.userPortfolio li .itemtitle p {
+	color: #ccc;
+	line-height: 18px
+}
+.userPortfolio li .itemtitle a {
+	color: #2079f2
+}
+.userPortfolio li.shown, .no-cssanimations .userPortfolio li, .no-js .grid li {
+	opacity: 1
+}
+.userPortfolio li a, .userPortfolio li img {
+	outline: 0;
+	border: none;
+	display: block;
+	max-width: 100%
+}
+
+/* Featured freelancers styling */
+.manager-resumes-item .update-date .action-btn {
+	float: left !important;
+	text-align: left;
+}
+
+/* error div styling */
+.error_message{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-top: 50px;
 }

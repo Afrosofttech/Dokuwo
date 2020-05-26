@@ -24,6 +24,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link href="account/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="assets/css/line-icons.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/css/owl.theme.default.css">
@@ -32,6 +33,7 @@
     <link rel="stylesheet" href="assets/css/main.css">    
     <link rel="stylesheet" href="assets/css/responsive.css">
     <link rel="stylesheet" href="assets/css/custom_landing.css">
+    <link rel="stylesheet" href="assets/css/lightbox.min.css">
 
     <script type="text/javascript">
 //@ams->to be moved to career.js-urgent
@@ -70,7 +72,9 @@
     <!-- SweetAlert2 -->
     <script src="account/js/plugins/rater.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="assets/js/lightbox.min.js"></script>
     <script src="account/js/core/functions.js"></script>
+    <script src="account/js/common.js"></script>
     <script src="account/js/core/jobseeker_categories.js"></script>
     <script src="account/js/plugins/notify.min.js"></script>
     <script src="landing.js"></script>

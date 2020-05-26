@@ -66,3 +66,61 @@ function gotoHomepage(){
   document.cookie ="cookie_user_id =" + session_user_id + ";" + expires + ";path=/Career/index.php";
   window.location.replace('../../Career/index.php');
 }
+
+function hireFreelancer(freelancerName,freelancer_id){
+  let temp=  ' <!-- Modal -->'+
+  '<div class="modal fade" id="hireModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">'+
+    '<div class="modal-dialog modal-dialog-centered" role="document">'+
+      '<div class="modal-content">'+
+        '<div class="modal-header">'+
+          '<h5 class="modal-title" id="exampleModalLongTitle">Hire Freelancer</h5>'+
+          '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+            '<span aria-hidden="true">&times;</span>'+
+          '</button>'+
+        '</div>'+
+        '<div class="modal-body">'+
+
+            '<div class="contact-block">'+
+              '<h2 class="text-center">'+ freelancerName +'</h2>'+
+              '<form id="contactForm1">'+
+                '<div class="row">'+
+                  '<div class="col-md-6">'+
+                    '<div class="form-group">'+
+                      '<input type="text" class="form-control" id="hirer_name" name="name" placeholder="Name" required data-error="Please enter your name">'+
+                      '<div class="help-block with-errors"></div>'+
+                    '</div>'+                                 
+                  '</div>'+
+                  '<div class="col-md-6">'+
+                    '<div class="form-group">'+
+                      '<input type="text" placeholder="Email" id="hirer_email" class="form-control" name="name" required data-error="Please enter your email">'+
+                      '<div class="help-block with-errors"></div>'+
+                    '</div>'+ 
+                  '</div>'+
+                  '<div class="col-md-12">'+
+                    '<div class="form-group">'+
+                      '<input type="text" placeholder="phone" id="hirer_phone_number" class="form-control" required data-error="Please enter your phone number">'+
+                      '<div class="help-block with-errors"></div>'+
+                    '</div>'+
+                  '</div>'+
+                  '<div class="col-md-12">'+
+                    '<div class="form-group">'+ 
+                      '<textarea class="form-control" id="task" placeholder="Task you want to be done" rows="5" data-error="Please enter a task to be done" required></textarea>'+
+                      '<div class="help-block with-errors"></div>'+
+                    '</div>'+
+            
+                 ' </div>'+
+               ' </div> ' +          
+              '</form>'+
+            '</div>'+
+      
+        '</div>'+
+        '<div class="modal-footer">'+
+          '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
+          `<button type="button" class="btn btn-primary" onclick='hire_jobseeker("${freelancer_id}","${freelancerName}");'>Hire</button>`+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+  $('#hireModal').modal('show');
+$('.content-section').append(temp);
+}

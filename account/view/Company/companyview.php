@@ -44,12 +44,12 @@ class CompanyView extends Company{
         $jobdetails = $this->get_job_company_details($jobId);
         return $jobdetails;
     }
-    public function get_featured_job(){
-        $featured_jobs = $this->get_featured_jobs();
+    public function get_featured_job($caller){
+        $featured_jobs = $this->get_featured_jobs($caller);
         return $featured_jobs;
     }
-    public function get_latest_job(){
-        $latest_job = $this->get_latest_jobs();
+    public function get_latest_job($caller){
+        $latest_job = $this->get_latest_jobs($caller);
         return $latest_job;
     }
     public function get_blogs(){
@@ -80,25 +80,14 @@ class CompanyView extends Company{
         $details = $this->recruiter_details($recruiter_id);
         return $details;
     }
-    public function get_admin_blogs($admin_id){
-        $result = $this->get_blog_by_admin($admin_id);
-        return $result;
+    
+    public function get_freelancers(){
+        $admin = $this->get_all_freelancers();
+        return $admin;
     }
 
-    public function get_all_recruiter_accounts(){
-        $result = $this->get_recruiter_accounts();
-        return $result;  
-    }
-    public function get_all_jobseeker_accounts(){
-        $result = $this->get_jobseeker_accounts();
-        return $result;  
-    }
-    public function get_all_admin_accounts(){
-        $result = $this->get_admin_accounts();
-        return $result;  
-    }
-    public function get_admin_profile($login_id){
-        $admin = $this->get_admin($login_id);
-        return $admin;
+    public function featured_freelancers(){
+        $res = $this->get_featured_freelancers();
+        return $res;
     }
 }
