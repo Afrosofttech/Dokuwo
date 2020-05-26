@@ -42,8 +42,5 @@ class JobseekerController extends Jobseeker{
         $res = $this->send_jobseeker_review($jobseeker_id,$name,$email,$rating,$content);   
         return $res;
     }
-    public function warn_jobseeker($login_id,$request){
-        $res = $this->warnJobseeker($login_id,$request);   
-        return $res;
-    }
+    
 }

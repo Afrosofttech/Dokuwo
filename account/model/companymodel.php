@@ -1,5 +1,6 @@
 <?php
 include_once 'dbhmodel.php';
+include_once 'adminmodel.php';
 
 class Company extends Dbh{
     
@@ -398,36 +399,72 @@ class Company extends Dbh{
             $stmt = null;
         }    
     }
-    protected function get_featured_jobs(){
-        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE featured = ? AND job.status = ? GROUP BY job.job_id";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([1,0]);
-        $result = $stmt->fetchAll();
+    protected function get_featured_jobs($caller){
+        if($caller == 'landing'){
+            $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE featured = ? AND job.status = ? GROUP BY job.job_id LIMIT 3";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([1,0]);
+            $result = $stmt->fetchAll();
+    
+            if(!$result ){
+                return self::fail;
+                $stmt = null;
+            }else{
+                return  $result ;
+                $stmt = null;
+            }  
+        }
+        else{
+            $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE featured = ? AND job.status = ? GROUP BY job.job_id";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([1,0]);
+            $result = $stmt->fetchAll();
 
-        if(!$result ){
-            return self::fail;
-            $stmt = null;
-        }else{
-            return  $result ;
-            $stmt = null;
-        }  
+            if(!$result ){
+                return self::fail;
+                $stmt = null;
+            }else{
+                return  $result ;
+                $stmt = null;
+            }  
+
+        }
+        
     }
-    protected function get_latest_jobs(){
-        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE job.status = ? GROUP BY job.job_id ORDER BY date_posted DESC";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([0]);
-        $result = $stmt->fetchAll();
-
-        if(!$result ){
-            return self::fail;
-            $stmt = null;
-        }else{
-            return  $result ;
-            $stmt = null;
-        }    
+    protected function get_latest_jobs($caller){
+        
+                if($caller == 'landing'){
+                    $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE job.status = ? GROUP BY job.job_id ORDER BY date_posted DESC LIMIT 4";
+                    $stmt = $this->connect()->prepare($sql);
+                    $stmt->execute([0]);
+                    $result = $stmt->fetchAll();
+            
+                    if(!$result ){
+                        return self::fail;
+                        $stmt = null;
+                    }else{
+                        return  $result ;
+                        $stmt = null;
+                    }  
+                }
+                else{
+                    $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company on job.company_id=company.company_id WHERE job.status = ? GROUP BY job.job_id ORDER BY date_posted DESC";
+                    $stmt = $this->connect()->prepare($sql);
+                    $stmt->execute([0]);
+                    $result = $stmt->fetchAll();
+            
+                    if(!$result ){
+                        return self::fail;
+                        $stmt = null;
+                    }else{
+                        return  $result ;
+                        $stmt = null;
+                    }  
+                }
+         
     }
     protected function get_all_blogs(){
-        $sql = "SELECT * FROM blog";
+        $sql = "SELECT * FROM blog ORDER BY date_posted DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -436,11 +473,11 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            return  $result ;
+            return  array($result);
             $stmt = null;
         }    
     }
-    protected function get_blog_details($blog_id){
+    public function get_blog_details($blog_id){
         $sql = " SELECT * FROM blog WHERE blog_id=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$blog_id]);
@@ -497,6 +534,7 @@ class Company extends Dbh{
         }    
     }
     protected function get_jobseeker_details($jobseeker_id){
+        $admin = new Admin();
         $sql = " SELECT * FROM job_seeker WHERE jobseeker_id=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$jobseeker_id]);
@@ -506,7 +544,7 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            $package = self::package_exists($result[0]['login_id']);
+            $package = $admin->package_exists($result[0]['login_id']);
             if($package != 400)
             {
                 $result[0]['package'] = $package['status'];
@@ -596,166 +634,8 @@ class Company extends Dbh{
             return  true;
             $stmt = null;
         } 
-    }
-// admin DAO @Biran
-    protected function get_blog_by_admin($admin_id){
-        $sql = "SELECT * FROM blog where admin_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$admin_id]);
-        $result = $stmt->fetchAll();
+    } 
 
-        if(!$result ){
-            return self::fail;
-            $stmt = null;
-        }else{
-            return  $result ;
-            $stmt = null;
-        }    
-    }
-
-    protected function create_new_blog($admin_id,$title,$publisher,$category,$tags,$content,$image){
-        $date = date('Y-m-d');$date = date('Y-m-d');
-        $sql = " INSERT INTO blog(admin_id,blog_title,date_posted,blog_publisher,category,tags,blog_content,blog_image) VALUES(?,?,?,?,?,?,?,?)";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$admin_id,$title,$date,$publisher,$category,$tags,$content,$image]);
-        return  self::success;
-        $stmt = null;
-    }
-
-    protected function updateBlog($title,$category,$tags,$image,$blog_id){
-        $sql = " UPDATE blog SET blog_title=?,category=?,tags=?,blog_image=? WHERE blog_id=?;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$title,$category,$tags,$image,$blog_id]);
-        return  self::success;
-        $stmt = null;
-    }
-
-    protected function deleteBlog($blog_id){
-        $sql = " DELETE FROM blog WHERE blog_id=?;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$blog_id]);
-        return  self::success;
-        $stmt = null; 
-    }
-
-    protected function get_recruiter_accounts(){
-        $sql = "SELECT login.login_id,email,status, company.company_name FROM login INNER JOIN company ON login.login_id = company.login_id GROUP BY login.login_id";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-
-        if(!$result ){
-            return self::fail;
-            $stmt = null;
-        }else{
-            foreach ($result as &$val) {
-                $status = self::package_exists($val['login_id']);
-                if($status == 400){
-                    $val['package'] = "No Package";
-                }
-                else{
-                    $val['package'] = $status['status']; 
-                }
-            }
-            return array("accounts" => $result);
-            $stmt = null;
-        }    
-    }
-
-    protected function get_jobseeker_accounts(){
-        $sql = "SELECT login.login_id,login.email,login.status, job_seeker.fullName,job_seeker.jobseeker_id FROM login INNER JOIN job_seeker ON login.login_id = job_seeker.login_id GROUP BY login.login_id";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-
-        if(!$result ){
-            return self::fail;
-            $stmt = null;
-        }else{
-            foreach ($result as &$val) {
-                $status = self::package_exists($val['login_id']);
-                $actions = self::getJobseekerActions($val['login_id']);
-                if($status == 400){
-                    $val['package'] = "No Package";
-                }
-                else{
-                    $val['package'] = $status['status']; 
-                }
-                if($actions != 400){
-                    $val['actions'] = $actions;
-                }
-                else{
-                    $val['actions'] = 'None'; 
-                }
-            }
-            return array("accounts" => $result);
-            $stmt = null;
-        }    
-    }
-
-    protected function get_admin_accounts(){
-        $sql = "SELECT login.login_id,login.email,login.status, admin.admin_name,admin.role FROM login INNER JOIN admin ON login.login_id = admin.login_id GROUP BY login.login_id";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-
-        if(!$result ){
-            return self::fail;
-            $stmt = null;
-        }else{
-            return  $result ;
-            $stmt = null;
-        }    
-    }
-    
-    protected function activateAccount($login_id){
-        $status = 1;
-        $sql = "UPDATE login SET status = ? WHERE login_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$status,$login_id]);
-        $result = $stmt->fetchAll();
-        return  self::success;
-        $stmt = null;  
-    }
-
-    protected function deactivateAccount($login_id){
-        $status = 0;
-        $sql = "UPDATE login SET status = ? WHERE login_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$status,$login_id]);
-        $result = $stmt->fetchAll();
-        return  self::success;   
-    }
-
-    protected function deleteAccount($login_id){
-        $sql = " DELETE FROM login WHERE login_id=?;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$login_id]);
-        return  self::success;
-        $stmt = null; 
-    }
-
-    protected function deleteReport($action_id){
-        $sql = " DELETE FROM actions WHERE action_id=?;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$action_id]);
-        return  self::success;
-        $stmt = null; 
-    }
-
-    protected function package_exists($login_id){
-        $sql= "SELECT status FROM package WHERE login_id = ? AND status IN (?,?);";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$login_id,'Pending','Active']);
-        $result = $stmt->fetch();
-        if(!$result ){
-            return self::fail;
-            $stmt = null;
-        }else{
-            return  $result;
-            $stmt = null;
-        }
-    }
     //packaging
     protected function requesting_this_package($login_id,$package){
         // if($package)
@@ -816,60 +696,6 @@ class Company extends Dbh{
             $stmt = null;
         } 
     }
-
-    protected function getJobseekerActions($jobseeker_login_id){
-        $sql= "SELECT action_id,request,reason,action,(SELECT COUNT(action) FROM actions WHERE jobseeker_login_id = ? AND action = ? GROUP BY jobseeker_login_id) AS totalWarnings,(SELECT COUNT(action) FROM actions WHERE jobseeker_login_id = ? AND action = ? GROUP BY jobseeker_login_id) AS totalPending FROM actions WHERE jobseeker_login_id = ? AND request = ? GROUP BY action_id ORDER BY action_id ASC";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$jobseeker_login_id,"warned",$jobseeker_login_id,"Pending",$jobseeker_login_id,"Report"]);
-        $result = $stmt->fetchAll();
-        if(!$result ){
-            return self::fail;
-            $stmt = null;
-        }else{
-            return  $result;
-            $stmt = null;
-        } 
-    }
-
-    protected function get_admin($login_id){
-        $sql = " SELECT admin.admin_name,login.email from admin INNER JOIN login ON admin.login_id=login.login_id WHERE admin.login_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$login_id]);
-        $result = $stmt->fetch();
-        if(!$result) return self::fail;
-        return  $result ;
-        $stmt = null;
-    }
-
-    protected function update_admin_login($email,$password,$login_id){
-        if($password == ""){
-            $sql = "UPDATE login SET email = ? WHERE login_id = ?";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$email,$login_id]);
-            return self::success;
-            $stmt = null;
-        }
-        else{
-            $passwd = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "UPDATE login SET email = ?,password = ? WHERE login_id = ?";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$email,$passwd,$login_id]);
-            return self::success;
-            $stmt = null; 
-        }
-    }
-
-    protected function updateAdmin($name,$email,$password,$login_id){
-        
-            $sql = "UPDATE admin SET admin_name = ? WHERE login_id = ?";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$name,$login_id]);
-            $update = self::update_admin_login($email,$password,$login_id);
-            return $update;
-            $stmt = null;
-       
-        
-    }
     
     protected function request_to_activate_this_pack($login_id,$package){
         $validFrom = date('Y-m-d');
@@ -902,20 +728,19 @@ class Company extends Dbh{
         }
     }
 
-<<<<<<< HEAD
     protected function get_all_freelancers(){
         $sql = " SELECT * from job_seeker WHERE interest = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(['Freelance']);
         $result = $stmt->fetchAll();
         if(!$result ){
-            return 0;
+            return 400;
             $stmt = null;
     }else{
         return  $result ;
         $stmt = null;
      }
-=======
+    }
     protected function create_expired_trial_package($login_id){
         $validFrom = date('Y-m-d');
         $validUntil = date('Y-m-d');
@@ -924,6 +749,19 @@ class Company extends Dbh{
         $stmt->execute([$login_id,$validFrom,$validUntil,'Inactive','Trial']); 
         return true;
         $stmt = null;
->>>>>>> dc48a43da6bb219c17d94f4078b9cd2b8ddfd803
+    }
+
+    protected function get_featured_freelancers(){
+        $sql = " SELECT * from job_seeker WHERE featured = ? LIMIT 3";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([1]);
+        $result = $stmt->fetchAll();
+        if(!$result ){
+            return 400;
+            $stmt = null;
+    }else{
+        return  $result ;
+        $stmt = null;
+     }
     }
 }

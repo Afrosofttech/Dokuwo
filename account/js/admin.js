@@ -181,14 +181,14 @@ function loadAdminDashboard(){
 function getBlog(){
 let url = '';
 if(session_adminType == "superadmin"){url = "get.php/company/retrieve_all_blogs";}
-else {url = "get.php/company/manage_blogs";}
+else {url = "get.php/admin/manage_blogs";}
 $.ajax({
   method: "GET",
   url: url,
   data:{'admin_id':session_user_id},
   dataType: "json",
   success: function(data){
-      manageBlog(data);
+      manageBlog(data[0]);
     },
   error: function(err){
      console.log("======Manage blogs========");
@@ -319,7 +319,7 @@ $.notify('There is nothing to search for','error');
 $.ajax({
   method: "GET",
   dataType: 'json',
-  url: "get.php/jobseeker/filter_blogs",
+  url: "get.php/admin/filter_blogs",
   data: {"title" : $('#title').val(), "category": $('#category').val()},
   success: function(data){
     if(data.length > 0){
@@ -460,9 +460,9 @@ let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12
         return;
       }
       if (category == ''){
-       swal('Invalid Category!','Blog Category cannot be empty','error','Cool');
-       errors.push('category_error');
-       return;
+      swal('Invalid Category!','Blog Category cannot be empty','error','Cool');
+      errors.push('category_error');
+      return;
       }
       if(errors.length < 1){
         var form = document.getElementById('createBlog')
@@ -472,7 +472,7 @@ let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12
         formData.append("blog_content", $('#summernote').summernote('code'));
         $.ajax({
           method: 'POST',
-          url: 'post.php/company/create_blog',
+          url: 'post.php/admin/create_blog',
           data:formData,
           contentType: false,
           processData: false,
@@ -494,17 +494,19 @@ let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12
       }else{
         return;
       }
+     
 
-    })
+    });
 
   })
 }
 
-function viewBlog(blog_id){
-let temp = '<div class="container-fluid manageBlog"></div>';
 
-$('#content').empty().append(temp);
-blog_details(blog_id);
+function viewBlog(blog_id){
+    let temp = '<div class="container-fluid manageBlog"></div>';
+
+    $('#content').empty().append(temp);
+    blog_details(blog_id);
 }
 
 function blog_details(blog_id){
@@ -560,7 +562,6 @@ $.ajax({
                     '<div class="form-group row">'+
                     '<label for="sblogCategory" class="col-sm-2 col-form-label">Category</label>'+
                     '<div class="col-sm-10">'+
-                      // '<input type="text" class="form-control" name="sblogCategory" id="sblogCategory" value="'+data[0].category+'">'+
                       '<select class="custom-select" id="sblogCategory" name="sblogCategory">'+
                         '<option>Choose...</option>'+
                         '<option value="Popular posts">Popular Posts</option>'+
@@ -667,11 +668,12 @@ $.ajax({
            return;
           }
           if(errors.length < 1){
-            var formData = new FormData($('#editBlog'));
+            let form = document.getElementById('editBlog');
+            var formData = new FormData(form);
             formData.append("sblogContent", $('#summernote').summernote('code'));
             $.ajax({
               method: 'POST',
-              url: 'post.php/company/update_blog',
+              url: 'post.php/admin/update_blog',
               data:formData,
               contentType: false,
               processData: false,
@@ -707,7 +709,7 @@ $.ajax({
 function deleteBlog(blog_id){
 $.ajax({
   method: 'POST',
-  url: 'post.php/company/delete_blog',
+  url: 'post.php/admin/delete_blog',
   data:{'blog_id':blog_id},
   success: function(response){
     if(response == 200){
@@ -733,7 +735,7 @@ temp +='<!-- tab-pane-->'+
 $.ajax({
   method: "GET",
   dataType: "json",
-  url: "get.php/company/retrieve_recruiter_accounts",
+  url: "get.php/admin/retrieve_recruiter_accounts",
   success: function(data){
   if(data !== 400 ){
   // recruiters account pane
@@ -809,7 +811,7 @@ temp +='<div class="tab-pane" id="jobseekers">';
 $.ajax({
   method: "GET",
   dataType: "json",
-  url: "get.php/company/retrieve_jobseeker_accounts",
+  url: "get.php/admin/retrieve_jobseeker_accounts",
   success: function(data){
   if(data !== 400 ){
   temp +='<!-- Page Heading -->'+
@@ -887,10 +889,9 @@ let temp = "";
 $.ajax({
   method: "GET",
   dataType: "json",
-  url: "get.php/company/retrieve_admin_accounts",
+  url: "get.php/admin/retrieve_admin_accounts",
   success: function(data){
   if(data !== 400 ){
-  console.log(data);
   temp +='<!-- Page Heading -->'+
   '<!-- DataTales Example -->'+
   '<div class="card shadow mb-4">'+
@@ -1017,7 +1018,7 @@ temp +='<!-- DataTales Example -->'+
 function warnOrBlockJobseeker(jobseeker_login_id,request){
 $.ajax({
   method: 'POST',
-  url: 'post.php/jobseeker/warn_jobseeker',
+  url: 'post.php/admin/warn_jobseeker',
   data:{'login_id':jobseeker_login_id,'request':request},
   success: function(response){
     if(request == "warning"){
@@ -1078,7 +1079,7 @@ function activatePackage(login_id,caller){
 function activateAccount(login_id){
       $.ajax({
         method: 'POST',
-        url: 'post.php/company/activateAccount',
+        url: 'post.php/admin/activateAccount',
         data:{'login_id':login_id},
         success: function(response){
           if(response == 200){
@@ -1099,7 +1100,7 @@ function activateAccount(login_id){
 function deactivateAccount(login_id){
       $.ajax({
         method: 'POST',
-        url: 'post.php/company/deactivateAccount',
+        url: 'post.php/admin/deactivateAccount',
         data:{'login_id':login_id},
         success: function(response){
           if(response == 200){
@@ -1119,7 +1120,7 @@ function deactivateAccount(login_id){
 function deleteReport(action_id){
 $.ajax({
   method: 'POST',
-  url: 'post.php/company/delete_report',
+  url: 'post.php/admin/delete_report',
   data:{'action_id':action_id},
   success: function(response){
     if(response == 200){
@@ -1245,7 +1246,7 @@ let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12
 function delAccount(login_id){
 $.ajax({
   method: 'POST',
-  url: 'post.php/company/delete_account',
+  url: 'post.php/admin/delete_account',
   data:{'login_id':login_id},
   success: function(response){
     if(response == 200){
@@ -1267,7 +1268,7 @@ function adminSettings(){
 let temp = '';
 $.ajax({
   method: 'GET',
-  url: 'get.php/company/admin_profile',
+  url: 'get.php/admin/admin_profile',
   data:{'login_id':session_id},
   dataType:'json',
   success: function(response){

@@ -300,6 +300,10 @@ class Jobseeker extends Dbh{
             ':status' => 0));
         }
         $result = $stmt->fetchAll();
+        if(!$result){
+            return 400;
+            $stmt = null; 
+         }
         return $result;
         $stmt = null;
     }
@@ -323,6 +327,10 @@ class Jobseeker extends Dbh{
             ':location' => '%'. $location . '%'));
         }
         $result = $stmt->fetchAll();
+        if(!$result){
+            return 400;
+            $stmt = null; 
+         }
         return $result;
         $stmt = null;
     }
@@ -347,6 +355,10 @@ class Jobseeker extends Dbh{
             ':location' => '%'. $location . '%'));
         }
         $result = $stmt->fetchAll();
+        if(!$result){
+            return 400;
+            $stmt = null; 
+         }
         return $result;
         $stmt = null;
     }
@@ -371,6 +383,10 @@ class Jobseeker extends Dbh{
             ':location' => '%'. $address . '%'));
         }
         $result = $stmt->fetchAll();
+        if(!$result){
+            return 400;
+            $stmt = null; 
+         }
         return $result;
         $stmt = null;
     }
@@ -394,6 +410,10 @@ class Jobseeker extends Dbh{
             ':compAddress' => '%'. $companyAddress . '%'));
         }
         $result = $stmt->fetchAll();
+        if(!$result){
+            return 400;
+            $stmt = null; 
+         }
         return $result;
         $stmt = null;
     }
@@ -421,6 +441,10 @@ class Jobseeker extends Dbh{
             ':location' => '%'. $location . '%'));
         }
         $result = $stmt->fetchAll();
+        if(!$result){
+           return 400;
+           $stmt = null; 
+        }
         return $result;
         $stmt = null;
     }
@@ -435,9 +459,9 @@ class Jobseeker extends Dbh{
         $stmt = null;
     }
     public function get_categories_of_jobs(){
-        $sql = " SELECT job_cat, COUNT(*) AS count FROM job GROUP BY job_cat";
+        $sql = " SELECT job_cat, COUNT(*) AS count FROM job WHERE status=? GROUP BY job_cat";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([0]);
         $result = $stmt->fetchAll();
         
         return  $result;
@@ -614,61 +638,10 @@ class Jobseeker extends Dbh{
         
     }
 
-    protected function warnJobseeker($jobseeker_login_id,$request){
-        if($request == "warning"){
-            $sql= "UPDATE  actions SET action = ? WHERE jobseeker_login_id = ? AND action = ?;";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(['warned',$jobseeker_login_id,'Pending']);
-            return  self::success;
-            $stmt = null; 
-        }
-        else{
-            $sql= "UPDATE  actions SET action = ? WHERE jobseeker_login_id = ? AND action = ?;";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(['blocked',$jobseeker_login_id,'Pending']);
-            $block = self::blockAccount($jobseeker_login_id);
-            return  $block;
-            $stmt = null;
-        } 
-        
-    }
-
-    protected function blockAccount($login_id){
-        $sql = "UPDATE login SET status = ? WHERE login_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([2,$login_id]);
-        $result = $stmt->fetchAll();
-        return  self::success;   
-    }
-
-    protected function filterBlogs($title,$category)
-    {
-        if($title == ''){
-        $sql="SELECT * FROM blog WHERE category like :search;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(array(
-            ':search' => '%' . $category . '%'));
-        }else if($category == ''){
-            $sql="SELECT * FROM blog WHERE blog_title like :search;";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(array(
-                ':search' => '%' . $title . '%'));
-        }else{
-            $sql="SELECT * FROM blog WHERE blog_title like :title AND category LIKE :category;";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(array(
-            ':title' => '%' . $title . '%',
-            ':category' => '%'. $category . '%'));
-        }
-        $result = $stmt->fetchAll();
-        return $result;
-        $stmt = null;
-    }
-
     protected function searchBlogs($params)
     {
         
-        $sql="SELECT * FROM blog WHERE category like :search;";
+        $sql="SELECT * FROM blog WHERE blog_title like :search;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(array(
             ':search' => '%' . $params . '%'));
@@ -678,16 +651,7 @@ class Jobseeker extends Dbh{
                 $stmt = null;
             }
             else{
-                $sql="SELECT * FROM blog WHERE blog_title like :search;";
-                $stmt = $this->connect()->prepare($sql);
-                $stmt->execute(array(
-                    ':search' => '%' . $params . '%'));
-                    $result = $stmt->fetchAll();
-                    if(!empty($result)){
-                        return $result;
-                        $stmt = null;
-                    }
-                    else{
+               
                         $sql="SELECT * FROM blog WHERE blog_publisher like :search;";
                         $stmt = $this->connect()->prepare($sql);
                         $stmt->execute(array(
@@ -701,8 +665,7 @@ class Jobseeker extends Dbh{
                             return 400;
                         }
                     }
-            }
+
+        }
         
-            
     }
-}

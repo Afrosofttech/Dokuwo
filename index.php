@@ -74,6 +74,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="assets/js/lightbox.min.js"></script>
     <script src="account/js/core/functions.js"></script>
+    <script src="account/js/common.js"></script>
     <script src="account/js/core/jobseeker_categories.js"></script>
     <script src="account/js/plugins/notify.min.js"></script>
     <script src="landing.js"></script>
