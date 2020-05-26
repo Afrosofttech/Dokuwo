@@ -2428,17 +2428,116 @@ else{
       });
     }
 
-    function get_posts_by_category(category){
+    function get_posts_by_category(category,start,finish){
+      let posts = '';
+      let beg ='';
+      let end ='';
+      let numberOfItems = '';
+      let totalPages = '';
+      let forward = '';
+      let Backward = '';
+      let Prev = '';
+      let Next = '';
+      let back = 'blogposts';
+
+      if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else{ beg = 0; end = 3;}
  
       $.ajax({
-        method: "POST",
+        method: "GET",
         url: "account/get.php/company/get_posts_by_category",
         dataType: "json",
         data: {'category':category},
         success: function(data){
           if(data != 400){
-            show_blog_posts(data);
-          }        
+            numberOfItems = data[0].length;
+            limitPerPage = 3;
+            totalPages = Math.round(numberOfItems/limitPerPage);
+            posts +='<div class="page-header">'+
+                '<div class="container">'+
+                  '<div class="row"> '+        
+                    '<div class="col-lg-12">'+
+                      '<div class="inner-header">'+
+                        '<h3>Blog Posts</h3>'+
+                      '</div>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>'+
+              '</div>'+
+              '<!-- Page Header End -->'+
+              '<!-- Start Content -->'+
+              '<div id="content">'+
+                '<div class="container">'+
+                  '<div class="row blogs">'+
+                    '<!-- Start Blog Posts -->'+
+                    '<div class="col-lg-8 col-md-12 col-xs-12 post-section">';
+                      $.each(data[0].slice(beg,end), function(i,val){
+                        let date_posted = new Date(val.date_posted);
+                        posts +='<!-- Start Post -->'+
+                        `<div class="blog-post" onclick='show_blog_details("${val.blog_id}","${back}");' style="cursor: pointer;">`+
+                          '<!-- Post thumb -->'+
+                            '<div class="post-thumb">'+
+                            '<a href="#"><img class="img-fulid" src="account/uploads/'+((val.blog_image == "" || val.blog_image == null)?"default.jpg":val.blog_image)+'" alt=""></a>'+
+                            '<div class="hover-wrap">'+
+                        '</div>'+
+                    '</div>'+
+                    '<!-- End Post post-thumb -->'+
+      
+                    '<!-- Post Content -->'+
+                    '<div class="post-content">'+                    
+                      '<h3 class="post-title"><a href="#">'+ val.blog_title+'</a></h3>'+
+                      '<div class="meta">'+                   
+                        `<span class="meta-part"><a href="#"><i class="lni-user"></i>By ${val.blog_publisher}</a></span>`+
+                        `<span class="meta-part"><i class="lni-calendar"></i><a>${formatMonth(date_posted.getMonth())} ${date_posted.getDate()}, ${date_posted.getFullYear()}</a></span>`+                   
+                      '</div>';
+                      if($.trim(val.blog_content).length > 100){
+                        let subcontent = val.blog_content.substring(0,100);
+                        posts +='<p>'+subcontent+'...</p>'+
+                        `<a class="btn btn-common" href="#">Read More</a>`;
+                      }
+                      else{
+                        posts +='<p>'+val.blog_content+'......</p>';
+                      }
+                       posts +='</div>'+
+                    '<!-- Post Content -->'+
+      
+                  '</div>'+
+                  '<!-- End Post -->';
+                    });   
+                  
+                  let begin = parseInt(beg);
+                  let ending = parseInt(end);
+                  let LastLast = ((limitPerPage*Math.floor(numberOfItems/limitPerPage)) == (numberOfItems))?`show_blog_posts(${(numberOfItems - 3)},${(numberOfItems)})`:`show_blog_posts(${(limitPerPage*Math.floor(numberOfItems/limitPerPage))},${(numberOfItems)})`;
+                  (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = `show_blog_posts(${(begin+limitPerPage)},${numberOfItems})`):(forward = `show_blog_posts(${(begin+limitPerPage)},${(ending+limitPerPage)})`); 
+                  (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = `show_blog_posts(${(begin)},${(ending)})`):(begin != 0 && ending != numberOfItems)?(Backward = `show_blog_posts(${(begin-limitPerPage)},${(ending-limitPerPage)})`): (Backward = `show_blog_posts(${(begin-limitPerPage)},${(numberOfItems-(numberOfItems%limitPerPage))})`);
+                  posts +='<!-- Start Pagination -->'+
+                    '<ul class="pagination">' +             
+                     `<li class="active"><a href="javascript:void(0)" class="btn-prev" onclick='show_blog_posts(0,3)'><i class="lni-angle-left"></i> First</a></li>`+
+                      `<li class="active"><a href="javascript:void(0)" class="btn-next" onclick='${Backward}'>Prev <i class="lni-angle-right"></i></a></li>`+
+                      `<li class="active"><a href="javascript:void(0)" class="btn-next" onclick='${forward}'>Next <i class="lni-angle-right"></i></a></li>`+
+                      `<li class="active"><a href="javascript:void(0)" class="btn-next" onclick='${LastLast}'>Last <i class="lni-angle-right"></i></a></li>`+
+                    '</ul>'+
+                    '<!-- End Pagination -->'+
+                    '</div>'+
+                    '<!-- End Blog Posts -->'+
+  
+                    '<!-- right side start --> '+
+                    '<div class="col-md-4 blog_sidebar">'+
+  
+                    '</div>'+
+                    '<!-- right side End --> '+
+          
+                  '</div>'+
+                '</div>'+
+              '</div>'+
+              '<!-- End Content -->';
+              }
+             
+              $(document).ready(function(){
+                $('header .intro-landing').remove();
+                $('.content-section').empty().append(posts);
+                blogSideBar();
+              });
+           
         },
         error: function(err){
           swalNotify(err.responseText,'error');

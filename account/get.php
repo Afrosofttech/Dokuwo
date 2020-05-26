@@ -153,7 +153,7 @@ if($view == 'company'){
         break;
         case "get_posts_by_category":
         $result = new CompanyView();
-        $posts = $result->posts_by_category($_POST['category']);
+        $posts = $result->posts_by_category($_GET['category']);
         echo json_encode($posts); 
         break;
         case "get_jobseeker_details":

@@ -536,7 +536,7 @@ class Company extends Dbh{
         }    
     }
     protected function get_posts_by_category($category){
-        $sql = " SELECT * FROM blog WHERE category = ?";
+        $sql = " SELECT * FROM blog WHERE category = ? ORDER BY date_posted DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$category]);
         $result = $stmt->fetchAll();
@@ -545,7 +545,7 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            return  $result ;
+            return  array($result);
             $stmt = null;
         }    
     }
