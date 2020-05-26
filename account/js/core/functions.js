@@ -27,7 +27,7 @@ function swalNotify(title,icon){
                 title: title,
                 icon: icon,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
               })
 }
 function currencyFormat(num){

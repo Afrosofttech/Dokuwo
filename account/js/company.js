@@ -487,6 +487,7 @@ $.ajax({
           ' <th></th>'+
           ' <th></th>'+
           ' <th></th>'+
+          ' <th></th>'+
           '</thead>'+
             '<tbody>';
             $.each(data, function( i, val ) {
@@ -501,8 +502,9 @@ $.ajax({
                             '</div>'+
                           '</td>'+
                           '<td class="mailbox-name">'+val.creator_name+'</td>'+
-                          '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                          '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 35).concat('...')+''+
                           '</td>'+
+                          '<td class="mailbox-attachment">'+((val.attachment)?"<i class='fas fa-paperclip'></i>":"")+'</td>'+
                           '<td class="mailbox-date">'+moment(val.create_date).fromNow()+'</td>'+
                         '</tr>';
             });
@@ -609,7 +611,23 @@ function viewMessage(msg_id,jobseeker_name,jobseeker_id){
         '</div>'+
         '<!-- /.mailbox-read-message -->'+
       '</div>'+
-      '<!-- /.card-footer -->'+
+      '<!-- /.card-body -->'+
+      '<div class="card-footer bg-white">'+
+      '<ul class="mailbox-attachments d-flex flex-wrap justify-content-between align-items-stretch clearfix">';
+    $.each(data.attachments, (i, val) => {
+      let extension = val.attachment.substr( (val.attachment.lastIndexOf('.') +1) );
+      let images = ['jpeg', 'jpg', 'png'];
+      temp += '<li>'+
+      '<div class="mailbox-attachment-info">'+
+        '<a href="uploads/'+val.attachment+'" target="_blank" class="mailbox-attachment-name"><i class="'+(images.includes(extension)?'fas fa-camera':'fas fa-paperclip')+'"></i> '+val.attachment.replace(/[0-9]{6}/g, '')+'</a>'+
+            '<span class="mailbox-attachment-size clearfix mt-1">'+
+              '<a href="uploads/'+val.attachment+'" target="_blank" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>'+
+            '</span>'+
+        '</div>'+
+      '</li>';
+    })
+    temp += '</ul>'+
+      '</div>'+
       '<div class="card-footer">'+
         '<div class="float-right">'+
           '<button type="button" class="btn btn-default" onclick="ReplyMsg(\''+msg_id+'\',\''+data.creator_id+'\',\''+data.creator_name+'\',\''+data.subject+'\',\''+jobseeker_id+'\');"><i class="fas fa-reply"></i> Reply</button>'+
@@ -890,7 +908,7 @@ if(jobseeker_id !== 'undefined'){
   '</div>'+
   '<!-- /.card-header -->'+
   '<div class="card-body">'+
-    '<form id="ComposeNewMsg">'+
+    '<form id="ComposeNewMsg" class="companyComposeMessage" method="POST" enctype="multipart/form-data" autocomplete="off">'+
     '<div class="form-group input-group">'+
     '<span class="input-group-addon" style="padding: 6px 3px; border: 1px solid lightgrey; border-radius: 5px 0px 0px 5px">'+
     '<i class="fa fa-user"></i>'+
@@ -903,14 +921,17 @@ if(jobseeker_id !== 'undefined'){
     '<div class="form-group">'+
       '<div id="summernote" class="message_body_info"></div>'+
     '</div>'+
+    '<div class="newAttachment">'+
+   '</div>'+
   '</div>'+
   '<!-- /.card-body -->'+
   '<div class="card-footer">'+
     '<div class="float-right">'+
-      '<button type="submit" name="submit" id="newreplymsg" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
+      '<button type="submit" name="submit" id="newreplymsg" form="ComposeNewMsg" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
     '</div>'+
     // '</form>'+
     '<button type="reset" class="btn btn-default" onclick="contentMessage();"><i class="fas fa-times"></i> Discard</button>'+
+    '<button class="btn btn-default" id="addAttachment"><i class="fas fa-paperclip" style="cursor: pointer;">Attachment</i></button>'+
   '</div>'+
   '</form>';
 
@@ -956,9 +977,17 @@ $(document).ready(function() {
       }
   }
   });
+  $("#addAttachment").click(function(e){
 
+    e.preventDefault();
+    let attachArray=[];
+    $(".newAttachment input").each(function() {
+      attachArray.push(this.name);
+  });
+    $(".newAttachment").append('<div class="form-group"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
+  });
 //on submit
-$('#newreplymsg').click(function(e){
+$('#ComposeNewMsg').submit(function(e){
   e.preventDefault();
   if($('#replyToName').val() ===''){
     $.notify('Message receiver name cannot be empty','error');
@@ -966,17 +995,34 @@ $('#newreplymsg').click(function(e){
     $.notify('Subject field cannot be empty','error');
   }else{
 
+  var formData = new FormData(this);
+  formData.append("creator_id", session_id);
+  formData.append("creator_name", session_fullname);
+  formData.append("recipient_id", recipient_id);
+  formData.append("recipient_name", recipient_name);
+  formData.append("parent_msg_id", msg_id);
+  formData.append("subject", $('#replyToSubject').val());
+  formData.append("msg_body", $('.message_body_info').summernote('code'));
+
   $.ajax({
     method: "POST",
     dataType: 'json',
     url: "post.php/company/reply_jobseeker",
-    data:{"creator_id": session_id,"creator_name": session_fullname,"recipient_id": recipient_id,"recipient_name": recipient_name,"parent_msg_id": msg_id,"subject": $('#replyToSubject').val(),"msg_body": $('.message_body_info').summernote('code')},
-    success: function(data){
-        $.notify(data.message,'success');
-        contentMessage();
+    data:formData,
+    contentType: false,
+    processData: false,
+    cache:false,
+    success: data => {
+      if(data.status == 'success'){
+        swalNotify(data.message,'success');
+        jcontentMessage();
+      }
+      if(data.status == 'error'){
+        swalNotify(data.message,'error'); 
+      }
     },
-    error: function(err){
-    //
+    error: err => {
+      swalNotify(err.responseText,'error');
     }
   });
  }
@@ -1077,7 +1123,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
   '</div>'+
   '<!-- /.card-header -->'+
   '<div class="card-body">'+
-    '<form id="ComposeNewMsg">'+
+    '<form id="ComposeNewMsg" class="companyComposeMessage" method="POST" enctype="multipart/form-data" autocomplete="off">'+
     '<div class="form-group input-group">'+
     '<span class="input-group-addon" style="padding: 6px 3px; border: 1px solid lightgrey; border-radius: 5px 0px 0px 5px">'+
     '<i class="fa fa-user"></i>'+
@@ -1090,14 +1136,17 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
     '<div class="form-group">'+
      '<div id="summernote" class="message_info"></div>'+
     '</div>'+
+    '<div class="newAttachment">'+
+    '</div>'+
   '</div>'+
   '<!-- /.card-body -->'+
   '<div class="card-footer">'+
     '<div class="float-right">'+
-      '<button type="submit" name="submit" id="newmessage" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
+      '<button type="submit" name="submit" form="ComposeNewMsg" id="newmessage" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
     '</div>'+
     '<button type="reset" class="btn btn-default" onclick="'+((divToClear == undefined)?"selectAJobseekerToMsg()": "discardMsg(\'"+divToClear+"\')")+'"><i class="fas fa-times"></i> Discard</button>'+
-  '</div>'+
+    '<button class="btn btn-default" id="addAttachment"><i class="fas fa-paperclip" style="cursor: pointer;">Attachment</i></button>'+
+   '</div>'+
   '</form>';
 
   $('.contentMessage').empty().append(temp);
@@ -1141,25 +1190,51 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
         }
     }
     });
+  //add a new file attachment
+  $("#addAttachment").click(function(e){
+
+    e.preventDefault();
+    let attachArray=[];
+    $(".newAttachment input").each(function() {
+      attachArray.push(this.name);
+  });
+    $(".newAttachment").append('<div class="form-group"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
+  });
   //on submit
-  $('#newmessage').click(function(e){
+  $('#ComposeNewMsg').submit(function(e){
     e.preventDefault();
     if($('#thefullname').val() ===''){
       $.notify('Message receiver name cannot be empty','error');
     }else if($('#theSubject').val() === ''){
       $.notify('Subject field cannot be empty','error');
     }else{
+      var formData = new FormData(this);
+      formData.append("creator_id", session_id);
+      formData.append("creator_name", session_fullname);
+      formData.append("recipient_id", login_id);
+      formData.append("recipient_name", $('#thefullname').val());
+      formData.append("parent_msg_id", null);
+      formData.append("subject", $('#theSubject').val());
+      formData.append("msg_body", $('.message_info').summernote('code'));
       $.ajax({
         method: "POST",
         dataType: 'json',
         url: "post.php/company/send_msg_to_jobseeker",
-        data: {"creator_id" : session_id, "fullname": session_fullname, "jobseeker_login_id" : login_id, "Name" : $('#thefullname').val(),"parent_msg_id": null, "Subject" : $('#theSubject').val(), "messageBody" : $('.message_info').summernote('code')},
-        success: function(data){
-            $.notify(data.message,'success'); 
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache:false,
+        success: data => {
+          if(data.status == 'success'){
+            swalNotify(data.message,'success'); 
             (divToClear == undefined)? contentMessage(): discardMsg(divToClear);
+          }
+          if(data.status == 'error'){
+            swalNotify(data.message,'error'); 
+          }
         },
-        error: function(err){
-          //
+        error: err => {
+          swalNotify(err.responseText,'error');
         }
       });
 
@@ -1195,6 +1270,7 @@ function sentMessages(){
           ' <th></th>'+
           ' <th></th>'+
           ' <th></th>'+
+          ' <th></th>'+
           '</thead>'+
             '<tbody>';
 
@@ -1212,9 +1288,9 @@ function sentMessages(){
                       '</td>'+
                       // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
                       '<td class="mailbox-name">'+val.fullName+'</td>'+
-                      '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                      '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 35).concat('...')+''+
                       '</td>'+
-                      // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
+                      '<td class="mailbox-attachment">'+((val.attachment)?"<i class='fas fa-paperclip'></i>":"")+'</td>'+
                       '<td class="mailbox-date">'+moment(val.create_date).fromNow()+'</td>'+
                     '</tr>';
               });
@@ -1271,7 +1347,6 @@ function DeleteMessage(msg_id,jobseeker_id){
   });
 }
 /**
- * 
  * @param param -> {is the id of the table}
  * @param message_id -> {check messagesCenter to know why i passed message_id}
  */
@@ -1285,7 +1360,7 @@ $.ajax({
     if(data != 0){
       $.each(data, function(i,val){
         var table = $('#'+param).DataTable();
-      table.$('tr#'+val.mess_rec_id).css({'background-color': 'gainsboro'});
+      table.$('tr#'+val.message_id).css({'background-color': 'gainsboro'});
       });
     if(message_id !== undefined) viewMessage(message_id);
     }
