@@ -27,7 +27,7 @@ let aSidebar = '';
     '</li>'+
   
     '<li class="nav-item">'+
-      '<a class="nav-link" href="">'+
+      '<a class="nav-link" href="" onclick="AdminMessagesCenter();">'+
         '<i class="fas fa-fw fa-envelope"></i>'+
         '<span>Messages</span></a>'+
     '</li>';

@@ -876,7 +876,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
     '<div class="form-group">'+
       '<div id="summernote" class="message_info"></div>'+
     '</div>'+
-    '<div class="newAttachment">'+
+    '<div class="newAttachment d-flex flex-wrap justify-content-between">'+
   '</div>'+
   '</div>'+
   '<!-- /.card-body -->'+
@@ -928,7 +928,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
       $(".newAttachment input").each(function() {
         attachArray.push(this.name);
     });
-      $(".newAttachment").append('<div class="form-group"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
+      $(".newAttachment").append('<div class="form-group flex-fill"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
     });
     /**
      * JUST MAKE SURE THAT data: formdata is sent
@@ -1172,7 +1172,7 @@ function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
       '<div class="form-group">'+
        '<div id="summernote" class="message_body_info"></div>'+
       '</div>'+
-      '<div class="newAttachment">'+
+      '<div class="newAttachment flex-wrap justify-content-between">'+
       '</div>'+
     '</div>'+
     '<!-- /.card-body -->'+
@@ -1224,7 +1224,7 @@ function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
       $(".newAttachment input").each(function() {
         attachArray.push(this.name);
     });
-      $(".newAttachment").append('<div class="form-group"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
+      $(".newAttachment").append('<div class="form-group flex-fill"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
     });
 
   //on submit
