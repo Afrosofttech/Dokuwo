@@ -161,7 +161,7 @@
               }
             },
             error: function(err){
-              $.notify("Error in creating account","warn",{position:"top center"});
+              swalNotify("Error in creating account","warn",{position:"top center"});
             }
           });    
       }
@@ -370,7 +370,7 @@ $(document).ready(function(){
             $.each(existingTokens, function(index, token) {
                 if (token.value === event.attrs.value){
                   event.preventDefault();
-                  $.notify('Skill cannot be repeated','error');
+                  swalNotify('Skill cannot be repeated','error');
                 }
             });
         });

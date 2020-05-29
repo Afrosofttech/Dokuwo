@@ -135,13 +135,13 @@ let topbar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4
 
         },
         error: function(err){
-              $.notify(err.responseText,'error');
+              swalNotify(err.responseText,'error');
         }
         })
 
       },
       error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -277,7 +277,7 @@ function dashBoardContentheader(){
        dashBoardContent();
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
     });
 }
@@ -346,7 +346,7 @@ $.ajax({
 
   },
   error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
   }
 });
 
@@ -456,7 +456,7 @@ $.ajax({
       //contentMessage();
   },
   error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
   }
 });
 
@@ -549,7 +549,7 @@ $.ajax({
       geyOutReadMessages('myTable',message_id);
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
     });
 }
@@ -660,14 +660,14 @@ $("div.msgBodyViewed").printArea( options );
 });
 
 $("p").on("copy cut", function (e) {
-  $.notify('copying disabled for good reasons','warning');
+  swalNotify('copying disabled for good reasons','warning');
   e.preventDefault();
   return false;
 });
 $('p').mousedown(function(e) { 
 if (e.button == 2) { 
     e.preventDefault(); 
-    $.notify('right-click is disabled!','warning'); 
+    swalNotify('right-click is disabled!','warning'); 
 }
 })
 
@@ -693,7 +693,7 @@ if(jobseeker_id === undefined){
 
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
    }
   });
 }
@@ -704,10 +704,10 @@ $.ajax({
   url: "post.php/company/block_jobseeker",
   data: {"company_login_id" : session_id,"jobseeker_login_id": jobseeker_login_id},
   success: function(data){
-    $.notify(data.message,'success');
+    swalNotify(data.message,'success');
   },
   error: function(error){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
  });
 
@@ -753,10 +753,10 @@ $('#reportButton').click(function(e){
     data: {"company_login_id" : session_id,"jobseeker_login_id": jobseeker_login_id,"reason":reason},
     success: function(data){
       sidebarMessage();
-      $.notify(data.message,'success');
+      swalNotify(data.message,'success');
     },
     error: function(error){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
    });
 });
@@ -865,7 +865,7 @@ $.ajax({
 
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
     });
   }else{
@@ -879,7 +879,7 @@ function forwardMsgTo(login_id,fullName,msg_id){
       url: "post.php/company/forward_msg_to_jobseeker",
       data: {"creator_id" : session_id, "fullname": session_fullname, "jobseeker_login_id" : login_id, "Name" : fullName,"message_id": msg_id},
       success: function(data){
-          $.notify(data.message,'success'); 
+          swalNotify(data.message,'success'); 
           contentMessage();
       },
       error: function(err){
@@ -899,7 +899,7 @@ function forwardMsgTo(login_id,fullName,msg_id){
 function ReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,jobseeker_id){
 if(package !== 'None'){
 if(jobseeker_id !== 'undefined'){
-  $.notify('You can\'t reply to your own sent messages!','warning');
+  swalNotify('You can\'t reply to your own sent messages!','warning');
   return;
 }else{
   let temp =' <div class="card card-primary card-outline">'+
@@ -980,19 +980,15 @@ $(document).ready(function() {
   $("#addAttachment").click(function(e){
 
     e.preventDefault();
-    let attachArray=[];
-    $(".newAttachment input").each(function() {
-      attachArray.push(this.name);
-  });
-    $(".newAttachment").append('<div class="form-group flex-fill"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
+    addNewAttachment();
   });
 //on submit
 $('#ComposeNewMsg').submit(function(e){
   e.preventDefault();
   if($('#replyToName').val() ===''){
-    $.notify('Message receiver name cannot be empty','error');
+    swalNotify('Message receiver name cannot be empty','error');
   }else if($('#replyToSubject').val() === ''){
-    $.notify('Subject field cannot be empty','error');
+    swalNotify('Subject field cannot be empty','error');
   }else{
 
   var formData = new FormData(this);
@@ -1108,7 +1104,7 @@ function selectAJobseekerToMsg(){
 
       },
       error: function(err){
-       $.notify(err.responseText,'error');
+       swalNotify(err.responseText,'error');
       }
      });
   }else{
@@ -1194,19 +1190,15 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
   $("#addAttachment").click(function(e){
 
     e.preventDefault();
-    let attachArray=[];
-    $(".newAttachment input").each(function() {
-      attachArray.push(this.name);
-  });
-    $(".newAttachment").append('<div class="form-group flex-fill"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
+    addNewAttachment();
   });
   //on submit
   $('#ComposeNewMsg').submit(function(e){
     e.preventDefault();
     if($('#thefullname').val() ===''){
-      $.notify('Message receiver name cannot be empty','error');
+      swalNotify('Message receiver name cannot be empty','error');
     }else if($('#theSubject').val() === ''){
-      $.notify('Subject field cannot be empty','error');
+      swalNotify('Subject field cannot be empty','error');
     }else{
       var formData = new FormData(this);
       formData.append("creator_id", session_id);
@@ -1276,7 +1268,6 @@ function sentMessages(){
 
               $.each(data, function( i, val ) {
                 let checkId = val.message_id+"checkbox";
-                // console.log(val.message_body);
                 //ams-> am filtering the message body to get rid of all <p> tags
                 var filteredMsgBody = $("<div>").html(val.message_body).text();
         temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessage(\''+val.message_id+'\',\''+val.fullName+'\',\''+val.recipient_id+'\');">'+
@@ -1323,7 +1314,7 @@ function sentMessages(){
           });
       },
       error: function(err){
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
       });
 }
@@ -1335,14 +1326,14 @@ function DeleteMessage(msg_id,jobseeker_id){
     data: {"message_id" : msg_id},
     success: function(data){
       if(data == 200){
-        $.notify('message successfully deleted','success');
+        swalNotify('message successfully deleted','success');
         (jobseeker_id === 'undefined')?contentMessage():sentMessages();
       }else{
-        $.notify('message has not been deleted','error');
+        swalNotify('message has not been deleted','error');
       }
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -1366,7 +1357,7 @@ $.ajax({
     }
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -1435,7 +1426,7 @@ $.ajax({
     $('.comp_jobseekers').append(innertemp);
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -1537,7 +1528,7 @@ $.ajax({
 
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 
@@ -1828,7 +1819,6 @@ $(document).ready(function(){
         processData: false,
         cache:false,
         success:function(response){
-          console.log(response);
           if(response == 200){
             swal('Update Successful!','Profile successfully updated','success','cool');
             settings();
@@ -1837,7 +1827,7 @@ $(document).ready(function(){
           }
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         } 
       });
     }else{
@@ -1863,7 +1853,7 @@ $(document).ready(function(){
           settings();
       },
       error: function(err){
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       } 
     });
 
@@ -1876,7 +1866,7 @@ $('#content').empty().append('<div>ERROR: This account doesn\'t exist. You shoul
 
 },
 error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
 }
 });
 $('#content').empty().append(temp);
@@ -1972,7 +1962,7 @@ function show_posted_jobs(){
       });
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 
@@ -2035,7 +2025,7 @@ function show_posted_jobs(){
     
       },
       error:function(err){
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
     
     });
@@ -2253,14 +2243,13 @@ function show_posted_jobs(){
         'jobCategory':$('#jobCategory').val(),'requirements':$('#summernote').summernote('code'),'salary':$('#salary').val(),
         'email':$('#contactEmail').val(),'phone':$('#contactPhone').val()},
         success: function(response){
-          console.log(response);
           if(response.status == 200) swal('Done!',response.message,'success','Cool');
           else if(response.status == 402) swal('Sorry!',response.message,'error','Cool');
           else  swal('Sorry!',response.message,'error','Cool');
           ShowJobsInfo();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       });
 
@@ -2279,7 +2268,6 @@ function show_posted_jobs(){
         data: {'job_id':job_id},
         dataType: 'json',
         success: function(data){
-          console.log(data);
       let temp = '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
       '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
         '<h4 class="card-title">Job detail</h4>'+
@@ -2492,19 +2480,19 @@ function show_posted_jobs(){
           'email':$('#contactEmail').val(),'phone':$('#contactPhone').val()},
           success: function(response){
             if(response == 200){
-              $.notify('Job successfully updated!','success');
+              swalNotify('Job successfully updated!','success');
               ShowJobsInfo();
             }
           },
           error: function(err){
-            $.notify(err.responseText,'error');
+            swalNotify(err.responseText,'error');
           }
         });
 
         })
       },
       error: function(err){
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
     });
 }
@@ -2515,12 +2503,12 @@ function closeJob(job_id){
     data: {'job_id':job_id},
     success: function(response){
       if(response == 200){
-        $.notify('Job has been closed. Applicants will be notified!','success');
+        swalNotify('Job has been closed. Applicants will be notified!','success');
         ShowJobsInfo();
       }
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -2568,7 +2556,7 @@ $('.jobdetails').append(jobdetails);
   jobApplicants(job_id,data.status);
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -2629,7 +2617,7 @@ function jobApplicants(job_id,job_status){
         });
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 
@@ -2694,7 +2682,7 @@ applicant += '<div class="col col-lg-4">'+
     $('.singleApplicant').empty().append(applicant);
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }else{
@@ -2709,13 +2697,13 @@ function acceptApplication(jobseeker_id,fullName,job_id,login_id){
     data: {'jobseeker_id':jobseeker_id,'jobseeker_login_id':login_id,'fullName':fullName,'job_id':job_id},
     success: function(response){
       if(response.status == 'success'){
-        $.notify(response.message,'success');
+        swalNotify(response.message,'success');
         jobApplicants(job_id);
         viewApplicant(job_id,login_id,1);
       }
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }

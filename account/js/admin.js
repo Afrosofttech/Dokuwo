@@ -127,7 +127,7 @@ let aSidebar = '';
     
         //    },
         //    error: function(err){
-        //     $.notify(err.responseText,'error');
+        //     swalNotify(err.responseText,'error');
         //  }
         // });
 
@@ -161,7 +161,7 @@ let aSidebar = '';
 
         //   },
         //   error: function(err){
-        //        $.notify(err.responseText,'error');
+        //        swalNotify(err.responseText,'error');
         //   }
         //  });
     }
@@ -191,8 +191,7 @@ $.ajax({
       manageBlog(data[0]);
     },
   error: function(err){
-     console.log("======Manage blogs========");
-     console.log(err.responseText);
+     swalNotify(err.responseText,'error');
     }
    });
 }
@@ -314,7 +313,7 @@ $("#pagin li a").click(function() {
 $('#filter').click(function(e){
 e.preventDefault();
 if($('#title').val() ==='' && $('#category').val() ===''){
-$.notify('There is nothing to search for','error');
+swalNotify('There is nothing to search for','error');
 }else{
 $.ajax({
   method: "GET",
@@ -325,11 +324,11 @@ $.ajax({
     if(data.length > 0){
       manageBlog(data);
     }else{
-      $.notify('search result doesn\'t exist','error');
+      swalNotify('search result doesn\'t exist','error');
     }
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 
   })
@@ -479,7 +478,7 @@ let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12
           cache:false,
           success: function(response){
             if(response == 200){
-              $.notify('Blog successfully created!','success');
+              swalNotify('Blog successfully created!','success');
               getBlog();
             }else if( response == "Invalid Image"){
               swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
@@ -487,8 +486,7 @@ let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12
           }
           },
           error: function(err){
-            console.log('error creating blog...');
-            $.notify(err.responseText,'error');
+            swalNotify(err.responseText,'error');
           }
         });
       }else{
@@ -680,7 +678,7 @@ $.ajax({
               cache:false,
               success: function(response){
                 if(response == 200){
-                  $.notify('Blog successfully updated!','success');
+                  swalNotify('Blog successfully updated!','success');
                   viewBlog(blog_id);
                 }else if( response == "Invalid Image"){
                   swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
@@ -688,8 +686,7 @@ $.ajax({
               }
               },
               error: function(err){
-                console.log('error updating blog...');
-                $.notify(err.responseText,'error');
+                swalNotify(err.responseText,'error');
               }
             });
           }else{
@@ -699,7 +696,7 @@ $.ajax({
         })
   },
   error: function(err){
-    console.log(err.responseText);
+    swalNotify(err.responseText,'error');
   }
 
 });
@@ -713,7 +710,7 @@ $.ajax({
   data:{'blog_id':blog_id},
   success: function(response){
     if(response == 200){
-      $.notify('Blog successfully deleted!','success');
+      swalNotify('Blog successfully deleted!','success');
       getBlog();
     }else{
       swal('Could not delete blog!','Blog could not be deleted','error','Cool');
@@ -721,8 +718,7 @@ $.ajax({
   }
   },
   error: function(err){
-    console.log('error deleting blog...');
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -797,8 +793,7 @@ $.ajax({
               }
 },
 error: function(err){
-  console.log('error retrieving recruiter accounts...');
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
 }
 });
 }
@@ -876,8 +871,7 @@ $.ajax({
      
           },
           error: function(err){
-            console.log('error retrieving jobseeker accounts...');
-            $.notify(err.responseText,'error');
+            swalNotify(err.responseText,'error');
           }
         });
 }
@@ -957,8 +951,7 @@ $.ajax({
         });
       },
       error: function(err){
-        console.log('error retrieving admin accounts...');
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
     });
 }
@@ -1023,7 +1016,7 @@ $.ajax({
   success: function(response){
     if(request == "warning"){
       if(response == 200){
-        $.notify('Warning successfully sent!','success');
+        swalNotify('Warning successfully sent!','success');
         getJobseekerAccounts();
       }else{
         swal('Could not send warning!','Warning could not be send to jobseeker!','error','Cool');
@@ -1032,7 +1025,7 @@ $.ajax({
   }
     else{
       if(response == 200){
-        $.notify('This account has successfully been blocked!','success');
+        swalNotify('This account has successfully been blocked!','success');
         getJobseekerAccounts();
       }else{
         swal('Could not block Jobseeker!','This account could not be blocked!','error','Cool');
@@ -1042,8 +1035,7 @@ $.ajax({
     
   },
   error: function(err){
-    console.log('error warning jobseeker...');
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -1057,11 +1049,11 @@ function activatePackage(login_id,caller){
       success: function(response){
         if(response == 200){
           if(caller == "recruiter"){
-            $.notify('Package successfully Activated!','success');
+            swalNotify('Package successfully Activated!','success');
             getRecruiterAccounts();
           }
           else{
-            $.notify('Package successfully Activated!','success');
+            swalNotify('Package successfully Activated!','success');
             getJobseekerAccounts();
           }
         }else{
@@ -1070,8 +1062,7 @@ function activatePackage(login_id,caller){
       }
       },
       error: function(err){
-        console.log('error activating package...');
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
     });
 }
@@ -1083,7 +1074,7 @@ function activateAccount(login_id){
         data:{'login_id':login_id},
         success: function(response){
           if(response == 200){
-            $.notify('Account successfully Activated!','success');
+            swalNotify('Account successfully Activated!','success');
             getJobseekerAccounts();
           }else{
             swal('Could not activate blog!','Account could not be activated','error','Cool');
@@ -1091,8 +1082,7 @@ function activateAccount(login_id){
         }
         },
         error: function(err){
-          console.log('error deleting blog...');
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       });
 }
@@ -1104,7 +1094,7 @@ function deactivateAccount(login_id){
         data:{'login_id':login_id},
         success: function(response){
           if(response == 200){
-            $.notify('Account successfully Deactivated!','success');
+            swalNotify('Account successfully Deactivated!','success');
             getJobseekerAccounts();
           }else{
             swal('Could not deactivate account!','Account could not be deactivated','error','Cool');
@@ -1112,7 +1102,7 @@ function deactivateAccount(login_id){
         }
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       });
 }
@@ -1124,7 +1114,7 @@ $.ajax({
   data:{'action_id':action_id},
   success: function(response){
     if(response == 200){
-      $.notify('Report successfully deleted!','success');
+      swalNotify('Report successfully deleted!','success');
       getJobseekerAccounts();
     }else{
       swal('Could not delete report!','report could not be deleted','error','Cool');
@@ -1132,8 +1122,7 @@ $.ajax({
   }
   },
   error: function(err){
-    console.log('error deleting report...');
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -1220,17 +1209,16 @@ let  temp = '<div class="container-fluid"><div class="row"><div class="col-md-12
           data:{'adminName':$('#adminName').val(),'email':email,'password':passwd},
           success: function(response){
             if(response == 200){
-              $.notify('Account successfully created!','success');
+              swalNotify('Account successfully created!','success');
               getAdminAccounts();
             }else {
-              $.notify('Error creating account!','error');
+              swalNotify('Error creating account!','error');
               // swal('Error creating account!','Account could not be created','error','Cool');
               return;
           }
           },
           error: function(err){
-            console.log('error creating admin account...');
-            $.notify(err.responseText,'error');
+            swalNotify(err.responseText,'error');
           }
         });
 
@@ -1250,7 +1238,7 @@ $.ajax({
   data:{'login_id':login_id},
   success: function(response){
     if(response == 200){
-      $.notify('Account successfully deleted!','success');
+      swalNotify('Account successfully deleted!','success');
       getAdminAccounts();
     }else{
       swal('Could not delete Account!','Account could not be deleted','error','Cool');
@@ -1258,8 +1246,7 @@ $.ajax({
   }
   },
   error: function(err){
-    console.log('error deleting Account...');
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -1343,7 +1330,7 @@ $.ajax({
             data:{'name':name,'email':email,'password':passwd,'login_id':session_id},
             success: function(response){
               if(response == 200){
-                $.notify('Account successfully updated!','success');
+                swalNotify('Account successfully updated!','success');
                 adminSettings();
               }else{
                 swal('Account update unsuccessfull!','Your account could not be updated','error','Cool');
@@ -1351,8 +1338,7 @@ $.ajax({
             }
             },
             error: function(err){
-              console.log('error creating blog...');
-              $.notify(err.responseText,'error');
+              swalNotify(err.responseText,'error');
             }
           });
   
@@ -1364,8 +1350,7 @@ $.ajax({
     }
   },
   error: function(err){
-    console.log('error deleting Account...');
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -1427,7 +1412,7 @@ function AdminMessagesCenter(message_id){
         //contentMessage();
     },
     error: err => {
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
     }
   });
   
@@ -1518,7 +1503,7 @@ function AdminMessagesCenter(message_id){
         greyOutReadMessagesByAdmin('myTable',message_id);
       },
       error: err => {
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
       });
 }
@@ -1542,7 +1527,7 @@ function greyOutReadMessagesByAdmin(param,message_id){
         }
       },
       error: err => {
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
     });
 }
@@ -1635,14 +1620,14 @@ function viewMessageByAdmin(msg_id,user_name,user_id){
  });
  
  $("p").on("copy cut", function (e) {
-   $.notify('copying disabled for good reasons','warning');
+   swalNotify('copying disabled for good reasons','warning');
    e.preventDefault();
    return false;
  });
  $('p').mousedown(function(e) { 
  if (e.button == 2) { 
      e.preventDefault(); 
-     $.notify('right-click is disabled!','warning'); 
+     swalNotify('right-click is disabled!','warning'); 
  }
  })
  
@@ -1668,7 +1653,7 @@ function viewMessageByAdmin(msg_id,user_name,user_id){
  
    },
    error: err => {
-     $.notify(err.responseText,'error');
+     swalNotify(err.responseText,'error');
     }
    });
  }
@@ -1709,7 +1694,7 @@ function viewMessageByAdmin(msg_id,user_name,user_id){
       }
     },
     error: err => {
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -1743,7 +1728,6 @@ function adminSentMessages(){
 
               $.each(data, ( i, val ) => {
                 let checkId = val.message_id+"checkbox";
-                // console.log(val.message_body);
                 //ams-> am filtering the message body to get rid of all <p> tags
                 var filteredMsgBody = $("<div>").html(val.message_body).text();
         temp += '<tr id="'+val.message_id+'" style="cursor: pointer;" onclick="viewMessageByAdmin(\''+val.message_id+'\',\''+val.recipient_name+'\',\''+val.recipient_id+'\');">'+
@@ -1790,7 +1774,7 @@ function adminSentMessages(){
           });
       },
       error: err => {
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
       });
 }
@@ -1807,14 +1791,14 @@ function aDeleteMessage(msg_id,jobseeker_id){
     data: {"message_id" : msg_id},
     success: data => {
       if(data == 200){
-        $.notify('message successfully deleted','success');
+        swalNotify('message successfully deleted','success');
         (jobseeker_id === 'undefined')?adminContentMessage():adminSentMessages();
       }else{
-        $.notify('message has not been deleted','error');
+        swalNotify('message has not been deleted','error');
       }
     },
     error: err => {
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -1829,7 +1813,7 @@ function aDeleteMessage(msg_id,jobseeker_id){
  */
 function aReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,user_id){
   if(user_id !== 'undefined'){
-    $.notify('You can\'t reply to your own sent messages!','warning');
+    swalNotify('You can\'t reply to your own sent messages!','warning');
     return;
   }else{
     let temp =' <div class="card card-primary card-outline">'+
@@ -1898,9 +1882,9 @@ function aReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,user_id){
 $('#newreplymsg').click(function(e){
   e.preventDefault();
   if($('#replyToName').val() ===''){
-    $.notify('Message receiver name cannot be empty','error');
+    swalNotify('Message receiver name cannot be empty','error');
   }else if($('#replyToSubject').val() === ''){
-    $.notify('Subject field cannot be empty','error');
+    swalNotify('Subject field cannot be empty','error');
   }else{
 
   $.ajax({
@@ -1909,11 +1893,11 @@ $('#newreplymsg').click(function(e){
     url: "post.php/admin/reply_user",
     data:{"creator_id": session_id,"creator_name": session_fullname,"recipient_id": recipient_id,"recipient_name": recipient_name,"parent_msg_id": msg_id,"subject": $('#replyToSubject').val(),"msg_body": $('.message_body_info').summernote('code')},
     success: data => {
-        $.notify(data.message,'success');
+        swalNotify(data.message,'success');
         adminContentMessage();
     },
     error: err => {
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -1992,9 +1976,9 @@ function acomposeNewMessage(login_id,name){
     $('#newmessage').click(function(e){
       e.preventDefault();
       if($('#thefullname').val() ===''){
-        $.notify('Message receiver name cannot be empty','error');
+        swalNotify('Message receiver name cannot be empty','error');
       }else if($('#theSubject').val() === ''){
-        $.notify('Subject field cannot be empty','error');
+        swalNotify('Subject field cannot be empty','error');
       }else{
         $.ajax({
           method: "POST",
@@ -2002,7 +1986,7 @@ function acomposeNewMessage(login_id,name){
           url: "post.php/admin/send_msg_to_user",
           data: {"creator_id" : session_id, "creator_name": session_fullname, "recipient_id" : login_id, "recipient_name" : $('#thefullname').val(),"parent_msg_id": null, "Subject" : $('#theSubject').val(), "messageBody" : $('.message_info').summernote('code')},
           success: function(data){
-              $.notify(data.message,'success'); 
+              swalNotify(data.message,'success'); 
               adminContentMessage();
           },
           error: function(err){
@@ -2093,7 +2077,7 @@ function selectAUserToMsgOrForward(msg_id,type){
   
       },
       error: err => {
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
       });
   }
@@ -2104,11 +2088,11 @@ function selectAUserToMsgOrForward(msg_id,type){
         url: "post.php/company/forward_msg_to_user",
         data: {"creator_id" : session_id, "fullname": session_fullname, "recipient_id" : login_id, "recipient_name" : name,"message_id": msg_id},
         success: function(data){
-            $.notify(data.message,'success'); 
+            swalNotify(data.message,'success'); 
             adminContentMessage();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       });
   }

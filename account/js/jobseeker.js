@@ -148,7 +148,7 @@ function jobseekerDashBoardheader(){
     jdashBoardContent();
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
   });
 }
@@ -287,13 +287,13 @@ function loadJobseekerDashboard(){
 
           },
           error: function(err){
-                $.notify(err.responseText,'error');
+                swalNotify(err.responseText,'error');
           }
           })
 
         },
         error: function(err){
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
     });
   }
@@ -349,7 +349,7 @@ $.ajax({
 
  },
  error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
  }
 });
 
@@ -501,7 +501,7 @@ function jobs(start,finish,filter){
         $('#filter').click(function(e){
           e.preventDefault();
           if($('#job').val() ==='' && $('#location').val() ===''){
-            $.notify('There is nothing to search for','error');
+            swalNotify('There is nothing to search for','error');
           }else{
             $.ajax({
               method: "GET",
@@ -512,11 +512,11 @@ function jobs(start,finish,filter){
                 if(data.length > 0){
                   jobs(undefined,undefined,data);
                 }else{
-                  $.notify('search result doesn\'t exist','error');
+                  swalNotify('search result doesn\'t exist','error');
                 }
               },
               error: err => {
-                $.notify(err.responseText,'error');
+                swalNotify(err.responseText,'error');
               }
           
               })
@@ -526,7 +526,7 @@ function jobs(start,finish,filter){
     
     },
     error: err => {
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
    });
     
@@ -584,7 +584,7 @@ $.ajax({
       $('#content').empty().append(apply);
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
  });
 }
@@ -596,15 +596,15 @@ function sendApp(job_id,company_id){
     data: {"jobseeker_id" : session_user_id,"job_id": job_id,"company_id": company_id},
     success: function(response){
     if(response == 200 ){
-      $.notify('job application successfully sent','success');
+      swalNotify('job application successfully sent','success');
     }else if(response == 'You already applied!'){
-      $.notify('You have already applied for this job. The company will get back to you','error');
+      swalNotify('You have already applied for this job. The company will get back to you','error');
     }else{
-      $.notify('application not sent. Please try again','error');
+      swalNotify('application not sent. Please try again','error');
     }
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
  })
 }
@@ -662,7 +662,7 @@ function jsidebarMessage(){
        //jcontentMessage();
    },
    error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
    }
   });
 }
@@ -694,7 +694,6 @@ $.ajax({
             '<tbody>';
 
             $.each(data, function( i, val ) {
-              console.log(val);
               let checkId = val.message_id+"checkbox";
               //AMS-> am filtering the message body to get rid of all tags
               var filteredMsgBody = $("<div>").html(val.message_body).text();
@@ -754,7 +753,7 @@ $.ajax({
       jgeyOutReadMessages('myTable',message_id);
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
     });
 }
@@ -774,7 +773,7 @@ $.ajax({
     }
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 })
 }
@@ -851,7 +850,7 @@ function selectACompanyToMsg(){
 
       },
       error: function(err){
-       $.notify(err.responseText,'error');
+       swalNotify(err.responseText,'error');
       }
      });
 }
@@ -924,22 +923,15 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
     $("#addAttachment").click(function(e){
 
       e.preventDefault();
-      let attachArray=[];
-      $(".newAttachment input").each(function() {
-        attachArray.push(this.name);
+      addNewAttachment();
     });
-      $(".newAttachment").append('<div class="form-group flex-fill"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
-    });
-    /**
-     * JUST MAKE SURE THAT data: formdata is sent
-     */
   //on submit
   $('#jComposeNewMsg').submit(function(e){
     e.preventDefault();
     if($('#thefullname').val() ===''){
-      $.notify('Message receiver name cannot be empty','error');
+      swalNotify('Message receiver name cannot be empty','error');
     }else if($('#theSubject').val() === ''){
-      $.notify('Subject field cannot be empty','error');
+      swalNotify('Subject field cannot be empty','error');
     }else{
       var formData = new FormData(this);
       formData.append("creator_id", session_id);
@@ -1040,7 +1032,6 @@ $.ajax({
     '<div class="card-footer bg-white">'+
     '<ul class="mailbox-attachments d-flex flex-wrap justify-content-between align-items-stretch clearfix">';
     $.each(data.attachments, (i, val) => {
-      console.log(val);
       let extension = val.attachment.substr( (val.attachment.lastIndexOf('.') +1) );
       let images = ['jpeg', 'jpg', 'png'];
     temp += '<li>'+
@@ -1086,14 +1077,14 @@ $(document).ready(function (){
   });
 
   $("p").on("copy cut", function (e) {
-    $.notify('copying disabled for good reasons','warning');
+    swalNotify('copying disabled for good reasons','warning');
     e.preventDefault();
     return false;
 });
 $('p').mousedown(function(e) { 
   if (e.button == 2) { 
       e.preventDefault(); 
-      $.notify('right-click is disabled!','warning'); 
+      swalNotify('right-click is disabled!','warning'); 
   }
 })
 if(company_id === undefined){
@@ -1116,7 +1107,7 @@ if(company_id === undefined){
   })
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
   });
 }
@@ -1128,14 +1119,14 @@ function jDeleteMessage(msg_id,company_id){
     data: {"message_id" : msg_id},
     success: function(data){
       if(data == 200){
-        $.notify('message successfully deleted','success');
+        swalNotify('message successfully deleted','success');
         (company_id === 'undefined')?jcontentMessage():jsentMessages();
       }else {
-        $.notify('message has not been deleted','error');
+        swalNotify('message has not been deleted','error');
       }
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -1150,7 +1141,7 @@ function jDeleteMessage(msg_id,company_id){
  */
 function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
   if(company_id !== 'undefined'){
-    $.notify('You can\'t reply to your own sent messages!','warning');
+    swalNotify('You can\'t reply to your own sent messages!','warning');
     return;
   }else{
     let temp =' <div class="card card-primary card-outline">'+
@@ -1217,23 +1208,20 @@ function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
         }
     }
     });
-    $("#addAttachment").click(function(e){
+  //on attachment add
+$("#addAttachment").click(function(e){
 
-      e.preventDefault();
-      let attachArray=[];
-      $(".newAttachment input").each(function() {
-        attachArray.push(this.name);
-    });
-      $(".newAttachment").append('<div class="form-group flex-fill"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
-    });
+  e.preventDefault();
+  addNewAttachment();
+});
 
   //on submit
 $('#jComposeNewMsg').submit(function(e){
   e.preventDefault();
   if($('#replyToName').val() ===''){
-    $.notify('Message receiver name cannot be empty','error');
+    swalNotify('Message receiver name cannot be empty','error');
   }else if($('#replyToSubject').val() === ''){
-    $.notify('Subject field cannot be empty','error');
+    swalNotify('Subject field cannot be empty','error');
   }else{
 
     var formData = new FormData(this);
@@ -1341,7 +1329,7 @@ $.ajax({
 
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
     });
 }
@@ -1352,11 +1340,11 @@ $.ajax({
   url: "post.php/jobseeker/forward_msg_to_company",
   data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : company_name,"message_id": msg_id},
   success: function(data){
-      $.notify(data.message,'success'); 
+      swalNotify(data.message,'success'); 
       jcontentMessage();
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -1397,7 +1385,7 @@ function jnewMsgNotification(){
       }
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -1474,7 +1462,7 @@ $.ajax({
     });
 },
 error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
 }
 });
 }
@@ -1555,7 +1543,7 @@ error: function(err){
     });
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
   }else{
@@ -1582,7 +1570,7 @@ error: function(err){
       hires(response);
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   })
  }
@@ -1593,11 +1581,11 @@ error: function(err){
       url: "post.php/jobseeker/delete_hire",
       data: {"hire_id" : hire_id},
       success: function(response){
-        $.notify('Deleted','success');
+        swalNotify('Deleted','success');
         hires();
       },
       error: function(err){
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
     });
  }
@@ -1684,7 +1672,7 @@ $('#content').empty().append(temp);
 
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 
@@ -1739,7 +1727,7 @@ $('#content').empty().append(temp);
   $('.portfolio').empty().append(portfolio);
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
   });
 }
@@ -1827,7 +1815,7 @@ function addService(){
           portfolio();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       })
   });
@@ -1926,14 +1914,14 @@ function editService(service_id){
           portfolio();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       })
     });
   });
 },
 error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
 }
 })
 
@@ -1949,7 +1937,7 @@ function deleteService(service_id){
       portfolio();
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   })
 }
@@ -2040,7 +2028,7 @@ function addPortfolio(){
           portfolio();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       })
   });
@@ -2143,14 +2131,14 @@ function editPortfolio(portfolio_id){
           portfolio();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       })
     });
   });
 },
 error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
 }
 })
 
@@ -2166,7 +2154,7 @@ function deletePortfolio(portfolio_id){
       portfolio();
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   })
 }
@@ -2515,7 +2503,7 @@ let temp='<div class="content-wrapper">'+
           }
           },
           error: function(err){
-            $.notify(err.responseText,'error');
+            swalNotify(err.responseText,'error');
           } 
         });
       }else{
@@ -2542,7 +2530,7 @@ let temp='<div class="content-wrapper">'+
             jsettings();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         } 
       });
   
@@ -2555,7 +2543,7 @@ let temp='<div class="content-wrapper">'+
 
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
   $('#content').empty().append(temp);
