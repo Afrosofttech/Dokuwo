@@ -595,7 +595,7 @@ function filterJobs(start,finish,filterParams){
     JSON.parse(filterData);
 }
 if(filterData.job_name == '' && filterData.job_location == ''){
-  $.notify('nothing to search for','error');
+  swalNotify('nothing to search for','error');
 }
 else{
 
@@ -883,7 +883,7 @@ else{
         JSON.parse(filterData);
       }
       if(filterData.tag_line =='' && filterData.freelancer_location ==''){
-        $.notify('There is nothing to search for','error');
+        swalNotify('There is nothing to search for','error');
       }else{
         if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else{ beg = 0; end = 4;}
         $.ajax({
@@ -2913,7 +2913,7 @@ else{
 
       $('#submit').click(function(e){
         e.preventDefault();
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
         let name = $('#contact_name').val();
         let email = $('#contact_email').val();
         let msg_subject = $('#msg_subject').val();
