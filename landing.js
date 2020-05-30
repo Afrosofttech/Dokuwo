@@ -109,8 +109,6 @@ function jobCategory(){
         '</div>'+
         '<div class="row"> ';
         $.each(data, function(i,val){
-          console.log('==================');
-          console.log(val)
           let sub = val.job_cat;
           let  profileImage = '';
           (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education/Training')?subcat=Education:(sub=='Art/Design')?subcat=Art:(sub=='Sale/Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:(sub=='Events, Catering & Entertainment')?subcat=ECE:subcat=Others; 
