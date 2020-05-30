@@ -109,14 +109,16 @@ function jobCategory(){
         '</div>'+
         '<div class="row"> ';
         $.each(data, function(i,val){
+          console.log('==================');
+          console.log(val)
           let sub = val.job_cat;
           let  profileImage = '';
-          (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education/Training')?subcat=Education:(sub=='Art/Design')?subcat=Art:(sub=='Sale/Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:subcat=''; 
-          (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education/Training')?profileImage=EducationImage:(sub=='Art/Design')?profileImage=ArtImage:(sub=='Sale/Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:profileImage='graphic.jpeg';
+          (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education/Training')?subcat=Education:(sub=='Art/Design')?subcat=Art:(sub=='Sale/Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:(sub=='Events, Catering & Entertainment')?subcat=ECE:subcat=Others; 
+          (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education/Training')?profileImage=EducationImage:(sub=='Art/Design')?profileImage=ArtImage:(sub=='Sale/Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:(sub=='Events, Catering & Entertainment')?profileImage=ECEImage:profileImage=OthersImage;
           job_category +='<div class="col-lg-3 col-md-6 col-xs-12 f-category">'+
           '<a onclick="show_jobs_and_jobseekers_by_categories(\''+val.job_cat+'\');" style="cursor: pointer;">'+
             '<div class="icon">'+
-            '<img src="account/uploads/'+profileImage+'" alt="" class="logo-img">'+
+            '<img src="account/img/'+profileImage+'" alt="" class="logo-img">'+
             '</div>'+
             '<h3>'+val.job_cat+'</h3>';
             (val.count == '1')?job_category +='<p>('+ val.count +' job)</p>':job_category +='<p>('+ val.count +' jobs)</p>';

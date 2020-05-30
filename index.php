@@ -1,6 +1,5 @@
 <?php 
   session_start();
-  // var_dump($_SESSION);
   if(isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'jobseeker'){
     session_unset();
 	  session_destroy();
@@ -8,7 +7,6 @@
   else if(isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'company'){
     header('Location: account/index.php');
   }
-  // var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
