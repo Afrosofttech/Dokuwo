@@ -1392,8 +1392,8 @@ $.ajax({
       $.each(response, function(index,row){
         let sub = row.category;
        let  profileImage = '';
-  (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education/Training')?subcat=Education:(sub=='Art/Design')?subcat=Art:(sub=='Sale/Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:subcat=''; 
-   (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education/Training')?profileImage=EducationImage:(sub=='Art/Design')?profileImage=ArtImage:(sub=='Sale/Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:profileImage='graphic.jpeg';
+  (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education/Training')?subcat=Education:(sub=='Art/Design')?subcat=Art:(sub=='Sale/Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:(sub=='Events, Catering & Entertainment')?subcat=ECE:subcat=Others; 
+   (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education/Training')?profileImage=EducationImage:(sub=='Art/Design')?profileImage=ArtImage:(sub=='Sale/Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:(sub=='Events, Catering & Entertainment')?profileImage=ECEImage:profileImage=OthersImage;
         innertemp += '<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch pb-5">'+
           '<div class="card bg-light" style="border-top: 3px solid #007bff;">'+
            '<div class="card-header text-muted border-bottom-0">'+
@@ -1408,7 +1408,7 @@ $.ajax({
                   '</ul>'+
                '</div>'+
                '<div class="col-6 text-center">'+
-                 '<img src="uploads/'+profileImage+'" alt="" class="img-fluid card-img-top rounded-circle img-thumbnail" style="width: 200px; height: 150px;">'+
+                 '<img src="img/'+profileImage+'" alt="" class="img-fluid card-img-top rounded-circle img-thumbnail" style="width: 200px; height: 150px;">'+
                '</div>'+
              '</div>'+
            '</div>'+
