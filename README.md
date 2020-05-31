@@ -31,7 +31,7 @@ for any tables, we will be using datatables. check out [**DataTables**](datatabl
 Check out the PrintArea plugin by clicking [**here.**](https://github.com/RitsC/PrintArea)
 
 >### WYSIWYG Editor
-for any textarea, we will be using CKEDITOR. Check out [**CKEditor**](ckeditor.com)
+for any textarea, we will be using Summernote. Check out [**Summernote**](https://summernote.org/)
 
 >### Validations
 for all validations,we will be gump. check out gump by clicking [**here.**](https://github.com/Wixel/GUMP)
