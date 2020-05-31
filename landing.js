@@ -972,15 +972,15 @@ else{
       
                   let begin = parseInt(beg);
                   let ending = parseInt(end);
-                  let LastLast =  ((limitPerPage*Math.floor(numberOfItems/limitPerPage)) == (numberOfItems))?`displayFreelancers(${(numberOfItems - 4)},${(numberOfItems)})`:`displayFreelancers(${(limitPerPage*Math.floor(numberOfItems/limitPerPage))},${(numberOfItems)})`;
-                  (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "displayFreelancers(\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "displayFreelancers(\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\')"); 
-                  (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "displayFreelancers(\'"+(begin)+"\',\'"+(ending)+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "displayFreelancers(\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\')"): (Backward = "displayFreelancers(\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
+                  let LastLast =  ((limitPerPage*Math.floor(numberOfItems/limitPerPage)) == (numberOfItems))?`filterFreelancers(${(numberOfItems - 4)},${(numberOfItems)},${JSON.stringify(filterData)})`:`filterFreelancers(${(limitPerPage*Math.floor(numberOfItems/limitPerPage))},${(numberOfItems)},${JSON.stringify(filterData)})`;
+                  (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = `filterFreelancers(${begin+limitPerPage},${numberOfItems},${JSON.stringify(filterData)})`):(forward = `filterFreelancers(${begin+limitPerPage},${ending+limitPerPage},${JSON.stringify(filterData)})`); 
+                  (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = `filterFreelancers(${begin},${ending},${JSON.stringify(filterData)})`):(begin != 0 && ending != numberOfItems)?(Backward = `filterFreelancers(${begin-limitPerPage},${ending-limitPerPage},${JSON.stringify(filterData)})`): (Backward = `filterFreelancers(${begin-limitPerPage},${numberOfItems-(numberOfItems%limitPerPage)},${JSON.stringify(filterData)})`);
                       temp +='<!-- Start Pagination -->'+
                         '<ul class="pagination">' +             
-                        ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" displayFreelancers(0,4)"><i class="lni-angle-left"></i> First</a></li>'+
-                          '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
-                          '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
-                          '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
+                          `<li class="active"><a href="javascript:void(0)" class="btn-prev" onclick='filterFreelancers(0,4,${JSON.stringify(filterData)})'><i class="lni-angle-left"></i> First</a></li>`+
+                          `<li class="active"><a href="javascript:void(0)" class="btn-next" onclick='${Backward}'>Prev <i class="lni-angle-right"></i></a></li>`+
+                          `<li class="active"><a href="javascript:void(0)" class="btn-next" onclick='${forward}'>Next <i class="lni-angle-right"></i></a></li>`+
+                          `<li class="active"><a href="javascript:void(0)" class="btn-next" onclick='${LastLast}'>Last <i class="lni-angle-right"></i></a></li>`+
                         '</ul>'+
                         '<!-- End Pagination -->'+
                     ' </div>'+
