@@ -9,8 +9,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Authentication</title>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="description" content="This is an accounting Software that aims to automate and make your accounting work simple.">
+    <meta name="author" content="Afrika Software Technologies">
+    <title>Dokuwo - Authentication</title>
 	<script src="js/plugins/jquery.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
@@ -121,6 +123,8 @@
 	let attempt = '<?php if(isset($_REQUEST['attempt'])){echo $_REQUEST['attempt'];}else{ echo '';}  ?>';
 	(attempt == 'success')? swal('Profile creation complete!','Please login to continue','success','Cool'):
 	(attempt == 'failed')?swal('Profile creation failed!','You need to create an account first','error','Cool'):
+	(attempt == 'Inexistent')?swal('Inexistent account!','This account doesn\'t exist in this system. Create an account or Contact support for help.','error','Cool'):
+	(attempt == 'Activated')?swal('Account activated!','Account already activated. Log in or Contact support for help.','error','Cool'):
 	(attempt == 'duplicate')?swal('account already exist!','Please login to continue','warning','Cool'): null;
 
 	$('#login-form-link').click(function(e) {

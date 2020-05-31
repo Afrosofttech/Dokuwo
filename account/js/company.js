@@ -2112,7 +2112,7 @@ function show_posted_jobs(){
        '<option value="Sale/Markting">Sale/Markting</option>'+
        '<option value="Healthcare">Healthcare</option>'+
        '<option value="Science">Science</option>'+
-       '<option value="Food Services">Food Services</option>'+
+       '<option value="Events,Catering & Entertainment">Events,Catering & Entertainment</option>'+
        '<option value="Others">Others</option>'+
      '</select>'+
     '</div>'+

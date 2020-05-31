@@ -30,9 +30,7 @@ $contr =  $urlParts[sizeof($urlParts)-2];
             echo $response;    
             break;
       case "fill_jobseeker_account":
-            $auth = new AuthController();
-            $response = $auth->jobseekerdetails();
-            echo $response;
+            echo ((new AuthController())->jobseekerdetails());
             break;
       case "fill_company_account":
             $auth = new AuthController();
