@@ -84,43 +84,66 @@ class AuthController extends Auth{
       $v_data = self::validate_jobseeker();
       $exist = $this->does_profile_already_exist($v_data['id'],'jobseeker');
       if(!$exist){
-      $imagePath = 'uploads/';
-      $cvPath = 'uploads/';
-      $valid_extensions = array('jpeg', 'jpg', 'png');
-      $valid_extensions_cv = array('jpeg', 'jpg', 'png', 'pdf' , 'doc' , 'docx' , 'ppt');
-      $img = $_FILES["image"]["name"]; 
-      $tmp = $_FILES["image"]["tmp_name"];
-      $cv = $_FILES["CV"]["name"]; 
-      $cv_tmp = $_FILES["CV"]["tmp_name"];
-      $errorimg = $_FILES["image"]["error"];
-      $errorcv = $_FILES["CV"]["error"];
-      $final_image = strtolower(rand(1000,1000000).$img);
-      $final_cv = strtolower(rand(1000,1000000).$cv);
-      $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
-      $ext_cv = strtolower(pathinfo($cv, PATHINFO_EXTENSION));
-
-      if(in_array($ext, $valid_extensions)){ 
-      $imagePath = $imagePath.strtolower($final_image);
-      move_uploaded_file($tmp,$imagePath);
-      }else{
-         return 'Invalid Image';
-      }
-      if(in_array($ext_cv, $valid_extensions_cv)){ 
-      $cvPath = $cvPath.strtolower($final_cv);
-      move_uploaded_file($cv_tmp,$cvPath);
-      }else{
-         return 'Invalid CV';
-      }
       $dob = $v_data['dateofbirth'];
       $time = strtotime($dob);
       $dateofbirth = date('Y-m-d',$time);
       $fullname = $v_data['firstname'].' '.$v_data['lastname'];
 
-      $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$v_data['category'],$v_data['interest'],$v_data['tag_line'],$final_image,$final_cv,$v_data['description']);
-      return $response;
-   }else{
-      return 'duplicate';
-   }
+      $targetDir = 'uploads/';
+      $valid_jobseeker_extensions = array(
+         array('jpeg', 'jpg', 'png'),
+         array('jpeg', 'jpg', 'png', 'pdf' , 'doc' , 'docx' , 'ppt'),
+      );
+
+      if($_FILES["image"]["name"] != "" && $_FILES["CV"]["name"] != ""){
+         $final_image = strtolower(rand(1000,1000000).$_FILES["image"]["name"]);
+         $final_cv = strtolower(rand(1000,1000000).$_FILES["CV"]["name"]);
+         $ext = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
+         $ext_cv = strtolower(pathinfo($_FILES["CV"]["name"], PATHINFO_EXTENSION));
+         if(in_array($ext, $valid_jobseeker_extensions[0])){ 
+            $targetDir = $targetDir.strtolower($final_image);
+            move_uploaded_file($_FILES["image"]["tmp_name"],$targetDir);
+         }else{
+               return 'Invalid Image';
+         }
+         if(in_array($ext_cv, $valid_jobseeker_extensions[1])){ 
+         $targetDir = 'uploads/';
+         $targetDir = $targetDir.strtolower($final_cv);
+         move_uploaded_file($_FILES["CV"]["tmp_name"],$targetDir);
+         }else{
+            return 'Invalid CV';
+         }
+         $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$v_data['category'],$v_data['interest'],$v_data['tag_line'],$v_data['description'],$final_image,$final_cv);
+         return $response;
+      } else if($_FILES["image"]["name"] != ""){
+         $final_image = strtolower(rand(1000,1000000).$_FILES["image"]["name"]);
+         $ext = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
+         if(in_array($ext, $valid_jobseeker_extensions[0])){ 
+            $targetDir = $targetDir.strtolower($final_image);
+            move_uploaded_file($_FILES["image"]["tmp_name"],$targetDir);
+         }else{
+               return 'Invalid Image';
+         }
+         $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$v_data['category'],$v_data['interest'],$v_data['tag_line'],$v_data['description'],$final_image,null);
+         return $response;
+      }else if($_FILES["CV"]["name"] != ""){
+         $final_cv = strtolower(rand(1000,1000000).$_FILES["CV"]["name"]);
+         $ext_cv = strtolower(pathinfo($_FILES["CV"]["name"], PATHINFO_EXTENSION));
+         if(in_array($ext_cv, $valid_jobseeker_extensions[1])){ 
+            $targetDir = $targetDir.strtolower($final_cv);
+            move_uploaded_file($_FILES["CV"]["tmp_name"],$targetDir);
+         }else{
+            return 'Invalid CV';
+         }
+            $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$v_data['category'],$v_data['interest'],$v_data['tag_line'],$v_data['description'],null,$final_cv);
+            return $response;
+      }else {
+         $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$v_data['category'],$v_data['interest'],$v_data['tag_line'],$v_data['description'],null,null);
+         return $response;
+      }
+    }else{
+         return 'duplicate';
+    }
    }
 
    public function companydetails(){
