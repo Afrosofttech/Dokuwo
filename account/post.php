@@ -15,32 +15,22 @@ $contr =  $urlParts[sizeof($urlParts)-2];
  if($contr == 'authentication'){
    switch ($method){
        case "create_company_account":
-            $auth = new AuthController();
-            $account = $auth->create_user_account();
-            echo $account;         
+            echo ((new AuthController())->create_user_account());        
             break;
       case "create_jobseeker_account":
-            $auth = new AuthController();
-            $account = $auth->create_user_account();
-            echo $account;    
+            echo ((new AuthController())->create_user_account());  
             break;
       case "user_login":
-            $auth = new AuthController();
-            $response  = $auth->user_login();
-            echo $response;    
+            echo ((new AuthController())->user_login()); 
             break;
       case "fill_jobseeker_account":
             echo ((new AuthController())->jobseekerdetails());
             break;
       case "fill_company_account":
-            $auth = new AuthController();
-            $result = $auth->companydetails();
-            echo $result;
+            echo ((new AuthController())->companydetails());
             break;
       case "create_admin_account":
-            $auth = new AuthController();
-            $result = $auth->create_admin_account();
-            echo $result;
+            echo ((new AuthController())->create_admin_account());
             break;
       default:
             break;

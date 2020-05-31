@@ -14,8 +14,7 @@ class JobseekerMessagesController extends Jobseeker{
             foreach ($_FILES as $key => $value) {
                 if($key != 'files') array_push($Images,$value);
                 else continue;
-            }
-            $targetDir = "uploads/"; 
+            } 
             $allowTypes = array('jpeg', 'jpg', 'png', 'pdf' , 'doc' , 'docx', 'ppt'); 
             //check here if all images are of accepted extensions b4 proceeding
               foreach ($Images as $key=>$val) {
@@ -27,6 +26,7 @@ class JobseekerMessagesController extends Jobseeker{
         $res = $this->send_msg_to_a_company($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body'],'withAttachment');
             foreach($Images as $key=>$val){ 
                     // File upload path 
+                    $targetDir = "uploads/";
                     $fileName = $val['name']; 
                     $tempFileName = $val['tmp_name'];
                     $final_fileName = rand(1000,1000000).$fileName;

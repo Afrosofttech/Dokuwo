@@ -247,7 +247,7 @@
                 '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" placeholder="choose the tag to appear on your profile e.g graphic designer">'+
               '</div>'+
               '<div class="form-group">'+
-                '<textarea name="description" id="description" placeholder="give a short description of 100 characters or less" class="form-control" style="width:100%;height:70px;resize:none;display:none;" maxlength="100"></textarea>'+
+                '<textarea name="description" id="description" placeholder="give a short description of 250 characters or less" class="form-control" style="width:100%;height:70px;resize:none;display:none;" maxlength="250"></textarea>'+
               '</div>'+
               '<div class="form-group">'+
                 '<input type="hidden" class="form-control form-control-user" name="id" id="Jobseeker_id" value="'+entity.login_id+'" >'+
