@@ -6,10 +6,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="This is an accounting Software that aims to automate and make your accounting work simple.">
+  <meta name="author" content="Afrika Software Technologies">
 
-  <title>Career</title>
+  <title>Dokuwo - Details</title>
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -64,10 +64,12 @@
   else{
     $.ajax({
       type:"GET",
-      url:"get.php/company/retrieve_login_info",
+      url:"get.php/company/retrieve_login_info", //to be changed as it is for both jobseekers and companies
       data:{"email" : email, "hash" : hash},
       success:function(data){
         var entity = $.parseJSON(data);
+        if(entity == 'Inexistent') window.location.replace('authentication.php?attempt=<?= "Inexistent"; ?>');
+        if(entity == 'Activated')  window.location.replace('authentication.php?attempt=<?= "Activated"; ?>');
         if(entity.user_type == "company"){
       $('#message_body').html('<div class="card o-hidden border-0 shadow-lg my-5">'+
       '<div class="card-body p-0">'+
@@ -161,7 +163,7 @@
               }
             },
             error: function(err){
-              swalNotify("Error in creating account","warn",{position:"top center"});
+              swalNotify("Error in creating account","warn");
             }
           });    
       }
@@ -230,7 +232,7 @@
                   '<option value="Sale/Markting">Sale/Markting</option>'+
                   '<option value="Healthcare">Healthcare</option>'+
                   '<option value="Science">Science</option>'+
-                  '<option value="Food Services">Food Services</option>'+
+                  '<option value="Events,Catering & Entertainment">Events,Catering & Entertainment</option>'+
                   '<option value="Others">Others</option>'+
                 '</select>'+
               '</div>'+
@@ -242,7 +244,10 @@
                 '</select>'+
               '</div>'+
               '<div class="form-group">'+
-                '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" placeholder="choose the tag to appear on your profile">'+
+                '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" placeholder="choose the tag to appear on your profile e.g graphic designer">'+
+              '</div>'+
+              '<div class="form-group">'+
+                '<textarea name="description" id="description" placeholder="give a short description of 100 characters or less" class="form-control" style="width:100%;height:70px;resize:none;display:none;" maxlength="100"></textarea>'+
               '</div>'+
               '<div class="form-group">'+
                 '<input type="hidden" class="form-control form-control-user" name="id" id="Jobseeker_id" value="'+entity.login_id+'" >'+
@@ -269,6 +274,11 @@
       '</div>'+
     '</div>');
 $(document).ready(function(){
+  //on change
+  $('#interest').on('change', function(){
+     if($('#interest').val() == 'Freelance') $("#description").css("display", "block");
+     else $("#description").css("display", "none");
+  })
   $('#jobseeker').submit(function(e) {
     e.preventDefault();
     var fname = $('#firstname').val();
@@ -277,6 +287,7 @@ $(document).ready(function(){
     var category =$('#category').val();
     var interest = $('#interest').val();
     var tag_line =$('#tag_line').val();
+    var description = $('#description').val();
     var errors = [];
 
     $(".error").remove();
@@ -299,13 +310,16 @@ $(document).ready(function(){
         swal('Invalid Job Category!','Please select a job category','error','Cool');
         return;
     }
-    if(category == 'What are you looking for?'){
+    if(interest == 'What are you looking for?'){
         swal('Invalid interest!','Please indicate what interests you on Dokuwo','error','Cool');
         return;
     }
     if(tag_line == '' || tag_line == null){
     swal('Invalid tag_line!','Please select a tag_line','error','Cool');
     return;
+    }
+    if(interest == 'Job'){
+      $('#description').val('');
     }
 
     if(errors.length < 1){
@@ -316,20 +330,19 @@ $(document).ready(function(){
           contentType: false,
           processData: false,
           cache:false,
-          success:function(response){
+          success: response => {
             if(response == 200){
               window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
             }else if( response == "Invalid Image"){
                 swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
             }else if(response == "Invalid CV"){
-               //@ams->this else is not working. Pls check
-               swal('Invalid CV type!','You can only upload png, jpeg, pdf, doc, ppt or jpg','error','Cool');
+               swal('Invalid CV type!','You can only upload png, jpeg, pdf, doc, docx, ppt or jpg','error','Cool');
             }else if(response == 'duplicate'){
                window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');
             }
           },
-          error: function(err){
-            $('#message').html(err.responseText);
+          error: err => {
+            swalNotify(err.responseText,'error');
           } 
         });
       }else{
@@ -376,7 +389,7 @@ $(document).ready(function(){
         });
       },
       error:function(err){
-        console.log(err.responseText);
+        swalNotify(err.responseText,'error');
       }
     });
   }

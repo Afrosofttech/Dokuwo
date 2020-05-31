@@ -17,7 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="Bootstrap, Landing page, Template, Registration, Landing">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="author" content="Grayrids">
+    <meta name="description" content="This is an accounting Software that aims to automate and make your accounting work simple.">
+    <meta name="author" content="Afrika Software Technologies">
     <title>Dokuwo - Landing</title>
 
     <!-- Bootstrap CSS -->

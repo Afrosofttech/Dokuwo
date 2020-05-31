@@ -18,10 +18,8 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
 if($view == 'company'){
    switch ($method){
       case "retrieve_login_info":
-         $get_login = new AuthController();
-         $login_info = $get_login->login_info($_GET['email'], $_GET['hash']);
-         echo json_encode($login_info);
-          break;
+         echo json_encode((new AuthController())->login_info());
+        break;
        case "dashboard_header_info":
          $result = new CompanyView();
          $res = $result->dashboard_header_info($_GET['login_id']);

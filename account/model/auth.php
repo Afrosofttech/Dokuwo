@@ -70,21 +70,25 @@ class Auth extends Dbh {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$email,$hash]);
         $data = $stmt->fetch();
-        return  $data;
+        if(!$data){
+           return 'Inexistent';
+        }
+        return  ($data['status'] == 1)? 'Activated': $data;
         $stmt = null;
       
     }
 
-    public function jobseeker_account($login_id,$fname,$lname,$fullname,$phone,$skills,$edulevel,$adr,$dob,$country,$category,$interest,$tag_line,$image,$cv){
-        $sql = " INSERT INTO job_seeker (login_id,fname,lname,fullname,phone,skills,category,interest,seeksJob,tag_line,education_level,address,dob,country,image,cv) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public function jobseeker_account($login_id,$fname,$lname,$fullname,$phone,$skills,$edulevel,$adr,$dob,$country,$category,$interest,$tag_line,$image,$cv,$description){
+        $sql = " INSERT INTO job_seeker (login_id,fname,lname,fullname,phone,skills,category,interest,seeksJob,tag_line,education_level,address,dob,country,image,cv,description,featured) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$login_id,$fname,$lname,$fullname,$phone,$skills,$category,$interest,'yes',$tag_line,$edulevel,$adr,$dob,$country,$image,$cv]);
+        $stmt->execute([$login_id,$fname,$lname,$fullname,$phone,$skills,$category,$interest,'yes',$tag_line,$edulevel,$adr,$dob,$country,$image,$cv,$description,0]);
         //@ams->change this entire query later
         $sql = " UPDATE login SET status=? WHERE login_id=?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([1,$login_id]);
+        $stmt2 = $this->connect()->prepare($sql);
+        $stmt2->execute([1,$login_id]);
         return 200;
         $stmt = null;
+        $stmt2 = null;
     }
 
     public function does_profile_already_exist($login_id,$caller){

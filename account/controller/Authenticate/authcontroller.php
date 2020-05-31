@@ -10,8 +10,8 @@ class AuthController extends Auth{
       return $login_id['login_id'];
    }
 
-   public function login_info($email,$hash){
-      $login_info = $this->get_login_info($email,$hash);
+   public function login_info(){
+      $login_info = $this->get_login_info($_GET['email'], $_GET['hash']);
       return $login_info;
    }
 
@@ -87,7 +87,7 @@ class AuthController extends Auth{
       $imagePath = 'uploads/';
       $cvPath = 'uploads/';
       $valid_extensions = array('jpeg', 'jpg', 'png');
-      $valid_extensions_cv = array('jpeg', 'jpg', 'png', 'pdf' , 'doc' , 'ppt');
+      $valid_extensions_cv = array('jpeg', 'jpg', 'png', 'pdf' , 'doc' , 'docx' , 'ppt');
       $img = $_FILES["image"]["name"]; 
       $tmp = $_FILES["image"]["tmp_name"];
       $cv = $_FILES["CV"]["name"]; 
@@ -116,7 +116,7 @@ class AuthController extends Auth{
       $dateofbirth = date('Y-m-d',$time);
       $fullname = $v_data['firstname'].' '.$v_data['lastname'];
 
-      $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$v_data['category'],$v_data['interest'],$v_data['tag_line'],$final_image,$final_cv);
+      $response = $this->jobseeker_account($v_data['id'],$v_data['firstname'],$v_data['lastname'],$fullname,$v_data['phone'],$v_data['skills'],$v_data['educationlevel'],$v_data['address'],$dateofbirth,$v_data['country'],$v_data['category'],$v_data['interest'],$v_data['tag_line'],$final_image,$final_cv,$v_data['description']);
       return $response;
    }else{
       return 'duplicate';
