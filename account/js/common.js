@@ -67,6 +67,14 @@ function gotoHomepage(){
   window.location.replace('../../Career/index.php');
 }
 
+function addNewAttachment(){
+  let attachArray=[];
+  $(".newAttachment input").each(function() {
+    attachArray.push(this.name);
+});
+  $(".newAttachment").append('<div class="form-group flex-fill"><input type="file" name="attachment'+((attachArray.length == 0)?(0):((attachArray.length-1)+1))+'" class="attachmentFile" style="width: 50%;"></div>');
+}
+
 function hireFreelancer(freelancerName,freelancer_id){
   let temp=  ' <!-- Modal -->'+
   '<div class="modal fade" id="hireModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">'+

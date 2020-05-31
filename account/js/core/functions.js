@@ -27,7 +27,7 @@ function swalNotify(title,icon){
                 title: title,
                 icon: icon,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
               })
 }
 function currencyFormat(num){
@@ -39,8 +39,7 @@ function postalCodeFormatter(code) {
 }
 function validEmail(email){
         var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        var validEmail = regEx.test(email);
-        return validEmail;
+        return regEx.test(email);
 }
 
 function formatMonth(month){

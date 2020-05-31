@@ -44,20 +44,46 @@ class Company extends Dbh{
         return $rowCount;
         $stmt = null;
     }
-    protected function get_all_inbox_messages($recipient_id){
+    protected function get_all_inbox_messages($recipient_id)
+    {
         $sql = " SELECT message.message_id,creator_id,creator_name,subject,message_body,create_date,parent_message_id,message_recipient.recipient_id,job_seeker.fullName FROM message_recipient INNER JOIN message ON message_recipient.message_id = message.message_id INNER JOIN job_seeker ON message.creator_id = job_seeker.login_id WHERE message_recipient.recipient_id = ? AND message_recipient.delete_request = ?  order by create_date desc;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$recipient_id,0]);
         $result = $stmt->fetchAll();
+        if(sizeof($result) > 0){
+            foreach ($result as $key => $value) {
+                $result[$key]['attachment'] = ($this->contains_attachments($value['message_id']))? true: false;
+         }
+       }
         return  $result ;
         $stmt = null;
     }
+    protected function contains_attachments($message_id){
+        $sql = "SELECT COUNT(*) as count FROM attachments WHERE message_id = ?;";
+        $stmt =$this->connect()->prepare($sql);
+        $stmt->execute([$message_id]);
+        $result = $stmt->fetchAll();
+        if($result[0]['count'] != 0) return true;
+        return false;
+        $stmt = null; 
+    }
     protected function get_this_message($msg_id){
+        $res = $this->get_attachment_if_exist($msg_id);
         $sql = " SELECT * FROM message WHERE message_id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$msg_id]);
         $result = $stmt->fetch();
-        return  $result ;
+        if($res) $result['attachments'] = $res;
+        return  $result;
+        $stmt = null;
+    }
+    protected function get_attachment_if_exist($message_id){
+        $sql = " SELECT attachment FROM attachments WHERE message_id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$message_id]);
+        $result = $stmt->fetchAll();
+        if(!$result) return false;
+        return  $result;
         $stmt = null;
     }
     protected function delete_this_message($message_id){
@@ -99,6 +125,11 @@ class Company extends Dbh{
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$creator_id,0]);
         $result = $stmt->fetchAll();
+        if(sizeof($result) > 0){
+            foreach ($result as $key => $value) {
+                $result[$key]['attachment'] = ($this->contains_attachments($value['message_id']))? true: false;
+         }
+        }
         return  $result;
         $stmt = null;
     }
@@ -157,7 +188,7 @@ class Company extends Dbh{
         return  array('message' => 'This user\'s account have already been removed after numerous reports.');
     }
     $date = date('Y-m-d H:i:sa');
-    if($parent_msg_id =='' || $parent_msg_id == null){
+    if($parent_msg_id =='' || $parent_msg_id == null || $parent_msg_id == 'null'){
         $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name,subject,message_body,sender_delete_request,create_date) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date]);
     }else{//change this
@@ -170,10 +201,10 @@ class Company extends Dbh{
 
         $stmt3 = $this->connect()->prepare("INSERT INTO message_recipient (recipient_id, message_id, is_read,delete_request) VALUES (?, ?, ?, ?)");
         $stmt3->execute([$recipient_id,$res['message_id'],0,0]);
-
-         if($type == 'forward') return  array('message' => 'Message has been successfully forwarded');
-         if($type = 'job_acceptance') return array('message' => 'Application accepted. Applicant will be notified!','status' => 'success');
-         else return  array('message' => 'Message successfully sent.');
+        if($type == 'forward') return  $res['message_id'];
+        else if($type == 'withAttachment') return $res['message_id'];
+        else if($type == 'job_acceptance') return array('message' => 'Application accepted. Applicant will be notified!','status' => 'success');
+        else return  array('message' => 'Message successfully sent.', 'status' => 'success');
     }
     protected function last_inserted_message_id($creator_id,$creator_name,$Subject,$date){
         $stmt = $this->connect()->prepare("SELECT message_id FROM message WHERE creator_id = ? AND creator_name = ? AND subject = ? AND create_date = ?");
@@ -198,6 +229,13 @@ class Company extends Dbh{
         $stmt->execute([$message_id]);
         $result = $stmt->fetch();
         return $this->send_msg_to_a_jobseeker($creator_id,$creator_name,$_recipient_id,$recipient_name,null,$result['subject'],$result['message_body'],'forward');
+    }
+    protected function save_attachment($message_id,$final_fileName){
+        $sql = "INSERT INTO attachments (message_id,attachment) VALUES (?,?);";
+        $stmt =$this->connect()->prepare($sql);
+        $stmt->execute([$message_id,$final_fileName]);
+        return;
+        $stmt = null;
     }
     protected function get_categories_of_jobseekers(){
         try {

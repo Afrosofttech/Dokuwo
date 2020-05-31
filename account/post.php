@@ -15,34 +15,22 @@ $contr =  $urlParts[sizeof($urlParts)-2];
  if($contr == 'authentication'){
    switch ($method){
        case "create_company_account":
-            $auth = new AuthController();
-            $account = $auth->create_user_account();
-            echo $account;         
+            echo ((new AuthController())->create_user_account());        
             break;
       case "create_jobseeker_account":
-            $auth = new AuthController();
-            $account = $auth->create_user_account();
-            echo $account;    
+            echo ((new AuthController())->create_user_account());  
             break;
       case "user_login":
-            $auth = new AuthController();
-            $response  = $auth->user_login();
-            echo $response;    
+            echo ((new AuthController())->user_login()); 
             break;
       case "fill_jobseeker_account":
-            $auth = new AuthController();
-            $response = $auth->jobseekerdetails();
-            echo $response;
+            echo ((new AuthController())->jobseekerdetails());
             break;
       case "fill_company_account":
-            $auth = new AuthController();
-            $result = $auth->companydetails();
-            echo $result;
+            echo ((new AuthController())->companydetails());
             break;
       case "create_admin_account":
-            $auth = new AuthController();
-            $result = $auth->create_admin_account();
-            echo $result;
+            echo ((new AuthController())->create_admin_account());
             break;
       default:
             break;
@@ -65,19 +53,15 @@ $contr =  $urlParts[sizeof($urlParts)-2];
          echo $res;
         break;
        case "send_msg_to_jobseeker":
-         $result = new MessagesController();
-         $res = $result->send_msg_to_jobseeker($_POST['creator_id'],$_POST['fullname'],$_POST['jobseeker_login_id'],$_POST['Name'],$_POST['parent_msg_id'],$_POST['Subject'],$_POST['messageBody']);
-         echo json_encode($res);
-         break;
+        echo json_encode((new MessagesController())->send_msg_to_jobseeker());
+        break;
       case "forward_msg_to_jobseeker":
         $result = new MessagesController();
         $res = $result->forward_msg_to_jobseeker($_POST['creator_id'],$_POST['fullname'],$_POST['jobseeker_login_id'],$_POST['Name'],$_POST['message_id']);
         echo json_encode($res);
       break;
        case "reply_jobseeker":
-         $result = new MessagesController();
-         $res = $result->send_msg_to_jobseeker($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']);
-         echo json_encode($res);
+         echo json_encode((new MessagesController())->send_msg_to_jobseeker());
          break;
        case "update_company":
          $result = new  SettingsController();
@@ -143,9 +127,7 @@ $contr =  $urlParts[sizeof($urlParts)-2];
           echo $res;
         break;
         case "send_msg_to_company":
-          $result = new JobseekerMessagesController();
-          $res = $result->send_msg_to_company($_POST['creator_id'],$_POST['cName'],$_POST['company_login_id'],$_POST['Name'],$_POST['parent_msg_id'],$_POST['Subject'],$_POST['messageBody']);
-          echo json_encode($res);
+          echo json_encode((new JobseekerMessagesController())->send_msg_to_company());
           break;
         case "forward_msg_to_company":
           $result = new JobseekerMessagesController();
@@ -163,9 +145,7 @@ $contr =  $urlParts[sizeof($urlParts)-2];
             echo $res; 
           break;
         case "reply_company":
-          $result = new JobseekerMessagesController();
-          $res = $result->send_msg_to_company($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']);
-          echo json_encode($res);
+          echo json_encode((new JobseekerMessagesController())->send_msg_to_company());
           break;
         case "send_application":
           $result = new JobseekerJobsController();

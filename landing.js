@@ -111,12 +111,12 @@ function jobCategory(){
         $.each(data, function(i,val){
           let sub = val.job_cat;
           let  profileImage = '';
-          (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education/Training')?subcat=Education:(sub=='Art/Design')?subcat=Art:(sub=='Sale/Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:subcat=''; 
-          (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education/Training')?profileImage=EducationImage:(sub=='Art/Design')?profileImage=ArtImage:(sub=='Sale/Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:profileImage='graphic.jpeg';
+          (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education/Training')?subcat=Education:(sub=='Art/Design')?subcat=Art:(sub=='Sale/Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:(sub=='Events, Catering & Entertainment')?subcat=ECE:subcat=Others; 
+          (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education/Training')?profileImage=EducationImage:(sub=='Art/Design')?profileImage=ArtImage:(sub=='Sale/Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:(sub=='Events, Catering & Entertainment')?profileImage=ECEImage:profileImage=OthersImage;
           job_category +='<div class="col-lg-3 col-md-6 col-xs-12 f-category">'+
           '<a onclick="show_jobs_and_jobseekers_by_categories(\''+val.job_cat+'\');" style="cursor: pointer;">'+
             '<div class="icon">'+
-            '<img src="account/uploads/'+profileImage+'" alt="" class="logo-img">'+
+            '<img src="account/img/'+profileImage+'" alt="" class="logo-img">'+
             '</div>'+
             '<h3>'+val.job_cat+'</h3>';
             (val.count == '1')?job_category +='<p>('+ val.count +' job)</p>':job_category +='<p>('+ val.count +' jobs)</p>';
@@ -595,7 +595,7 @@ function filterJobs(start,finish,filterParams){
     JSON.parse(filterData);
 }
 if(filterData.job_name == '' && filterData.job_location == ''){
-  $.notify('nothing to search for','error');
+  swalNotify('nothing to search for','error');
 }
 else{
 
@@ -883,7 +883,7 @@ else{
         JSON.parse(filterData);
       }
       if(filterData.tag_line =='' && filterData.freelancer_location ==''){
-        $.notify('There is nothing to search for','error');
+        swalNotify('There is nothing to search for','error');
       }else{
         if(start !== undefined && finish !== undefined){ beg = start; end = finish;}else{ beg = 0; end = 4;}
         $.ajax({
@@ -2913,7 +2913,7 @@ else{
 
       $('#submit').click(function(e){
         e.preventDefault();
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
         let name = $('#contact_name').val();
         let email = $('#contact_email').val();
         let msg_subject = $('#msg_subject').val();

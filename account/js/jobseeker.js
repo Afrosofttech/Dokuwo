@@ -148,7 +148,7 @@ function jobseekerDashBoardheader(){
     jdashBoardContent();
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
   });
 }
@@ -287,13 +287,13 @@ function loadJobseekerDashboard(){
 
           },
           error: function(err){
-                $.notify(err.responseText,'error');
+                swalNotify(err.responseText,'error');
           }
           })
 
         },
         error: function(err){
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
     });
   }
@@ -349,7 +349,7 @@ $.ajax({
 
  },
  error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
  }
 });
 
@@ -501,7 +501,7 @@ function jobs(start,finish,filter){
         $('#filter').click(function(e){
           e.preventDefault();
           if($('#job').val() ==='' && $('#location').val() ===''){
-            $.notify('There is nothing to search for','error');
+            swalNotify('There is nothing to search for','error');
           }else{
             $.ajax({
               method: "GET",
@@ -512,11 +512,11 @@ function jobs(start,finish,filter){
                 if(data.length > 0){
                   jobs(undefined,undefined,data);
                 }else{
-                  $.notify('search result doesn\'t exist','error');
+                  swalNotify('search result doesn\'t exist','error');
                 }
               },
               error: err => {
-                $.notify(err.responseText,'error');
+                swalNotify(err.responseText,'error');
               }
           
               })
@@ -526,7 +526,7 @@ function jobs(start,finish,filter){
     
     },
     error: err => {
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
    });
     
@@ -584,7 +584,7 @@ $.ajax({
       $('#content').empty().append(apply);
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
  });
 }
@@ -596,15 +596,15 @@ function sendApp(job_id,company_id){
     data: {"jobseeker_id" : session_user_id,"job_id": job_id,"company_id": company_id},
     success: function(response){
     if(response == 200 ){
-      $.notify('job application successfully sent','success');
+      swalNotify('job application successfully sent','success');
     }else if(response == 'You already applied!'){
-      $.notify('You have already applied for this job. The company will get back to you','error');
+      swalNotify('You have already applied for this job. The company will get back to you','error');
     }else{
-      $.notify('application not sent. Please try again','error');
+      swalNotify('application not sent. Please try again','error');
     }
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
  })
 }
@@ -662,7 +662,7 @@ function jsidebarMessage(){
        //jcontentMessage();
    },
    error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
    }
   });
 }
@@ -689,6 +689,7 @@ $.ajax({
           ' <th></th>'+
           ' <th></th>'+
           ' <th></th>'+
+          ' <th></th>'+
           '</thead>'+
             '<tbody>';
 
@@ -704,8 +705,9 @@ $.ajax({
                             '</div>'+
                           '</td>'+
                           '<td class="mailbox-name">'+val.creator_name+'</td>'+
-                          '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                          '<td class="mailbox-subject"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 35).concat('...')+''+
                           '</td>'+
+                          '<td class="mailbox-attachment">'+((val.attachment)?"<i class='fas fa-paperclip'></i>":"")+'</td>'+
                           '<td class="mailbox-date">'+moment(val.create_date).fromNow()+'</td>'+
                         '</tr>';
             });
@@ -751,7 +753,7 @@ $.ajax({
       jgeyOutReadMessages('myTable',message_id);
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
     });
 }
@@ -771,7 +773,7 @@ $.ajax({
     }
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 })
 }
@@ -848,98 +850,125 @@ function selectACompanyToMsg(){
 
       },
       error: function(err){
-       $.notify(err.responseText,'error');
+       swalNotify(err.responseText,'error');
       }
      });
 }
 function jcomposeNewMessage(login_id,cName,divToClear){
-  let temp =' <div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
-  // '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
-    '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-      '<h2 class="card-title text-primary">Compose New Message</h2>'+
+let temp =' <div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+// '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
+  '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+    '<h2 class="card-title text-primary">Compose New Message</h2>'+
+  '</div>'+
+  '<!-- /.card-header -->'+
+  '<div class="card-body">'+
+    '<form id="jComposeNewMsg" class="jobseekerComposeMessage" method="POST" enctype="multipart/form-data" autocomplete="off">'+
+    '<div class="form-group input-group">'+
+    '<span class="input-group-addon" style="padding: 6px 3px; border: 1px solid lightgrey; border-radius: 5px 0px 0px 5px">'+
+    '<i class="fa fa-user"></i>'+
+    '</span>'+
+    '<input class="form-control" type="text" name="recipient" id="thefullname" value="'+cName+'" readonly>'+
     '</div>'+
-    '<!-- /.card-header -->'+
-    '<div class="card-body">'+
-      '<form id="ComposeNewMsg">'+
-      '<div class="form-group input-group">'+
-      '<span class="input-group-addon" style="padding: 6px 3px; border: 1px solid lightgrey; border-radius: 5px 0px 0px 5px">'+
-      '<i class="fa fa-user"></i>'+
-      '</span>'+
-      '<input class="form-control" type="text" name="recipient" id="thefullname" value="'+cName+'" readonly>'+
-      '</div>'+
-      '<div class="form-group">'+
-        '<input class="form-control" id="theSubject" placeholder="Subject:" value="">'+
-      '</div>'+
-      '<div class="form-group">'+
-       '<div id="summernote" class="message_info"></div>'+
-      '</div>'+
+    '<div class="form-group">'+
+      '<input class="form-control" id="theSubject" placeholder="Subject:" value="">'+
     '</div>'+
-    '<!-- /.card-body -->'+
-    '<div class="card-footer">'+
-      '<div class="float-right">'+
-        '<button type="submit" name="submit" id="newmessage" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
-      '</div>'+
-      '<button type="reset" class="btn btn-default" onclick="'+((divToClear == undefined)?"selectACompanyToMsg()": "discardMsg(\'"+divToClear+"\')")+'"><i class="fas fa-times"></i> Discard</button>'+
+    '<div class="form-group">'+
+      '<div id="summernote" class="message_info"></div>'+
     '</div>'+
-    '</form>';
-  
-    $('.contentMessage').empty().append(temp);
-    $(document).ready(function() {
-      $('#summernote').summernote({
-        height: 300,
-        lineHeight: 1,
-        callbacks: {
-          onPaste: function (e) {
-              if (document.queryCommandSupported("insertText")) {
-                  var text = $(e.currentTarget).html();
-                  var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-  
-                  setTimeout(function () {
-                      document.execCommand('insertText', false, bufferText);
-                  }, 10);
-                  e.preventDefault();
-              } else { //Internet Explorer
-                  var text = window.clipboardData.getData("text")
-                  if (trap) {
-                      trap = false;
-                  } else {
-                      trap = true;
-                      setTimeout(function () {
-                          document.execCommand('paste', false, text);
-                      }, 10);
-                      e.preventDefault();
-                  }
-              }
-  
-          }
-      }
-      });
-    //on submit
-    $('#newmessage').click(function(e){
-      e.preventDefault();
-      if($('#thefullname').val() ===''){
-        $.notify('Message receiver name cannot be empty','error');
-      }else if($('#theSubject').val() === ''){
-        $.notify('Subject field cannot be empty','error');
-      }else{
-        $.ajax({
-          method: "POST",
-          dataType: 'json',
-          url: "post.php/jobseeker/send_msg_to_company",
-          data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : $('#thefullname').val(),"parent_msg_id": null, "Subject" : $('#theSubject').val(), "messageBody" : $('.message_info').summernote('code')},
-          success: function(data){
-              $.notify(data.message,'success'); 
-              (divToClear == undefined)? jcontentMessage(): discardMsg(divToClear);
-          },
-          error: function(err){
-            //
-          }
-        });
-  
+    '<div class="newAttachment d-flex flex-wrap justify-content-between">'+
+  '</div>'+
+  '</div>'+
+  '<!-- /.card-body -->'+
+  '<div class="card-footer">'+
+    '<div class="float-right">'+
+      '<button type="submit" name="submit" id="newmessage" form="jComposeNewMsg" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
+    '</div>'+
+    '<button type="reset" class="btn btn-default" onclick="'+((divToClear == undefined)?"selectACompanyToMsg()": "discardMsg(\'"+divToClear+"\')")+'"><i class="fas fa-times"></i> Discard</button>'+
+    '<button class="btn btn-default" id="addAttachment"><i class="fas fa-paperclip" style="cursor: pointer;">Attachment</i></button>'+
+    '</div>'+
+  '</form>';
+
+  $('.contentMessage').empty().append(temp);
+  $(document).ready(function() {
+    $('#summernote').summernote({
+      height: 300,
+      lineHeight: 1,
+      callbacks: {
+        onPaste: function (e) {
+            if (document.queryCommandSupported("insertText")) {
+                var text = $(e.currentTarget).html();
+                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+                setTimeout(function () {
+                    document.execCommand('insertText', false, bufferText);
+                }, 10);
+                e.preventDefault();
+            } else { //Internet Explorer
+                var text = window.clipboardData.getData("text")
+                if (trap) {
+                    trap = false;
+                } else {
+                    trap = true;
+                    setTimeout(function () {
+                        document.execCommand('paste', false, text);
+                    }, 10);
+                    e.preventDefault();
+                }
+            }
+
         }
-  
+    }
+    });
+    //add a new file attachment
+    $("#addAttachment").click(function(e){
+
+      e.preventDefault();
+      addNewAttachment();
+    });
+  //on submit
+  $('#jComposeNewMsg').submit(function(e){
+    e.preventDefault();
+    if($('#thefullname').val() ===''){
+      swalNotify('Message receiver name cannot be empty','error');
+    }else if($('#theSubject').val() === ''){
+      swalNotify('Subject field cannot be empty','error');
+    }else{
+      var formData = new FormData(this);
+      formData.append("creator_id", session_id);
+      formData.append("creator_name", session_fullname);
+      formData.append("recipient_id", login_id);
+      formData.append("recipient_name", $('#thefullname').val());
+      formData.append("parent_msg_id", null);
+      formData.append("subject", $('#theSubject').val());
+      formData.append("msg_body", $('.message_info').summernote('code'));
+
+      $.ajax({
+        method: "POST",
+        dataType: 'json',
+        url: "post.php/jobseeker/send_msg_to_company",
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache:false,
+        success: data => {
+          if(data.status == 'success'){
+            swalNotify(data.message,'success'); 
+            (divToClear == undefined)? jcontentMessage(): discardMsg(divToClear);
+          }
+          if(data.status == 'error'){
+            swalNotify(data.message,'error'); 
+          }
+
+        },
+        error: err => {
+          swalNotify(err.responseText,'error');
+        }
       });
-  });  
+
+      }
+
+    });
+});  
 }
 /**
  * @param msg_id 
@@ -999,7 +1028,25 @@ $.ajax({
       '</div>'+
       '<!-- /.mailbox-read-message -->'+
     '</div>'+
-    '<!-- /.card-footer -->'+
+    '<!-- /.card-body -->'+
+    '<div class="card-footer bg-white">'+
+    '<ul class="mailbox-attachments d-flex flex-wrap justify-content-between align-items-stretch clearfix">';
+    $.each(data.attachments, (i, val) => {
+      let extension = val.attachment.substr( (val.attachment.lastIndexOf('.') +1) );
+      let images = ['jpeg', 'jpg', 'png'];
+    temp += '<li>'+
+              '<div class="mailbox-attachment-info">'+
+                '<a href="uploads/'+val.attachment+'" target="_blank" class="mailbox-attachment-name"><i class="'+(images.includes(extension)?'fas fa-camera':'fas fa-paperclip')+'"></i> '+val.attachment.replace(/[0-9]{6}/g, '')+'</a>'+
+                    '<span class="mailbox-attachment-size clearfix mt-1">'+
+                      '<a href="uploads/'+val.attachment+'" target="_blank" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>'+
+                    '</span>'+
+              '</div>'+
+            '</li>';
+    })
+
+temp += '</ul>'+
+  '</div>'+
+  '<!-- /.card-footer -->'+
     '<div class="card-footer">'+
       '<div class="float-right">'+
         '<button type="button" class="btn btn-default" onclick="jReplyMsg(\''+msg_id+'\',\''+data.creator_id+'\',\''+data.creator_name+'\',\''+data.subject+'\',\''+company_id+'\');"><i class="fas fa-reply"></i> Reply</button>'+
@@ -1030,14 +1077,14 @@ $(document).ready(function (){
   });
 
   $("p").on("copy cut", function (e) {
-    $.notify('copying disabled for good reasons','warning');
+    swalNotify('copying disabled for good reasons','warning');
     e.preventDefault();
     return false;
 });
 $('p').mousedown(function(e) { 
   if (e.button == 2) { 
       e.preventDefault(); 
-      $.notify('right-click is disabled!','warning'); 
+      swalNotify('right-click is disabled!','warning'); 
   }
 })
 if(company_id === undefined){
@@ -1060,7 +1107,7 @@ if(company_id === undefined){
   })
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
   });
 }
@@ -1072,14 +1119,14 @@ function jDeleteMessage(msg_id,company_id){
     data: {"message_id" : msg_id},
     success: function(data){
       if(data == 200){
-        $.notify('message successfully deleted','success');
+        swalNotify('message successfully deleted','success');
         (company_id === 'undefined')?jcontentMessage():jsentMessages();
       }else {
-        $.notify('message has not been deleted','error');
+        swalNotify('message has not been deleted','error');
       }
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -1094,7 +1141,7 @@ function jDeleteMessage(msg_id,company_id){
  */
 function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
   if(company_id !== 'undefined'){
-    $.notify('You can\'t reply to your own sent messages!','warning');
+    swalNotify('You can\'t reply to your own sent messages!','warning');
     return;
   }else{
     let temp =' <div class="card card-primary card-outline">'+
@@ -1103,7 +1150,7 @@ function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
     '</div>'+
     '<!-- /.card-header -->'+
     '<div class="card-body">'+
-      '<form id="ComposeNewMsg">'+
+      '<form id="jComposeNewMsg" class="jobseekerComposeMessage" method="POST" enctype="multipart/form-data" autocomplete="off">'+
       '<div class="form-group input-group">'+
       '<span class="input-group-addon" style="padding: 6px 3px; border: 1px solid lightgrey; border-radius: 5px 0px 0px 5px">'+
       '<i class="fa fa-user"></i>'+
@@ -1116,13 +1163,16 @@ function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
       '<div class="form-group">'+
        '<div id="summernote" class="message_body_info"></div>'+
       '</div>'+
+      '<div class="newAttachment flex-wrap justify-content-between">'+
+      '</div>'+
     '</div>'+
     '<!-- /.card-body -->'+
     '<div class="card-footer">'+
       '<div class="float-right">'+
-        '<button type="submit" name="submit" id="newreplymsg" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
+        '<button type="submit" name="submit" id="newreplymsg" form="jComposeNewMsg" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>'+
       '</div>'+
       '<button type="reset" class="btn btn-default" onclick="jcontentMessage();"><i class="fas fa-times"></i> Discard</button>'+
+      '<button class="btn btn-default" id="addAttachment"><i class="fas fa-paperclip" style="cursor: pointer;">Attachment</i></button>'+
     '</div>'+
     '</form>';
   
@@ -1158,27 +1208,49 @@ function jReplyMsg(msg_id,recipient_id,recipient_name,msg_subject,company_id){
         }
     }
     });
+  //on attachment add
+$("#addAttachment").click(function(e){
+
+  e.preventDefault();
+  addNewAttachment();
+});
 
   //on submit
-$('#newreplymsg').click(function(e){
+$('#jComposeNewMsg').submit(function(e){
   e.preventDefault();
   if($('#replyToName').val() ===''){
-    $.notify('Message receiver name cannot be empty','error');
+    swalNotify('Message receiver name cannot be empty','error');
   }else if($('#replyToSubject').val() === ''){
-    $.notify('Subject field cannot be empty','error');
+    swalNotify('Subject field cannot be empty','error');
   }else{
 
+    var formData = new FormData(this);
+    formData.append("creator_id", session_id);
+    formData.append("creator_name", session_fullname);
+    formData.append("recipient_id", recipient_id);
+    formData.append("recipient_name", recipient_name);
+    formData.append("parent_msg_id", msg_id);
+    formData.append("subject", $('#replyToSubject').val());
+    formData.append("msg_body", $('.message_body_info').summernote('code'));
   $.ajax({
     method: "POST",
     dataType: 'json',
     url: "post.php/jobseeker/reply_company",
-    data:{"creator_id": session_id,"creator_name": session_fullname,"recipient_id": recipient_id,"recipient_name": recipient_name,"parent_msg_id": msg_id,"subject": $('#replyToSubject').val(),"msg_body": $('.message_body_info').summernote('code')},
-    success: function(data){
-        $.notify(data.message,'success');
+    data: formData,
+    contentType: false,
+    processData: false,
+    cache:false,
+    success: data => {
+      if(data.status == 'success'){
+        swalNotify(data.message,'success');
         jcontentMessage();
+      }
+      if(data.status == 'error'){
+        swalNotify(data.message,'error'); 
+      }
     },
-    error: function(err){
-      $.notify(err.responseText,'error');
+    error: err => {
+        swalNotify(err.responseText,'error');
     }
   });
 }
@@ -1187,79 +1259,79 @@ $('#newreplymsg').click(function(e){
 }
 }
 function selectACompanyToForward(msg_id){
-  let conMessage ='';
-  $.ajax({
-    method: "GET",
-    dataType: 'json',
-    url: "get.php/jobseeker/retreive_all_companies",
-    success: function(data){
-   conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
-        '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
-          '<h4 class="card-title">Select a recipient</h4>'+
+let conMessage ='';
+$.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/jobseeker/retreive_all_companies",
+  success: function(data){
+  conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
+      '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
+        '<h4 class="card-title">Select a recipient</h4>'+
 
-        '</div>'+
-        '<!-- /.card-header -->'+
-        '<div class="card-body p-1">'+
-          '<div class="table-responsive mailbox-messages">'+
-            '<table class="table table-hover" id="mySelector">'+
-            '<thead>'+
-             ' <th>id</th>'+
-             '<th>img</th>'+
-            ' <th>FullName</th>'+
-            ' <th>Address</th>'+
-            ' <th>Country</th>'+
-            '</thead>'+
-              '<tbody>';
-             if(data === 0){
-              //
-             }else{
-              $.each(data, function( i, val ) {
-                conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="jforwardMsgTo(\''+val.login_id+'\',\''+val.company_name+'\',\''+msg_id+'\');">'+
-                            '<td>'+
-                                '<input type="hidden" value="" id="'+val.login_id+'">'+
-                            '</td>'+
-                            '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'"/>'+
-                            '<div class="status-indicator bg-success"></div>'+
-                            '</td>'+
-                            '<td class="full-name"><b>'+val.company_name+'</b></td>'+
-                            '<td class="country-name">'+val.company_address+'</td>'+
-                            '<td class="Skills">'+val.country+'</td>'+
-                          '</tr>';
-              });
-             }
+      '</div>'+
+      '<!-- /.card-header -->'+
+      '<div class="card-body p-1">'+
+        '<div class="table-responsive mailbox-messages">'+
+          '<table class="table table-hover" id="mySelector">'+
+          '<thead>'+
+            ' <th>id</th>'+
+            '<th>img</th>'+
+          ' <th>FullName</th>'+
+          ' <th>Address</th>'+
+          ' <th>Country</th>'+
+          '</thead>'+
+            '<tbody>';
+            if(data === 0){
+            //
+            }else{
+            $.each(data, function( i, val ) {
+              conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="jforwardMsgTo(\''+val.login_id+'\',\''+val.company_name+'\',\''+msg_id+'\');">'+
+                          '<td>'+
+                              '<input type="hidden" value="" id="'+val.login_id+'">'+
+                          '</td>'+
+                          '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'"/>'+
+                          '<div class="status-indicator bg-success"></div>'+
+                          '</td>'+
+                          '<td class="full-name"><b>'+val.company_name+'</b></td>'+
+                          '<td class="country-name">'+val.company_address+'</td>'+
+                          '<td class="Skills">'+val.country+'</td>'+
+                        '</tr>';
+            });
+            }
 
-            conMessage +=  '</tbody>'+
-                            '</table>'+
-                            '<!-- /.table -->'+
-                          '</div>'+
-                          '<!-- /.mail-box-messages -->'+
+          conMessage +=  '</tbody>'+
+                          '</table>'+
+                          '<!-- /.table -->'+
                         '</div>'+
-                        '<!-- /.card-body -->'+
+                        '<!-- /.mail-box-messages -->'+
+                      '</div>'+
+                      '<!-- /.card-body -->'+
 
-                        '</div>'+
+                      '</div>'+
 
-                      '</div>';
+                    '</div>';
 
-       $('.contentMessage').empty().append(conMessage);
+      $('.contentMessage').empty().append(conMessage);
 
-       $(document).ready( function () {
-        $('#mySelector').DataTable({
-          "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
-          "oLanguage": {
-            "sLengthMenu": "Display _MENU_ job seekers",
-            "sEmptyTable":     "No message available"
-          },
-          fnDrawCallback: function() {
-            $("#mySelector thead").remove();
-          }
-        });
-        });
+      $(document).ready( function () {
+      $('#mySelector').DataTable({
+        "aLengthMenu": [[10,25, 50, 75, -1], [10,25, 50, 75, "All"]],
+        "oLanguage": {
+          "sLengthMenu": "Display _MENU_ job seekers",
+          "sEmptyTable":     "No message available"
+        },
+        fnDrawCallback: function() {
+          $("#mySelector thead").remove();
+        }
+      });
+      });
 
-      },
-      error: function(err){
-       $.notify(err.responseText,'error');
-      }
-     });
+    },
+    error: function(err){
+      swalNotify(err.responseText,'error');
+    }
+    });
 }
 function jforwardMsgTo(login_id,company_name,msg_id){
 $.ajax({
@@ -1268,11 +1340,11 @@ $.ajax({
   url: "post.php/jobseeker/forward_msg_to_company",
   data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : company_name,"message_id": msg_id},
   success: function(data){
-      $.notify(data.message,'success'); 
+      swalNotify(data.message,'success'); 
       jcontentMessage();
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
 }
@@ -1313,7 +1385,7 @@ function jnewMsgNotification(){
       }
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 }
@@ -1338,6 +1410,7 @@ $.ajax({
         ' <th></th>'+
         ' <th></th>'+
         ' <th></th>'+
+        ' <th></th>'+
         '</thead>'+
           '<tbody>';
 
@@ -1354,11 +1427,11 @@ $.ajax({
                     '</td>'+
                     // '<td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>'+
                     '<td class="mailbox-name">'+val.company_name+'</td>'+
-                    '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 50)+''+
+                    '<td class="mailbox-subject" id="jrcheck"><b>'+val.subject+'</b> -'+filteredMsgBody.substring(0, 35).concat("...")+''+
                     '</td>'+
-                    // '<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>'+
+                    '<td class="mailbox-attachment">'+((val.attachment)?"<i class='fas fa-paperclip'></i>":"")+'</td>'+
                     '<td class="mailbox-date">'+moment(val.create_date).fromNow()+'</td>'+
-                  '</tr>';
+                '</tr>';
             });
         temp +=  '</tbody>'+
               '</table>'+
@@ -1389,7 +1462,7 @@ $.ajax({
     });
 },
 error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
 }
 });
 }
@@ -1470,7 +1543,7 @@ error: function(err){
     });
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
   }else{
@@ -1497,7 +1570,7 @@ error: function(err){
       hires(response);
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   })
  }
@@ -1508,11 +1581,11 @@ error: function(err){
       url: "post.php/jobseeker/delete_hire",
       data: {"hire_id" : hire_id},
       success: function(response){
-        $.notify('Deleted','success');
+        swalNotify('Deleted','success');
         hires();
       },
       error: function(err){
-        $.notify(err.responseText,'error');
+        swalNotify(err.responseText,'error');
       }
     });
  }
@@ -1599,7 +1672,7 @@ $('#content').empty().append(temp);
 
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   });
 
@@ -1654,7 +1727,7 @@ $('#content').empty().append(temp);
   $('.portfolio').empty().append(portfolio);
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
   });
 }
@@ -1742,7 +1815,7 @@ function addService(){
           portfolio();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       })
   });
@@ -1841,14 +1914,14 @@ function editService(service_id){
           portfolio();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       })
     });
   });
 },
 error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
 }
 })
 
@@ -1864,7 +1937,7 @@ function deleteService(service_id){
       portfolio();
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   })
 }
@@ -1955,7 +2028,7 @@ function addPortfolio(){
           portfolio();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       })
   });
@@ -2058,14 +2131,14 @@ function editPortfolio(portfolio_id){
           portfolio();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         }
       })
     });
   });
 },
 error: function(err){
-  $.notify(err.responseText,'error');
+  swalNotify(err.responseText,'error');
 }
 })
 
@@ -2081,7 +2154,7 @@ function deletePortfolio(portfolio_id){
       portfolio();
     },
     error: function(err){
-      $.notify(err.responseText,'error');
+      swalNotify(err.responseText,'error');
     }
   })
 }
@@ -2259,7 +2332,7 @@ let temp='<div class="content-wrapper">'+
                       '<option value="Sale/Markting">Sale/Markting</option>'+
                       '<option value="Healthcare">Healthcare</option>'+
                       '<option value="Science">Science</option>'+
-                      '<option value="Food Services">Food Services</option>'+
+                      '<option value="Events,Catering & Entertainment">Events,Catering & Entertainment</option>'+
                       '<option value="Others">Others</option>'+
                       '</select>'+
                       '</div>'+
@@ -2430,7 +2503,7 @@ let temp='<div class="content-wrapper">'+
           }
           },
           error: function(err){
-            $.notify(err.responseText,'error');
+            swalNotify(err.responseText,'error');
           } 
         });
       }else{
@@ -2457,7 +2530,7 @@ let temp='<div class="content-wrapper">'+
             jsettings();
         },
         error: function(err){
-          $.notify(err.responseText,'error');
+          swalNotify(err.responseText,'error');
         } 
       });
   
@@ -2470,7 +2543,7 @@ let temp='<div class="content-wrapper">'+
 
   },
   error: function(err){
-    $.notify(err.responseText,'error');
+    swalNotify(err.responseText,'error');
   }
 });
   $('#content').empty().append(temp);
