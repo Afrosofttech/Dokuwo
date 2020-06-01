@@ -1536,7 +1536,7 @@ $.ajax({
 function viewProfile(profile_id,profile_log_id,profile_fname,profile_lname,profile_fullname,profile_email,profile_phone,profile_skills, profile_tag_line,profile_edu_level,profile_address,profile_dob,profile_country,profile_image,profile_cv,category){
 if(package !== 'None'){
 let temp ='<div class="container-fluid"><div class="row"><div class="col-xl-6 col-lg-7 profileInner"></div><div class="col-xl-6 col-lg-5 contentMessage"></div></div></div>';
-
+console.log(profile_cv);
 $('#content').empty().append(temp);
 let profile =
 '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
@@ -1578,7 +1578,7 @@ let profile =
         '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+profile_log_id+'\',\''+profile_fullname+'\',\'contentMessage\');">'+
           '<i class="fas fa-comments"> Message</i>'+
         '</a>'+
-        '<a href="'+((profile_cv == null || profile_cv == '')?'javascript:void();': 'uploads/'+profile_cv)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
+        '<a href="'+((profile_cv == null || profile_cv == 'null' || profile_cv == '')?'javascript:void();': 'uploads/'+profile_cv)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
           '<i class="fas fa-file-image"></i> View CV'+
         '</a>'+
       '</div>'+
@@ -2663,7 +2663,7 @@ applicant += '<div class="col col-lg-4">'+
     '</div>'+
     '<div class="card-footer">'+
       '<div class="text-right">'+
-      '<a href="'+((data.CV == null || data.CV == '')?'javascript:void();':'uploads/'+data.CV)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
+      '<a href="'+((data.CV == null || data.CV == 'null' || data.CV == '')?'javascript:void();':'uploads/'+data.CV)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
       '<i class="fas fa-file-image"></i> View CV'+
       '</a>'+
       '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+data.login_id+'\',\''+data.fullName+'\',\'contentMessage\')">'+

@@ -68,8 +68,8 @@
       data:{"email" : email, "hash" : hash},
       success:function(data){
         var entity = $.parseJSON(data);
-        if(entity == 'Inexistent') window.location.replace('authentication.php?attempt=<?= "Inexistent"; ?>');
-        if(entity == 'Activated')  window.location.replace('authentication.php?attempt=<?= "Activated"; ?>');
+        if(entity == 'Inexistent') window.location.replace('authentication.php?attempt=<?php echo "Inexistent"; ?>');
+        if(entity == 'Activated')  window.location.replace('authentication.php?attempt=<?php echo "Activated"; ?>');
         if(entity.user_type == "company"){
       $('#message_body').html('<div class="card o-hidden border-0 shadow-lg my-5">'+
       '<div class="card-body p-0">'+
@@ -96,7 +96,7 @@
                 '<input type="text" class="form-control form-control-user" name="address" id="comp_address" placeholder="Company Address">'+
                 '</div> '+
                 '<div class="form-group">'+
-                '<input type="text" class="form-control form-control-user" name="postalcode" id="postalcode" placeholder="Postal Code">'+
+                '<input type="text" class="form-control form-control-user" name="postalcode" id="postalcode" placeholder="Postal Code" maxlength="5">'+
                 '</div>'+ 
                 '<div class="form-group">'+
                 '<input type="text" class="form-control form-control-user" name="country" id="comp_country" placeholder="Country">'+

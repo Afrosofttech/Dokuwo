@@ -154,17 +154,21 @@ class AuthController extends Auth{
       $path = 'uploads/';
       $img = $_FILES["logo"]["name"]; 
       $tmp = $_FILES["logo"]["tmp_name"]; 
-      $errorimg = $_FILES["logo"]["error"];
-      $final_image = rand(1000,1000000).$img;
-      $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+      if($_FILES["logo"]["name"] != ""){
+         $final_image = rand(1000,1000000).$img;
+         $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
          if(in_array($ext, $valid_extensions)){ 
          $path = $path.strtolower($final_image);
          move_uploaded_file($tmp,$path);
          }else{
             return 'Invalid';  //@ams-> make sure this is also considered as a return value
          }
-      $result = $this->company_account($company_data['id'],$company_data['name'],$company_data['email'],$company_data['phone'],$company_data['address'],$company_data['postalcode'],$company_data['country'],$company_data['currency'],$final_image);
+         $result = $this->company_account($company_data['id'],$company_data['name'],$company_data['email'],$company_data['phone'],$company_data['address'],$company_data['postalcode'],$company_data['country'],$company_data['currency'],$final_image);
          return $result;
+      }else{
+         $result = $this->company_account($company_data['id'],$company_data['name'],$company_data['email'],$company_data['phone'],$company_data['address'],$company_data['postalcode'],$company_data['country'],$company_data['currency'],null);
+         return $result;
+       }
       }else{
          return 'duplicate';
       }
