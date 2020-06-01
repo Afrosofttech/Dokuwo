@@ -2198,7 +2198,7 @@ let temp='<div class="content-wrapper">'+
                 '<i class="fas fa-lg fa-building"></i><b> Address</b> <a class="float-right">'+data[0].address+'</a>'+
               '</li>'+
               '</ul>'+
-              '<a href="uploads/'+data[0].CV+'" target="_blank" class="btn btn-primary btn-block"><b>View CV</b></a>'+
+              '<a href="'+((data[0].CV == null || data[0].CV == 'null' || data[0].CV == '')?'javascript:void();':'uploads/'+data[0].CV)+'" target="_blank" class="btn btn-primary btn-block"><b>View CV</b></a>'+
             '</div>'+
             '<!-- /.card-body -->'+
           '</div>'+

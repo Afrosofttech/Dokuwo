@@ -112,9 +112,11 @@ class Auth extends Dbh {
         $stmt = null;
     }
     public function company_account($login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$final_image){
-        $sql = " INSERT INTO company (login_id,company_name,company_email,company_phone,company_address,postal_code,country,currency,logo) VALUES(?,?,?,?,?,?,?,?,?)";
+        if($final_image == null) $sql = " INSERT INTO company (login_id,company_name,company_email,company_phone,company_address,postal_code,country,currency) VALUES(?,?,?,?,?,?,?,?)";
+        else $sql = " INSERT INTO company (login_id,company_name,company_email,company_phone,company_address,postal_code,country,currency,logo) VALUES(?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$final_image]);
+        if($final_image == null) $stmt->execute([$login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr]);
+        else $stmt->execute([$login_id,$cmp_name,$cmp_email,$phone,$addr,$postcode,$country,$curr,$final_image]);
         //@ams->change this entire query later
         $sql = " UPDATE login SET status=? WHERE login_id=?";
         $stmt = $this->connect()->prepare($sql);
