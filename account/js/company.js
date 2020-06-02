@@ -1729,9 +1729,9 @@ let profile =
                     '<div class="col-sm-10">'+
                     '<select class="custom-select" id="package" name="package">'+
                     '<option value="None">None</option>'+
-                    '<option value="One-time">post 1 job @D3000</option>'+
-                    '<option value="Month">post unlimited jobs for 1 month @D15000</option>'+
-                    '<option value="Half-year">post unlimited jobs for 6 months @D49000</option>'+
+                    '<option value="One-time">post 1 job @D2500</option>'+
+                    '<option value="Month">post unlimited jobs for 1 month @D12000</option>'+
+                    '<option value="Half-year">post unlimited jobs for 6 months @D35000</option>'+
                     '</select>'+
                     '</div>'+
                   '</div>'+
@@ -1739,7 +1739,7 @@ let profile =
                     '<div class="offset-sm-2 col-sm-10">'+
                       '<div class="">'+
                         '<label>'+
-                          '<p> Select a package and it will be activated within 24hrs.</p>'+
+                          '<p> Select a package and it will be activated within 24hrs. Below are the means of payment we currently support.</p>'+
                         '</label>'+
                       '</div>'+
                     '</div>'+
@@ -1749,6 +1749,40 @@ let profile =
                       '<button type="submit" class="btn btn-success">Activate</button>'+
                     '</div>'+
                   '</div>'+
+                  '<div class="form-group row">'+
+                  '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
+                    '<div class="p-2 bd-highlight">'+
+                    
+                      '<div class="card" style="width: 12rem;">'+
+                        '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                        '<div class="card-body">'+
+                          '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                        '</div>'+
+                      '</div>'+
+
+                    '</div>'+
+                    '<div class="p-2 bd-highlight">'+
+
+                      '<div class="card" style="width: 12rem;">'+
+                        '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                        '<div class="card-body">'+
+                          '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                        '</div>'+
+                     '</div>'+
+                     
+                    '</div>'+
+                    '<div class="p-2 bd-highlight">'+
+
+                      '<div class="card" style="width: 12rem;">'+
+                        '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                        '<div class="card-body">'+
+                          '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                        '</div>'+
+                      '</div>'+
+
+                    '</div>'+
+                  '</div>'+
+                '</div>'+
                 '</form>'+
               '</div>'+
               '<!-- /.tab-pane -->'+

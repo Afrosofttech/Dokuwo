@@ -2998,7 +2998,7 @@ else{
                   '<li>Message Jobseekers</li>'+
                   '<li>View Jobseekers Profiles</li>'+
                 '</ul>'+
-                '<div class="price"><span>GMD</span>3000<span>/Job</span></div>'+
+                '<div class="price"><span>GMD</span>2500<span>/Job</span></div>'+
               '</div>'+
               
             '</div>'+
@@ -3018,7 +3018,7 @@ else{
                   '<li>Message Jobseekers</li>'+
                   '<li>View Jobseekers Profiles</li>'+
                 '</ul>'+
-                '<div class="price"><span>GMD</span>15000<span>/Month</span></div>'+
+                '<div class="price"><span>GMD</span>12000<span>/Month</span></div>'+
               '</div>'+
               
             '</div>'+
@@ -3038,7 +3038,7 @@ else{
                 '<li>Message Jobseekers</li>'+
                 '<li>View Jobseekers Profiles</li>'+
                 '</ul>'+
-                '<div class="price"><span>GMD</span>49000<span>/6 Month</span></div>'+
+                '<div class="price"><span>GMD</span>35000<span>/6 Month</span></div>'+
               '</div>'+
               
             '</div>'+
@@ -3084,7 +3084,7 @@ else{
                   '<li>30-day Expired</li>'+
                   '<li></li>'+
                 '</ul>'+
-                '<div class="price"><span>GMD</span>125<span>/Month</span></div>'+
+                '<div class="price"><span>GMD</span>100<span>/Month</span></div>'+
               '</div>'+
               
             '</div>'+

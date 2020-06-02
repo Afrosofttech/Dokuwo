@@ -2382,7 +2382,7 @@ let temp='<div class="content-wrapper">'+
                       '<div class="col-sm-10">'+
                       '<select class="custom-select" id="package" name="package">'+
                       '<option value="None">None</option>'+
-                      '<option value="Month">Monthly @D125</option>'+
+                      '<option value="Month">Monthly @D100</option>'+
                       '<option value="Year">Annual @D1000</option>'+
                       '</select>'+
                       '</div>'+
@@ -2391,7 +2391,7 @@ let temp='<div class="content-wrapper">'+
                       '<div class="offset-sm-2 col-sm-10">'+
                         '<div class="">'+
                           '<label>'+
-                            '<p> Select a Freelancer package and it will be activated within 24hrs.</p>'+
+                            '<p> Select a Freelancer package and it will be activated within 24hrs. Below are the means of payment we currently support.</p>'+
                           '</label>'+
                         '</div>'+
                       '</div>'+
@@ -2401,6 +2401,40 @@ let temp='<div class="content-wrapper">'+
                         '<button  type="submit" class="btn btn-success">Activate</button>'+
                       '</div>'+
                     '</div>'+
+                    '<div class="form-group row">'+
+                    '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
+                      '<div class="p-2 bd-highlight">'+
+                      
+                        '<div class="card" style="width: 12rem;">'+
+                          '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                          '<div class="card-body">'+
+                            '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                      '</div>'+
+                      '<div class="p-2 bd-highlight">'+
+
+                        '<div class="card" style="width: 12rem;">'+
+                          '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                          '<div class="card-body">'+
+                            '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                          '</div>'+
+                       '</div>'+
+                       
+                      '</div>'+
+                      '<div class="p-2 bd-highlight">'+
+
+                        '<div class="card" style="width: 12rem;">'+
+                          '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                          '<div class="card-body">'+
+                            '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                      '</div>'+
+                    '</div>'+
+                  '</div>'+
                   '</form>'+
                 '</div>'+
                 '<!-- /.tab-pane -->'+

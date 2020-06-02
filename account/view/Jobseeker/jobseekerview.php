@@ -10,11 +10,11 @@ class JobseekerView extends Jobseeker{
         $jobsAvailable = $this->get_no_of_jobs_available();
         $dbContentArray['noOfJobsAvailable'] = $jobsAvailable;
         foreach ($jobSeeker[0] as $key => $value) {
-            if ($value != ''){
+            if ($value != '' || $value != null){
                 $count += 1;
             }
         }
-       $result = floor(($count/17)*100);
+       $result = floor(($count/19)*100);
        $dbContentArray['isProfileComplete'] = $result;
        $noOfCompanies = $this->get_no_of_companies();
        if($noOfCompanies == 400) $noOfCompanies = 0; 
