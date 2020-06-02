@@ -1,19 +1,85 @@
 <?php
 include_once 'dbhmodel.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
+require 'includes/PHPMailer/src/Exception.php';
+require 'includes/PHPMailer/src/PHPMailer.php';
+require 'includes/PHPMailer/src/SMTP.php';
 class Auth extends Dbh {
    private $packs = array(
                             1 => 'Month',
                             2 => 'Year'
                         );
+    private $baseUrl = 'http://127.0.0.1:8000'; // @ams => change this when we go live
 
     public function create_account($email,$passwd, $hash, $usertype, $status){
         $sql = " INSERT INTO login (email,password, user_type, hash, status) VALUES(?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$email,$passwd, $usertype, $hash, $status]);
+        return $this->send_activation_link($email,$hash,$usertype);
         $stmt = null;
     }
+    public function send_activation_link($email,$hash,$usertype){
+        $mail = new PHPMailer(true);
 
+        try {
+            //Server settings
+            $mail->SMTPDebug = 0;                      // Enable verbose debug output
+            $mail->isSMTP();                                            // Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+            $mail->Username   = 'dokuwo01@gmail.com';                     // SMTP username
+            $mail->Password   = 'legaye@2020';                               // SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
+            //Recipients
+            $mail->setFrom('dokuwo01@gmail.com', 'Dokuwo');
+            $mail->addAddress($email);     // Add a recipient
+            $mail->addReplyTo('dokuwo01@gmail.com', 'Dokuwo');
+            $mail->addBCC('asj.sarjo@gmail.com', 'Dokuwo');
+
+            // Content
+            $mail->isHTML(true);   // Set email format to HTML
+            $mail->Subject = 'Account Activation';
+            $mail->addEmbeddedImage('img/banner2.jpeg', 'image_cid');
+            if($usertype == 'jobseeker'){
+                $mail->Body = '<div>
+                                 <img src="cid:image_cid" width="500px" height="250px">
+                                 <p>Hello, Welcome to Dokuwo! Click 
+                                  <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b>
+                                  Our mission is to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt.<br>We are happy have you on board.
+                                 </p>
+                              </div>';
+                $mail->AltBody = 'Hello, Welcome to Dokuwo! copy this link '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' into a website address bar to activate your account. Our mission is to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. We are happy have you on board.';
+            }
+            if($usertype == 'company'){
+                $mail->Body = '<div>
+                                 <img src="cid:image_cid" width="500px" height="250px">
+                                 <p>Hello, Welcome to Dokuwo! Click 
+                                  <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b>
+                                  Our mission is to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. There is a <b>free 14 days trial</b> which you can activate to enjoy all the services we offer for free.<br>We are happy have you on board.
+                                 </p>
+                              </div>';
+                $mail->AltBody = 'Hello, Welcome to Dokuwo! copy this link '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' into a website address bar to activate your account. Our mission is to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. There is a free 14 days trial which you can activate to enjoy all the services we offer for free. We are happy have you on board.';
+            }
+
+            $mail->send();
+            return 'Success';
+        } catch (Exception $e) {
+        //@ams => we need to send a message to our self so as to know that a message was not sent. so basically store them in a table
+            return "Error";
+        }
+    }
     public function verify_email($email){
         
         $sql = " SELECT email FROM login WHERE email=?";

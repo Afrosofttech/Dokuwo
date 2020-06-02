@@ -21,8 +21,10 @@ class AuthController extends Auth{
       if($verify_email == null){
          $hash = md5(rand(0,1000));
          $password = password_hash($validated_data['password'], PASSWORD_DEFAULT);
-         $company_account = $this->create_account($validated_data['email'],$password,$hash,$validated_data['tag'],0);
-         return "success";
+         $res = $this->create_account($validated_data['email'],$password,$hash,$validated_data['tag'],0);
+         if($res == 'Success') return 'success';
+         return "Error"; // @ams => call a function that sends a message to your table and capture the details of that user
+                         // and informs the user that we will react out to him/her or he/her can react out as well
       }else{
          return "duplicate";
       }
@@ -198,8 +200,8 @@ class AuthController extends Auth{
       $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
       //@ams-> i have replaced most alpha_numeric with alpha_space cus names can be multiple and need to allow spaces between
       $gump->validation_rules(array(
-         'firstname'   => 'required|alpha_space|max_len,100', 
-         'lastname'    => 'required|alpha_space|max_len,100'
+         'firstname'   => 'required|max_len,100', //'required|alpha_space|max_len,100'
+         'lastname'    => 'required|max_len,100'  //'required|alpha_space|max_len,100'
       ));
    
       $gump->filter_rules(array(
@@ -223,7 +225,7 @@ class AuthController extends Auth{
       $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
       
       $gump->validation_rules(array(
-         'name'     => 'required|alpha_space|max_len,100',
+         'name'     => 'required|max_len,100',
          'email'    => 'required|valid_email',
       ));
       

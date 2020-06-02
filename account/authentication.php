@@ -82,10 +82,10 @@
 								</form>
 								<form id="jobseeker-form" role="form" style="display: none;" class="my-form" autocomplete="off">
 									<div class="form-group">
-										<input type="email" name="email" id="jobseeker_email" tabindex="1" class="form-control password" placeholder="Enter Email Address" value="">
+										<input type="email" name="email" id="jobseeker_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="jobseeker_pwd" tabindex="2" class="form-control" placeholder="Enter Password">
+										<input type="password" name="password" id="jobseeker_pwd" tabindex="2" class="form-control password" placeholder="Enter Password">
 									</div>
 									<div class="form-group">
 										<div class="row">
@@ -97,10 +97,10 @@
 								</form>
                                 <form id="company-form" role="form" style="display: none;" class="my-form" autocomplete="off">
 									<div class="form-group">
-										<input type="email" name="email" id="company_email" tabindex="1" class="form-control" placeholder="Enter Email Address" value="">
+										<input type="email" name="email" id="company_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="company_pwd" tabindex="2" class="form-control" placeholder="Password">
+										<input type="password" name="password" id="company_pwd" tabindex="2" class="form-control password" placeholder="Password">
 									</div>
 									<div class="form-group">
 										<div class="row">
@@ -169,6 +169,7 @@
 	})
 
 	function auth(mail,pwd,tag_val){
+	$('.btn-submit-request').prop('disabled', true);
 	var email = $('#'+mail).val();
 	var passwd = $('#'+pwd).val();
 	var tag = tag_val;
@@ -199,16 +200,19 @@
 			(tag == 'jobseeker')?'post.php/authentication/create_jobseeker_account':null,
             data: {'email':email,'password': passwd,'tag':tag},
             success:function(response){
+				$('.btn-submit-request').prop('disabled', false);
                if(response == 200){
                   window.location.replace('index.php');
                 }else if(response == 400){
 					swal('Invalid account access!','Activate your account if you have already created an account','warning','Cool');
 				}else if(response == 'success'){
-					swal('account creation complete!','A link has been sent to your email to activate your account','success','Cool');
+					swal('Account creation complete!','A link has been sent to your email to activate your account.','success','Cool');
+					$('.email').val('');
+					$('.password').val('');
 				}else if(response == 'duplicate'){
-                    swal('account already exist!','Please login to continue or create a different account','warning','Cool');
+                    swal('Account already exist!','Please login to continue or create a different account','warning','Cool');
 				}else{
-				    swal('account does not exist!','You need to create an account first','warning','Cool');
+				    swal('Account does not exist!','You need to create an account first','warning','Cool');
                }
             },
             error: function(err){
