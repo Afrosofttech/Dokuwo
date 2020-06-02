@@ -14,7 +14,7 @@ class CompanyView extends Company{
         $jobsPublished = $this->get_no_of_jobs_published($company['company_id']);
         $dbContentArray['noOfJobsPublished'] = $jobsPublished;
         foreach ($company as $key => $value) {
-            if ($value != ''){
+            if ($value != '' || $value != null){
                 $count += 1;
             }
         }
