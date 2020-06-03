@@ -113,7 +113,7 @@
                 '<input type="hidden" class="form-control form-control-user" name="id" id="comp_id" value="'+entity.login_id+'">'+
                 '</div>'+
                 '<div class="text-center">'+
-                '<button class="btn btn-primary btn-user btn-block" id="comp_submit">Submit</button>'+
+                '<button type="submit" class="btn btn-primary btn-user btn-block" id="comp_submit">Submit</button>'+
                 '</div>'+
               '</form>'+
               '</div>'+
@@ -265,7 +265,7 @@
                '</div>'+
               '</div>'+
               '<div class="text-center">'+
-                '<button class="btn btn-primary btn-user btn-block" id="submit">Submit</button>'+
+                '<button class="btn btn-primary btn-user btn-block"  type="submit" id="submit">Submit</button>'+
               '</div>'+
               '</form>'+
               '</div>'+
