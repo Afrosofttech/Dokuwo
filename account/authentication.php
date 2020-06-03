@@ -65,7 +65,7 @@
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="text-center">
-													<a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+													<a href="forgot-pwd.php" tabindex="5" class="forgot-password">Forgot Password?</a>
 												</div>
 											</div>
 										</div>
@@ -125,6 +125,10 @@
 	(attempt == 'failed')?swal('Profile creation failed!','You need to create an account first','error','Cool'):
 	(attempt == 'Inexistent')?swal('Inexistent account!','This account doesn\'t exist in this system. Create an account or Contact support for help.','error','Cool'):
 	(attempt == 'Activated')?swal('Account activated!','Account already activated. Log in or Contact support for help.','error','Cool'):
+	(attempt == 'reset-success')?swal('Link sent!','A reset link has been sent to your email to reset your password.','success','Cool'):
+	(attempt == 'reset-empty')?swal('Empty field','Both email and hash fields cannot be empty. Contact support for help.','error','Cool'):
+	(attempt == 'Inexistent-reset')?swal('Inexistent reset!','This reset does not exist. If you playing smart, go get a life else Contact support for help.','error','Cool'):
+	(attempt == 'Pwd-success')?swal('Password Successfully Changed!','Log in to your account using your new password.','success','Cool'):
 	(attempt == 'duplicate')?swal('account already exist!','Please login to continue','warning','Cool'): null;
 
 	$('#login-form-link').click(function(e) {
@@ -216,7 +220,7 @@
                }
             },
             error: function(err){
-              console.log(err);
+              swalNotify(err.responseText,'error');
       
             }
            

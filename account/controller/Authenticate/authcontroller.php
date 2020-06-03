@@ -2,7 +2,6 @@
 session_start();
 
 include_once 'model/auth.php';
-
 class AuthController extends Auth{
   
    public function login_id($email,$hash){
@@ -194,7 +193,7 @@ class AuthController extends Auth{
 
    function validate_jobseeker(){
       require "gump.class.php";
-      
+
       $gump = new GUMP();
    
       $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
@@ -218,8 +217,8 @@ class AuthController extends Auth{
       }
    }
    function validate_company(){
-      //@ams->both company signup and update company profile are using this.To be changed
       require "gump.class.php";
+      //@ams->both company signup and update company profile are using this.To be changed
       $gump = new GUMP();
       
       $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
@@ -243,8 +242,8 @@ class AuthController extends Auth{
       }
       }
    function validate_data(){
-         require "gump.class.php";
-         
+      require "gump.class.php";
+
          $gump = new GUMP();
       
          $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
@@ -257,6 +256,93 @@ class AuthController extends Auth{
          $gump->filter_rules(array(
             'email'    => 'trim|sanitize_email',
             'password' => 'trim',
+         ));
+      
+         $validated_data = $gump->run($_POST);
+      
+         if($validated_data === false) {
+            return $gump->get_readable_errors(true);
+         } else {
+            return $validated_data; // validation successful
+         }
+      }
+      public function reset_password(){
+         $reset_email = self::validate_email();
+         $result = $this->does_account_exist($reset_email['email']);
+         if($result == 'Error')  return 'Error';// make sure to send a message to our db first
+         return $result;
+      }
+      public function validate_email(){
+      require "gump.class.php";
+
+         $gump = new GUMP();
+      
+         $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
+      
+         $gump->validation_rules(array(
+            'email'       => 'required|valid_email'
+         ));
+      
+         $gump->filter_rules(array(
+            'email'    => 'trim|sanitize_email'
+         ));
+      
+         $validated_data = $gump->run($_POST);
+      
+         if($validated_data === false) {
+            return $gump->get_readable_errors(true);
+         } else {
+            return $validated_data; // validation successful
+         }
+      }
+      public function verify_existence_reset_request(){
+         $res = self::validate_reset();
+         $result = $this->if_request_valid($res['email'],$res['hash']);
+         return $result;
+      }
+      public function validate_reset(){
+         require "gump.class.php";
+
+         $gump = new GUMP();
+      
+         $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
+      
+         $gump->validation_rules(array(
+            'email'       => 'required|valid_email',
+            'hash'       => 'required|alpha_numeric|max_len,100'
+         ));
+      
+         $gump->filter_rules(array(
+            'email'    => 'trim|sanitize_email',
+            'email'    => 'trim'
+         ));
+      
+         $validated_data = $gump->run($_POST);
+      
+         if($validated_data === false) {
+            return $gump->get_readable_errors(true);
+         } else {
+            return $validated_data; // validation successful
+         }
+      }
+      public function change_password(){
+         $validated_data = self::validate_pwd();
+         $res = $this->new_password(password_hash($validated_data['pwd'], PASSWORD_DEFAULT),$validated_data['login_id']);
+         return $res;
+      }
+      public function validate_pwd(){
+         require "gump.class.php";
+         
+         $gump = new GUMP();
+
+         $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
+      
+         $gump->validation_rules(array(
+            'pwd'       => 'required|min_len,8'
+         ));
+      
+         $gump->filter_rules(array(
+            'pwd'    => 'trim|htmlencode'
          ));
       
          $validated_data = $gump->run($_POST);
