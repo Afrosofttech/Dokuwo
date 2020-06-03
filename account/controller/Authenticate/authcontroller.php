@@ -22,8 +22,10 @@ class AuthController extends Auth{
          $password = password_hash($validated_data['password'], PASSWORD_DEFAULT);
          $res = $this->create_account($validated_data['email'],$password,$hash,$validated_data['tag'],0);
          if($res == 'Success') return 'success';
-         return "Error"; // @ams => call a function that sends a message to your table and capture the details of that user
-                         // and informs the user that we will react out to him/her or he/her can react out as well
+         if($res == "Error"){
+            $response = $this->send_error_copy($validated_data['email'],'Activation');
+            return $response;
+         } 
       }else{
          return "duplicate";
       }
@@ -269,7 +271,10 @@ class AuthController extends Auth{
       public function reset_password(){
          $reset_email = self::validate_email();
          $result = $this->does_account_exist($reset_email['email']);
-         if($result == 'Error')  return 'Error';// make sure to send a message to our db first
+         if($result == 'Error'){
+            $response = $this->send_error_copy($reset_email['email'],'Password Reset');
+            return $response;
+         }  
          return $result;
       }
       public function validate_email(){

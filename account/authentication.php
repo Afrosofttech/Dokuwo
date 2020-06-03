@@ -13,16 +13,16 @@
 	<meta name="description" content="This is an accounting Software that aims to automate and make your accounting work simple.">
     <meta name="author" content="Afrika Software Technologies">
     <title>Dokuwo - Authentication</title>
-	<script src="js/plugins/jquery.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="js/core/functions.js"></script>
-<link rel="stylesheet" href="css/custom.css" type="text/css">
+	<!-- <script src="js/plugins/jquery.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<!-- SweetAlert2 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script src="js/core/functions.js"></script>
+	<link rel="stylesheet" href="css/custom.css" type="text/css">
 
 </head>
 <body>
@@ -211,6 +211,10 @@
 					swal('Invalid account access!','Activate your account if you have already created an account','warning','Cool');
 				}else if(response == 'success'){
 					swal('Account creation complete!','A link has been sent to your email to activate your account.','success','Cool');
+					$('.email').val('');
+					$('.password').val('');
+				}else if(response == 'error'){
+                    swal('Activation link not Sent!','The activation link was not sent to your email. Dokuwo has been notified. You can as well contact support and let them know about this or wait for them to reach out and fix it once they notice it. The activation link will be sent to your email, so do check your email later on. Apologies','error','Cool');
 					$('.email').val('');
 					$('.password').val('');
 				}else if(response == 'duplicate'){

@@ -92,6 +92,13 @@ class Auth extends Dbh {
             return "Error";
         }
     }
+    protected function send_error_copy($email,$err_type){
+        $sql = " INSERT INTO contact (contact_name,contact_email,subject,message) VALUES(?,?,?,?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$err_type,$email,'Email Link','Email link was not sent.']);
+        return 'error';
+        $stmt = null;
+    }
     public function verify_email($email){
         
         $sql = " SELECT email FROM login WHERE email=?";

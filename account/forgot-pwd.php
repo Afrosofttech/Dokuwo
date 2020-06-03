@@ -105,9 +105,10 @@ $('#forgot-form').submit(function(e){
                if(response == 'Inexistent'){
                 swal('Invalid email!','This email is not registered with this system.','error','Cool');
                 window.location.replace('index.php');
-               }else if(response == 'Error'){
-				swal('Error In Sending Link!','There was error in sending you a reset link to your email. Please contact support if urgent or we will get back to you soonest when we notice the error.','error','Cool');
-			   }else if(response == 'Success'){
+               }else if(response == 'error'){
+                swal('Reset link not Sent!','The link to reset your password was not sent to your email. Dokuwo has been notified. You can as well contact support and let them know about this or wait for them to reach out and fix it once they notice it. The reset link will be sent to your email, so do check your email later on. Apologies','error','Cool');
+                $('#InputEmail').val('');
+               }else if(response == 'Success'){
                     window.location.replace('authentication.php?attempt=<?php echo "reset-success"; ?>');
 				}
             },
