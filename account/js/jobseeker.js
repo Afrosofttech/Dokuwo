@@ -2321,6 +2321,12 @@ let temp='<div class="content-wrapper">'+
                     '</select>'+
                     '</div>'+
                   '</div>'+
+                  '<div class="form-group row desc_klass" style="display:none;">'+
+                     '<label for="description" class="col-sm-2 col-form-label">Description</label>'+
+                     '<div class="col-sm-10">'+
+                       '<textarea name="description" id="description" placeholder="give a short description of 250 characters or less" class="form-control" style="width:100%;height:70px;resize:none;" maxlength="250">'+data[0].description+'</textarea>'+
+                     '</div>'+
+                    '</div>'+
                     '<div class="form-group row" name="category">'+
                     '<label class="col-sm-2 col-form-label" for="category">Category</label>'+
                     '<div class="col-sm-10">'+
@@ -2479,7 +2485,13 @@ let temp='<div class="content-wrapper">'+
         changeYear: true,
       }); 
     });   
-
+     //default description display
+     if($('#interest').val() == 'Freelance') $(".desc_klass").css("display", "");
+      //on change
+    $('#interest').on('change', function(){
+        if($('#interest').val() == 'Freelance') $(".desc_klass").css("display", "");
+        else $(".desc_klass").css("display", "none");
+    })
     $('#editJobseeker').submit(function(e) {
     e.preventDefault();
     var fName = $('#fName').val();

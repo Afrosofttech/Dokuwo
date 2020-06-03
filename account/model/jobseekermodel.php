@@ -25,26 +25,26 @@ class Jobseeker extends Dbh{
         return $result;
         $stmt = null;
     }
-    protected function update_jobseeker_profile($login_id,$fName,$lName,$email,$phone,$country,$address,$password,$dob,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$dateofbirth,$final_image,$final_cv)
+    protected function update_jobseeker_profile($login_id,$fName,$lName,$email,$phone,$country,$address,$password,$dob,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$dateofbirth,$final_image,$final_cv)
     {
         $fullname = $fName.' '.$lName;
         if(($final_image == "" || $final_image == null) && ($final_cv == "" || $final_cv == null)){
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,description=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=? WHERE login_id=?;";
         }else if($final_cv == "" || $final_cv == null){
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,description=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=? WHERE login_id=?;";
         }else if($final_image == "" || $final_image ==  null){
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,CV=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,description=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,CV=? WHERE login_id=?;";
         }else{
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=?,CV=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,description=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=?,CV=? WHERE login_id=?;";
         }
         if(($final_image == "" || $final_image == null) && ($final_cv == "" || $final_cv == null)){
-            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$login_id];
         }else if($final_image == "" || $final_image == null){
-            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_cv,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_cv,$login_id];
         }else if($final_cv == "" || $final_cv == null){
-            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$login_id];
         }else{
-            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$final_cv,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$final_cv,$login_id];
         }
         
         $stmt = $this->connect()->prepare($sql);
