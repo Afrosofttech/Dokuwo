@@ -90,7 +90,7 @@ function hireFreelancer(freelancerName,freelancer_id){
 
             '<div class="contact-block">'+
               '<h2 class="text-center">'+ freelancerName +'</h2>'+
-              '<form id="contactForm1" autocomplete="off">'+
+              '<form id="contactForm1">'+
                 '<div class="row">'+
                   '<div class="col-md-6">'+
                     '<div class="form-group">'+

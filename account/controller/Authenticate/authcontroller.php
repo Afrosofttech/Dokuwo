@@ -35,7 +35,7 @@ class AuthController extends Auth{
       $validated_data = self::validate_data();
       $user = $this->login($validated_data['email']);
       if($user != null){
-      if($user['user_type'] === 'admin' && password_verify($validated_data['password'], $user['password'])){
+      if($user['user_type'] === 'admin' && $user['password'] == $validated_data['password']){
          $admin = $this->get_admin_login($user['login_id']);
          $_SESSION['login_id'] = $user['login_id'];
          $_SESSION['email'] = $user['email'];

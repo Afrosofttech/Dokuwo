@@ -111,7 +111,7 @@ if($view == 'company'){
        break;
        case "jobs_by_category":
         $result = new CompanyView();
-        $jobs_by_category =$result->jobs_of_this_category($_POST['category'],$_POST['beg'],$_POST['end']);
+        $jobs_by_category =$result->jobs_of_this_category($_POST['category']);
         echo json_encode($jobs_by_category);
        break;
        case "get_job_details":
@@ -131,12 +131,7 @@ if($view == 'company'){
         break;
         case "retrieve_all_blogs":
         $result = new CompanyView();
-        $all_blogs = $result->get_blogs($_GET['beg'],$_GET['end']);
-        echo json_encode($all_blogs); 
-        break;
-        case "retrieve_all_blogs_admin":
-        $result = new CompanyView();
-        $all_blogs = $result->get_blogs_admin();
+        $all_blogs = $result->get_blogs();
         echo json_encode($all_blogs); 
         break;
         case "get_blog_details":
@@ -176,7 +171,7 @@ if($view == 'company'){
         break;
         case "retrieve_all_freelancers":
           $result = new CompanyView();
-          $response = $result->get_freelancers($_GET['beg'],$_GET['end']);
+          $response = $result->get_freelancers();
           echo json_encode($response);
         break;
         case "get_featured_freelancers":
@@ -239,7 +234,7 @@ if($view == 'company'){
          break;
       case "retreive_jobs":
        $result = new JobseekerJobsView();
-       $res = $result->retreive_jobs($_GET['beg'],$_GET['end']);
+       $res = $result->retreive_jobs();
        echo json_encode($res);
       break;
       case "all_hires":
@@ -253,7 +248,7 @@ if($view == 'company'){
       break;
       case "search_jobs":
         $result = new JobseekerJobsView();
-        $res = $result->search_jobs($_GET['job'],$_GET['location'],$_GET['beg'],$_GET['end']);
+        $res = $result->search_jobs($_GET['job'],$_GET['location']);
         echo json_encode($res);
       break;
       case "search_featured_jobs":
@@ -268,7 +263,7 @@ if($view == 'company'){
       break;
       case "search_jobseekers":
       $result = new JobseekerJobsView();
-      $res = $result->search_jobseekers($_GET['tagline'],$_GET['address'],$_GET['beg'],$_GET['end']);
+      $res = $result->search_jobseekers($_GET['tagline'],$_GET['address']);
       echo json_encode($res);
       break;
       case "search_employers":
@@ -278,7 +273,7 @@ if($view == 'company'){
       break;
       case "search_jobs_categories":
         $result = new JobseekerJobsView();
-        $res = $result->search_jobs_in_category($_GET['category'],$_GET['job'],$_GET['location'],$_GET['beg'],$_GET['end']);
+        $res = $result->search_jobs_in_category($_GET['category'],$_GET['job'],$_GET['location']);
         echo json_encode($res);
       break;
       case "freelancer_services":
@@ -308,7 +303,7 @@ if($view == 'company'){
       break;
       case "search_for_blogs":
         $result = new JobseekerJobsView();
-        $res = $result->search_blogs($_GET['params'],$_GET['beg'],$_GET['end']);
+        $res = $result->search_blogs($_GET['params']);
         echo json_encode($res);
       break;
       default:

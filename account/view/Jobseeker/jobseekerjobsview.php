@@ -3,14 +3,14 @@
 include_once 'model/jobseekermodel.php';
 
 class JobseekerJobsView extends Jobseeker{
-    public function retreive_jobs($beg,$end)
+    public function retreive_jobs()
     {
-        $alljobs = $this->retreive_all_jobs($beg,$end);
+        $alljobs = $this->retreive_all_jobs();
         return $alljobs;
     }
-    public function search_jobs($job,$location,$beg,$end)
+    public function search_jobs($job,$location)
     {
-        $alljobs = $this->search_for_jobs($job,$location,$beg,$end);
+        $alljobs = $this->search_for_jobs($job,$location);
         return $alljobs;
     }
     public function search_featured_job($job,$location)
@@ -25,9 +25,9 @@ class JobseekerJobsView extends Jobseeker{
         return $alljobs;
     }
 
-    public function search_jobseekers($tagline,$address,$beg,$end)
+    public function search_jobseekers($tagline,$address)
     {
-        $alljobseekers = $this->search_for_jobseekers($tagline,$address,$beg,$end);
+        $alljobseekers = $this->search_for_jobseekers($tagline,$address);
         return $alljobseekers;
     }
 
@@ -36,15 +36,15 @@ class JobseekerJobsView extends Jobseeker{
         $allemployers = $this->search_for_employers($companyName,$companyAddress);
         return $allemployers;
     }
-    public function search_jobs_in_category($category,$job,$location,$beg,$end)
+    public function search_jobs_in_category($category,$job,$location)
     {
-        $allemployers = $this->search_jobs_category($category,$job,$location,$beg,$end);
+        $allemployers = $this->search_jobs_category($category,$job,$location);
         return $allemployers;
     }
 
-    public function search_blogs($params,$beg,$end)
+    public function search_blogs($params)
     {
-        $blogs = $this->searchBlogs($params,$beg,$end);
+        $blogs = $this->searchBlogs($params);
         return $blogs;
     }
 }

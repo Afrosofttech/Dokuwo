@@ -384,8 +384,8 @@ function jJobStatistics(){
 '</div>';
 $('.dbInner').append(job_statistics);
 }
-function jobs(start,finish){
-  let job = '';
+function jobs(start,finish,filter){
+  // let jobs = '';
   let beg ='';
   let end ='';
   let numberOfItems = '';
@@ -400,21 +400,14 @@ function jobs(start,finish){
   $.ajax({
     method: "GET",
     url: "get.php/jobseeker/retreive_jobs",
-    data: {'beg':beg,'end':end},
     dataType: "json",
     success: data => {
-      if(beg == 0){
-        job = data[0];
-        if(localStorage.getItem('totaljobs') == null || localStorage.getItem('totaljobs') == undefined || localStorage.getItem('totaljobs') == '')
-        {
-          localStorage.setItem('totaljobs',parseInt(data[1]));
-        }
-      }
-      else{ job = data};
-      numberOfItems = localStorage.getItem('totaljobs');
+      if(filter == undefined || filter == 'undefined') ;
+      else  data = filter;
+      numberOfItems = data.length;
       limitPerPage = 4;
       totalPages = Math.round(numberOfItems/limitPerPage);
-      if(job != 400){
+      if(data != 400){
         temp +='<!-- Page Header Start -->'+
         '<div class="page-header">'+
           '<div class="container">'+
@@ -442,12 +435,12 @@ function jobs(start,finish){
                     '<input type="text" class="form-control" id="location" placeholder="location">'+
                   '</div>'+
                   '<div class="col-lg-2 col-md-2 col-xs-12">'+
-                    '<button type="submit" class="btn btn-common btn-success btn-block float-right" id="filter" onclick="filterJobs();">Filter</button>'+
+                    '<button type="submit" class="btn btn-common btn-success btn-block float-right" id="filter">Filter</button>'+
                   '</div>'+
                 '</div>'+
               '</div>'+
               '<div class="col-lg-12 col-md-12 col-xs-12 jobs">';
-              $.each(job,function(i,val){
+              $.each(data.slice(beg,end),function(i,val){
                 temp +='<a class="job-listings" onclick="applyNow(\''+val.job_id+'\',\''+val.company_name+'\',\''+val.currency+'\',\''+val.logo+'\',\''+val.company_id+'\');" style="cursor: pointer;">'+
                 '<div class="row">'+
                   '<div class="col-lg-4 col-md-4 col-xs-12">'+
@@ -484,12 +477,12 @@ function jobs(start,finish){
               
         let begin = parseInt(beg);
         let ending = parseInt(end);
-        let LastLast =  "jobs(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\')";
-        (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "jobs(\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\')"):(forward = "jobs(\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\')"); 
-        (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "jobs(\'"+(begin)+"\',\'"+(ending)+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "jobs(\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\')"): (Backward = "jobs(\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\')");
+        let LastLast =  "jobs(\'"+(limitPerPage*Math.floor(numberOfItems/limitPerPage))+"\',\'"+(numberOfItems)+"\',\'"+filter+"\')";
+        (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = "jobs(\'"+(begin+limitPerPage)+"\',\'"+numberOfItems+"\',\'"+filter+"\')"):(forward = "jobs(\'"+(begin+limitPerPage)+"\',\'"+(ending+limitPerPage)+"\',\'"+filter+"\')"); 
+        (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = "jobs(\'"+(begin)+"\',\'"+(ending)+"\',\'"+filter+"\')"):(begin != 0 && ending != numberOfItems)?(Backward = "jobs(\'"+(begin-limitPerPage)+"\',\'"+(ending-limitPerPage)+"\',\'"+filter+"\')"): (Backward = "jobs(\'"+(begin-limitPerPage)+"\',\'"+(numberOfItems-(numberOfItems%limitPerPage))+"\',\'"+filter+"\')");
                   temp +='<!-- Start Pagination -->'+
                     '<ul class=" j-pagination">' +             
-                    ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" jobs(0,4)"><i class="lni-angle-left"></i> First</a></li>'+
+                    ' <li class="active"><a href="javascript:void(0)" class="btn-prev" onclick=" jobs(0,4,\''+filter+'\')"><i class="lni-angle-left"></i> First</a></li>'+
                       '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+Backward+'">Prev <i class="lni-angle-right"></i></a></li>'+
                       '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+forward+'">Next <i class="lni-angle-right"></i></a></li>'+
                       '<li class="active"><a href="javascript:void(0)" class="btn-next" onclick="'+LastLast+'">Last <i class="lni-angle-right"></i></a></li>'+
@@ -504,6 +497,31 @@ function jobs(start,finish){
       }
       $(document).ready(()=>{
         $('#content').empty().append(temp);
+        //filter search
+        $('#filter').click(function(e){
+          e.preventDefault();
+          if($('#job').val() ==='' && $('#location').val() ===''){
+            swalNotify('There is nothing to search for','error');
+          }else{
+            $.ajax({
+              method: "GET",
+              dataType: 'json',
+              url: "get.php/jobseeker/search_jobs",
+              data: {"job" : $('#job').val(), "location": $('#location').val()},
+              success: data => {
+                if(data.length > 0){
+                  jobs(undefined,undefined,data);
+                }else{
+                  swalNotify('search result doesn\'t exist','error');
+                }
+              },
+              error: err => {
+                swalNotify(err.responseText,'error');
+              }
+          
+              })
+             }
+           })
       });
     
     },
@@ -512,152 +530,6 @@ function jobs(start,finish){
     }
    });
     
-  }
-
-  function filterJobs(start,finish,filterParams){
-    let job = $('#job').val();
-    let location = $('#location').val();
-    let filterData = (filterParams == null)?{'job_name':job,'job_location':location}:filterParams;
-    let beg ='';
-    let end ='';
-    let numberOfItems = '';
-    let totalPages = '';
-    let forward = '';
-    let Backward = '';
-    let Prev = '';
-    let Next = '';
-    let temp = '';
-    let jobs = '';
-    if(typeof filterData == "string"){
-      JSON.parse(filterData);
-    }
-    if(filterData.job_name == '' && filterData.job_location == ''){
-      swalNotify('There is nothing to search for','error');
-    }else{
-      if(start != undefined && finish != undefined){ beg = start; end = finish;}else{ beg = 0; end = 4;}
-      $.ajax({
-        method: "GET",
-        dataType: 'json',
-        url: "get.php/jobseeker/search_jobs",
-        data: {"job" : filterData.job_name, "location": filterData.job_location,'beg':beg,'end':end},
-        success: data => {
-          if(beg == 0){
-            jobs = data[0];
-            if(localStorage.getItem('totalfilteredjobs') == null || localStorage.getItem('totalfilteredjobs') == undefined || localStorage.getItem('totalfilteredjobs') == '')
-            {
-              localStorage.setItem('totalfilteredjobs',parseInt(data[1]));
-            }
-          }
-          else{ jobs = data};
-          numberOfItems = localStorage.getItem('totalfilteredjobs');
-          limitPerPage = 4;
-          totalPages = Math.round(numberOfItems/limitPerPage);
-          if(jobs != 400){
-            temp +='<!-- Page Header Start -->'+
-            '<div class="page-header">'+
-              '<div class="container">'+
-                '<div class="row">'+        
-                  '<div class="col-lg-12">'+
-                    '<div class="inner-header">'+
-                      '<h3>Browse Jobs</h3>'+
-                    '</div>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'+
-            '</div>'+
-            '<!-- Page Header End -->'+       
-      
-            '<!-- Job Browse Section Start -->'+  
-            '<section class="job-browse section">'+
-              '<div class="container">'+
-                '<div class="row">'+
-                  '<div class="col-lg-12 col-md-12 col-xs-12">'+
-                    '<div class="wrap-search-filter row">'+
-                        '<div class="col-lg-12 col-md-12 col-xs-12 d-flex justify-content-center">'+
-                          '<a href="#" class="float-right" onclick="jobs();">Exit search mode <i class="fa fa-angle-double-right"></i></a>'+
-                        '</div>'+
-                      '<div class="col-lg-5 col-md-5 col-xs-12">'+
-                        '<input type="text" class="form-control" id="job" placeholder="Job Name">'+
-                      '</div>'+
-                      '<div class="col-lg-5 col-md-5 col-xs-12">'+
-                        '<input type="text" class="form-control" id="location" placeholder="location">'+
-                      '</div>'+
-                      '<div class="col-lg-2 col-md-2 col-xs-12">'+
-                        '<button type="submit" class="btn btn-common btn-success btn-block float-right" id="filter" onclick="filterJobs();">Filter</button>'+
-                      '</div>'+
-                    '</div>'+
-                  '</div>'+
-                  '<div class="col-lg-12 col-md-12 col-xs-12 jobs">';
-                  $.each(jobs,function(i,val){
-                    temp +='<a class="job-listings" onclick="applyNow(\''+val.job_id+'\',\''+val.company_name+'\',\''+val.currency+'\',\''+val.logo+'\',\''+val.company_id+'\');" style="cursor: pointer;">'+
-                    '<div class="row">'+
-                      '<div class="col-lg-4 col-md-4 col-xs-12">'+
-                        '<div class="job-company-logo">'+
-                          '<img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
-                        '</div>'+
-                        '<div class="job-details">'+
-                          '<h3>'+val.job_name+'</h3>'+
-                          '<span class="company-neme">'+
-                            val.company_name+
-                          '</span>'+
-                        '</div>'+
-                      '</div>'+
-                      '<div class="col-lg-2 col-md-2 col-xs-12 text-center">'+
-                        '<span class="btn-open text-xs">'+
-                         val.currency+currencyFormat(val.salary) +
-                        '</span>'+
-                      '</div>'+
-                      '<div class="col-lg-2 col-md-2 col-xs-12 text-left">'+
-                      '<div class="location">'+
-                        '<i class="lni-map-marker"></i>'+ val.job_location +
-                      '</div>'+
-                      '</div>'+
-                      '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                        '<span class="btn-full-time" style="color:#007bff;">'+val.job_type+'</span>'+
-                      '</div>'+
-                      '<div class="col-lg-2 col-md-2 col-xs-12 text-right">'+
-                        '<span class="btn-apply" style="cursor: pointer;">Apply Now</span>'+
-                      '</div>'+
-                    '</div>'+
-                  '</a>';
-                  
-                  });
-                  
-                  let begin = parseInt(beg);
-                  let ending = parseInt(end);
-                  let LastLast = `filterJobs(${(limitPerPage*Math.floor(numberOfItems/limitPerPage))},${(numberOfItems)},${JSON.stringify(filterData)})`;
-                  (numberOfItems <= limitPerPage || numberOfItems == ending)?(Next = 'disabled'):(numberOfItems < ending+limitPerPage)? (forward = `filterJobs(${(begin+limitPerPage)},${numberOfItems},${JSON.stringify(filterData)})`):(forward = `filterJobs(${(begin+limitPerPage)},${(ending+limitPerPage)},${JSON.stringify(filterData)})`); 
-                  (begin == 0 && (ending == numberOfItems || ending == limitPerPage))? (Prev = 'disabled',Backward = `filterJobs(${(begin)},${(ending)},${JSON.stringify(filterData)})`):(begin != 0 && ending != numberOfItems)?(Backward = `filterJobs(${(begin-limitPerPage)},${(ending-limitPerPage)},${JSON.stringify(filterData)})`): (Backward = `filterJobs(${(begin-limitPerPage)},${(numberOfItems-(numberOfItems%limitPerPage))},${JSON.stringify(filterData)})`);
-                 temp +='<!-- Start Pagination -->'+
-                '<ul class="j-pagination">' +             
-                 `<li class="active"><a href="javascript:void(0)" class="btn-prev" onclick='filterJobs(0,4,${JSON.stringify(filterData)})'><i class="lni-angle-left"></i> First</a></li>`+
-                  `<li class="active"><a href="javascript:void(0)" class="btn-next" onclick='${Backward}'>Prev <i class="lni-angle-right"></i></a></li>`+
-                  `<li class="active"><a href="javascript:void(0)" class="btn-next" onclick='${forward}'>Next <i class="lni-angle-right"></i></a></li>`+
-                  `<li class="active"><a href="javascript:void(0)" class="btn-next" onclick='${LastLast}'>Last <i class="lni-angle-right"></i></a></li>`+
-                '</ul>'+
-                '<!-- End Pagination -->'+
-                    
-                ' </div>'+
-                '</div>'+
-              '</div>'+
-            '</section>'+
-            '<!-- Job Browse Section End -->';
-            $(document).ready(()=>{
-              $('#content').empty().append(temp);
-            });
-
-          }else{
-            swalNotify('search result doesn\'t exist','error');
-            jobs();
-          }
-        },
-        error: err => {
-          swalNotify(err.responseText,'error');
-        }
-    
-        })
-
-       }
   }
 function applyNow(job_id){
 let apply = '';
@@ -2326,7 +2198,7 @@ let temp='<div class="content-wrapper">'+
                 '<i class="fas fa-lg fa-building"></i><b> Address</b> <a class="float-right">'+data[0].address+'</a>'+
               '</li>'+
               '</ul>'+
-              '<a href="uploads/'+data[0].CV+'" target="_blank" class="btn btn-primary btn-block"><b>View CV</b></a>'+
+              '<a href="'+((data[0].CV == null || data[0].CV == 'null' || data[0].CV == '')?'javascript:void();':'uploads/'+data[0].CV)+'" target="_blank" class="btn btn-primary btn-block"><b>View CV</b></a>'+
             '</div>'+
             '<!-- /.card-body -->'+
           '</div>'+
@@ -2449,6 +2321,12 @@ let temp='<div class="content-wrapper">'+
                     '</select>'+
                     '</div>'+
                   '</div>'+
+                  '<div class="form-group row desc_klass" style="display:none;">'+
+                     '<label for="description" class="col-sm-2 col-form-label">Description</label>'+
+                     '<div class="col-sm-10">'+
+                       '<textarea name="description" id="description" placeholder="give a short description of 250 characters or less" class="form-control" style="width:100%;height:70px;resize:none;" maxlength="250">'+data[0].description+'</textarea>'+
+                     '</div>'+
+                    '</div>'+
                     '<div class="form-group row" name="category">'+
                     '<label class="col-sm-2 col-form-label" for="category">Category</label>'+
                     '<div class="col-sm-10">'+
@@ -2510,7 +2388,7 @@ let temp='<div class="content-wrapper">'+
                       '<div class="col-sm-10">'+
                       '<select class="custom-select" id="package" name="package">'+
                       '<option value="None">None</option>'+
-                      '<option value="Month">Monthly @D125</option>'+
+                      '<option value="Month">Monthly @D100</option>'+
                       '<option value="Year">Annual @D1000</option>'+
                       '</select>'+
                       '</div>'+
@@ -2519,7 +2397,7 @@ let temp='<div class="content-wrapper">'+
                       '<div class="offset-sm-2 col-sm-10">'+
                         '<div class="">'+
                           '<label>'+
-                            '<p> Select a Freelancer package and it will be activated within 24hrs.</p>'+
+                            '<p> Select a Freelancer package and it will be activated within 24hrs. Below are the means of payment we currently support.</p>'+
                           '</label>'+
                         '</div>'+
                       '</div>'+
@@ -2529,6 +2407,40 @@ let temp='<div class="content-wrapper">'+
                         '<button  type="submit" class="btn btn-success">Activate</button>'+
                       '</div>'+
                     '</div>'+
+                    '<div class="form-group row">'+
+                    '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
+                      '<div class="p-2 bd-highlight">'+
+                      
+                        '<div class="card" style="width: 12rem;">'+
+                          '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                          '<div class="card-body">'+
+                            '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                      '</div>'+
+                      '<div class="p-2 bd-highlight">'+
+
+                        '<div class="card" style="width: 12rem;">'+
+                          '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                          '<div class="card-body">'+
+                            '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                          '</div>'+
+                       '</div>'+
+                       
+                      '</div>'+
+                      '<div class="p-2 bd-highlight">'+
+
+                        '<div class="card" style="width: 12rem;">'+
+                          '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                          '<div class="card-body">'+
+                            '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                      '</div>'+
+                    '</div>'+
+                  '</div>'+
                   '</form>'+
                 '</div>'+
                 '<!-- /.tab-pane -->'+
@@ -2573,7 +2485,13 @@ let temp='<div class="content-wrapper">'+
         changeYear: true,
       }); 
     });   
-
+     //default description display
+     if($('#interest').val() == 'Freelance') $(".desc_klass").css("display", "");
+      //on change
+    $('#interest').on('change', function(){
+        if($('#interest').val() == 'Freelance') $(".desc_klass").css("display", "");
+        else $(".desc_klass").css("display", "none");
+    })
     $('#editJobseeker').submit(function(e) {
     e.preventDefault();
     var fName = $('#fName').val();

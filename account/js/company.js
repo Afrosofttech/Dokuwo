@@ -1536,7 +1536,7 @@ $.ajax({
 function viewProfile(profile_id,profile_log_id,profile_fname,profile_lname,profile_fullname,profile_email,profile_phone,profile_skills, profile_tag_line,profile_edu_level,profile_address,profile_dob,profile_country,profile_image,profile_cv,category){
 if(package !== 'None'){
 let temp ='<div class="container-fluid"><div class="row"><div class="col-xl-6 col-lg-7 profileInner"></div><div class="col-xl-6 col-lg-5 contentMessage"></div></div></div>';
-
+console.log(profile_cv);
 $('#content').empty().append(temp);
 let profile =
 '<div class="card shadow mb-4" style="border-top: 3px solid #007bff;">'+
@@ -1578,7 +1578,7 @@ let profile =
         '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+profile_log_id+'\',\''+profile_fullname+'\',\'contentMessage\');">'+
           '<i class="fas fa-comments"> Message</i>'+
         '</a>'+
-        '<a href="'+((profile_cv == null || profile_cv == '')?'javascript:void();': 'uploads/'+profile_cv)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
+        '<a href="'+((profile_cv == null || profile_cv == 'null' || profile_cv == '')?'javascript:void();': 'uploads/'+profile_cv)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
           '<i class="fas fa-file-image"></i> View CV'+
         '</a>'+
       '</div>'+
@@ -1729,9 +1729,9 @@ let profile =
                     '<div class="col-sm-10">'+
                     '<select class="custom-select" id="package" name="package">'+
                     '<option value="None">None</option>'+
-                    '<option value="One-time">post 1 job @D3000</option>'+
-                    '<option value="Month">post unlimited jobs for 1 month @D15000</option>'+
-                    '<option value="Half-year">post unlimited jobs for 6 months @D49000</option>'+
+                    '<option value="One-time">post 1 job @D2500</option>'+
+                    '<option value="Month">post unlimited jobs for 1 month @D12000</option>'+
+                    '<option value="Half-year">post unlimited jobs for 6 months @D35000</option>'+
                     '</select>'+
                     '</div>'+
                   '</div>'+
@@ -1739,7 +1739,7 @@ let profile =
                     '<div class="offset-sm-2 col-sm-10">'+
                       '<div class="">'+
                         '<label>'+
-                          '<p> Select a package and it will be activated within 24hrs.</p>'+
+                          '<p> Select a package and it will be activated within 24hrs. Below are the means of payment we currently support.</p>'+
                         '</label>'+
                       '</div>'+
                     '</div>'+
@@ -1749,6 +1749,40 @@ let profile =
                       '<button type="submit" class="btn btn-success">Activate</button>'+
                     '</div>'+
                   '</div>'+
+                  '<div class="form-group row">'+
+                  '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
+                    '<div class="p-2 bd-highlight">'+
+                    
+                      '<div class="card" style="width: 12rem;">'+
+                        '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                        '<div class="card-body">'+
+                          '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                        '</div>'+
+                      '</div>'+
+
+                    '</div>'+
+                    '<div class="p-2 bd-highlight">'+
+
+                      '<div class="card" style="width: 12rem;">'+
+                        '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                        '<div class="card-body">'+
+                          '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                        '</div>'+
+                     '</div>'+
+                     
+                    '</div>'+
+                    '<div class="p-2 bd-highlight">'+
+
+                      '<div class="card" style="width: 12rem;">'+
+                        '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                        '<div class="card-body">'+
+                          '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                        '</div>'+
+                      '</div>'+
+
+                    '</div>'+
+                  '</div>'+
+                '</div>'+
                 '</form>'+
               '</div>'+
               '<!-- /.tab-pane -->'+
@@ -2663,7 +2697,7 @@ applicant += '<div class="col col-lg-4">'+
     '</div>'+
     '<div class="card-footer">'+
       '<div class="text-right">'+
-      '<a href="'+((data.CV == null || data.CV == '')?'javascript:void();':'uploads/'+data.CV)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
+      '<a href="'+((data.CV == null || data.CV == 'null' || data.CV == '')?'javascript:void();':'uploads/'+data.CV)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
       '<i class="fas fa-file-image"></i> View CV'+
       '</a>'+
       '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+data.login_id+'\',\''+data.fullName+'\',\'contentMessage\')">'+
