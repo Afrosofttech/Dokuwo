@@ -1,5 +1,6 @@
 <?php
 include_once 'dbhmodel.php';
+include_once 'companymodel.php';
 
 class Jobseeker extends Dbh{
 
@@ -25,26 +26,26 @@ class Jobseeker extends Dbh{
         return $result;
         $stmt = null;
     }
-    protected function update_jobseeker_profile($login_id,$fName,$lName,$email,$phone,$country,$address,$password,$dob,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$dateofbirth,$final_image,$final_cv)
+    protected function update_jobseeker_profile($login_id,$fName,$lName,$email,$phone,$country,$address,$password,$dob,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$dateofbirth,$final_image,$final_cv)
     {
         $fullname = $fName.' '.$lName;
         if(($final_image == "" || $final_image == null) && ($final_cv == "" || $final_cv == null)){
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,description=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=? WHERE login_id=?;";
         }else if($final_cv == "" || $final_cv == null){
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,description=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=? WHERE login_id=?;";
         }else if($final_image == "" || $final_image ==  null){
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,description=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,CV=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,CV=? WHERE login_id=?;";
         }else{
-            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,description=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=?,CV=? WHERE login_id=?;";
+            $sql = "UPDATE job_seeker SET fname=?,lname=?,fullName=?,phone=?,category=?,interest=?,seeksJob=?,skills=?,tag_line=?,education_level=?,address=?,dob=?,country=?,image=?,CV=? WHERE login_id=?;";
         }
         if(($final_image == "" || $final_image == null) && ($final_cv == "" || $final_cv == null)){
-            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$login_id];
         }else if($final_image == "" || $final_image == null){
-            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_cv,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_cv,$login_id];
         }else if($final_cv == "" || $final_cv == null){
-            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$login_id];
         }else{
-            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$description,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$final_cv,$login_id];
+            $det = [$fName,$lName,$fullname,$phone,$category,$interest,$seeksJob,$skills,$tag_line,$education_level,$address,$dob,$country,$final_image,$final_cv,$login_id];
         }
         
         $stmt = $this->connect()->prepare($sql);
@@ -289,15 +290,30 @@ class Jobseeker extends Dbh{
         return self::success;
         $stmt = null;
     }
-    protected function retreive_all_jobs()
+    protected function retreive_all_jobs($beg,$end)
     {
-        $sql = "SELECT job.*,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE status=?";
+        $status=0;
+        $start = (int) $beg;
+        $ending = (int) $end;
+        $sql = "SELECT job.*,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE status=? LIMIT ?,?";
         $stmt =$this->connect()->prepare($sql);
-        $stmt->execute([0]);
+        $stmt->bindParam(1,$status,PDO::PARAM_STR);
+        $stmt->bindParam(2,$start,PDO::PARAM_INT);
+        $stmt->bindParam(3,$end,PDO::PARAM_INT);
+        $stmt->execute();
         $result = $stmt->fetchAll();
-        if(!$result) return self::fail;
-        return $result;
-        $stmt = null;
+        if(!$result) {return self::fail;$stmt = null;}
+        else{
+            $query = "SELECT COUNT(*) AS total_rows FROM job WHERE status ='".$status."' ";
+            if($start == 0){
+                $comp = new Company();
+                return array($result,$comp->get_totalrows($query));
+                $stmt = null;
+            }
+            else return $result;
+            $stmt = null;
+        }
+        
     }
     protected function have_user_already_applied_this_job($jobseeker_id,$job_id,$company_id)
     {
@@ -345,35 +361,57 @@ class Jobseeker extends Dbh{
         return  self::success;
         $stmt = null;  
     }
-    protected function search_for_jobs($job,$location)
+    protected function search_for_jobs($job,$location,$beg,$end)
     {
+        $status=0;
+        $start = (int) $beg;
+        $ending = (int) $end;
+        $query = "";
+        $locParam = "";
+        $jobParam = "";
         if($job == ''){
-        $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_location like :search AND status =:status;";
+        $locParam = '%' . $location . '%';
+        $query = "SELECT COUNT(*) AS total_rows FROM job WHERE job_location LIKE '".$locParam."' AND status = '".$status."'";
+        $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_location like ? AND status =? LIMIT ?,?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(array(
-            ':search' => '%' . $location . '%',
-            ':status' => 0));
+        $stmt->bindParam(1,$locParam,PDO::PARAM_STR);
+        $stmt->bindParam(2,$status,PDO::PARAM_STR);
+        $stmt->bindParam(3,$start,PDO::PARAM_INT);
+        $stmt->bindParam(4,$ending,PDO::PARAM_INT);
+        $stmt->execute();
         }else if($location == ''){
-            $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like :search AND status =:status;";
+            $jobParam  = '%' . $job . '%';
+            $query = "SELECT COUNT(*) AS total_rows FROM job WHERE job_name LIKE '".$jobParam."' AND status = '".$status."'";
+            $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like ? AND status =? LIMIT ?,?;";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(array(
-                ':search' => '%' . $job . '%',
-                ':status' => 0));
+            $stmt->bindParam(1,$jobParam,PDO::PARAM_STR);
+            $stmt->bindParam(2,$status,PDO::PARAM_STR);
+            $stmt->bindParam(3,$start,PDO::PARAM_INT);
+            $stmt->bindParam(4,$ending,PDO::PARAM_INT);
+            $stmt->execute();
         }else{
-            $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like :job AND job_location LIKE :location AND status =:status;";
+            $jobParam  = '%' . $job . '%';
+            $locParam = '%' . $location . '%';
+            $query = "SELECT COUNT(*) AS total_rows FROM job WHERE job_name LIKE '".$jobParam."' AND job_location LIKE '".$locParam."' AND status = '".$status."'";
+            $sql="SELECT job_id,job_name,job_cat,job_type,requirements,job_location,date_posted,job_contact_email,job_contact_phone,salary,status,company.company_id,company.company_name,company.currency,company.logo FROM job INNER JOIN company ON job.company_id = company.company_id WHERE job_name like ? AND job_location LIKE ? AND status ? LIMIT ?,?;";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(array(
-            ':job' => '%' . $job . '%',
-            ':location' => '%'. $location . '%',
-            ':status' => 0));
+            $stmt->bindParam(1,$jobParam,PDO::PARAM_STR);
+            $stmt->bindParam(2,$locParam,PDO::PARAM_STR);
+            $stmt->bindParam(3,$status,PDO::PARAM_STR);
+            $stmt->bindParam(4,$start,PDO::PARAM_INT);
+            $stmt->bindParam(5,$ending,PDO::PARAM_INT);
+            $stmt->execute();
         }
         $result = $stmt->fetchAll();
-        if(!$result){
+        if(!$result ){
             return 400;
-            $stmt = null; 
-         }
-        return $result;
-        $stmt = null;
+            $stmt = null;
+        }else{
+            $comp = new Company();
+            if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
+            else  return $result;
+            $stmt = null;
+        } 
     }
     protected function search_featured_jobs($job,$location)
     {
@@ -431,32 +469,57 @@ class Jobseeker extends Dbh{
         $stmt = null;
     }
 
-    protected function search_for_jobseekers($tagline,$address)
+    protected function search_for_jobseekers($tagline,$address,$beg,$end)
     {
+        $interest='Freelance';
+        $start = (int) $beg;
+        $ending = (int) $end;
+        $query = "";
+        $tagParam = "";
+        $addrParam = "";
         if($tagline == ''){
-        $sql="SELECT * FROM job_seeker WHERE address like :search;";
+        $addrParam  = '%' . $address . '%';
+        $query = "SELECT COUNT(*) AS total_rows FROM job_seeker WHERE address LIKE '".$addrParam."' AND interest = '".$interest."'";
+        $sql="SELECT * FROM job_seeker WHERE interest = ? AND address like ? LIMIT ?,?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(array(
-            ':search' => '%' . $address . '%'));
+        $stmt->bindParam(1,$interest,PDO::PARAM_STR);
+        $stmt->bindParam(2,$addrParam,PDO::PARAM_STR);
+        $stmt->bindParam(3,$start,PDO::PARAM_INT);
+        $stmt->bindParam(4,$ending,PDO::PARAM_INT);
+        $stmt->execute();
         }else if($address == ''){
-            $sql="SELECT * FROM job_seeker WHERE tag_line like :search;";
+            $tagParam  = '%' . $tagline . '%';
+            $query = "SELECT COUNT(*) AS total_rows FROM job_seeker WHERE tag_line LIKE '".$tagParam."' AND interest = '".$interest."'";
+            $sql="SELECT * FROM job_seeker WHERE interest = ? AND tag_line like ? LIMIT ?,?;";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(array(
-                ':search' => '%' . $tagline . '%'));
+            $stmt->bindParam(1,$interest,PDO::PARAM_STR);
+            $stmt->bindParam(2,$tagParam,PDO::PARAM_STR);
+            $stmt->bindParam(3,$start,PDO::PARAM_INT);
+            $stmt->bindParam(4,$ending,PDO::PARAM_INT);
+            $stmt->execute();
         }else{
-            $sql="SELECT * FROM job_seeker WHERE tag_line like :tagLine AND address LIKE :location;";
+            $tagParam  = '%' . $tagline . '%';
+            $addrParam  = '%' . $address . '%';
+            $query = "SELECT COUNT(*) AS total_rows FROM job_seeker WHERE tag_line LIKE '".$tagParam."' AND address LIKE '".$addrParam."' AND interest = '".$interest."'";
+            $sql="SELECT * FROM job_seeker WHERE interest = ? AND tag_line like ? AND address LIKE ? LIMIT ?,?;";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(array(
-            ':tagLine' => '%' . $tagline . '%',
-            ':location' => '%'. $address . '%'));
+            $stmt->bindParam(1,$interest,PDO::PARAM_STR);
+            $stmt->bindParam(2,$tagParam,PDO::PARAM_STR);
+            $stmt->bindParam(3,$addrParam,PDO::PARAM_STR);
+            $stmt->bindParam(4,$start,PDO::PARAM_INT);
+            $stmt->bindParam(5,$ending,PDO::PARAM_INT);
+            $stmt->execute();
         }
         $result = $stmt->fetchAll();
-        if(!$result){
+        if(!$result ){
             return 400;
-            $stmt = null; 
-         }
-        return $result;
-        $stmt = null;
+            $stmt = null;
+        }else{
+            $comp = new Company();
+            if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
+            else  return $result;
+            $stmt = null;
+        }
     }
     protected function search_for_employers($companyName,$companyAddress)
     {
@@ -486,35 +549,60 @@ class Jobseeker extends Dbh{
         $stmt = null;
     }
 
-    protected function search_jobs_category($category,$job,$location)
+    protected function search_jobs_category($category,$job,$location,$beg,$end)
     {
+        $status=0;
+        $start = (int) $beg;
+        $ending = (int) $end;
+        $query = "";
+        $locParam = "";
+        $jobParam = "";
         if($job == ''){
-        $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = :category AND job_location LIKE :search GROUP BY job.job_id;";
+        $locParam = '%' . $location . '%';
+        $query = "SELECT COUNT(*) AS total_rows FROM job WHERE job_cat = '".$category."'  AND job_location LIKE '".$locParam."' AND status = '".$status."'";
+        $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = ? AND job_location LIKE ? AND status = ? GROUP BY job.job_id LIMIT ?,?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(array(
-            ':category' => $category,
-            ':search' => '%' . $location . '%'));
+        $stmt->bindParam(1,$category,PDO::PARAM_STR);
+        $stmt->bindParam(2,$locParam,PDO::PARAM_STR);
+        $stmt->bindParam(3,$status,PDO::PARAM_STR);
+        $stmt->bindParam(4,$start,PDO::PARAM_INT);
+        $stmt->bindParam(5,$ending,PDO::PARAM_INT);
+        $stmt->execute();
         }else if($location == ''){
-            $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = :category AND job_name LIKE :search GROUP BY job.job_id;";
+            $jobParam = '%' . $job . '%';
+            $query = "SELECT COUNT(*) AS total_rows FROM job WHERE job_cat = '".$category."'  AND job_name LIKE '".$jobParam."' AND status = '".$status."'";
+            $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = ? AND job_name LIKE ? AND status = ? GROUP BY job.job_id LIMIT ?,?;";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(array(
-                ':category' => $category,
-                ':search' => '%' . $job . '%'));
+            $stmt->bindParam(1,$category,PDO::PARAM_STR);
+            $stmt->bindParam(2,$jobParam,PDO::PARAM_STR);
+            $stmt->bindParam(3,$status,PDO::PARAM_STR);
+            $stmt->bindParam(4,$start,PDO::PARAM_INT);
+            $stmt->bindParam(5,$ending,PDO::PARAM_INT);
+            $stmt->execute();
         }else{
-            $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = :category AND job_name LIKE :job AND job_location LIKE :location GROUP BY job.job_id;";
+            $jobParam = '%' . $job . '%';
+            $locParam = '%' . $location . '%';
+            $query = "SELECT COUNT(*) AS total_rows FROM job WHERE job_cat = '".$category."'  AND job_name LIKE '".$jobParam."' AND job_location LIKE '".$locParam."' AND status = '".$status."'";
+            $sql="SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = ? AND job_name LIKE ? AND job_location LIKE ? AND status = ? GROUP BY job.job_id LIMIT ?,?;";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(array(
-            ':category' => $category,
-            ':job' => '%' . $job . '%',
-            ':location' => '%'. $location . '%'));
+            $stmt->bindParam(1,$category,PDO::PARAM_STR);
+            $stmt->bindParam(2,$jobParam,PDO::PARAM_STR);
+            $stmt->bindParam(3,$locParam,PDO::PARAM_STR);
+            $stmt->bindParam(4,$status,PDO::PARAM_STR);
+            $stmt->bindParam(5,$start,PDO::PARAM_INT);
+            $stmt->bindParam(6,$ending,PDO::PARAM_INT);
+            $stmt->execute();
         }
         $result = $stmt->fetchAll();
-        if(!$result){
-           return 400;
-           $stmt = null; 
-        }
-        return $result;
-        $stmt = null;
+        if(!$result ){
+            return 400;
+            $stmt = null;
+        }else{
+            $comp = new Company();
+            if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
+            else  return $result;
+            $stmt = null;
+        } 
     }
 
     protected function hire_jobseeker($jobseeker_id,$name,$email,$phone,$task)
@@ -541,8 +629,16 @@ class Jobseeker extends Dbh{
         $sql = "INSERT INTO contact (contact_name,contact_email,subject,message) VALUES (?,?,?,?);";
         $stmt =$this->connect()->prepare($sql);
         $stmt->execute([$name,$email,$subject,$message]);
-        return self::success;
-        $stmt = null;
+        $send_mail = self::sendEmail($name,$email,$subject,$message);
+        if($send_mail != 400){
+            return 200;
+            $stmt = null;
+        }
+        else{
+            return 400;
+            $stmt = null;
+        }
+        
     }
     protected function have_blocked($jobseeker_login_id,$company_login_id){
         $sql = " SELECT * FROM actions WHERE company_login_id=? AND jobseeker_login_id=? AND action=?";
@@ -706,27 +802,37 @@ class Jobseeker extends Dbh{
         
     }
 
-    protected function searchBlogs($params)
+    protected function searchBlogs($params,$beg,$end)
     {
-        
-        $sql="SELECT * FROM blog WHERE blog_title like :search;";
+        $comp = new Company();
+        $start = (int) $beg;
+        $ending = (int) $end;
+        $queryParam = '%' . $params . '%';
+        $sql="SELECT * FROM blog WHERE blog_title like ? LIMIT ?,?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(array(
-            ':search' => '%' . $params . '%'));
-            $result = $stmt->fetchAll();
+        $stmt->bindParam(1,$queryParam,PDO::PARAM_STR);
+        $stmt->bindParam(2,$start,PDO::PARAM_INT);
+        $stmt->bindParam(3,$ending,PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
             if(!empty($result)){
-                return $result;
+                $query = "SELECT COUNT(*) AS total_rows FROM blog WHERE blog_title LIKE '".$queryParam."' ";
+                if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
+                else  return $result;
                 $stmt = null;
             }
             else{
-               
-                        $sql="SELECT * FROM blog WHERE blog_publisher like :search;";
+                        $sql="SELECT * FROM blog WHERE blog_publisher like ? LIMIT ?,?;";
                         $stmt = $this->connect()->prepare($sql);
-                        $stmt->execute(array(
-                        ':search' => '%'. $params . '%'));
+                        $stmt->bindParam(1,$queryParam,PDO::PARAM_STR);
+                        $stmt->bindParam(2,$start,PDO::PARAM_INT);
+                        $stmt->bindParam(3,$ending,PDO::PARAM_INT);
+                        $stmt->execute();
                         $result = $stmt->fetchAll();
                         if(!empty($result)){
-                            return $result;
+                            $query = "SELECT COUNT(*) AS total_rows FROM blog WHERE blog_publisher LIKE '".$queryParam."' ";
+                            if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
+                            else  return $result;
                             $stmt = null;
                         }
                         else{
@@ -734,6 +840,35 @@ class Jobseeker extends Dbh{
                         }
                     }
 
+        }
+
+        protected function sendEmail($name,$email,$msg_subject,$message){
+            $EmailTo = "contact@afrosofttech.com";
+            $Subject = "New Message Received";
+            
+            // prepare email body text
+            $Body = "";
+            $Body .= "Name: ";
+            $Body .= $name;
+            $Body .= "\n";
+            $Body .= "Email: ";
+            $Body .= $email;
+            $Body .= "\n";
+            $Body .= "Subject: ";
+            $Body .= $msg_subject;
+            $Body .= "\n";
+            $Body .= "Message: ";
+            $Body .= $message;
+            $Body .= "\n";
+            
+            // send email
+            $success = mail($EmailTo, $Subject, $Body, "From:".$email);
+            // redirect to success page
+                if ($success == ""){
+                    return 200;
+                }else{
+                   return 400;
+                }
         }
         
     }

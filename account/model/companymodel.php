@@ -439,17 +439,33 @@ class Company extends Dbh{
             $stmt = null;
         }
     }
-    protected function get_jobs_of_this_category($category){
-        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = ? AND job.status = ? GROUP BY job.job_id";
+
+    public function get_totalrows($query){
+        $stmt = $this->connect()->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result['total_rows'];
+    }
+    protected function get_jobs_of_this_category($category,$beg,$end){
+        $status=0;
+        $start = (int) $beg;
+        $finish = (int) $end;
+        $sql = " SELECT job.*,company.company_name,company.logo,company.currency FROM job INNER JOIN company ON job.company_id=company.company_id WHERE job_cat = ? AND job.status = ? GROUP BY job.job_id LIMIT ?,?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$category,0]);
+        $stmt->bindParam(1,$category,PDO::PARAM_STR);
+        $stmt->bindParam(2,$status,PDO::PARAM_STR);
+        $stmt->bindParam(3,$start,PDO::PARAM_INT);
+        $stmt->bindParam(4,$finish,PDO::PARAM_INT);
+        $stmt->execute();
         $result = $stmt->fetchAll();
 
         if(!$result ){
             return self::fail;
             $stmt = null;
         }else{
-            return  $result ;
+            $query = "SELECT COUNT(*) AS total_rows FROM job WHERE job_cat ='".$category."' AND job.status ='".$status."' ";
+            if($start == 0) {return  array($result,self::get_totalrows($query)); $stmt = null;}
+            else  return $result;
             $stmt = null;
         }    
     }
@@ -517,7 +533,28 @@ class Company extends Dbh{
                 }
          
     }
-    protected function get_all_blogs(){
+    protected function get_all_blogs($beg,$end){
+        $start = (int) $beg;
+        $finish = (int) $end;
+        $sql = "SELECT * FROM blog ORDER BY date_posted DESC LIMIT ?,?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->bindParam(1,$start,PDO::PARAM_INT);
+        $stmt->bindParam(2,$finish,PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(!$result ){
+            return self::fail;
+            $stmt = null;
+        }else{
+            $query = "SELECT COUNT(*) AS total_rows FROM blog ";
+            if($start == 0) {return  array($result,self::get_totalrows($query)); $stmt = null;}
+            else  return array($result);
+            $stmt = null;
+        }   
+    }
+
+    protected function get_all_blogs_admin(){
         $sql = "SELECT * FROM blog ORDER BY date_posted DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -782,16 +819,24 @@ class Company extends Dbh{
         }
     }
 
-    protected function get_all_freelancers(){
-        $sql = " SELECT * from job_seeker WHERE interest = ?";
+    protected function get_all_freelancers($beg,$end){
+        $start = (int) $beg;
+        $ending = (int) $end;
+        $interst = 'Freelance';
+        $sql = " SELECT * from job_seeker WHERE interest = ? LIMIT ?,?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(['Freelance']);
+        $stmt->bindParam(1,$interst,PDO::PARAM_STR);
+        $stmt->bindParam(2,$start,PDO::PARAM_INT);
+        $stmt->bindParam(3,$ending,PDO::PARAM_INT);
+        $stmt->execute();
         $result = $stmt->fetchAll();
         if(!$result ){
             return 400;
             $stmt = null;
     }else{
-        return  $result ;
+        $query = " SELECT COUNT(*) AS total_rows from job_seeker WHERE interest = 'Freelance' ";
+        if($start == 0) return array($result,self::get_totalrows($query));
+        else return  $result ;
         $stmt = null;
      }
     }

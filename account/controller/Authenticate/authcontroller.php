@@ -2,6 +2,7 @@
 session_start();
 
 include_once 'model/auth.php';
+
 class AuthController extends Auth{
   
    public function login_id($email,$hash){
@@ -20,12 +21,8 @@ class AuthController extends Auth{
       if($verify_email == null){
          $hash = md5(rand(0,1000));
          $password = password_hash($validated_data['password'], PASSWORD_DEFAULT);
-         $res = $this->create_account($validated_data['email'],$password,$hash,$validated_data['tag'],0);
-         if($res == 'Success') return 'success';
-         if($res == "Error"){
-            $response = $this->send_error_copy($validated_data['email'],'Activation');
-            return $response;
-         } 
+         $company_account = $this->create_account($validated_data['email'],$password,$hash,$validated_data['tag'],0);
+         return "success";
       }else{
          return "duplicate";
       }
@@ -35,7 +32,7 @@ class AuthController extends Auth{
       $validated_data = self::validate_data();
       $user = $this->login($validated_data['email']);
       if($user != null){
-      if($user['user_type'] === 'admin' && $user['password'] == $validated_data['password']){
+      if($user['user_type'] === 'admin' && password_verify($validated_data['password'], $user['password'])){
          $admin = $this->get_admin_login($user['login_id']);
          $_SESSION['login_id'] = $user['login_id'];
          $_SESSION['email'] = $user['email'];
@@ -157,21 +154,17 @@ class AuthController extends Auth{
       $path = 'uploads/';
       $img = $_FILES["logo"]["name"]; 
       $tmp = $_FILES["logo"]["tmp_name"]; 
-      if($_FILES["logo"]["name"] != ""){
-         $final_image = rand(1000,1000000).$img;
-         $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+      $errorimg = $_FILES["logo"]["error"];
+      $final_image = rand(1000,1000000).$img;
+      $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
          if(in_array($ext, $valid_extensions)){ 
          $path = $path.strtolower($final_image);
          move_uploaded_file($tmp,$path);
          }else{
             return 'Invalid';  //@ams-> make sure this is also considered as a return value
          }
-         $result = $this->company_account($company_data['id'],$company_data['name'],$company_data['email'],$company_data['phone'],$company_data['address'],$company_data['postalcode'],$company_data['country'],$company_data['currency'],$final_image);
+      $result = $this->company_account($company_data['id'],$company_data['name'],$company_data['email'],$company_data['phone'],$company_data['address'],$company_data['postalcode'],$company_data['country'],$company_data['currency'],$final_image);
          return $result;
-      }else{
-         $result = $this->company_account($company_data['id'],$company_data['name'],$company_data['email'],$company_data['phone'],$company_data['address'],$company_data['postalcode'],$company_data['country'],$company_data['currency'],null);
-         return $result;
-       }
       }else{
          return 'duplicate';
       }
@@ -195,14 +188,14 @@ class AuthController extends Auth{
 
    function validate_jobseeker(){
       require "gump.class.php";
-
+      
       $gump = new GUMP();
    
       $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
       //@ams-> i have replaced most alpha_numeric with alpha_space cus names can be multiple and need to allow spaces between
       $gump->validation_rules(array(
-         'firstname'   => 'required|max_len,100', //'required|alpha_space|max_len,100'
-         'lastname'    => 'required|max_len,100'  //'required|alpha_space|max_len,100'
+         'firstname'   => 'required|alpha_space|max_len,100', 
+         'lastname'    => 'required|alpha_space|max_len,100'
       ));
    
       $gump->filter_rules(array(
@@ -219,14 +212,14 @@ class AuthController extends Auth{
       }
    }
    function validate_company(){
-      require "gump.class.php";
       //@ams->both company signup and update company profile are using this.To be changed
+      require "gump.class.php";
       $gump = new GUMP();
       
       $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
       
       $gump->validation_rules(array(
-         'name'     => 'required|max_len,100',
+         'name'     => 'required|alpha_space|max_len,100',
          'email'    => 'required|valid_email',
       ));
       
@@ -244,8 +237,8 @@ class AuthController extends Auth{
       }
       }
    function validate_data(){
-      require "gump.class.php";
-
+         require "gump.class.php";
+         
          $gump = new GUMP();
       
          $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
@@ -258,96 +251,6 @@ class AuthController extends Auth{
          $gump->filter_rules(array(
             'email'    => 'trim|sanitize_email',
             'password' => 'trim',
-         ));
-      
-         $validated_data = $gump->run($_POST);
-      
-         if($validated_data === false) {
-            return $gump->get_readable_errors(true);
-         } else {
-            return $validated_data; // validation successful
-         }
-      }
-      public function reset_password(){
-         $reset_email = self::validate_email();
-         $result = $this->does_account_exist($reset_email['email']);
-         if($result == 'Error'){
-            $response = $this->send_error_copy($reset_email['email'],'Password Reset');
-            return $response;
-         }  
-         return $result;
-      }
-      public function validate_email(){
-      require "gump.class.php";
-
-         $gump = new GUMP();
-      
-         $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
-      
-         $gump->validation_rules(array(
-            'email'       => 'required|valid_email'
-         ));
-      
-         $gump->filter_rules(array(
-            'email'    => 'trim|sanitize_email'
-         ));
-      
-         $validated_data = $gump->run($_POST);
-      
-         if($validated_data === false) {
-            return $gump->get_readable_errors(true);
-         } else {
-            return $validated_data; // validation successful
-         }
-      }
-      public function verify_existence_reset_request(){
-         $res = self::validate_reset();
-         $result = $this->if_request_valid($res['email'],$res['hash']);
-         return $result;
-      }
-      public function validate_reset(){
-         require "gump.class.php";
-
-         $gump = new GUMP();
-      
-         $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
-      
-         $gump->validation_rules(array(
-            'email'       => 'required|valid_email',
-            'hash'       => 'required|alpha_numeric|max_len,100'
-         ));
-      
-         $gump->filter_rules(array(
-            'email'    => 'trim|sanitize_email',
-            'email'    => 'trim'
-         ));
-      
-         $validated_data = $gump->run($_POST);
-      
-         if($validated_data === false) {
-            return $gump->get_readable_errors(true);
-         } else {
-            return $validated_data; // validation successful
-         }
-      }
-      public function change_password(){
-         $validated_data = self::validate_pwd();
-         $res = $this->new_password(password_hash($validated_data['pwd'], PASSWORD_DEFAULT),$validated_data['login_id']);
-         return $res;
-      }
-      public function validate_pwd(){
-         require "gump.class.php";
-         
-         $gump = new GUMP();
-
-         $_POST = $gump->sanitize($_POST); // You don't have to sanitize, but it's safest to do so.
-      
-         $gump->validation_rules(array(
-            'pwd'       => 'required|min_len,8'
-         ));
-      
-         $gump->filter_rules(array(
-            'pwd'    => 'trim|htmlencode'
          ));
       
          $validated_data = $gump->run($_POST);

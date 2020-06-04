@@ -183,7 +183,7 @@ class Admin extends Dbh{
         }
 
         protected function get_blog_by_admin($admin_id){
-            $sql = "SELECT * FROM blog where admin_id = ?";
+            $sql = "SELECT * FROM blog where admin_id = ? ORDER BY date_posted DESC";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute([$admin_id]);
             $result = $stmt->fetchAll();
@@ -192,7 +192,7 @@ class Admin extends Dbh{
                 return self::fail;
                 $stmt = null;
             }else{
-                return  $result ;
+                return  array($result);
                 $stmt = null;
             }    
         }
