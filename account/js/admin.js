@@ -180,7 +180,7 @@ function loadAdminDashboard(){
 
 function getBlog(){
 let url = '';
-if(session_adminType == "superadmin"){url = "get.php/company/retrieve_all_blogs";}
+if(session_adminType == "superadmin"){url = "get.php/company/retrieve_all_blogs_admin";}
 else {url = "get.php/admin/manage_blogs";}
 $.ajax({
   method: "GET",
@@ -527,9 +527,13 @@ $.ajax({
             '<div class="hover-wrap">'+
             '</div>'+
           '</div>'+
-          '<!-- End Post post-thumb -->'+
-      
-        '</div>'+
+          '<!-- End Post post-thumb -->';
+          if(session_adminType == "superadmin"){
+            temp +='<div>'+
+            `<a class="btn btn-danger mt-2" style="color:#fff;cursor:pointer;" onclick="deleteBlog(${blog_id});"><i class="fa fa-trash"></i> Delete</a>`+
+            '</div>';
+          }
+          temp +='</div>'+
         '<!-- End Post --></div>'+
         // update blog
         '<!-- /.col -->'+
