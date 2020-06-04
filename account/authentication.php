@@ -190,6 +190,7 @@
 	})
 
 	function auth(mail,pwd,tag_val){
+		console.log('auth func);
 	$('.btn-submit-request').prop('disabled', true);
 	var email = $('#'+mail).val();
 	var passwd = $('#'+pwd).val();
@@ -215,12 +216,14 @@
 	}
 	
     if(errors.length < 1){
+	    console.log('b4 ajax');
         $.ajax({
             method:'POST',
 			url: (tag == 'login')?'post.php/authentication/user_login':(tag == 'company')? 'post.php/authentication/create_company_account':
 			(tag == 'jobseeker')?'post.php/authentication/create_jobseeker_account':null,
             data: {'email':email,'password': passwd,'tag':tag},
             success:function(response){
+		    console.log('Success call');
 				$('.btn-submit-request').prop('disabled', false);
                if(response == 200){
                   window.location.replace('index.php');
