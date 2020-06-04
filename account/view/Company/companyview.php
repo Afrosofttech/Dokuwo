@@ -14,7 +14,7 @@ class CompanyView extends Company{
         $jobsPublished = $this->get_no_of_jobs_published($company['company_id']);
         $dbContentArray['noOfJobsPublished'] = $jobsPublished;
         foreach ($company as $key => $value) {
-            if ($value != ''){
+            if ($value != '' || $value != null){
                 $count += 1;
             }
         }
@@ -36,8 +36,8 @@ class CompanyView extends Company{
         $company = $this->get_company_profile_details($login_id);
         return $company;
     }
-    public function jobs_of_this_category($category,$beg,$end){
-        $jobs = $this->get_jobs_of_this_category($category,$beg,$end);
+    public function jobs_of_this_category($category){
+        $jobs = $this->get_jobs_of_this_category($category);
         return $jobs;
     }
     public function job_details($jobId){
@@ -52,12 +52,8 @@ class CompanyView extends Company{
         $latest_job = $this->get_latest_jobs($caller);
         return $latest_job;
     }
-    public function get_blogs($beg,$end){
-        $blogs = $this->get_all_blogs($beg,$end);
-        return $blogs;
-    }
-    public function get_blogs_admin(){
-        $blogs = $this->get_all_blogs_admin();
+    public function get_blogs(){
+        $blogs = $this->get_all_blogs();
         return $blogs;
     }
     public function blog_details($blog_id){
@@ -85,8 +81,8 @@ class CompanyView extends Company{
         return $details;
     }
     
-    public function get_freelancers($beg,$end){
-        $admin = $this->get_all_freelancers($beg,$end);
+    public function get_freelancers(){
+        $admin = $this->get_all_freelancers();
         return $admin;
     }
 
