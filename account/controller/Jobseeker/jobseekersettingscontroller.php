@@ -49,7 +49,7 @@ class JobseekerSettingsController extends Jobseeker{
             }
        }
 
-        $res = $this->update_jobseeker_profile($v_data['login_id'],$v_data['fName'],$v_data['lName'],$v_data['email'],$v_data['phone'],$v_data['country'],$v_data['address'],$password,$v_data['dateofbirth'],$v_data['category'],$v_data['interest'],$v_data['description'],$v_data['seeksJob'],$v_data['skills'],$v_data['tag_line'],$v_data['education_level'],$v_data['dateofbirth'],$final_image,$final_cv);
+        $res = $this->update_jobseeker_profile($v_data['login_id'],$v_data['fName'],$v_data['lName'],$v_data['email'],$v_data['phone'],$v_data['country'],$v_data['address'],$password,$v_data['dateofbirth'],$v_data['category'],$v_data['interest'],$v_data['seeksJob'],$v_data['skills'],$v_data['tag_line'],$v_data['education_level'],$v_data['dateofbirth'],$final_image,$final_cv);
         return $res;
     }
     function validate_jobseeker(){

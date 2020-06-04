@@ -68,8 +68,8 @@
       data:{"email" : email, "hash" : hash},
       success:function(data){
         var entity = $.parseJSON(data);
-        if(entity == 'Inexistent') window.location.replace('authentication.php?attempt=<?php echo "Inexistent"; ?>');
-        if(entity == 'Activated')  window.location.replace('authentication.php?attempt=<?php echo "Activated"; ?>');
+        if(entity == 'Inexistent') window.location.replace('authentication.php?attempt=<?= "Inexistent"; ?>');
+        if(entity == 'Activated')  window.location.replace('authentication.php?attempt=<?= "Activated"; ?>');
         if(entity.user_type == "company"){
       $('#message_body').html('<div class="card o-hidden border-0 shadow-lg my-5">'+
       '<div class="card-body p-0">'+
@@ -96,7 +96,7 @@
                 '<input type="text" class="form-control form-control-user" name="address" id="comp_address" placeholder="Company Address">'+
                 '</div> '+
                 '<div class="form-group">'+
-                '<input type="text" class="form-control form-control-user" name="postalcode" id="postalcode" placeholder="Postal Code" maxlength="5">'+
+                '<input type="text" class="form-control form-control-user" name="postalcode" id="postalcode" placeholder="Postal Code">'+
                 '</div>'+ 
                 '<div class="form-group">'+
                 '<input type="text" class="form-control form-control-user" name="country" id="comp_country" placeholder="Country">'+
@@ -113,7 +113,7 @@
                 '<input type="hidden" class="form-control form-control-user" name="id" id="comp_id" value="'+entity.login_id+'">'+
                 '</div>'+
                 '<div class="text-center">'+
-                '<button type="submit" class="btn btn-primary btn-user btn-block" id="comp_submit">Submit</button>'+
+                '<button class="btn btn-primary btn-user btn-block" id="comp_submit">Submit</button>'+
                 '</div>'+
               '</form>'+
               '</div>'+
@@ -265,7 +265,7 @@
                '</div>'+
               '</div>'+
               '<div class="text-center">'+
-                '<button class="btn btn-primary btn-user btn-block"  type="submit" id="submit">Submit</button>'+
+                '<button class="btn btn-primary btn-user btn-block" id="submit">Submit</button>'+
               '</div>'+
               '</form>'+
               '</div>'+
