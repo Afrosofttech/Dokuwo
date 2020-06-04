@@ -32,6 +32,15 @@ $contr =  $urlParts[sizeof($urlParts)-2];
       case "create_admin_account":
             echo ((new AuthController())->create_admin_account());
             break;
+      case "reset_password":
+            echo ((new AuthController())->reset_password());
+            break;
+      case "verify_existence_reset_request":
+            echo ((new AuthController())->verify_existence_reset_request());
+            break;
+      case "change_password":
+            echo ((new AuthController())->change_password());
+            break;
       default:
             break;
    }

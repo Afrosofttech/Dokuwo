@@ -13,16 +13,16 @@
 	<meta name="description" content="This is an accounting Software that aims to automate and make your accounting work simple.">
     <meta name="author" content="Afrika Software Technologies">
     <title>Dokuwo - Authentication</title>
-	<script src="js/plugins/jquery.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="js/core/functions.js"></script>
-<link rel="stylesheet" href="css/custom.css" type="text/css">
+	<!-- <script src="js/plugins/jquery.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<!-- SweetAlert2 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script src="js/core/functions.js"></script>
+	<link rel="stylesheet" href="css/custom.css" type="text/css">
 
 </head>
 <body>
@@ -65,7 +65,7 @@
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="text-center">
-													<a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+													<a href="forgot-pwd.php" tabindex="5" class="forgot-password">Forgot Password?</a>
 												</div>
 											</div>
 										</div>
@@ -82,10 +82,10 @@
 								</form>
 								<form id="jobseeker-form" role="form" style="display: none;" class="my-form" autocomplete="off">
 									<div class="form-group">
-										<input type="email" name="email" id="jobseeker_email" tabindex="1" class="form-control password" placeholder="Enter Email Address" value="">
+										<input type="email" name="email" id="jobseeker_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="jobseeker_pwd" tabindex="2" class="form-control" placeholder="Enter Password">
+										<input type="password" name="password" id="jobseeker_pwd" tabindex="2" class="form-control password" placeholder="Enter Password">
 									</div>
 									<div class="form-group">
 										<div class="row">
@@ -97,10 +97,10 @@
 								</form>
                                 <form id="company-form" role="form" style="display: none;" class="my-form" autocomplete="off">
 									<div class="form-group">
-										<input type="email" name="email" id="company_email" tabindex="1" class="form-control" placeholder="Enter Email Address" value="">
+										<input type="email" name="email" id="company_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="company_pwd" tabindex="2" class="form-control" placeholder="Password">
+										<input type="password" name="password" id="company_pwd" tabindex="2" class="form-control password" placeholder="Password">
 									</div>
 									<div class="form-group">
 										<div class="row">
@@ -125,6 +125,10 @@
 	(attempt == 'failed')?swal('Profile creation failed!','You need to create an account first','error','Cool'):
 	(attempt == 'Inexistent')?swal('Inexistent account!','This account doesn\'t exist in this system. Create an account or Contact support for help.','error','Cool'):
 	(attempt == 'Activated')?swal('Account activated!','Account already activated. Log in or Contact support for help.','error','Cool'):
+	(attempt == 'reset-success')?swal('Link sent!','A reset link has been sent to your email to reset your password.','success','Cool'):
+	(attempt == 'reset-empty')?swal('Empty field','Both email and hash fields cannot be empty. Contact support for help.','error','Cool'):
+	(attempt == 'Inexistent-reset')?swal('Inexistent reset!','This reset does not exist. If you playing smart, go get a life else Contact support for help.','error','Cool'):
+	(attempt == 'Pwd-success')?swal('Password Successfully Changed!','Log in to your account using your new password.','success','Cool'):
 	(attempt == 'duplicate')?swal('account already exist!','Please login to continue','warning','Cool'): null;
 
 	$('#login-form-link').click(function(e) {
@@ -169,6 +173,7 @@
 	})
 
 	function auth(mail,pwd,tag_val){
+	$('.btn-submit-request').prop('disabled', true);
 	var email = $('#'+mail).val();
 	var passwd = $('#'+pwd).val();
 	var tag = tag_val;
@@ -199,20 +204,27 @@
 			(tag == 'jobseeker')?'post.php/authentication/create_jobseeker_account':null,
             data: {'email':email,'password': passwd,'tag':tag},
             success:function(response){
+				$('.btn-submit-request').prop('disabled', false);
                if(response == 200){
                   window.location.replace('index.php');
                 }else if(response == 400){
 					swal('Invalid account access!','Activate your account if you have already created an account','warning','Cool');
 				}else if(response == 'success'){
-					swal('account creation complete!','A link has been sent to your email to activate your account','success','Cool');
+					swal('Account creation complete!','A link has been sent to your email to activate your account.','success','Cool');
+					$('.email').val('');
+					$('.password').val('');
+				}else if(response == 'error'){
+                    swal('Activation link not Sent!','The activation link was not sent to your email. Dokuwo has been notified. You can as well contact support and let them know about this or wait for them to reach out and fix it once they notice it. The activation link will be sent to your email, so do check your email later on. Apologies','error','Cool');
+					$('.email').val('');
+					$('.password').val('');
 				}else if(response == 'duplicate'){
-                    swal('account already exist!','Please login to continue or create a different account','warning','Cool');
+                    swal('Account already exist!','Please login to continue or create a different account','warning','Cool');
 				}else{
-				    swal('account does not exist!','You need to create an account first','warning','Cool');
+				    swal('Account does not exist!','You need to create an account first','warning','Cool');
                }
             },
             error: function(err){
-              console.log(err);
+              swalNotify(err.responseText,'error');
       
             }
            
