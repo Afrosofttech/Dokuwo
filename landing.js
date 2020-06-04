@@ -2908,21 +2908,21 @@ else{
                       '<div class="contact-icon">'+
                         '<i class="lni-map-marker"></i>'+
                       '</div>'+
-                      '<p>Main Office: Kairaba Avenue- Banjul,Gambia <br> Customer Center: Bundung Jola kunda- Banjul, Gambia</p>'+
+                      '<p>Office: Bundung Jola kunda- Banjul, Gambia.</p>'+
                     '</div>'+
                     '<div class="single-contact">'+
                       '<div class="contact-icon">'+
                         '<i class="lni-envelope"></i>'+
                       '</div>'+
-                      '<p><a href="mailto:contact@afrosofttech.com">Customer Support: contact@afrosofttech.com Technical Support: </a></p>'+
-                      '<p><a href="mailto:contact@afrosofttech.com">contact@afrosofttech.com</a></p>'+
+                      '<p><a href="mailto:contact@afrosofttech.com">Customer Support: dokuwo01@gmail.com</a></p>'+
+                      '<p><a href="mailto:contact@afrosofttech.com">Technical Support: asj.sarjo@gmail.com</a></p>'+
                     '</div>'+
                     '<div class="single-contact">'+
                       '<div class="contact-icon">'+
                         '<i class="lni-phone-handset"></i>'+
                       '</div>'+
-                      '<p><a href="#">Main Office: +220 295 2173</a></p>'+
-                      '<p><a href="#">Customer Supprort: +220 533 6171</a></p>'+
+                      '<p><a href="#">Customer Supprort: +220 3196234</a></p>'+
+                      '<p><a href="#">Technical Supprort: +220 533 6171</a></p>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
