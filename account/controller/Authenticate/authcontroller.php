@@ -33,6 +33,7 @@ class AuthController extends Auth{
 
    public function user_login(){
       $validated_data = self::validate_data();
+      var_dump($validated_data);
       $user = $this->login($validated_data['email']);
       if($user != null){
       if($user['user_type'] === 'admin' && password_verify($validated_data['password'], $user['password'])){
