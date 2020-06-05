@@ -190,7 +190,7 @@
 	})
 
 	function auth(mail,pwd,tag_val){
-		console.log('auth func);
+		console.log('auth func');
 	$('.btn-submit-request').prop('disabled', true);
 	var email = $('#'+mail).val();
 	var passwd = $('#'+pwd).val();
