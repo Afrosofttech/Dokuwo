@@ -11,7 +11,7 @@ class Dbh {
 protected function connect(){
     $url = getenv('mysql://euswoktlhfjaakft:vhyoh0gvvc7mrp64@kl28h27lwgjntlbt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/primary_app_db');
     $dbparts = parse_url($url);
-    var_dump($url);
+    var_dump($dbparts);
     $host = $dbparts['host'];
     $username = $dbparts['user'];
     $password = $dbparts['pass'];
