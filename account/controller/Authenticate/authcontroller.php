@@ -32,6 +32,7 @@ class AuthController extends Auth{
    }
 
    public function user_login(){
+     var_dump('AMADOU SARJO');
       $validated_data = self::validate_data();
       $user = $this->login($validated_data['email']);
       if($user != null){
