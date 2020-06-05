@@ -82,7 +82,7 @@
       type:"GET",
       url:"get.php/company/retrieve_login_info",
       data:{"email" : email, "hash" : hash},
-      success:function(entity){
+      success:function(data){
         var entity = $.parseJSON(data);
         if(entity == 'Inexistent') window.location.replace('authentication.php?attempt=<?php echo "Inexistent"; ?>');
         if(entity == 'Activated')  window.location.replace('authentication.php?attempt=<?php echo "Activated"; ?>');
