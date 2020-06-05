@@ -116,7 +116,6 @@ class Auth extends Dbh {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$email,1]);
         $user = $stmt->fetch();
-         var_dump($user);
         if(!$user) return null;
         return $user;
         $stmt = null;
