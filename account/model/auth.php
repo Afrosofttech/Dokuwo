@@ -111,7 +111,6 @@ class Auth extends Dbh {
     }
 
     public function login($email){
-        var_dump($email);
         $sql = " SELECT * FROM login WHERE email=? and status =?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$email,1]);
