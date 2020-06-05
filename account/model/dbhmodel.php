@@ -9,7 +9,6 @@ class Dbh {
 
 protected function connect(){
     $dsn ='mysql:host=' .$this->host. ';dbname=' .$this->dbname;
-            //var_dump($dsn);
     $pdo = new PDO($dsn,$this->username,$this->password);    
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
