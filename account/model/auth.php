@@ -106,6 +106,7 @@ class Auth extends Dbh {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$email]);
         $rowCount = $stmt->rowCount();
+       var_dump($rowCount);
         if(!$rowCount) return null;
         return $rowCount;
         $stmt = null;
