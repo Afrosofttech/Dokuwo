@@ -26,6 +26,7 @@ class Auth extends Dbh {
 
         try {
             //Server settings
+            $mail->Host       = "mail.mydomain.me"; // SMTP server
             $mail->SMTPDebug = 2;                      // Enable verbose debug output
             $mail->isSMTP();                                            // Send using SMTP
             $mail->Host       = getenv('HOST');                    // Set the SMTP server to send through
