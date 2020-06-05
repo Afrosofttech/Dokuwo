@@ -32,7 +32,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="account/img/fav/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="account/img/fav/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="account/img/fav/favicon-16x16.png">
-    <link rel="manifest" href="img/fav/manifest.json">
+    <link rel="manifest" href="account/img/fav/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="account/img/fav/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
