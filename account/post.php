@@ -6,13 +6,12 @@ include 'includes/autoloader.inc.php';
 // if we were only interacting with the controllers and never with the views but if we are 
 // to use the first MVC model, then there will be no need for views here since Jquery will handle everything involving viewing
 $uri = $_SERVER['REQUEST_URI'];
-var_dump($uri);
 $urlParts = parse_url($uri, PHP_URL_PATH);
 $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
 
 $method =  $urlParts[sizeof($urlParts)-1];
 $contr =  $urlParts[sizeof($urlParts)-2];
-
+var_dump($contr. " ". $method);
  if($contr == 'authentication'){
    switch ($method){
        case "create_company_account":
