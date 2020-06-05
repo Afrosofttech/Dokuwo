@@ -12,7 +12,7 @@ class Auth extends Dbh {
                             1 => 'Month',
                             2 => 'Year'
                         );
-    private $baseUrl = 'https://dokuwo.herokuapp.com/'; // @ams => change this when we go live
+    private $baseUrl = 'https://dokuwo.herokuapp.com'; // @ams => change this when we go live
 
     public function create_account($email,$passwd, $hash, $usertype, $status){
         $sql = " INSERT INTO login (email,password, user_type, hash, status) VALUES(?,?,?,?,?)";
