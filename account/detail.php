@@ -81,10 +81,12 @@
   else{
     $.ajax({
       type:"GET",
-      url:"get.php/company/retrieve_login_info", //to be changed as it is for both jobseekers and companies
+      url:"get.php/company/retrieve_login_info",
+      dataType: "json",
       data:{"email" : email, "hash" : hash},
-      success:function(data){
-        var entity = $.parseJSON(data);
+      success:function(entity){
+	      console.log(entity);
+        //var entity = $.parseJSON(data);
 	console.log(entity);
 	      console.log(entity.user_type);
         if(entity == 'Inexistent') window.location.replace('authentication.php?attempt=<?php echo "Inexistent"; ?>');
