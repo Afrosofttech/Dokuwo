@@ -26,16 +26,21 @@ class Auth extends Dbh {
 
         try {
             //Server settings
-            $mail->Host       = "mail.mydomain.me"; // SMTP server
             $mail->SMTPDebug = 2;                      // Enable verbose debug output
             $mail->isSMTP();                                            // Send using SMTP
-            $mail->Host       = getenv('HOST');                    // Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-            $mail->Username   = getenv('USERNAME');                     // SMTP username
-            $mail->Password   = getenv('PASSWORD');                               // SMTP password
-            $mail->SMTPSecure = getenv('SMTP_SECURE');         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port       = getenv('PORT');                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+//             $mail->Host       = getenv('HOST');                    // Set the SMTP server to send through
+//             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+//             $mail->Username   = getenv('USERNAME');                     // SMTP username
+//             $mail->Password   = getenv('PASSWORD');                               // SMTP password
+//             $mail->SMTPSecure = getenv('SMTP_SECURE');         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+//             $mail->Port       = getenv('PORT');                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
+           $mail->Host       = 'smtp.mailtrap.io';                    // Set the SMTP server to send through
+           $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+           $mail->Username   = '31c1c5f2f68b05';                     // SMTP username
+           $mail->Password   = 'd52f01e0822c43';                               // SMTP password
+           $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+           $mail->Port       = 2525;  
             $mail->SMTPOptions = array(
                 'ssl' => array(
                     'verify_peer' => false,
