@@ -24,76 +24,73 @@ class Auth extends Dbh {
     public function send_activation_link($email,$hash,$usertype){
         $mail = new PHPMailer(true);
 
-       $HOST = getenv('HOST');
-       $USERNAME = getenv('USERNAME');
-       var_dump($HOST." ".$USERNAME);
-//         try {
-//             //Server settings
-//             $mail->SMTPDebug = 0;                      // Enable verbose debug output
-//             $mail->isSMTP();                                            // Send using SMTP
-//             $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
-//             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-//             $mail->Username   = 'dokuwo01@gmail.com';                     // SMTP username
-//             $mail->Password   = 'legaye@2020';                               // SMTP password
-//             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-//             $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+        try {
+            //Server settings
+            $mail->SMTPDebug = 0;                      // Enable verbose debug output
+            $mail->isSMTP();                                            // Send using SMTP
+            $mail->Host       = getenv('HOST');                    // Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+            $mail->Username   = getenv('USERNAME');                     // SMTP username
+            $mail->Password   = getenv('PASSWORD');                               // SMTP password
+            $mail->SMTPSecure = getenv('SMTP_SECURE');         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = getenv('PORT');;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
-//             $mail->SMTPOptions = array(
-//                 'ssl' => array(
-//                     'verify_peer' => false,
-//                     'verify_peer_name' => false,
-//                     'allow_self_signed' => true
-//                 )
-//             );
-//             //Recipients
-//             $mail->setFrom('dokuwo01@gmail.com', 'Dokuwo');
-//             $mail->addAddress($email);     // Add a recipient
-//             $mail->addReplyTo('dokuwo01@gmail.com', 'Dokuwo');
-//             $mail->addBCC('asj.sarjo@gmail.com', 'Dokuwo');
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
+            //Recipients
+            $mail->setFrom('dokuwo01@gmail.com', 'Dokuwo');
+            $mail->addAddress($email);     // Add a recipient
+            $mail->addReplyTo('dokuwo01@gmail.com', 'Dokuwo');
+            $mail->addBCC('asj.sarjo@gmail.com', 'Dokuwo');
 
-//             // Content
-//             $mail->isHTML(true);   // Set email format to HTML
-//             $mail->Subject = 'Account Activation';
-//             $mail->addEmbeddedImage('img/banner.png', 'image_cid');
-//             if($usertype == 'jobseeker'){
-//                 $mail->Body = '<div style="padding: 2px 16px;font-family: Times New Roman;font-size: 18px;">
-//                             <div style="padding: 2px 0px;">
-//                             <img src="cid:image_cid" width="100%" height="250px">
-//                             </div>
-//                             <p>Hello, Welcome to Dokuwo! Click 
-//                             <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>
-//                             Do connect with us on our social handles provided below. We are happy to have you on board.</p>
-//                             <div style="text-align: center;padding: 3px;background-color: Violet; color: white">
-//                             <a href="https://www.facebook.com/pg/Dokuwo-106334990997957">facebook</a>
-//                             <a href="https://twitter.com/Dokuwo1">Twitter</a></p>
-//                             <a href="https://www.linkedin.com/company/38126868/">linkedIn</a>
-//                             </div>
-//                         </div>';
-//                 $mail->AltBody = 'Hello, Welcome to Dokuwo! copy this link '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' into a website address bar to activate your account. We are happy have you on board.';
-//             }
-//             if($usertype == 'company'){
-//                 $mail->Body = '<div style="padding: 2px 16px;font-family: Times New Roman;font-size: 18px;">
-//                                     <div style="padding: 2px 0px;">
-//                                     <img src="cid:image_cid" width="100%" height="250px">
-//                                     </div>
-//                                     <p>Hello, Welcome to Dokuwo! Click 
-//                                     <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>There is a <b>free 14 days trial</b> which you can activate to enjoy all the services we offer for free.<br><br>
-//                                     Do connect with us on our social handles provided below. We are happy to have you on board.</p>
-//                                     <div style="text-align: center;padding: 3px;background-color: Violet; color: white">
-//                                     <a href="https://www.facebook.com/pg/Dokuwo-106334990997957">facebook</a>
-//                                     <a href="https://twitter.com/Dokuwo1">Twitter</a></p>
-//                                     <a href="https://www.linkedin.com/company/38126868/">linkedIn</a>
-//                                     </div>
-//                                 </div>';
-//                 $mail->AltBody = 'Hello, Welcome to Dokuwo! copy this link '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' into a website address bar to activate your account. There is a free 14 days trial which you can activate to enjoy all the services we offer for free. We are happy have you on board.';
-//             }
+            // Content
+            $mail->isHTML(true);   // Set email format to HTML
+            $mail->Subject = 'Account Activation';
+            $mail->addEmbeddedImage('img/banner.png', 'image_cid');
+            if($usertype == 'jobseeker'){
+                $mail->Body = '<div style="padding: 2px 16px;font-family: Times New Roman;font-size: 18px;">
+                            <div style="padding: 2px 0px;">
+                            <img src="cid:image_cid" width="100%" height="250px">
+                            </div>
+                            <p>Hello, Welcome to Dokuwo! Click 
+                            <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>
+                            Do connect with us on our social handles provided below. We are happy to have you on board.</p>
+                            <div style="text-align: center;padding: 3px;background-color: Violet; color: white">
+                            <a href="https://www.facebook.com/pg/Dokuwo-106334990997957">facebook</a>
+                            <a href="https://twitter.com/Dokuwo1">Twitter</a></p>
+                            <a href="https://www.linkedin.com/company/38126868/">linkedIn</a>
+                            </div>
+                        </div>';
+                $mail->AltBody = 'Hello, Welcome to Dokuwo! copy this link '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' into a website address bar to activate your account. We are happy have you on board.';
+            }
+            if($usertype == 'company'){
+                $mail->Body = '<div style="padding: 2px 16px;font-family: Times New Roman;font-size: 18px;">
+                                    <div style="padding: 2px 0px;">
+                                    <img src="cid:image_cid" width="100%" height="250px">
+                                    </div>
+                                    <p>Hello, Welcome to Dokuwo! Click 
+                                    <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>There is a <b>free 14 days trial</b> which you can activate to enjoy all the services we offer for free.<br><br>
+                                    Do connect with us on our social handles provided below. We are happy to have you on board.</p>
+                                    <div style="text-align: center;padding: 3px;background-color: Violet; color: white">
+                                    <a href="https://www.facebook.com/pg/Dokuwo-106334990997957">facebook</a>
+                                    <a href="https://twitter.com/Dokuwo1">Twitter</a></p>
+                                    <a href="https://www.linkedin.com/company/38126868/">linkedIn</a>
+                                    </div>
+                                </div>';
+                $mail->AltBody = 'Hello, Welcome to Dokuwo! copy this link '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' into a website address bar to activate your account. There is a free 14 days trial which you can activate to enjoy all the services we offer for free. We are happy have you on board.';
+            }
 
-//             $mail->send();
-//             return 'Success';
-//         } catch (Exception $e) {
+            $mail->send();
+            return 'Success';
+        } catch (Exception $e) {
         //@ams => we need to send a message to our self so as to know that a message was not sent. so basically store them in a table
             return "Error";
-//         }
+        }
     }
     protected function send_error_copy($email,$err_type){
         $sql = " INSERT INTO contact (contact_name,contact_email,subject,message) VALUES(?,?,?,?);";
