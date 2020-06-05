@@ -192,6 +192,7 @@
       });
     });
   }else if(entity.user_type == "jobseeker"){
+	  console.log(entity);
 	  console.log(entity.user_type);
       $('#message_body').html('<div class="card o-hidden border-0 shadow-lg my-5">'+
       '<div class="card-body p-0">'+
