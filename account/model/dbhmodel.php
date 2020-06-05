@@ -8,14 +8,14 @@ class Dbh {
     private $username = $dbparts['user'];
     private $password = $dbparts['pass'];
     private $dbname = ltrim($dbparts['path'],'/');
-    
+                var_dump($host." ".$username." ".$password." ".$dbname);
 //     private $host = "kl28h27lwgjntlbt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
 //     private $username = "euswoktlhfjaakft"; 
 //     private $password = "vhyoh0gvvc7mrp64";
 //     private $dbname = "	primary_app_db";
 
 protected function connect(){
-            var_dump('amadou jallow');
+
     $dsn ='mysql:host=' .$this->host. ';dbname=' .$this->dbname;
             //var_dump($dsn);
     $pdo = new PDO($dsn,$this->username,$this->password);    
