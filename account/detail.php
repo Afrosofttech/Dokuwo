@@ -85,6 +85,7 @@
       dataType: "json",
       data:{"email" : email, "hash" : hash},
       success:function(entity){
+	      console.log('amsjr');
 	      console.log(entity);
         //var entity = $.parseJSON(data);
 	console.log(entity);
