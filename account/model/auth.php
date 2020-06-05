@@ -34,7 +34,7 @@ class Auth extends Dbh {
             $mail->Username   = getenv('USERNAME');                     // SMTP username
             $mail->Password   = getenv('PASSWORD');                               // SMTP password
             $mail->SMTPSecure = getenv('SMTP_SECURE');         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port       = getenv('PORT');;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+            $mail->Port       = getenv('PORT');                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
             $mail->SMTPOptions = array(
                 'ssl' => array(
