@@ -15,9 +15,9 @@ class Dbh {
 //     private $dbname = "	primary_app_db";
 
 protected function connect(){
-
+            var_dump('amadou jallow');
     $dsn ='mysql:host=' .$this->host. ';dbname=' .$this->dbname;
-            var_dump($dsn);
+            //var_dump($dsn);
     $pdo = new PDO($dsn,$this->username,$this->password);    
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
