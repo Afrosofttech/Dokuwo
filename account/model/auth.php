@@ -35,12 +35,12 @@ class Auth extends Dbh {
 //             $mail->SMTPSecure = getenv('SMTP_SECURE');         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
 //             $mail->Port       = getenv('PORT');                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
-           $mail->Host       = 'smtp.mailtrap.io';                    // Set the SMTP server to send through
-           $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-           $mail->Username   = '31c1c5f2f68b05';                     // SMTP username
-           $mail->Password   = 'd52f01e0822c43';                               // SMTP password
-           $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-           $mail->Port       = 2525;  
+            $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+            $mail->Username   = 'dokuwo01@gmail.com';                     // SMTP username
+            $mail->Password   = 'legaye@2020';                               // SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = 587;   
             $mail->SMTPOptions = array(
                 'ssl' => array(
                     'verify_peer' => false,
