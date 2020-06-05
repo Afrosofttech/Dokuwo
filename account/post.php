@@ -11,7 +11,7 @@ $urlParts = explode('/',filter_var(rtrim($urlParts, '/'), FILTER_SANITIZE_URL));
 
 $method =  $urlParts[sizeof($urlParts)-1];
 $contr =  $urlParts[sizeof($urlParts)-2];
-var_dump($contr. " ". $method);
+
  if($contr == 'authentication'){
    switch ($method){
        case "create_company_account":
