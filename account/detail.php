@@ -74,7 +74,7 @@
   var email = urlParams.get('email');
   var hash = urlParams.get('hash');
   let country_curr = '';
-
+  console.log(email);
   if(email == null || email == '' || hash == null || hash == ''){
     window.location.replace('authentication.php?attempt=<?php echo "failed"; ?>');
   }
@@ -85,6 +85,8 @@
       data:{"email" : email, "hash" : hash},
       success:function(data){
         var entity = $.parseJSON(data);
+	console.log(entity);
+	      console.log(entity.user_type);
         if(entity == 'Inexistent') window.location.replace('authentication.php?attempt=<?php echo "Inexistent"; ?>');
         if(entity == 'Activated')  window.location.replace('authentication.php?attempt=<?php echo "Activated"; ?>');
         if(entity.user_type == "company"){
@@ -190,6 +192,7 @@
       });
     });
   }else if(entity.user_type == "jobseeker"){
+	  console.log(entity.user_type);
       $('#message_body').html('<div class="card o-hidden border-0 shadow-lg my-5">'+
       '<div class="card-body p-0">'+
         '<div class="row">'+
