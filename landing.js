@@ -393,14 +393,14 @@ function footer(){
                 '<form method="post" id="subscribe-form" name="subscribe-form" class="validate">'+
                   '<div class="form-group is-empty">'+
                     '<input type="email" value="" name="Email" class="form-control" id="EMAIL" placeholder="Enter Email..." required="">'+
-                    '<button type="submit" name="subscribe" id="subscribes" class="btn btn-common sub-btn"><i class="lni-envelope"></i></button>'+
+                    '<button type="button" name="subscribe" id="subscribes" class="btn btn-common sub-btn"><i class="lni-envelope"></i></button>'+
                     '<div class="clearfix"></div>'+
                   '</div>'+
                 '</form>'+
                 '<ul class="mt-3 footer-social">'+
-                  '<li><a class="facebook" href="https://www.facebook.com/pg/Dokuwo-106334990997957"><i class="lni-facebook-filled"></i></a></li>'+
-                  '<li><a class="twitter" href="https://twitter.com/Dokuwo1"><i class="lni-twitter-filled"></i></a></li>'+
-                  '<li><a class="linkedin" href="https://www.linkedin.com/company/38126868/"><i class="lni-linkedin-fill"></i></a></li>'+
+                  '<li><a class="facebook" href="https://www.facebook.com/pg/Dokuwo-106334990997957" target="_blank"><i class="lni-facebook-filled"></i></a></li>'+
+                  '<li><a class="twitter" href="https://twitter.com/Dokuwo1" target="_blank"><i class="lni-twitter-filled"></i></a></li>'+
+                  '<li><a class="linkedin" href="https://www.linkedin.com/company/38126868/" target="_blank"><i class="lni-linkedin-fill"></i></a></li>'+
                 '</ul> '+       
               '</div>'+
             '</div>'+
