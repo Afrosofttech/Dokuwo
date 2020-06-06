@@ -7,10 +7,8 @@ class Auth extends Dbh {
                             2 => 'Year'
                         );
     private $baseUrl = 'www.dokuwo.com'; // @ams => change this when we go live
-//     private $sendgrid_key = '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';
-       private $sendgrid_key = $_ENV['SEND_GRID_API'];
-       return var_dump($_ENV);
-       die;
+    private $sendgrid_key = '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';
+//        private $sendgrid_key = $_ENV['SEND_GRID_API'];
     public function create_account($email,$passwd, $hash, $usertype, $status){
         $sql = " INSERT INTO login (email,password, user_type, hash, status) VALUES(?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
