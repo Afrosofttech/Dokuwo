@@ -3115,7 +3115,7 @@ else{
                   '<li>30-day Expired</li>'+
                   '<li></li>'+
                 '</ul>'+
-                '<div class="price"><span>GMD</span>100<span>/Month</span></div>'+
+                '<div class="price"><span>GMD</span>150<span>/Month</span></div>'+
               '</div>'+
               
             '</div>'+
