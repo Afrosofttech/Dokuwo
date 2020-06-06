@@ -39,8 +39,8 @@ class Auth extends Dbh {
             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
             $mail->Username   = 'dokuwo01@gmail.com';                     // SMTP username
             $mail->Password   = 'legaye@2020';                               // SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port       = 587;   
+            $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = 465;   
 //             $mail->SMTPOptions = array(
 //                 'ssl' => array(
 //                     'verify_peer' => false,
