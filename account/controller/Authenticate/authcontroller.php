@@ -21,8 +21,8 @@ class AuthController extends Auth{
          $hash = md5(rand(0,1000));
          $password = password_hash($validated_data['password'], PASSWORD_DEFAULT);
          $res = $this->create_account($validated_data['email'],$password,$hash,$validated_data['tag'],0);
-         if($res == 'Success') return 'success';
-         if($res == "Error"){
+         if($res == 202) return 'success';
+         if(!$res == 202){
             $response = $this->send_error_copy($validated_data['email'],'Activation');
             return $response;
          } 
@@ -271,11 +271,11 @@ class AuthController extends Auth{
       public function reset_password(){
          $reset_email = self::validate_email();
          $result = $this->does_account_exist($reset_email['email']);
-         if($result == 'Error'){
+         if(!$result == 202){
             $response = $this->send_error_copy($reset_email['email'],'Password Reset');
             return $response;
          }  
-         return $result;
+         return 'Success';
       }
       public function validate_email(){
       require "gump.class.php";
