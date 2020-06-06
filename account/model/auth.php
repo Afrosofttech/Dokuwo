@@ -8,6 +8,7 @@ class Auth extends Dbh {
                         );
     private $baseUrl = 'www.dokuwo.com'; // @ams => change this when we go live
     private $sendgrid_key = getenv('SEND_GRID_API');
+   var_dump($sendgrid_key);
     public function create_account($email,$passwd, $hash, $usertype, $status){
         $sql = " INSERT INTO login (email,password, user_type, hash, status) VALUES(?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
