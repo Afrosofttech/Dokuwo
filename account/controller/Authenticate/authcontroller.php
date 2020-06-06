@@ -15,7 +15,6 @@ class AuthController extends Auth{
    }
 
    public function create_user_account(){
-     return getenv('SEND_GRID_API');
       $validated_data = self::validate_data();
       $verify_email = $this->verify_email($validated_data['email']);
       if($verify_email == null){
