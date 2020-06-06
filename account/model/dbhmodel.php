@@ -2,9 +2,9 @@
 
 class Dbh {
     
-    private $host = "kl28h27lwgjntlbt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
-    private $username = "euswoktlhfjaakft"; 
-    private $password = "vhyoh0gvvc7mrp64";
+    private $host = "v5bu25tv32c79mxn.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
+    private $username = "lj7ihg7dfn9h9zkt"; 
+    private $password = "a9kr4hk23y9uxifh";
     private $dbname = "primary_app_db";
 
 protected function connect(){
