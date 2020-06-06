@@ -41,13 +41,13 @@ class Auth extends Dbh {
             $mail->Password   = 'legaye@2020';                               // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
             $mail->Port       = 587;   
-            $mail->SMTPOptions = array(
-                'ssl' => array(
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
-                )
-            );
+//             $mail->SMTPOptions = array(
+//                 'ssl' => array(
+//                     'verify_peer' => false,
+//                     'verify_peer_name' => false,
+//                     'allow_self_signed' => true
+//                 )
+//             );
             //Recipients
             $mail->setFrom('dokuwo01@gmail.com', 'Dokuwo');
             $mail->addAddress($email);     // Add a recipient
