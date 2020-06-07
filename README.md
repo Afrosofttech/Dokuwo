@@ -1,6 +1,6 @@
 ## Career portal
 
-This is a simple software that makes job applications easy and and brings together companies and potential employees.
+This is a simple software that makes job applications easy and and brings together Recruiters and potential employees.
 
 ---
 
