@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="This is an accounting Software that aims to automate and make your accounting work simple.">
+  <meta name="description" content="This is a job hunting platform that brings together Recruiters, Freelancers and potential employees.">
   <meta name="author" content="Afrika Software Technologies">
   <link rel="apple-touch-icon" sizes="57x57" href="img/fav/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="img/fav/apple-icon-60x60.png">
