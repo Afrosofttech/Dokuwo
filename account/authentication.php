@@ -3,8 +3,6 @@
 	session_unset();
 	session_destroy();
 	include 'includes/functions.php';
-         var_dump($_ENV);
-var_dump('hello');
 ?>
 <!DOCTYPE html>
 <html lang="en">
