@@ -1,13 +1,13 @@
 <?php
 include_once 'dbhmodel.php';
 require("includes/sendgrid-php/sendgrid-php.php");
+define('SEND_GRID_API',  getenv('SEND_GRID_API'));
 class Auth extends Dbh {
    private $packs = array(
                             1 => 'Month',
                             2 => 'Year'
                         );
     private $baseUrl = 'www.dokuwo.com'; // @ams => change this when we go live
-    private $sendgrid_key = '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';
 //        private $sendgrid_key = $_ENV['SEND_GRID_API'];
     public function create_account($email,$passwd, $hash, $usertype, $status){
         $sql = " INSERT INTO login (email,password, user_type, hash, status) VALUES(?,?,?,?,?)";
@@ -55,7 +55,7 @@ class Auth extends Dbh {
         }
         $mail = new SendGrid\Mail($from, $subject, $to, $content);
         
-        $apiKey = $this->sendgrid_key;
+        $apiKey = SEND_GRID_API;
         $sg = new \SendGrid($apiKey);
         
         $response = $sg->client->mail()->send()->post($mail);
@@ -304,7 +304,7 @@ class Auth extends Dbh {
                                 </div>');
             $mail = new SendGrid\Mail($from, $subject, $to, $content);
             
-            $apiKey = $this->sendgrid_key;
+            $apiKey = SEND_GRID_API;
             $sg = new \SendGrid($apiKey);
             
             $response = $sg->client->mail()->send()->post($mail);
