@@ -6,10 +6,10 @@ define('PASSWORD',  getenv('PASSWORD'));
 define('DATABASE_NAME', getenv('DATABASE_NAME'));
 class Dbh {
     
-//         private $host = "v5bu25tv32c79mxn.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
-//         private $username = "lj7ihg7dfn9h9zkt";
-//         private $password = "a9kr4hk23y9uxifh";
-//         private $dbname = "primary_app_db";
+//         private $host = "localhost";
+//         private $username = "root";
+//         private $password = "";
+//         private $dbname = "career";
 
 protected function connect(){
     $dsn ='mysql:host=' .HOST. ';dbname=' .DATABASE_NAME;
