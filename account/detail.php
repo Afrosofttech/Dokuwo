@@ -100,16 +100,16 @@
               '<div>'+
            '<form class="user" method="POST" id="companydetail" enctype="multipart/form-data" autocomplete="off">'+
                 '<div class="form-group">'+
-                  '<input type="text" class="form-control form-control-user" name="name" id="name" placeholder="Company name">'+
+                  '<input type="text" class="form-control form-control-user" name="name" id="name" placeholder="Recruiter name">'+
                 '</div>'+
                 '<div class="form-group">'+
-                '<input type="email" class="form-control form-control-user" name="email" id="comp_email" placeholder="Company email">'+
+                '<input type="email" class="form-control form-control-user" name="email" id="comp_email" placeholder="Recruiter email">'+
                 '</div>'+
                 '<div class="form-group">'+
                 '<input type="text" class="form-control form-control-user" name="phone" id="comp_phone" placeholder="Phone number...">'+
                 '</div> '+
                 '<div class="form-group">'+
-                '<input type="text" class="form-control form-control-user" name="address" id="comp_address" placeholder="Company Address">'+
+                '<input type="text" class="form-control form-control-user" name="address" id="comp_address" placeholder="Recruiter Address">'+
                 '</div> '+
                 '<div class="form-group">'+
                 '<input type="text" class="form-control form-control-user" name="postalcode" id="postalcode" placeholder="Postal Code" maxlength="5">'+
