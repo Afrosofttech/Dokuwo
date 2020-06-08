@@ -56,7 +56,7 @@
 								<a href="#" id="jobseeker-form-link">Jobseeker</a>
 							</div>
                             <div class="col-xs-4">
-								<a href="#" id="company-form-link">Company</a>
+								<a href="#" id="company-form-link">Recruiter</a>
 							</div>
 						</div>
 						<hr>
