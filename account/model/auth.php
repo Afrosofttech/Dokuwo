@@ -17,7 +17,7 @@ class Auth extends Dbh {
         $stmt = null;
     }
     public function send_activation_link($email,$hash,$usertype){
-        $from = new SendGrid\Email('Dokuwo',"dokuwo01@gmail.com");
+        $from = new SendGrid\Email('Dokuwo',"dokuwo.gm@gmail.com");
         $subject = "Account Activation";
         $to = new SendGrid\Email(null,$email);
         if($usertype == 'jobseeker'){
@@ -284,7 +284,7 @@ class Auth extends Dbh {
     }
     protected function send_password_reset_link($email,$hash){
     
-            $from = new SendGrid\Email('Dokuwo',"dokuwo01@gmail.com");
+            $from = new SendGrid\Email('Dokuwo',"dokuwo.gm@gmail.com");
             $subject = "Password Reset";
             $to = new SendGrid\Email(null,$email);
             $content = new SendGrid\Content("text/html", 
