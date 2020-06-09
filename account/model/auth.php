@@ -25,7 +25,7 @@ class Auth extends Dbh {
         $content = new SendGrid\Content("text/html", 
         '<div style="padding: 2px 16px;font-family: Times New Roman;font-size: 18px;">
                             <div style="padding: 2px 0px;">
-                            <img alt="My Image" src="https://i.postimg.cc/SNyBLt2x/banner.png" width="100%" height="250px"/>
+                            <img alt="My Image" src="https://dokuwo-assets.s3.amazonaws.com/assets/img/b1.png" width="100%" height="250px"/>
                             </div>
                             <p>Hello, Welcome to Dokuwo! Click 
                             <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>
@@ -41,7 +41,7 @@ class Auth extends Dbh {
             $content = new SendGrid\Content("text/html", 
             '<div style="padding: 2px 16px;font-family: Times New Roman;font-size: 18px;">
                                     <div style="padding: 2px 0px;">
-                                    <img src="https://i.postimg.cc/SNyBLt2x/banner.png" width="100%" height="250px">
+                                    <img src="https://dokuwo-assets.s3.amazonaws.com/assets/img/b1.png" width="100%" height="250px">
                                     </div>
                                     <p>Hello, Welcome to Dokuwo! Click 
                                     <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>There is a <b>free 14 days trial</b> which you can activate to enjoy all the services we offer for free.<br><br>
@@ -290,7 +290,7 @@ class Auth extends Dbh {
             $content = new SendGrid\Content("text/html", 
             '<div style="padding: 2px 16px;font-family: Times New Roman;font-size: 18px;">
                                     <div style="padding: 2px 0px;">
-                                    <img src="https://i.postimg.cc/SNyBLt2x/banner.png" width="100%" height="250px">
+                                    <img src="https://dokuwo-assets.s3.amazonaws.com/assets/img/b1.png" width="100%" height="250px">
                                     </div>
                                     <p>Hello, We get it, stuff happens. Just Click 
                                     <a href="'.$this->baseUrl.'/account/pwd-reset.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to reset your <b>password!</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a 
