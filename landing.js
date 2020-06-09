@@ -2262,6 +2262,8 @@ else{
                   '</div>'+
                   '<p> '+ data[0].blog_content +'</p>'+
                 '</div>'+
+
+                '<div id="disqus_thread"></div>'+
                
                 '</div>'+
              
@@ -2284,7 +2286,19 @@ else{
           $(document).ready(function(){
             $('header .intro-landing').remove();
             $('.content-section').empty().append(blog_details);
-            blogSideBar()
+            blogSideBar();
+            //Disqus
+            var disqus_config = function () {
+              this.page.url = 'http://www.dokuwo.com/index.php';  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = blog_id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://dokuwo.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+
           });
         },
         error: function(err){
