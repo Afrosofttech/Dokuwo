@@ -116,7 +116,8 @@ let topbar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4
           profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
           '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+data.company_name+'</span>'+
           '<img class="img-profile rounded-circle" src="http://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'">'+
-        '</a>'+
+          '<img class="img-profile rounded-circle" src="http://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/27617fb-cover.png">'+
+          '</a>'+
 
         '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
           '<a class="dropdown-item" href="#" onclick="settings();">'+
