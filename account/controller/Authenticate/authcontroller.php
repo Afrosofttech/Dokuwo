@@ -151,6 +151,8 @@ class AuthController extends Auth{
    }
 
    public function companydetails(){
+      global $s3;
+      global $bucket;
       $company_data = self::validate_company();
       $exist = $this->does_profile_already_exist($company_data['id'],'company');
       if(!$exist){
