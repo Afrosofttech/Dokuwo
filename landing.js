@@ -390,13 +390,9 @@ function footer(){
               '<div class="widget">'+
                 '<h3 class="block-title">Subscribe Now</h3>'+
                 '<p>Subscribe to receive our newsletters!.</p> '+
-                '<form method="post" id="subscribe-form" name="subscribe-form" class="validate">'+
                   '<div class="form-group is-empty">'+
-                    '<input type="email" value="" name="Email" class="form-control" id="EMAIL" placeholder="Enter Email..." required="">'+
-                    '<button type="button" name="subscribe" id="subscribes" class="btn btn-common sub-btn"><i class="lni-envelope"></i></button>'+
-                    '<div class="clearfix"></div>'+
+                    '<a type="button" name="subscribe" target="_blank" id="subscribes" href="https://cdn.forms-content.sg-form.com/506bba9b-aaf1-11ea-8ee3-d62c3763a3b7" class="btn btn-common btn-lg " role="button" style="width:100%; height:20%;margin: 7px 0px;">Subscribe</i></a>'+
                   '</div>'+
-                '</form>'+
                 '<ul class="mt-3 footer-social">'+
                   '<li><a class="facebook" href="https://www.facebook.com/pg/Dokuwo-106334990997957" target="_blank"><i class="lni-facebook-filled"></i></a></li>'+
                   '<li><a class="twitter" href="https://twitter.com/Dokuwo1" target="_blank"><i class="lni-twitter-filled"></i></a></li>'+
