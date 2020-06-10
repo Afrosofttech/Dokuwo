@@ -2,6 +2,7 @@
 session_start();
 
 include_once 'model/auth.php';
+require_once 'includes/FileUpload.php';
 class AuthController extends Auth{
   
    public function login_id($email,$hash){
@@ -162,7 +163,8 @@ class AuthController extends Auth{
          $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
          if(in_array($ext, $valid_extensions)){ 
          $path = $path.strtolower($final_image);
-         move_uploaded_file($tmp,$path);
+         // move_uploaded_file($tmp,$path);
+         $upload = $s3->upload($bucket, $_FILES['logo']['name'], fopen($_FILES['logo']['tmp_name'], 'rb'), 'public-read');
          }else{
             return 'Invalid';  //@ams-> make sure this is also considered as a return value
          }
