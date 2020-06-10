@@ -2,6 +2,9 @@
 session_start();
 
 include_once 'model/auth.php';
+require('/app/vendor/autoload.php');
+
+define('BUCKET', getenv('S3_BUCKET_UPLOADS'));
 class AuthController extends Auth{
   
    public function login_id($email,$hash){
@@ -150,6 +153,12 @@ class AuthController extends Auth{
    }
 
    public function companydetails(){
+      // this will simply read AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY from env vars
+      $s3 = new Aws\S3\S3Client([
+          'version'  => '2006-03-01',
+          'region'   => 'us-east-1',
+      ]);
+      global $bucket;
       $company_data = self::validate_company();
       $exist = $this->does_profile_already_exist($company_data['id'],'company');
       if(!$exist){
@@ -162,7 +171,8 @@ class AuthController extends Auth{
          $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
          if(in_array($ext, $valid_extensions)){ 
          $path = $path.strtolower($final_image);
-         move_uploaded_file($tmp,$path);
+         // move_uploaded_file($tmp,$path);
+         $upload = $s3->upload(BUCKET, $final_image, fopen($_FILES['logo']['tmp_name'], 'rb'), 'public-read');
          }else{
             return 'Invalid';  //@ams-> make sure this is also considered as a return value
          }
