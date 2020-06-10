@@ -172,7 +172,7 @@ class AuthController extends Auth{
          if(in_array($ext, $valid_extensions)){ 
          $path = $path.strtolower($final_image);
          // move_uploaded_file($tmp,$path);
-         $upload = $s3->upload(BUCKET.'/uploads', $_FILES['logo']['name'], fopen($_FILES['logo']['tmp_name'], 'rb'), 'public-read');
+         $upload = $s3->upload(BUCKET.'&sol;uploads', $_FILES['logo']['name'], fopen($_FILES['logo']['tmp_name'], 'rb'), 'public-read');
          }else{
             return 'Invalid';  //@ams-> make sure this is also considered as a return value
          }
