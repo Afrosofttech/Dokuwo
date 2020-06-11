@@ -158,7 +158,6 @@ class AuthController extends Auth{
           'version'  => 'latest',
           'region'   => 'us-east-1',
       ]);
-      global $bucket;
       $company_data = self::validate_company();
       $exist = $this->does_profile_already_exist($company_data['id'],'company');
       if(!$exist){
@@ -197,7 +196,7 @@ class AuthController extends Auth{
 // get the image content-type
    public function content_type($ext,$valid_extensions,$content_map){
       $key = array_keys($valid_extensions, $ext);
-      return $content_map[$key[0]];
+      return $content_map[$valid_extensions[$key[0]]];
    }
 //  admin account creation by super admin
    public function create_admin_account(){
