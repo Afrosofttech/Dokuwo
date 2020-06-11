@@ -87,6 +87,10 @@ class AuthController extends Auth{
    }
 
    public function jobseekerdetails(){
+      $s3 = new Aws\S3\S3Client([
+         'version'  => 'latest',
+         'region'   => 'us-east-1',
+     ]);
       $v_data = self::validate_jobseeker();
       $exist = $this->does_profile_already_exist($v_data['id'],'jobseeker');
       if(!$exist){
@@ -95,10 +99,10 @@ class AuthController extends Auth{
       $dateofbirth = date('Y-m-d',$time);
       $fullname = $v_data['firstname'].' '.$v_data['lastname'];
 
-      $targetDir = 'uploads/';
+      // $targetDir = 'uploads/';
       $valid_jobseeker_extensions = array(
          array('jpeg', 'jpg', 'png'),
-         array('jpeg', 'jpg', 'png', 'pdf' , 'doc' , 'docx' , 'ppt'),
+         array('jpeg', 'jpg', 'png', 'pdf' , 'doc' , 'docx' , 'txt', 'zip'),
       );
 
       if($_FILES["image"]["name"] != "" && $_FILES["CV"]["name"] != ""){
@@ -107,15 +111,33 @@ class AuthController extends Auth{
          $ext = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
          $ext_cv = strtolower(pathinfo($_FILES["CV"]["name"], PATHINFO_EXTENSION));
          if(in_array($ext, $valid_jobseeker_extensions[0])){ 
-            $targetDir = $targetDir.strtolower($final_image);
-            move_uploaded_file($_FILES["image"]["tmp_name"],$targetDir);
+            // $targetDir = $targetDir.strtolower($final_image);
+            //move_uploaded_file($_FILES["image"]["tmp_name"],$targetDir);
+            $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png');
+            $contentType = $this->content_type($ext,$valid_jobseeker_extensions[0],$content_map);
+            $upload = $s3->putObject([
+               'Bucket' => BUCKET,
+               'Key'    => $final_image,
+               'Body'   => fopen($_FILES["image"]["tmp_name"], 'r'),
+               'ACL'    => 'public-read',
+               'ContentType' => $contentType
+           ]);
          }else{
                return 'Invalid Image';
          }
          if(in_array($ext_cv, $valid_jobseeker_extensions[1])){ 
-         $targetDir = 'uploads/';
-         $targetDir = $targetDir.strtolower($final_cv);
-         move_uploaded_file($_FILES["CV"]["tmp_name"],$targetDir);
+         // $targetDir = 'uploads/';
+         // $targetDir = $targetDir.strtolower($final_cv);
+         // move_uploaded_file($_FILES["CV"]["tmp_name"],$targetDir);
+         $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png','pdf' => 'application/pdf','doc' => 'application/msword','docx' => 'application/msword','txt' => 'text/plain','zip' => 'application/zip');
+         $contentType = $this->content_type($ext_cv,$valid_jobseeker_extensions[1],$content_map);
+         $upload = $s3->putObject([
+            'Bucket' => BUCKET,
+            'Key'    => $final_cv,
+            'Body'   => fopen($_FILES["CV"]["tmp_name"], 'r'),
+            'ACL'    => 'public-read',
+            'ContentType' => $contentType
+        ]);
          }else{
             return 'Invalid CV';
          }
@@ -125,8 +147,17 @@ class AuthController extends Auth{
          $final_image = strtolower(rand(1000,1000000).$_FILES["image"]["name"]);
          $ext = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
          if(in_array($ext, $valid_jobseeker_extensions[0])){ 
-            $targetDir = $targetDir.strtolower($final_image);
-            move_uploaded_file($_FILES["image"]["tmp_name"],$targetDir);
+            // $targetDir = $targetDir.strtolower($final_image);
+            // move_uploaded_file($_FILES["image"]["tmp_name"],$targetDir);
+            $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png');
+            $contentType = $this->content_type($ext,$valid_jobseeker_extensions[0],$content_map);
+            $upload = $s3->putObject([
+               'Bucket' => BUCKET,
+               'Key'    => $final_image,
+               'Body'   => fopen($_FILES["image"]["tmp_name"], 'r'),
+               'ACL'    => 'public-read',
+               'ContentType' => $contentType
+           ]);
          }else{
                return 'Invalid Image';
          }
@@ -136,8 +167,17 @@ class AuthController extends Auth{
          $final_cv = strtolower(rand(1000,1000000).$_FILES["CV"]["name"]);
          $ext_cv = strtolower(pathinfo($_FILES["CV"]["name"], PATHINFO_EXTENSION));
          if(in_array($ext_cv, $valid_jobseeker_extensions[1])){ 
-            $targetDir = $targetDir.strtolower($final_cv);
-            move_uploaded_file($_FILES["CV"]["tmp_name"],$targetDir);
+            // $targetDir = $targetDir.strtolower($final_cv);
+            // move_uploaded_file($_FILES["CV"]["tmp_name"],$targetDir);
+            $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png','pdf' => 'application/pdf','doc' => 'application/msword','docx' => 'application/msword','txt' => 'text/plain','zip' => 'application/zip');
+            $contentType = $this->content_type($ext_cv,$valid_jobseeker_extensions[1],$content_map);
+            $upload = $s3->putObject([
+               'Bucket' => BUCKET,
+               'Key'    => $final_cv,
+               'Body'   => fopen($_FILES["CV"]["tmp_name"], 'r'),
+               'ACL'    => 'public-read',
+               'ContentType' => $contentType
+           ]);
          }else{
             return 'Invalid CV';
          }
