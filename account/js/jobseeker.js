@@ -262,7 +262,7 @@ function loadJobseekerDashboard(){
             if(data != 400){
             profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
             '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+data[0].fullName+'</span>'+
-            '<img class="img-profile rounded-circle" src="uploads/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'">'+
+            '<img class="img-profile rounded-circle" src="https://dokuwo-uploads.s3.amazonaws.com/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'">'+
           '</a>'+
 
           '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
@@ -321,7 +321,7 @@ $.ajax({
        '<div class="container">'+
        '<div class="row justify-content-md-center mb-4">'+
        '<div class="col col-lg-4">'+
-       '<img src="uploads/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+       '<img src="https://dokuwo-uploads.s3.amazonaws.com/'+((data[0].image == "" || data[0].image == null)?"default.jpg":data[0].image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
      '</div>'+
        '<div class="col-lg-4">'+
          '<ul class="ml-4 mb-0 fa-ul text-muted">'+
@@ -452,7 +452,7 @@ function jobs(start,finish){
                 '<div class="row">'+
                   '<div class="col-lg-4 col-md-4 col-xs-12">'+
                     '<div class="job-company-logo">'+
-                      '<img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
+                      '<img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
                     '</div>'+
                     '<div class="job-details">'+
                       '<h3>'+val.job_name+'</h3>'+
@@ -593,7 +593,7 @@ function jobs(start,finish){
                     '<div class="row">'+
                       '<div class="col-lg-4 col-md-4 col-xs-12">'+
                         '<div class="job-company-logo">'+
-                          '<img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
+                          '<img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
                         '</div>'+
                         '<div class="job-details">'+
                           '<h3>'+val.job_name+'</h3>'+
@@ -676,7 +676,7 @@ $.ajax({
     
               '<div class="breadcrumb-wrapper">'+
              ' <div class="img-wrapper">'+
-                '<img src="'+((data.logo == 'null')?"https://ui-avatars.com/api/?name="+data.company_name.replace(/ /g, '+'):'uploads/'+data.logo)+'" style="height: 5rem;width: 5rem;" alt="'+data.company_name+'">'+
+                '<img src="'+((data.logo == 'null')?"https://ui-avatars.com/api/?name="+data.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+data.logo)+'" style="height: 5rem;width: 5rem;" alt="'+data.company_name+'">'+
               '</div>'+
               '<div class="content">'+
                 '<h3 class="product-title font-weight-bold">Hiring '+data.job_name+'</h3>'+
@@ -939,7 +939,7 @@ function selectACompanyToMsg(){
                             '<td>'+
                                 '<input type="hidden" value="" id="'+val.login_id+'">'+
                             '</td>'+
-                            '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt=""/>'+
+                            '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt=""/>'+
                             '<div class="status-indicator bg-success"></div>'+
                             '</td>'+
                             '<td class="full-name"><b>'+val.company_name+'</b></td>'+
@@ -1164,9 +1164,9 @@ $.ajax({
       let images = ['jpeg', 'jpg', 'png'];
     temp += '<li>'+
               '<div class="mailbox-attachment-info">'+
-                '<a href="uploads/'+val.attachment+'" target="_blank" class="mailbox-attachment-name"><i class="'+(images.includes(extension)?'fas fa-camera':'fas fa-paperclip')+'"></i> '+val.attachment.replace(/[0-9]{6}/g, '')+'</a>'+
+                '<a href="https://dokuwo-uploads.s3.amazonaws.com/'+val.attachment+'" target="_blank" class="mailbox-attachment-name"><i class="'+(images.includes(extension)?'fas fa-camera':'fas fa-paperclip')+'"></i> '+val.attachment.replace(/[0-9]{6}/g, '')+'</a>'+
                     '<span class="mailbox-attachment-size clearfix mt-1">'+
-                      '<a href="uploads/'+val.attachment+'" target="_blank" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>'+
+                      '<a href="https://dokuwo-uploads.s3.amazonaws.com/'+val.attachment+'" target="_blank" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>'+
                     '</span>'+
               '</div>'+
             '</li>';
@@ -1418,7 +1418,7 @@ $.ajax({
                           '<td>'+
                               '<input type="hidden" value="" id="'+val.login_id+'">'+
                           '</td>'+
-                          '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'uploads/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'"/>'+
+                          '<td class="img-link"><img class="rounded-circle img-thumbnail" src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'"/>'+
                           '<div class="status-indicator bg-success"></div>'+
                           '</td>'+
                           '<td class="full-name"><b>'+val.company_name+'</b></td>'+
@@ -2309,7 +2309,7 @@ let temp='<div class="content-wrapper">'+
         ' <div class="card card-primary card-outline mb-3" style="border-top: 3px solid #007bff;">'+
           ' <div class="card-body box-profile">'+
               '<div class="text-center">'+
-                '<img class="img-fluid img-circle img-thumbnail" src="uploads/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'" style="width:100%;height:150px" alt="User profile picture">'+
+                '<img class="img-fluid img-circle img-thumbnail" src="https://dokuwo-uploads.s3.amazonaws.com/'+((data[0].image==null || data[0].image=='')?'default.jpg':data[0].image)+'" style="width:100%;height:150px" alt="User profile picture">'+
               '</div>'+
               '<h4 class="profile-username text-center">'+data[0].fullName+'</h4>'+
               '<ul class="list-group list-group-unbordered mb-3">'+
@@ -2326,7 +2326,7 @@ let temp='<div class="content-wrapper">'+
                 '<i class="fas fa-lg fa-building"></i><b> Address</b> <a class="float-right">'+data[0].address+'</a>'+
               '</li>'+
               '</ul>'+
-              '<a href="'+((data[0].CV == null || data[0].CV == 'null' || data[0].CV == '')?'javascript:void();':'uploads/'+data[0].CV)+'" target="_blank" class="btn btn-primary btn-block"><b>View CV</b></a>'+
+              '<a href="'+((data[0].CV == null || data[0].CV == 'null' || data[0].CV == '')?'javascript:void();':'https://dokuwo-uploads.s3.amazonaws.com/'+data[0].CV)+'" target="_blank" class="btn btn-primary btn-block"><b>View CV</b></a>'+
             '</div>'+
             '<!-- /.card-body -->'+
           '</div>'+
@@ -2540,7 +2540,7 @@ let temp='<div class="content-wrapper">'+
                       '<div class="p-2 bd-highlight">'+
                       
                         '<div class="card" style="width: 12rem;">'+
-                          '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                          '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
                           '</div>'+
@@ -2550,7 +2550,7 @@ let temp='<div class="content-wrapper">'+
                       '<div class="p-2 bd-highlight">'+
 
                         '<div class="card" style="width: 12rem;">'+
-                          '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                          '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
                           '</div>'+
@@ -2560,7 +2560,7 @@ let temp='<div class="content-wrapper">'+
                       '<div class="p-2 bd-highlight">'+
 
                         '<div class="card" style="width: 12rem;">'+
-                          '<img src="uploads/default.jpg" class="card-img-top" alt="...">'+
+                          '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
                           '</div>'+
