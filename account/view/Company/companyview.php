@@ -21,7 +21,7 @@ class CompanyView extends Company{
        $result = floor(($count/10)*100);
        $dbContentArray['isProfileComplete'] = $result;
        $noOfJobseekers = $this->get_no_of_job_seekers();
-       if($company == 400) $noOfJobseekers = 0; 
+       if($noOfJobseekers == 400) $noOfJobseekers = 0; 
        $dbContentArray['noOfJobseekers'] = $noOfJobseekers;
        $res= (new Auth())->get_recruiter_package_info($login_id);
        $dbContentArray['package'] = $res['package'];

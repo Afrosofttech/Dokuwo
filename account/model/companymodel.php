@@ -19,7 +19,7 @@ class Company extends Dbh{
     public function get_no_of_job_seekers(){ 
         $sql = "Select * from job_seeker";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([]);
+        $stmt->execute();
         $rowCount = $stmt->rowCount();
         if(!$rowCount) return self::fail;
         return  $rowCount ;
