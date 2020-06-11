@@ -1173,7 +1173,6 @@ else{
                         '<div class="col-md-4 col-sm-4 col-lg-4">'+ 
                           '<!-- Candidate Contact -->'+
                           '<div class="candidateinfo">'+
-                          `<div class="loctext"><i class="fa fa-calendar-alt fa-lg" aria-hidden="true"></i> ${formatMonth(dob.getMonth())} ${dob.getDate()}, ${dob.getFullYear()}</div>`+
                             '<div class="loctext"><i class="fa fa-tag fa-lg" aria-hidden="true"></i> '+ data.details[0].category +'</div>'+
                             '<div class="loctext"><i class="fa fa-phone fa-lg" aria-hidden="true"></i> '+ data.details[0].phone+'</div>'+
                             '<div class="loctext"><i class="fa fa-globe fa-lg" aria-hidden="true"></i> '+ data.details[0].country +'</div>'+
