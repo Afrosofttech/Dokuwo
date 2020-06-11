@@ -55,7 +55,7 @@ class JobseekerMessagesController extends Jobseeker{
             }
             return array('message' => 'message successfully sent!', 'status' => 'success');
         }else{
-        $res = $this->send_msg_to_a_company($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body']);
+        $res = $this->send_msg_to_a_company($_POST['creator_id'],$_POST['creator_name'],$_POST['recipient_id'],$_POST['recipient_name'],$_POST['parent_msg_id'],$_POST['subject'],$_POST['msg_body'],'');
         return $res;
         }
     }
