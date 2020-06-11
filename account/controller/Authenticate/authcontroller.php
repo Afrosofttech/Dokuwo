@@ -172,6 +172,7 @@ class AuthController extends Auth{
          if(in_array($ext, $valid_extensions)){ 
          $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png');
          $contentType = $this->content_type($ext,$valid_extensions,$content_map);
+         var_dump($contentType); die;
          // move_uploaded_file($tmp,$path);
          $upload = $s3->putObject([
             'Bucket' => $bucket,
