@@ -127,6 +127,7 @@ class Company extends Dbh{
         $result = $stmt->fetchAll();
         if(sizeof($result) > 0){
             foreach ($result as $key => $value) {
+                $result[$key]['message_body'] = htmlspecialchars_decode($result[$key]['message_body'], ENT_QUOTES);
                 $result[$key]['attachment'] = ($this->contains_attachments($value['message_id']))? true: false;
          }
         }
@@ -194,7 +195,6 @@ class Company extends Dbh{
     }else{//change this
         $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt1->execute([$creator_id,$creator_name,$Subject,htmlspecialchars($messageBody, ENT_QUOTES),0,$date,$parent_msg_id]);
-         var_dump(htmlspecialchars($messageBody, ENT_QUOTES));
     }
         //AMS: this query is not efficient although it is working. I should be using lastInsertId()
         //but due to some unknown reasons, it is not working. so i will revise it later.
