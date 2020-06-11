@@ -59,11 +59,11 @@ class JobseekerMessagesController extends Jobseeker{
         return $res;
         }
     }
-        // get the image content-type
-        public function content_type($ext,$valid_extensions,$content_map){
-            $key = array_keys($valid_extensions, $ext);
-            return $content_map[$valid_extensions[$key[0]]];
-       }
+    // get the image content-type
+    public function content_type($ext,$valid_extensions,$content_map){
+        $key = array_keys($valid_extensions, $ext);
+        return $content_map[$valid_extensions[$key[0]]];
+    }
     public function forward_msg_to_company($creator_id,$creator_name,$recipient_id,$recipient_name,$message_id)
     {
         $res =$this->forward_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,$message_id);

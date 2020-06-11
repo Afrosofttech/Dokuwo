@@ -187,7 +187,7 @@ class Company extends Dbh{
     if($this->account_removed($recipient_id)){
         return  array('message' => 'This user\'s account have already been removed after numerous reports.');
     }
-    $date = date('Y-m-d H:i:sa');
+    $date = date('Y-m-d H:i:s');
     if($parent_msg_id =='' || $parent_msg_id == null || $parent_msg_id == 'null'){
         $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name,subject,message_body,sender_delete_request,create_date) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date]);
