@@ -74,6 +74,7 @@ class Company extends Dbh{
         $stmt->execute([$msg_id]);
         $result = $stmt->fetch();
         if($res) $result['attachments'] = $res;
+        $result['message_body'] = htmlspecialchars_decode($result['message_body']);
         return  $result;
         $stmt = null;
     }
