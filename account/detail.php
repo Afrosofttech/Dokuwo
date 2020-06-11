@@ -353,7 +353,7 @@ $(document).ready(function(){
             }else if( response == "Invalid Image"){
                 swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
             }else if(response == "Invalid CV"){
-               swal('Invalid CV type!','You can only upload png, jpeg, pdf, doc, docx, ppt or jpg','error','Cool');
+               swal('Invalid CV type!','You can only upload jpeg, jpg, png, pdf, doc, docx, txt, zip','error','Cool');
             }else if(response == 'duplicate'){
                window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');
             }
