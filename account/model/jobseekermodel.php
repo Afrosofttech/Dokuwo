@@ -202,18 +202,19 @@ class Jobseeker extends Dbh{
     /**
      * @param type ->{'withAttachment' -> means there are attachments}
      */
-    protected function send_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody,$type){
+    protected function send_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody,$type=''){
         
         if($this->have_blocked($creator_id,$recipient_id)){
             return  array('message' => 'You have been blocked by this company. Your message is not delivered.');
         }
         $date = date('Y-m-d H:i:sa');
         if($parent_msg_id =='' || $parent_msg_id == null || $parent_msg_id == 'null'){
-            $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?,?,?)");
+            $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?,?,?);");
             $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date,NULL]);
-            var_dump($creator_id." ".$creator_name." ".$recipient_id." ".$recipient_name." ".$parent_msg_id." ".$Subject." ".$messageBody." ".$type);
+            var_dump($stmt1);
+            var_dump($creator_id." ".$creator_name." ".$recipient_id." ".$recipient_name." ".$parent_msg_id." ".$Subject." ".$messageBody." ".$date);
         }else{//change this
-            $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?, ?, ?);");
             $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date,$parent_msg_id]);
         }
             //AMS-> this query is not efficient although it is working. I should be using lastInsertId()
