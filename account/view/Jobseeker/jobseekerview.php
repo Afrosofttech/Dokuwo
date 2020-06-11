@@ -8,7 +8,8 @@ class JobseekerView extends Jobseeker{
         $count = 0;
         $jobSeeker = $this->get_jobseeker($login_id);
         $jobsAvailable = $this->get_no_of_jobs_available();
-        $dbContentArray['noOfJobsAvailable'] = $jobsAvailable;
+        if($jobsAvailable == 400) $dbContentArray['noOfJobsAvailable'] = 0;
+        else $dbContentArray['noOfJobsAvailable'] = $jobsAvailable;
         foreach ($jobSeeker[0] as $key => $value) {
             if ($value != '' || $value != null){
                 $count += 1;
