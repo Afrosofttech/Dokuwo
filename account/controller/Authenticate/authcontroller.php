@@ -178,7 +178,7 @@ class AuthController extends Auth{
             'Key'    => $final_image,
             'Body'   => fopen($_FILES["logo"]["tmp_name"], 'r'),
             'ACL'    => 'public-read',
-            'ContentType' => 'image/jpeg'
+            'ContentType' => $contentType
         ]);
          $upload = $s3->upload(BUCKET, $_FILES['logo']['name'], fopen($_FILES['logo']['tmp_name'], 'rb'), 'public-read');
          }else{
@@ -197,11 +197,6 @@ class AuthController extends Auth{
 // get the image content-type
    public function content_type($ext,$valid_extensions,$content_map){
       $key = array_keys($valid_extensions, $ext);
-      $contentType = array(
-         'jpeg' => 'image/jpeg',
-         'jpg' => 'image/jpeg',
-         'png' => 'image/png'
-      );
       return $content_map[$key[0]];
    }
 //  admin account creation by super admin
