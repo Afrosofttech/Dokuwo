@@ -24,7 +24,7 @@ class SettingsController extends Company{
         $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
         if(in_array($ext, $valid_extensions)){ 
            $Details = $this->get_company($v_data['login_id']);
-           if($Details['logo'] !== null && $Details['logo'] !==""){
+           if($Details['logo'] !== null || $Details['logo'] !==""){
             //   unlink($path.$Details['logo']);
               $result = $s3->deleteObject([
                'Bucket' => BUCKET,
@@ -32,6 +32,8 @@ class SettingsController extends Company{
            ]);
            }
             // move_uploaded_file($tmp,$path);
+            $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png');
+            $contentType = $this->content_type($ext,$valid_extensions,$content_map);
             $upload = $s3->putObject([
                'Bucket' => BUCKET,
                'Key'    => $final_image,
@@ -46,7 +48,11 @@ class SettingsController extends Company{
         $res = $this->update_company_profile($v_data['login_id'],$v_data['name'],$v_data['email'],$v_data['phone'],$v_data['country'],$v_data['address'],$password,$v_data['currency'],$v_data['code'],$final_image);
         return $res;
     }
-
+   // get the image content-type
+    public function content_type($ext,$valid_extensions,$content_map){
+      $key = array_keys($valid_extensions, $ext);
+      return $content_map[$valid_extensions[$key[0]]];
+    }
     public function update_admin(){
       $v_data = self::validate_data();
       $res = $this->updateAdmin($v_data['name'],$v_data['email'],$v_data['password'],$v_data['login_id']);
