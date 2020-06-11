@@ -194,6 +194,7 @@ class Company extends Dbh{
     }else{//change this
         $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date,$parent_msg_id]);
+        var_dump($messageBody);
     }
         //AMS: this query is not efficient although it is working. I should be using lastInsertId()
         //but due to some unknown reasons, it is not working. so i will revise it later.
