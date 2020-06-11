@@ -202,7 +202,7 @@ class Jobseeker extends Dbh{
     /**
      * @param type ->{'withAttachment' -> means there are attachments}
      */
-    protected function send_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody,$type=''){
+    protected function send_msg_to_a_company($creator_id,$creator_name,$recipient_id,$recipient_name,$parent_msg_id,$Subject,$messageBody,$type){
         
         if($this->have_blocked($creator_id,$recipient_id)){
             return  array('message' => 'You have been blocked by this company. Your message is not delivered.');
