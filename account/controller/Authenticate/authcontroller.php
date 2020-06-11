@@ -162,7 +162,6 @@ class AuthController extends Auth{
       $exist = $this->does_profile_already_exist($company_data['id'],'company');
       if(!$exist){
       $valid_extensions = array('jpeg', 'jpg', 'png');
-      $path = 'uploads/';
       $img = $_FILES["logo"]["name"]; 
       $tmp = $_FILES["logo"]["tmp_name"]; 
       if($_FILES["logo"]["name"] != ""){
@@ -173,13 +172,13 @@ class AuthController extends Auth{
          $contentType = $this->content_type($ext,$valid_extensions,$content_map);
          // move_uploaded_file($tmp,$path);
          $upload = $s3->putObject([
-            'Bucket' => $bucket,
+            'Bucket' => BUCKET,
             'Key'    => $final_image,
             'Body'   => fopen($_FILES["logo"]["tmp_name"], 'r'),
             'ACL'    => 'public-read',
             'ContentType' => $contentType
         ]);
-         $upload = $s3->upload(BUCKET, $_FILES['logo']['name'], fopen($_FILES['logo']['tmp_name'], 'rb'), 'public-read');
+         // $upload = $s3->upload(BUCKET, $_FILES['logo']['name'], fopen($_FILES['logo']['tmp_name'], 'rb'), 'public-read');
          }else{
             return 'Invalid';  //@ams-> make sure this is also considered as a return value
          }
