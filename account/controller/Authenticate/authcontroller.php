@@ -155,7 +155,7 @@ class AuthController extends Auth{
    public function companydetails(){
       // this will simply read AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY from env vars
       $s3 = new Aws\S3\S3Client([
-          'version'  => '2006-03-01',
+          'version'  => 'latest',
           'region'   => 'us-east-1',
       ]);
       global $bucket;
@@ -170,8 +170,16 @@ class AuthController extends Auth{
          $final_image = rand(1000,1000000).$img;
          $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
          if(in_array($ext, $valid_extensions)){ 
-         $path = $path.strtolower($final_image);
+         $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png');
+         $contentType = $this->content_type($ext,$valid_extensions,$content_map);
          // move_uploaded_file($tmp,$path);
+         $upload = $s3->putObject([
+            'Bucket' => $bucket,
+            'Key'    => $final_image,
+            'Body'   => fopen($_FILES["logo"]["tmp_name"], 'r'),
+            'ACL'    => 'public-read',
+            'ContentType' => 'image/jpeg'
+        ]);
          $upload = $s3->upload(BUCKET, $_FILES['logo']['name'], fopen($_FILES['logo']['tmp_name'], 'rb'), 'public-read');
          }else{
             return 'Invalid';  //@ams-> make sure this is also considered as a return value
@@ -186,7 +194,16 @@ class AuthController extends Auth{
          return 'duplicate';
       }
    }
-
+// get the image content-type
+   public function content_type($ext,$valid_extensions,$content_map){
+      $key = array_keys($valid_extensions, $ext);
+      $contentType = array(
+         'jpeg' => 'image/jpeg',
+         'jpg' => 'image/jpeg',
+         'png' => 'image/png'
+      );
+      return $content_map[$key[0]];
+   }
 //  admin account creation by super admin
    public function create_admin_account(){
    $validated_data = self::validate_data();
