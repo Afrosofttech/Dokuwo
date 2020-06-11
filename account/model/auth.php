@@ -23,7 +23,7 @@ class Auth extends Dbh {
         if($usertype == 'jobseeker'){
 
         $content = new SendGrid\Content("text/html", 
-        '<div style="padding: 2% 200%;font-family: Times New Roman;font-size: 18px;">
+        '<div style="padding: 2px 100px;font-family: Times New Roman;font-size: 18px;">
                             <div style="padding: 2px 0px;">
                             <img alt="My Image" src="https://dokuwo-assets.s3.amazonaws.com/assets/img/b1.png" width="100%" height="250px"/>
                             </div>
@@ -39,7 +39,7 @@ class Auth extends Dbh {
         }
         if($usertype == 'company'){
             $content = new SendGrid\Content("text/html", 
-            '<div style="padding: 2% 200%;font-family: Times New Roman;font-size: 18px;">
+            '<div style="padding: 2px 100px;font-family: Times New Roman;font-size: 18px;">
                                     <div style="padding: 2px 0px;">
                                     <img src="https://dokuwo-assets.s3.amazonaws.com/assets/img/b1.png" width="100%" height="250px">
                                     </div>
@@ -288,7 +288,7 @@ class Auth extends Dbh {
             $subject = "Password Reset";
             $to = new SendGrid\Email(null,$email);
             $content = new SendGrid\Content("text/html", 
-            '<div style="padding: 2% 200%;font-family: Times New Roman;font-size: 18px;">
+            '<div style="padding: 2px 100px;font-family: Times New Roman;font-size: 18px;">
                                     <div style="padding: 2px 0px;">
                                     <img src="https://dokuwo-assets.s3.amazonaws.com/assets/img/b1.png" width="100%" height="250px">
                                     </div>
