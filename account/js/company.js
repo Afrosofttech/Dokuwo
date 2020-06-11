@@ -115,7 +115,7 @@ let topbar = '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4
           if(data != 400){
           profile += '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
           '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'+data.company_name+'</span>'+
-           '<img class="img-profile rounded-circle" src="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'">'+
+           '<img class="img-profile rounded-circle" src="https://dokuwo-uploads.s3.amazonaws.com/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'">'+
         '</a>'+
 
         '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in userProfile" aria-labelledby="userDropdown">'+
@@ -318,7 +318,7 @@ $.ajax({
           '<div class="col col-lg-2">'+
           '</div>'+
           '<div class="col-md-auto">'+
-            '<img src="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+((data.logo == "" || data.logo == null)?"default.jpg":data.logo)+'" class="card-img-top rounded-circle img-thumbnail" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+            '<img src="https://dokuwo-uploads.s3.amazonaws.com/'+((data.logo == "" || data.logo == null)?"default.jpg":data.logo)+'" class="card-img-top rounded-circle img-thumbnail" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
           '</div>'+
           '<div class="col col-lg-2">'+
           '</div>'+
@@ -619,9 +619,9 @@ function viewMessage(msg_id,jobseeker_name,jobseeker_id){
       let images = ['jpeg', 'jpg', 'png'];
       temp += '<li>'+
       '<div class="mailbox-attachment-info">'+
-        '<a href="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+val.attachment+'" target="_blank" class="mailbox-attachment-name"><i class="'+(images.includes(extension)?'fas fa-camera':'fas fa-paperclip')+'"></i> '+val.attachment.replace(/[0-9]{6}/g, '')+'</a>'+
+        '<a href="https://dokuwo-uploads.s3.amazonaws.com/'+val.attachment+'" target="_blank" class="mailbox-attachment-name"><i class="'+(images.includes(extension)?'fas fa-camera':'fas fa-paperclip')+'"></i> '+val.attachment.replace(/[0-9]{6}/g, '')+'</a>'+
             '<span class="mailbox-attachment-size clearfix mt-1">'+
-              '<a href="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+val.attachment+'" target="_blank" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>'+
+              '<a href="https://dokuwo-uploads.s3.amazonaws.com/'+val.attachment+'" target="_blank" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>'+
             '</span>'+
         '</div>'+
       '</li>';
@@ -826,7 +826,7 @@ $.ajax({
                           '<td>'+
                               '<input type="hidden" value="" id="'+val.login_id+'">'+
                           '</td>'+
-                          '<td class="img-link"><img class=" rounded-circle" src="'+((val.image == null)?"https://ui-avatars.com/api/?name="+val.fullName.replace(/ /g, '+'):'https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+val.image)+'" style="height: auto;width: 5rem;" alt="'+val.fullName+'"/>'+
+                          '<td class="img-link"><img class=" rounded-circle" src="'+((val.image == null)?"https://ui-avatars.com/api/?name="+val.fullName.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.image)+'" style="height: auto;width: 5rem;" alt="'+val.fullName+'"/>'+
                           '<div class="status-indicator bg-success"></div>'+
                           '</td>'+
                           '<td class="full-name"><b>'+val.fullName+'</b></td>'+
@@ -1059,7 +1059,7 @@ function selectAJobseekerToMsg(){
              }else{
 
               $.each(data, function( i, val ) {
-            let img = (val.image == null)?"https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/default.jpg": "https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/"+val.image;
+            let img = (val.image == null)?"https://dokuwo-uploads.s3.amazonaws.com/default.jpg": "https://dokuwo-uploads.s3.amazonaws.com/"+val.image;
 
                 conMessage+= '<tr id="test101" style="cursor: pointer;" onclick="composeNewMessage(\''+val.login_id+'\',\''+val.fullName+'\');">'+
                             '<td>'+
@@ -1493,7 +1493,7 @@ $.ajax({
               '</ul>'+
             '</div>'+
             '<div class="col-5 text-center">'+
-              '<img src="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+((individual.image == "" || individual.image == null)?"default.jpg":individual.image)+'" alt="" class="img-fluid card-img-top rounded-circle img-thumbnail" style="width: 1500px; height: 150px;">'+
+              '<img src="https://dokuwo-uploads.s3.amazonaws.com/'+((individual.image == "" || individual.image == null)?"default.jpg":individual.image)+'" alt="" class="img-fluid card-img-top rounded-circle img-thumbnail" style="width: 1500px; height: 150px;">'+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -1547,7 +1547,7 @@ let profile =
   '<div class="container">'+
   '<div class="row justify-content mb-4">'+
   '<div class="col col-lg-4">'+
-    '<img src="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+((profile_image == "" || profile_image == null)?"default.jpg": profile_image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+    '<img src="https://dokuwo-uploads.s3.amazonaws.com/'+((profile_image == "" || profile_image == null)?"default.jpg": profile_image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
   '</div>'+
     '<div class="col-lg-4">'+
       '<ul class="ml-4 mb-0 fa-ul text-muted">'+
@@ -1578,7 +1578,7 @@ let profile =
         '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+profile_log_id+'\',\''+profile_fullname+'\',\'contentMessage\');">'+
           '<i class="fas fa-comments"> Message</i>'+
         '</a>'+
-        '<a href="'+((profile_cv == null || profile_cv == 'null' || profile_cv == '')?'javascript:void();': 'https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+profile_cv)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
+        '<a href="'+((profile_cv == null || profile_cv == 'null' || profile_cv == '')?'javascript:void();': 'https://dokuwo-uploads.s3.amazonaws.com/'+profile_cv)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
           '<i class="fas fa-file-image"></i> View CV'+
         '</a>'+
       '</div>'+
@@ -1616,7 +1616,7 @@ let profile =
       ' <div class="card card-primary card-outline" style="border-top: 3px solid #007bff;">'+
         ' <div class="card-body box-profile">'+
             '<div class="text-center">'+
-              '<img class="img-fluid img-circle img-thumbnail" src="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'" style="width:100%;height:150px" alt="User profile picture">'+
+              '<img class="img-fluid img-circle img-thumbnail" src="https://dokuwo-uploads.s3.amazonaws.com/'+((data.logo==null || data.logo=='')?'default.jpg':data.logo)+'" style="width:100%;height:150px" alt="User profile picture">'+
             '</div>'+
             '<h4 class="profile-username text-center">'+data.company_name+'</h4>'+
             '<ul class="list-group list-group-unbordered mb-3">'+
@@ -1754,7 +1754,7 @@ let profile =
                     '<div class="p-2 bd-highlight">'+
                     
                       '<div class="card" style="width: 12rem;">'+
-                        '<img src="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
+                        '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                         '<div class="card-body">'+
                           '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
                         '</div>'+
@@ -1764,7 +1764,7 @@ let profile =
                     '<div class="p-2 bd-highlight">'+
 
                       '<div class="card" style="width: 12rem;">'+
-                        '<img src="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
+                        '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                         '<div class="card-body">'+
                           '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
                         '</div>'+
@@ -1774,7 +1774,7 @@ let profile =
                     '<div class="p-2 bd-highlight">'+
 
                       '<div class="card" style="width: 12rem;">'+
-                        '<img src="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
+                        '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                         '<div class="card-body">'+
                           '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
                         '</div>'+
@@ -2676,7 +2676,7 @@ let applicant = '<div class="card shadow mb-4" style="border-top: 3px solid #007
         if(data !== 400){
       // (data.CV == null || data.CV == '')?profile_cv = 'javascript:void();': profile_cv = 'uploads/'+data.CV;
 applicant += '<div class="col col-lg-4">'+
-      '<img src="https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+((data.image == '' || null)?"default.jpg":data.image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
+      '<img src="https://dokuwo-uploads.s3.amazonaws.com/'+((data.image == '' || null)?"default.jpg":data.image)+'" class="card-img-top rounded-circle img-thumbnail mb-2" alt="Jone Doe" style="width: 12rem; height: 12rem;">'+
     '</div>'+
       '<div class="col-lg-8">'+
         '<ul class="ml-4 mb-0 fa-ul text-muted">'+
@@ -2697,7 +2697,7 @@ applicant += '<div class="col col-lg-4">'+
     '</div>'+
     '<div class="card-footer">'+
       '<div class="text-right">'+
-      '<a href="'+((data.CV == null || data.CV == 'null' || data.CV == '')?'javascript:void();':'https://dokuwo-uploads.s3-website-us-east-1.amazonaws.com/'+data.CV)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
+      '<a href="'+((data.CV == null || data.CV == 'null' || data.CV == '')?'javascript:void();':'https://dokuwo-uploads.s3.amazonaws.com/'+data.CV)+'"  target="_blank" class="btn btn-sm btn-info" data-toggle="tooltip" title="View CV">'+
       '<i class="fas fa-file-image"></i> View CV'+
       '</a>'+
       '<a href="#" class="btn btn-sm bg-teal btn-primary mx-1" data-toggle="tooltip" title="Send Message" onclick="composeNewMessage(\''+data.login_id+'\',\''+data.fullName+'\',\'contentMessage\')">'+
