@@ -156,7 +156,7 @@ function featuredJobs(){
               featuredjobs +=`<div class="col-lg-4 col-md-6 col-xs-12" onclick='show_job_details(${val.job_id},"${back}");' style="cursor: pointer;">`+
                 '<div class="job-featured">'+
                   '<div class="icon">'+
-                    '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" class="logo-img" alt="" >'+
+                    '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" class="logo-img" alt="" >'+
                   '</div>'+
                   '<div class="content">'+
                     '<h3><a>'+ val.job_name +'</a></h3>'+
@@ -208,7 +208,7 @@ function latestJobs(){
             latestjobs +=`<div class="col-lg-6 col-md-6 col-xs-12" onclick='show_job_details(${val.job_id},"${back}");' style="cursor: pointer;">`+
             '<div class="jobs-latest">'+
               '<div class="img-thumb">'+
-                '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" alt="" class="logo-img">'+
+                '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" alt="" class="logo-img">'+
               '</div>'+
               '<div class="content">'+
                 '<h3><a>'+ val.job_name +'</a></h3>'+
@@ -319,7 +319,7 @@ function blog(){
           '<div class="blog-item-wrapper">'+
             '<div class="blog-item-img">'+
               '<a>'+
-                '<img src="account/uploads/'+((val.blog_image == "" || val.blog_image == null)?"default.jpg":val.blog_image)+'" alt="" class="blog-image">'+
+                '<img src="https://dokuwo-uploads.s3.amazonaws.com/'+((val.blog_image == "" || val.blog_image == null)?"default.jpg":val.blog_image)+'" alt="" class="blog-image">'+
               '</a>'+              
             '</div>'+
             '<div class="blog-item-text">'+ 
@@ -503,7 +503,7 @@ function displayJobs(start,finish){
                 '<div class="row">'+
                   '<div class="col-lg-4 col-md-4 col-xs-12">'+
                     '<div class="job-company-logo">'+
-                      '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" alt="" class="logo-img">'+
+                      '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" alt="" class="logo-img">'+
                     '</div>'+
                     '<div class="job-details">'+
                       '<h3>'+val.job_name+'</h3>'+
@@ -654,7 +654,7 @@ else{
                   '<div class="row">'+
                     '<div class="col-lg-4 col-md-4 col-xs-12">'+
                       '<div class="job-company-logo">'+
-                        '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" alt="" class="logo-img">'+
+                        '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" alt="" class="logo-img">'+
                       '</div>'+
                       '<div class="job-details">'+
                         '<h3>'+val.job_name+'</h3>'+
@@ -801,7 +801,7 @@ else{
                   temp +=`<div class="col-lg-6 col-md-6 col-xs-12" onclick='show_freelancer_details(${val.jobseeker_id},${beg},${end});'  style="cursor: pointer;">`+
                     '<div class="manager-resumes-item">'+
                       '<div class="manager-content">'+
-                        '<a href="#"><img class="resume-thumb logo-img" src="account/uploads/'+((val.image == "" || val.image == null)?"default.jpg":val.image)+'" alt=""></a>'+
+                        '<a href="#"><img class="resume-thumb logo-img" src="https://dokuwo-uploads.s3.amazonaws.com/'+((val.image == "" || val.image == null)?"default.jpg":val.image)+'" alt=""></a>'+
                         '<div class="manager-info d-flex flex-column">'+
                           '<div class="manager-name">'+
                             '<h4><a href="#">'+val.fullName+'</a></h4>'+
@@ -953,7 +953,7 @@ else{
                         temp +=`<div class="col-lg-6 col-md-6 col-xs-12" onclick='show_freelancer_details(${val.jobseeker_id},${beg},${end});'  style="cursor: pointer;">`+
                           '<div class="manager-resumes-item">'+
                             '<div class="manager-content">'+
-                              '<a href="#"><img class="resume-thumb logo-img" src="account/uploads/'+((val.image == "" || val.image == null)?"default.jpg":val.image)+'" alt=""></a>'+
+                              '<a href="#"><img class="resume-thumb logo-img" src="https://dokuwo-uploads.s3.amazonaws.com/'+((val.image == "" || val.image == null)?"default.jpg":val.image)+'" alt=""></a>'+
                               '<div class="manager-info d-flex flex-column">'+
                                 '<div class="manager-name">'+
                                   '<h4><a href="#">'+val.fullName+'</a></h4>'+
@@ -1044,7 +1044,7 @@ else{
                ' <div class="col-lg-8 col-md-6 col-xs-12">'+
                   '<div class="breadcrumb-wrapper">'+
                     '<div class="img-wrapper">'+
-                      '<img src="'+((data.logo == null)?"https://ui-avatars.com/api/?name="+data.company_name.replace(/ /g, '+'):'account/uploads/'+data.logo)+'" alt="" class="logo-img">'+
+                      '<img src="'+((data.logo == null)?"https://ui-avatars.com/api/?name="+data.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+data.logo)+'" alt="" class="logo-img">'+
                     '</div>'+
                     '<div class="content">'+
                       '<h3 class="product-title">'+ data.job_name +'</h3>'+
@@ -1162,7 +1162,7 @@ else{
                         '<div class="col-md-8 col-sm-8 col-lg-8">'+ 
                           '<!-- Candidate Info -->'+
                           '<div class="candidateinfo">'+
-                            '<div class="userPic"><img src="account/uploads/'+((data.details[0].image == "" || data.details[0].image == null)?"default.jpg":data.details[0].image)+'" alt="'+ data.details[0].fullName +'" style="width: 90px; height: 90px;"></div>'+
+                            '<div class="userPic"><img src="https://dokuwo-uploads.s3.amazonaws.com/'+((data.details[0].image == "" || data.details[0].image == null)?"default.jpg":data.details[0].image)+'" alt="'+ data.details[0].fullName +'" style="width: 90px; height: 90px;"></div>'+
                             '<div class="title">'+ data.details[0].fullName +'</div>'+
                             '<div class="desi">'+ data.details[0].tag_line +'</div>'+
                             '<div class="loctext"><i class="fa fa-user-graduate fa-lg" aria-hidden="true"></i> '+ data.details[0].education_level +'</div>'+
@@ -1437,7 +1437,7 @@ else{
                     '<div class="row">'+
                       '<div class="col-lg-4 col-md-4 col-xs-12">'+
                         '<div class="job-company-logo">'+
-                          '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" alt="" style="width: 64px; height: 64px;display: inline-block;border-radius: 50%;margin-top: 5px;margin-bottom: 15px;">'+
+                          '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" alt="" style="width: 64px; height: 64px;display: inline-block;border-radius: 50%;margin-top: 5px;margin-bottom: 15px;">'+
                         '</div>'+
                         '<div class="job-details">'+
                           '<h3>'+val.job_name+'</h3>'+
@@ -1578,7 +1578,7 @@ else{
                     '<div class="row">'+
                       '<div class="col-lg-4 col-md-4 col-xs-12">'+
                         '<div class="job-company-logo">'+
-                          '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" alt="" style="width: 64px; height: 64px;display: inline-block;border-radius: 50%;margin-top: 5px;margin-bottom: 15px;">'+
+                          '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" alt="" style="width: 64px; height: 64px;display: inline-block;border-radius: 50%;margin-top: 5px;margin-bottom: 15px;">'+
                         '</div>'+
                         '<div class="job-details">'+
                           '<h3>'+val.job_name+'</h3>'+
@@ -1710,7 +1710,7 @@ else{
                     '<div class="row">'+
                       '<div class="col-lg-4 col-md-4 col-xs-12">'+
                         '<div class="job-company-logo">'+
-                          '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" alt="" class="logo-img">'+
+                          '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" alt="" class="logo-img">'+
                         '</div>'+
                         '<div class="job-details">'+
                           '<h3>'+val.job_name+'</h3>'+
@@ -1853,7 +1853,7 @@ else{
                       '<div class="row">'+
                         '<div class="col-lg-4 col-md-4 col-xs-12">'+
                           '<div class="job-company-logo">'+
-                            '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" alt="" class="logo-img">'+
+                            '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" alt="" class="logo-img">'+
                           '</div>'+
                           '<div class="job-details">'+
                             '<h3>'+val.job_name+'</h3>'+
@@ -1992,7 +1992,7 @@ else{
                     '<div class="row">'+
                       '<div class="col-lg-4 col-md-4 col-xs-12">'+
                         '<div class="job-company-logo">'+
-                          '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" alt="" class="logo-img">'+
+                          '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" alt="" class="logo-img">'+
                         '</div>'+
                         '<div class="job-details">'+
                           '<h3>'+val.job_name+'</h3>'+
@@ -2132,7 +2132,7 @@ else{
                       '<div class="row">'+
                         '<div class="col-lg-4 col-md-4 col-xs-12">'+
                           '<div class="job-company-logo">'+
-                            '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'account/uploads/'+val.logo)+'" alt="" class="logo-img">'+
+                            '<img src="'+((val.logo == null)?"https://ui-avatars.com/api/?name="+val.company_name.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.logo)+'" alt="" class="logo-img">'+
                           '</div>'+
                           '<div class="job-details">'+
                             '<h3>'+val.job_name+'</h3>'+
@@ -2245,7 +2245,7 @@ else{
               '<!-- Blog List start -->'+
               '<div class="blogWraper">'+
                 '<div class="blogList blogdetailbox">'+
-                  '<div class="postimg"><img src="account/uploads/'+((data[0].blog_image == "" || data[0].blog_image == null)?"default.jpg":data[0].blog_image)+'" alt="blog Title">'+
+                  '<div class="postimg"><img src="https://dokuwo-uploads.s3.amazonaws.com/'+((data[0].blog_image == "" || data[0].blog_image == null)?"default.jpg":data[0].blog_image)+'" alt="blog Title">'+
                     '<div class="date"> '+ date_posted.getDate() +' '+ formatMonth(date_posted.getMonth()) +'</div>'+
                   '</div>'+
                   '<div class="post-header margin-top30">'+
@@ -2359,7 +2359,7 @@ else{
                       `<div class="blog-post" onclick='show_blog_details("${val.blog_id}","${back}");' style="cursor: pointer;">`+
                         '<!-- Post thumb -->'+
                           '<div class="post-thumb">'+
-                          '<a href="#"><img class="img-fulid" src="account/uploads/'+((val.blog_image == "" || val.blog_image == null)?"default.jpg":val.blog_image)+'" alt=""></a>'+
+                          '<a href="#"><img class="img-fulid" src="https://dokuwo-uploads.s3.amazonaws.com/'+((val.blog_image == "" || val.blog_image == null)?"default.jpg":val.blog_image)+'" alt=""></a>'+
                           '<div class="hover-wrap">'+
                       '</div>'+
                   '</div>'+
@@ -2465,7 +2465,7 @@ else{
               $.each(data.recentPosts, function(i,val){
                 let date_posted = new Date(val.date_posted);
                 recent_posts +=`<li onclick="show_blog_details(${val.blog_id});">`+
-                `<div class="media-left"> <a href="#"><img src="account/uploads/${val.blog_image}" alt="Blog Image"></a> </div>`+
+                `<div class="media-left"> <a href="#"><img src="https://dokuwo-uploads.s3.amazonaws.com/${val.blog_image}" alt="Blog Image"></a> </div>`+
                  `<div class="media-body"> <a class="media-heading" href="#">${val.blog_title}</a> <span>${formatMonth(date_posted.getMonth())} ${date_posted.getDate()}, ${date_posted.getFullYear()}</span> </div>`+
                  '</li>';
               });
@@ -2529,7 +2529,7 @@ else{
                         `<div class="blog-post" onclick='show_blog_details("${val.blog_id}","${back}");' style="cursor: pointer;">`+
                           '<!-- Post thumb -->'+
                             '<div class="post-thumb">'+
-                            '<a href="#"><img class="img-fulid" src="account/uploads/'+((val.blog_image == "" || val.blog_image == null)?"default.jpg":val.blog_image)+'" alt=""></a>'+
+                            '<a href="#"><img class="img-fulid" src="https://dokuwo-uploads.s3.amazonaws.com/'+((val.blog_image == "" || val.blog_image == null)?"default.jpg":val.blog_image)+'" alt=""></a>'+
                             '<div class="hover-wrap">'+
                         '</div>'+
                     '</div>'+
@@ -2691,7 +2691,7 @@ else{
                   `<div class="blog-post" onclick='show_blog_details("${val.blog_id}","${back}",${JSON.stringify(filterData)});' style="cursor: pointer;">`+
                     '<!-- Post thumb -->'+
                       '<div class="post-thumb">'+
-                      '<a href="#"><img class="img-fulid" src="account/uploads/'+((val.blog_image == "" || val.blog_image == null)?"default.jpg":val.blog_image)+'" alt=""></a>'+
+                      '<a href="#"><img class="img-fulid" src="https://dokuwo-uploads.s3.amazonaws.com/'+((val.blog_image == "" || val.blog_image == null)?"default.jpg":val.blog_image)+'" alt=""></a>'+
                       '<div class="hover-wrap">'+
                   '</div>'+
               '</div>'+
@@ -3182,7 +3182,7 @@ else{
                 let dob = new Date(val.dob);
                 temp += '<div class="manager-resumes-item">'+
                 '<div class="manager-content">'+
-                  '<a><img class="resume-thumb logo-img" src="account/uploads/'+((val.image == "" || val.image == null)?"default.jpg":val.image)+'" alt=""></a>'+
+                  '<a><img class="resume-thumb logo-img" src="https://dokuwo-uploads.s3.amazonaws.com/'+((val.image == "" || val.image == null)?"default.jpg":val.image)+'" alt=""></a>'+
                   '<div class="manager-info">'+
                     '<div class="manager-name">'+
                       `<h4><a href="#" onclick='show_freelancer_details(${val.jobseeker_id},"${caller}","${id}","${back}");'  style="cursor: pointer;">${val.fullName}</a></h4>`+
