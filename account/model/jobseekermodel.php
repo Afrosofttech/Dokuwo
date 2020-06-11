@@ -209,8 +209,8 @@ class Jobseeker extends Dbh{
         }
         $date = date('Y-m-d H:i:sa');
         if($parent_msg_id =='' || $parent_msg_id == null || $parent_msg_id == 'null'){
-            $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date) VALUES (?, ?, ?, ?, ?,?)");
-            $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date]);
+            $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?,?,?)");
+            $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date,NULL]);
         }else{//change this
             $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date,$parent_msg_id]);
