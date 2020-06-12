@@ -246,7 +246,7 @@
                   '<option value="IT & Engineering">IT & Engineering</option>'+
                   '<option value="Education/Training">Education/Training</option>'+
                   '<option value="Art/Design">Art/Design</option>'+
-                  '<option value="Sale/Markting">Sale/Markting</option>'+
+                  '<option value="Sale/Marketing">Sale/Marketing</option>'+
                   '<option value="Healthcare">Healthcare</option>'+
                   '<option value="Science">Science</option>'+
                   '<option value="Events,Catering & Entertainment">Events,Catering & Entertainment</option>'+
