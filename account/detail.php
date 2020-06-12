@@ -244,9 +244,9 @@
                   '<option value="" selected hidden>Select your job category of interest</option>'+
                   '<option value="Finance">Finance</option>'+
                   '<option value="IT & Engineering">IT & Engineering</option>'+
-                  '<option value="Education/Training">Education/Training</option>'+
-                  '<option value="Art/Design">Art/Design</option>'+
-                  '<option value="Sale/Marketing">Sale/Marketing</option>'+
+                  '<option value="Education or Training">Education/Training</option>'+
+                  '<option value="Art or Design">Art/Design</option>'+
+                  '<option value="Sale or Marketing">Sale/Marketing</option>'+
                   '<option value="Healthcare">Healthcare</option>'+
                   '<option value="Science">Science</option>'+
                   '<option value="Events,Catering & Entertainment">Events,Catering & Entertainment</option>'+
