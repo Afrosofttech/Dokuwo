@@ -295,7 +295,8 @@ class Company extends Dbh{
         $stmt = null;
     }
     protected function get_jobs($company_id){
-        $sql = " SELECT * FROM job where company_id = ? ORDER BY status ASC;";
+        // $sql = " SELECT * FROM job where company_id = ? ORDER BY status ASC;";
+        $sql = " SELECT * FROM job where company_id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$company_id]);
         $result = $stmt->fetchAll();
@@ -304,7 +305,9 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            $result['requirements'] = htmlspecialchars_decode($result['requirements']);
+            foreach ($result as $key => $value) {
+            $result[$key]['requirements'] = htmlspecialchars_decode($result[$key]['requirements']);
+            }
             return  $result;
             $stmt = null;
         }
