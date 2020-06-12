@@ -143,14 +143,52 @@
       $('#companydetail').submit(function(e) {
       e.preventDefault();
 
+      var name = $('#name').val();
+      var phone = $('#comp_phone').val();
+      var address = $('#comp_address').val();
+      var postalcode = $('#postalcode').val();
       var email = $('#comp_email').val();
       var errors = [];
       $(".error").remove();
-
+      
+      if(name.length > 50){
+        swal('Invalid Name Length!','Recruiter Name field should not exceed 50 characters','error','Cool');
+        errors.push('Name');
+        return;
+      }
+      if(phone.length > 20){
+        swal('Invalid phone Length!','Phone number field should not exceed 20 numbers','error','Cool');
+        errors.push('phone');
+        return;
+      }else{
+        var reg = /^\d+$/;
+        var validPhone = reg.test(phone);
+        if(!validPhone){
+          swal('Invalid Phone!','Phone number field should only contain numbers','error','Cool');
+          return;
+        }
+      }
+      if(address.length > 255){
+        swal('Invalid Address Length!','Address field should not exceed 255 charaters','error','Cool');
+        errors.push('address');
+        return;
+      }
+      if(postalcode.length > 5){
+        swal('Invalid Postal code!','Postal Code field should not exceed 5 numbers','error','Cool');
+        errors.push('Postalcode');
+        return;
+      }else{
+        var reg = /^\d+$/;
+        var validPostalCode = reg.test(postalcode);
+        if(!validPostalCode){
+          swal('Invalid Postal code!','Postal Code field should only contain numbers','error','Cool');
+          return;
+        }
+      }
       if (email.length < 1) {
       swal('Invalid Email!','Email cannot be empty','error','Cool');
-      return;
       errors.push('email_error');
+      return;
       } else {
       var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var validEmail = regEx.test(email);
