@@ -304,7 +304,8 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            return  $result ;
+            $result['requirements'] = htmlspecialchars_decode($result['requirements']);
+            return  $result;
             $stmt = null;
         }
     }
@@ -331,7 +332,8 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            return  $result ;
+            $result['requirements'] = htmlspecialchars_decode($result['requirements']);
+            return  $result;
             $stmt = null;
         }
     }
@@ -392,7 +394,7 @@ class Company extends Dbh{
     protected function update_this_job($job_id,$jobName,$jobLocation,$jobType,$jobCategory,$requirements,$salary,$email,$phone){
         $sql = " UPDATE job SET job_name=?,job_type=?,job_cat=?,requirements=?,job_location=?,job_contact_email=?,job_contact_phone=?,salary=? WHERE job_id=?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$jobName,$jobType,$jobCategory,$requirements,$jobLocation,$email,$phone,$salary,$job_id]);
+        $stmt->execute([$jobName,$jobType,$jobCategory,htmlspecialchars($requirements, ENT_QUOTES),$jobLocation,$email,$phone,$salary,$job_id]);
         return  self::success;
         $stmt = null;
     }
@@ -404,7 +406,7 @@ class Company extends Dbh{
         $date = date('Y-m-d');
         $sql = " INSERT INTO job(company_id,job_name,job_type,job_cat,requirements,job_location,job_contact_email,job_contact_phone,salary,date_posted,status) VALUES(?,?,?,?,?,?,?,?,?,?,?);";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$company_id,$jobName,$jobType,$jobCategory,$requirements,$jobLocation,$email,$phone,$salary,$date,0]);
+        $stmt->execute([$company_id,$jobName,$jobType,$jobCategory,htmlspecialchars($requirements, ENT_QUOTES),$jobLocation,$email,$phone,$salary,$date,0]);
         return  array('message' => 'Job successfully created!','status' => 200);
         $stmt = null;
       }

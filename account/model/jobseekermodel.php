@@ -307,6 +307,7 @@ class Jobseeker extends Dbh{
         $result = $stmt->fetchAll();
         if(!$result) {return self::fail;$stmt = null;}
         else{
+            $result['requirements'] = htmlspecialchars_decode($result['requirements']);
             $query = "SELECT COUNT(*) AS total_rows FROM job WHERE status ='".$status."' ";
             if($start == 0){
                 $comp = new Company();
@@ -410,6 +411,7 @@ class Jobseeker extends Dbh{
             return 400;
             $stmt = null;
         }else{
+            $result['requirements'] = htmlspecialchars_decode($result['requirements']);
             $comp = new Company();
             if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
             else  return $result;
@@ -440,6 +442,7 @@ class Jobseeker extends Dbh{
             return 400;
             $stmt = null; 
          }
+        $result['requirements'] = htmlspecialchars_decode($result['requirements']);
         return $result;
         $stmt = null;
     }
@@ -468,6 +471,7 @@ class Jobseeker extends Dbh{
             return 400;
             $stmt = null; 
          }
+        $result['requirements'] = htmlspecialchars_decode($result['requirements']);
         return $result;
         $stmt = null;
     }
@@ -601,6 +605,7 @@ class Jobseeker extends Dbh{
             return 400;
             $stmt = null;
         }else{
+            $result['requirements'] = htmlspecialchars_decode($result['requirements']);
             $comp = new Company();
             if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
             else  return $result;
@@ -819,6 +824,7 @@ class Jobseeker extends Dbh{
         $stmt->execute();
         $result = $stmt->fetchAll();
             if(!empty($result)){
+                $result['blog_content'] = htmlspecialchars_decode($result['blog_content']);
                 $query = "SELECT COUNT(*) AS total_rows FROM blog WHERE blog_title LIKE '".$queryParam."' ";
                 if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
                 else  return $result;
@@ -833,6 +839,7 @@ class Jobseeker extends Dbh{
                         $stmt->execute();
                         $result = $stmt->fetchAll();
                         if(!empty($result)){
+                            $result['blog_content'] = htmlspecialchars_decode($result['blog_content']);
                             $query = "SELECT COUNT(*) AS total_rows FROM blog WHERE blog_publisher LIKE '".$queryParam."' ";
                             if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
                             else  return $result;
