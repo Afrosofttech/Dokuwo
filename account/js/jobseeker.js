@@ -2461,9 +2461,9 @@ let temp='<div class="content-wrapper">'+
                       '<select class="custom-select" id="category" name="category">'+
                       '<option value="Finance">Finance</option>'+
                       '<option value="IT & Engineering">IT & Engineering</option>'+
-                      '<option value="Education/Training">Education/Training</option>'+
-                      '<option value="Art/Design">Art/Design</option>'+
-                      '<option value="Sale/Markting">Sale/Markting</option>'+
+                      '<option value="Education or Training">Education/Training</option>'+
+                      '<option value="Art or Design">Art/Design</option>'+
+                      '<option value="Sale or Markting">Sale/Markting</option>'+
                       '<option value="Healthcare">Healthcare</option>'+
                       '<option value="Science">Science</option>'+
                       '<option value="Events,Catering & Entertainment">Events,Catering & Entertainment</option>'+
