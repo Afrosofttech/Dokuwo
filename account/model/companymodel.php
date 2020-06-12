@@ -385,6 +385,7 @@ class Company extends Dbh{
         $stmt =$this->connect()->prepare($sql);
         $stmt->execute([$job_id]);
         $result = $stmt->fetch();
+        $result['requirements'] = htmlspecialchars_decode($result['requirements']);
         return $result;
     }
     protected function close_this_job($job_id){
