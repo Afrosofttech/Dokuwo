@@ -404,9 +404,9 @@ class Company extends Dbh{
         if($res['status'] == 402) return $res;
         else{
         $date = date('Y-m-d');
-        $sql = " INSERT INTO job(company_id,job_name,job_type,job_cat,requirements,job_location,job_contact_email,job_contact_phone,salary,date_posted,status) VALUES(?,?,?,?,?,?,?,?,?,?,?);";
+        $sql = " INSERT INTO job(company_id,job_name,job_type,job_cat,requirements,job_location,job_contact_email,job_contact_phone,salary,date_posted,status,featured) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$company_id,$jobName,$jobType,$jobCategory,htmlspecialchars($requirements, ENT_QUOTES),$jobLocation,$email,$phone,$salary,$date,0]);
+        $stmt->execute([$company_id,$jobName,$jobType,$jobCategory,htmlspecialchars($requirements, ENT_QUOTES),$jobLocation,$email,$phone,$salary,$date,0,0]);
         return  array('message' => 'Job successfully created!','status' => 200);
         $stmt = null;
       }
