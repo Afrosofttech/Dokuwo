@@ -261,7 +261,7 @@
                 '</select>'+
               '</div>'+
               '<div class="form-group">'+
-                '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" placeholder="choose the tag to appear on your profile e.g graphic designer">'+
+                '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" maxlength="30" placeholder="choose the tag to appear on your profile e.g graphic designer">'+
               '</div>'+
               '<div class="form-group">'+
                 '<textarea name="description" id="description" placeholder="give a short description of 250 characters or less" class="form-control" style="width:100%;height:70px;resize:none;display:none;" maxlength="250"></textarea>'+
@@ -333,6 +333,10 @@ $(document).ready(function(){
     }
     if(tag_line == '' || tag_line == null){
     swal('Invalid tag_line!','Please select a tag_line','error','Cool');
+    return;
+    }
+    if(tag_line.length >30){
+    swal('Invalid tag_line!','Tag_line cannot be more that 30 characters in length','error','Cool');
     return;
     }
     if(interest == 'Job'){
