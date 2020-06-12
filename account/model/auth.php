@@ -138,6 +138,7 @@ class Auth extends Dbh {
         else if($cv == null || $cv == 'null'){ $sql = "INSERT INTO job_seeker (login_id,fname,lname,fullname,phone,skills,category,interest,seeksJob,tag_line,education_level,address,dob,country,image,description,featured) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; var_dump('CV');}
         else $sql = "INSERT INTO job_seeker (login_id,fname,lname,fullname,phone,skills,category,interest,seeksJob,tag_line,education_level,address,dob,country,image,cv,description,featured) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
+        var_dump('AMADOU SARJO');
         if(($image == null || $image == 'null') && ($cv == null || $cv == 'null')) $stmt->execute([$login_id,$fname,$lname,$fullname,$phone,$skills,$category,$interest,'yes',$tag_line,$edulevel,$adr,$dob,$country,$description,0]);
         else if($image == null || $image == 'null') $stmt->execute([$login_id,$fname,$lname,$fullname,$phone,$skills,$category,$interest,'yes',$tag_line,$edulevel,$adr,$dob,$country,$cv,$description,0]);
         else if($cv == null || $cv == 'null') $stmt->execute([$login_id,$fname,$lname,$fullname,$phone,$skills,$category,$interest,'yes',$tag_line,$edulevel,$adr,$dob,$country,$image,$description,0]);
