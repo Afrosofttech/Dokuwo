@@ -307,7 +307,9 @@ class Jobseeker extends Dbh{
         $result = $stmt->fetchAll();
         if(!$result) {return self::fail;$stmt = null;}
         else{
-            $result['requirements'] = htmlspecialchars_decode($result['requirements']);
+            foreach ($result as $key => $value) {
+                $result[$key]['requirements'] = htmlspecialchars_decode($result[$key]['requirements']);
+            }
             $query = "SELECT COUNT(*) AS total_rows FROM job WHERE status ='".$status."' ";
             if($start == 0){
                 $comp = new Company();
