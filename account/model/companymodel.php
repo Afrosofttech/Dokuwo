@@ -52,6 +52,7 @@ class Company extends Dbh{
         $result = $stmt->fetchAll();
         if(sizeof($result) > 0){
             foreach ($result as $key => $value) {
+                $result[$key]['message_body'] = htmlspecialchars_decode($result[$key]['message_body'], ENT_QUOTES);
                 $result[$key]['attachment'] = ($this->contains_attachments($value['message_id']))? true: false;
          }
        }
@@ -147,6 +148,7 @@ class Company extends Dbh{
                     $stmt = null;
             }else{
                 foreach ($result as $key => $value) {
+                    $result[$key]['message_body'] =htmlspecialchars_decode($result[$key]['message_body'], ENT_QUOTES);
                     $result[$key]['count'] = $count;
                 }
                 return  $result;
