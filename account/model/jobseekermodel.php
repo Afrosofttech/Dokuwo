@@ -128,6 +128,7 @@ class Jobseeker extends Dbh{
         $result = $stmt->fetchAll();
         if(sizeof($result) > 0){
             foreach ($result as $key => $value) {
+                $result[$key]['message_body'] = htmlspecialchars_decode($result[$key]['message_body'], ENT_QUOTES);
                 $result[$key]['attachment'] = ($this->contains_attachments($value['message_id']))? true: false;
          }
        }
@@ -140,7 +141,8 @@ class Jobseeker extends Dbh{
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$msg_id]);
         $result = $stmt->fetch();
-        if($res) $result['attachments'] = $res; 
+        if($res) $result['attachments'] = $res;
+        $result['message_body'] = htmlspecialchars_decode($result['message_body']); 
         return  $result;
         $stmt = null;
     }
@@ -173,6 +175,7 @@ class Jobseeker extends Dbh{
         $result = $stmt->fetchAll();
         if(sizeof($result) > 0){
             foreach ($result as $key => $value) {
+                $result[$key]['message_body'] = htmlspecialchars_decode($result[$key]['message_body'], ENT_QUOTES);
                 $result[$key]['attachment'] = ($this->contains_attachments($value['message_id']))? true: false;
          }
        }
@@ -210,10 +213,10 @@ class Jobseeker extends Dbh{
         $date = date('Y-m-d H:i:s');
         if($parent_msg_id =='' || $parent_msg_id == null || $parent_msg_id == 'null'){
             $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date) VALUES (?, ?, ?, ?, ?,?);");
-            $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date]);
+            $stmt1->execute([$creator_id,$creator_name,$Subject,htmlspecialchars($messageBody, ENT_QUOTES),0,$date]);
         }else{//change this
             $stmt1 = $this->connect()->prepare("INSERT INTO message (creator_id, creator_name, subject,message_body,sender_delete_request,create_date,parent_message_id) VALUES (?, ?, ?, ?, ?, ?, ?);");
-            $stmt1->execute([$creator_id,$creator_name,$Subject,$messageBody,0,$date,$parent_msg_id]);
+            $stmt1->execute([$creator_id,$creator_name,$Subject,htmlspecialchars($messageBody, ENT_QUOTES),0,$date,$parent_msg_id]);
         }
             //AMS-> this query is not efficient although it is working. I should be using lastInsertId()
             //but due to some unknown reasons, it is not working. so i will revise it later
@@ -843,7 +846,7 @@ class Jobseeker extends Dbh{
         }
 
         protected function sendEmail($name,$email,$msg_subject,$message){
-            $EmailTo = "contact@afrosofttech.com";
+            $EmailTo = "dokuwo.gm@gmail.com";
             $Subject = "New Message Received";
             
             // prepare email body text
