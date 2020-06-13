@@ -447,7 +447,7 @@ class Admin extends Dbh{
         $result = $stmt->fetchAll();
         return  self::success;   
     }
-    
+
     protected function contactAdmin($name,$email,$subject,$message)
     {
         // $date = date('Y-m-d');
@@ -455,42 +455,34 @@ class Admin extends Dbh{
         $stmt =$this->connect()->prepare($sql);
         $stmt->execute([$name,$email,$subject,$message]);
         $send_mail = self::sendEmail($name,$email,$subject,$message);
-        if($send_mail != 400){
-            return 200;
+        if($send_mail != 202){
+            return 400;
             $stmt = null;
         }
         else{
-            return 400;
+            return 200;
             $stmt = null;
         }
         
     }
     protected function sendEmail($name,$email,$msg_subject,$message){
-        $EmailTo = "dokuwo.gm@gmail.com";
-        $Subject = "New Message Received";
+ 
+        $from = new SendGrid\Email('Contact form',"techsavvyasj@gmail.com");
+        $subject = "Contact form";
+        $to = new SendGrid\Email(null,'dokuwo.gm@gmail.com');
+        $content = new SendGrid\Content("text/html", 
+        '<div style="padding: 2px 100px;font-family: Times New Roman;font-size: 18px;">
+                                <p>From: '.$name.'</p><br>
+                                <p>Email: '.$email.'</p><br>
+                                <p>Subject: '.$msg_subject.'</p><br>
+                                <p>Message: '.$message.'</p><br>
+                            </div>');
+        $mail = new SendGrid\Mail($from, $subject, $to, $content);
         
-        // prepare email body text
-        $Body = "";
-        $Body .= "Name: ";
-        $Body .= $name;
-        $Body .= "\n";
-        $Body .= "Email: ";
-        $Body .= $email;
-        $Body .= "\n";
-        $Body .= "Subject: ";
-        $Body .= $msg_subject;
-        $Body .= "\n";
-        $Body .= "Message: ";
-        $Body .= $message;
-        $Body .= "\n";
+        $apiKey = SEND_GRID_API;
+        $sg = new \SendGrid($apiKey);
         
-        // send email
-        $success = mail($EmailTo, $Subject, $Body, "From:".$email);
-        // redirect to success page
-            if ($success == ""){
-                return 200;
-            }else{
-               return 400;
-            }
+        $response = $sg->client->mail()->send()->post($mail);
+        return $response->statusCode();
     }
 }
