@@ -2953,7 +2953,6 @@ else{
 
       $('#submit').click(function(e){
         e.preventDefault();
-        swalNotify(err.responseText,'error');
         let name = $('#contact_name').val();
         let email = $('#contact_email').val();
         let msg_subject = $('#msg_subject').val();
