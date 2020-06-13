@@ -241,6 +241,7 @@
                }
             },
             error: function(err){
+			  $('.btn-submit-request').prop('disabled', false);
               swalNotify(err.responseText,'error');
       
             }
