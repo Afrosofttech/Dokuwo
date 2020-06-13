@@ -1,5 +1,7 @@
 <?php
 include_once 'dbhmodel.php';
+require("includes/sendgrid-php/sendgrid-php.php");
+define('SEND_GRID_API',  getenv('SEND_GRID_API'));
 
 class Admin extends Dbh{
     const success = 200;
