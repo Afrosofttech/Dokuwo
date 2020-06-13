@@ -2953,21 +2953,22 @@ else{
 
       $('#submit').click(function(e){
         e.preventDefault();
+        $('#submit').prop('disabled', true);
         let name = $('#contact_name').val();
         let email = $('#contact_email').val();
         let msg_subject = $('#msg_subject').val();
         let message = $('#message').val();
   
         if (name == ''){
-          swal('Invalid Name!','Name cannot be empty','error','Cool');
+          swal('Invalid Name!','Name field cannot be empty','error','Cool');
           return;
         }
         if (email.length < 1) {
-          swal('Invalid Email!','Email cannot be empty','error','Cool');
+          swal('Invalid Email!','Email field cannot be empty','error','Cool');
           return;
          }else {
           if (!validEmail(email)) {
-             swal('Invalid Email!','Please enter a valid email!','error','Cool');
+             swal('Invalid Email!','Please field enter a valid email!','error','Cool');
              return;
           }
          }
@@ -2986,10 +2987,16 @@ else{
           data :{'name':name,'email':email,'subject':msg_subject,'message': message},
           success: function(data){
             if(data == 200){
+              $('#submit').prop('disabled', false);
+              $('#contact_name').val('');
+              $('#contact_email').val('');
+              $('#msg_subject').val('');
+              $('#message').val('');
               swal('Message Sent','Your message has been successfully sent. Thank you for using Dokuwo.','success','Close');
             }
           },
           error: function(err){
+            $('#submit').prop('disabled', false);
             swalNotify(err.responseText,'error');
           }
         });
