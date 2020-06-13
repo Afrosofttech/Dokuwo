@@ -2982,12 +2982,12 @@ else{
         }
         $.ajax({
           method: "POST",
-          url: "account/post.php/jobseeker/contact_admin",
+          url: "account/post.php/admin/contact_admin",
           dataType: "json",
           data :{'name':name,'email':email,'subject':msg_subject,'message': message},
           success: function(data){
             if(data == 200){
-              swal('Message Sent','Your message has been sent to admin','success','Close');
+              swal('Message Sent','Your message has been successfully sent. Thank you for using Dokuwo.','success','Close');
             }
           },
           error: function(err){

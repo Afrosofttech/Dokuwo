@@ -447,5 +447,50 @@ class Admin extends Dbh{
         $result = $stmt->fetchAll();
         return  self::success;   
     }
-
+    
+    protected function contactAdmin($name,$email,$subject,$message)
+    {
+        // $date = date('Y-m-d');
+        $sql = "INSERT INTO contact (contact_name,contact_email,subject,message) VALUES (?,?,?,?);";
+        $stmt =$this->connect()->prepare($sql);
+        $stmt->execute([$name,$email,$subject,$message]);
+        $send_mail = self::sendEmail($name,$email,$subject,$message);
+        if($send_mail != 400){
+            return 200;
+            $stmt = null;
+        }
+        else{
+            return 400;
+            $stmt = null;
+        }
+        
+    }
+    protected function sendEmail($name,$email,$msg_subject,$message){
+        $EmailTo = "dokuwo.gm@gmail.com";
+        $Subject = "New Message Received";
+        
+        // prepare email body text
+        $Body = "";
+        $Body .= "Name: ";
+        $Body .= $name;
+        $Body .= "\n";
+        $Body .= "Email: ";
+        $Body .= $email;
+        $Body .= "\n";
+        $Body .= "Subject: ";
+        $Body .= $msg_subject;
+        $Body .= "\n";
+        $Body .= "Message: ";
+        $Body .= $message;
+        $Body .= "\n";
+        
+        // send email
+        $success = mail($EmailTo, $Subject, $Body, "From:".$email);
+        // redirect to success page
+            if ($success == ""){
+                return 200;
+            }else{
+               return 400;
+            }
+    }
 }

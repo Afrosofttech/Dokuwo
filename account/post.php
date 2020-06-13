@@ -167,11 +167,6 @@ $contr =  $urlParts[sizeof($urlParts)-2];
           $res = $result->hire_a_jobseeker();
           echo $res;
           break;
-        case "contact_admin":
-          $result = new JobseekerJobsController();
-          $res = $result->contact();
-          echo $res;
-          break;
         case "request_to_activate_package":
           $result = new JobseekerController();
           $res = $result->request_to_activate_package($_POST['login_id'],$_POST['package']);
@@ -276,6 +271,9 @@ $contr =  $urlParts[sizeof($urlParts)-2];
             $result = new AdminController();
             $response = $result->delete_report($_POST['action_id']);
             echo $response;
+           break;
+           case "contact_admin":
+            echo ((new AdminController())->contact());
            break;
         default:
            break;
