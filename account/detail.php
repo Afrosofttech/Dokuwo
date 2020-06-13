@@ -338,6 +338,8 @@ $(document).ready(function(){
     e.preventDefault();
     var fname = $('#firstname').val();
     var lname = $('#lastname').val();
+    var phone = $('#phone').val();
+    var address = $('#address').val();
     var dob = $('#dateofbirth').val();
     var category =$('#category').val();
     var interest = $('#interest').val();
@@ -348,18 +350,45 @@ $(document).ready(function(){
     $(".error").remove();
     if (fname.length < 1) {
       swal('Invalid First Name!','First name cannot be empty','error','Cool');
-      return;
       errors.push('fname_error');
+      return;
+    }
+    if(fname.length > 25){
+      swal('Invalid First Name!','First name field should not exceed 25 characters','error','Cool');
+      errors.push('fname_error');
+      return;
     }
     if (lname.length < 1) {
       swal('Invalid Last Name!','Last name cannot be empty','error','Cool');
-      return;
       errors.push('lname_error');
+      return;
     }
+    if(lname.length > 25){
+      swal('Invalid Last Name!','Last name field should not exceed 25 characters','error','Cool');
+      errors.push('lname');
+      return;
+    }
+    if(phone.length > 20){
+        swal('Invalid phone Length!','Phone number field should not exceed 20 numbers','error','Cool');
+        errors.push('phone');
+        return;
+      }else{
+        var reg = /^\d+$/;
+        var validPhone = reg.test(phone);
+        if(!validPhone){
+          swal('Invalid Phone!','Phone number field should only contain numbers','error','Cool');
+          return;
+        }
+      }
+      if(address.length > 255){
+        swal('Invalid Address Length!','Address field should not exceed 255 charaters','error','Cool');
+        errors.push('address');
+        return;
+      }
     if(dob == ''){
       swal('Invalid date!','Date cannot be empty','error','Cool');
-      return;
       errors.push('date_error');
+      return;
     }
     if(category == 'Select your job category of interest'){
         swal('Invalid Job Category!','Please select a job category','error','Cool');
