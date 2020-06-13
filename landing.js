@@ -48,7 +48,7 @@ function header(){
               '</a>'+
             '</li>'+
             '<li class="nav-item">'+
-              '<a class="nav-link" style="cursor: pointer;" href="account/authentication.php">Sign In</a>'+
+              '<a class="nav-link" style="cursor: pointer;" href="account/authentication.php">Sign In/Up</a>'+
             '</li>'+
           '</ul>'+
         '</div>'+
@@ -2917,21 +2917,21 @@ else{
                       '<div class="contact-icon">'+
                         '<i class="lni-map-marker"></i>'+
                       '</div>'+
-                      '<p>Office: Bundung Jola kunda- Banjul, Gambia.</p>'+
+                      '<p>Office: Bundung - Serrekunda, Gambia.</p>'+
                     '</div>'+
                     '<div class="single-contact">'+
                       '<div class="contact-icon">'+
                         '<i class="lni-envelope"></i>'+
                       '</div>'+
-                      '<p><a href="mailto:contact@afrosofttech.com">Customer Support: dokuwo01@gmail.com</a></p>'+
-                      '<p><a href="mailto:contact@afrosofttech.com">Technical Support: asj.sarjo@gmail.com</a></p>'+
+                      '<p><a href="mailto:dokuwo.gm@gmail.com">Customer Support: dokuwo.gm@gmail.com</a></p>'+
+                      '<p><a href="mailto:asj.sarjo@gmail.com">Technical Support: asj.sarjo@gmail.com</a></p>'+
                     '</div>'+
                     '<div class="single-contact">'+
                       '<div class="contact-icon">'+
                         '<i class="lni-phone-handset"></i>'+
                       '</div>'+
                       '<p><a href="#">Customer Supprort: +220 3196234</a></p>'+
-                      '<p><a href="#">Technical Supprort: +220 533 6171</a></p>'+
+                      '<p><a href="#">Technical Supprort: +220 5336171</a></p>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -2963,7 +2963,6 @@ else{
           swal('Invalid Name!','Name cannot be empty','error','Cool');
           return;
         }
-  
         if (email.length < 1) {
           swal('Invalid Email!','Email cannot be empty','error','Cool');
           return;
@@ -2981,7 +2980,6 @@ else{
           swal('Invalid submission!','All fields except subject are required','error','Cool');
           return;
         }
-
         $.ajax({
           method: "POST",
           url: "account/post.php/jobseeker/contact_admin",
