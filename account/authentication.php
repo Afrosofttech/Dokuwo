@@ -227,7 +227,7 @@
                 }else if(response == 400){
 					swal('Invalid account access!','Activate your account if you have already created an account','warning','Cool');
 				}else if(response == 'success'){
-					swal('Account creation complete!','A link has been sent to your email to activate your account.<br>NOTE: DO CHECK ALL MAILS OR PROMOTIONAL EMAILS IF YOU DO NOT SEE THE LINK IN YOUR PRIMARY EMAILS.','success','Cool');
+					swal('Account creation complete!','A link has been sent to your email to activate your account. NOTE: DO CHECK ALL MAILS OR PROMOTIONAL EMAILS IF YOU DO NOT SEE THE LINK IN YOUR PRIMARY EMAILS.','success','Cool');
 					$('.email').val('');
 					$('.password').val('');
 				}else if(response == 'error'){
