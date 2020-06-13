@@ -473,7 +473,7 @@ class Admin extends Dbh{
         $subject = "Contact form";
         $to = new SendGrid\Email(null,'dokuwo.gm@gmail.com');
         $content = new SendGrid\Content("text/html", 
-        '<div style="padding: 2px 100px;font-family: Times New Roman;font-size: 18px;">
+        '<div style="font-family: Times New Roman;font-size: 18px;">
                                 <p>From: '.$name.'</p><br>
                                 <p>Email: '.$email.'</p><br>
                                 <p>Subject: '.$msg_subject.'</p><br>
