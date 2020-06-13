@@ -474,10 +474,10 @@ class Admin extends Dbh{
         $to = new SendGrid\Email(null,'dokuwo.gm@gmail.com');
         $content = new SendGrid\Content("text/html", 
         '<div style="font-family: Times New Roman;font-size: 18px;">
-                                <p>From: '.$name.'</p><br>
-                                <p>Email: '.$email.'</p><br>
-                                <p>Subject: '.$msg_subject.'</p><br>
-                                <p>Message: '.$message.'</p><br>
+                                <p>From: '.$name.'</p>
+                                <p>Email: '.$email.'</p>
+                                <p>Subject: '.$msg_subject.'</p>
+                                <p>Message: '.$message.'</p>
                             </div>');
         $mail = new SendGrid\Mail($from, $subject, $to, $content);
         
