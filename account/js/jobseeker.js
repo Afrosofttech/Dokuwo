@@ -2630,7 +2630,7 @@ let temp='<div class="content-wrapper">'+
     var errors = [];
   
     if (email.length < 1) {
-      swal('Invalid Email!','Email cannot be empty','error','Cool');
+      swal('Invalid Email!','Email field cannot be empty','error','Cool');
       $('#update-details').prop('disabled', false);
       errors.push('email_error');
       return;
@@ -2643,19 +2643,19 @@ let temp='<div class="content-wrapper">'+
       }
     }
     if (fName.length < 1) {
-      swal('Invalid Name!','First Name cannot be empty!','error','Cool');
+      swal('Invalid Name!','First Name field cannot be empty!','error','Cool');
       $('#update-details').prop('disabled', false);
       errors.push('name_error');
       return;
     }
     if (lName.length < 1) {
-      swal('Invalid Last Name!','Last Name cannot be empty!','error','Cool');
+      swal('Invalid Last Name!','Last Name field cannot be empty!','error','Cool');
       $('#update-details').prop('disabled', false);
       errors.push('name_error');
       return;
     }
     if(password !== '' && password.length < 8){
-      swal('Invalid password!','password must at least be 8 characters!','error','Cool');
+      swal('Invalid password!','password field must be at least 8 characters!','error','Cool');
       $('#update-details').prop('disabled', false);
       errors.push('password_error');
       return;
