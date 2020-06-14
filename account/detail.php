@@ -151,6 +151,12 @@
       var errors = [];
       $(".error").remove();
       
+      if (name.length < 1) {
+        $('#comp_submit').prop('disabled', false);
+        swal('Invalid Name!','Name field cannot be empty!','error','Cool');
+        errors.push('name_error');
+        return;
+      }
       if(name.length > 50){
         $('#comp_submit').prop('disabled', false);
         swal('Invalid Name Length!','Recruiter Name field should not exceed 50 characters','error','Cool');
@@ -193,7 +199,7 @@
       }
       if (email.length < 1) {
         $('#comp_submit').prop('disabled', false);
-        swal('Invalid Email!','Email cannot be empty','error','Cool');
+        swal('Invalid Email!','Email field cannot be empty','error','Cool');
         errors.push('email_error');
         return;
       } else {
