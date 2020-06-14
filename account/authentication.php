@@ -197,19 +197,22 @@
     var errors = [];
     $(".error").remove();
     if (email.length < 1) {
-	    swal('Invalid email!','Email cannot be empty','error','Cool');
-	errors.push('email_error');
-	return;
+		swal('Invalid email!','Email cannot be empty','error','Cool');
+		$('.btn-submit-request').prop('disabled', false);
+		errors.push('email_error');
+		return;
     } else {
 	var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var validEmail = regEx.test(email);
     if (!validEmail) {
 		swal('Invalid Email!','Please enter a valid email','error','Cool');
+		$('.btn-submit-request').prop('disabled', false);
 		return;
     }
     }
     if (passwd.length < 8) {
 	swal('Short password!','Password must be at least 8 characters long','error','Cool');
+	$('.btn-submit-request').prop('disabled', false);
 	errors.push('password_error');
 	return;
 	}
