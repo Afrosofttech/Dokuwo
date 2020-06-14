@@ -52,7 +52,7 @@ function footer(){
   return '<footer class="sticky-footer bg-white">'+
   '<div class="container my-auto">'+
     '<div class="copyright text-center my-auto">'+
-      '<span><p class="copyright">&copy;&nbsp;2020. Powered by <a class="text-primary" href="www.afrosofttech.com" target="_blank">Afrika Software Technologies</a></p></span>'+
+      '<span><p class="copyright">&copy;&nbsp;2020. Powered by <a class="text-primary" href="javascript:void(0)" target="_blank">Afrika Software Technologies</a></p></span>'+
     '</div>'+
   '</div>'+
 '</footer>';
