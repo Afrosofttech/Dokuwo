@@ -15,7 +15,7 @@ class JobseekerView extends Jobseeker{
                 $count += 1;
             }
         }
-       $result = floor(($count/19)*100);
+       $result = floor(($count/20)*100);
        $dbContentArray['isProfileComplete'] = $result;
        $noOfCompanies = $this->get_no_of_companies();
        if($noOfCompanies == 400) $noOfCompanies = 0; 
