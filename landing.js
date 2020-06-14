@@ -411,7 +411,7 @@ function footer(){
           '<div class="row">'+
             '<div class="col-md-12">'+
               '<div class="site-info text-center">'+
-                '<p class="copyright">&copy;&nbsp;2020. Powered by <a class="text-primary" href="javascript:void(0)" target="_blank">Afrika Software Technologies</a></p>'+
+                '<p class="copyright">&copy;&nbsp;2020. Powered by <a class="text-primary" href="javascript:void(0)">Afrika Software Technologies</a></p>'+
               '</div>'+     
             '</div>'+
           '</div>'+
