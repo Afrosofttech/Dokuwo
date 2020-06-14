@@ -1716,7 +1716,7 @@ let profile =
                 '</div>'+
                     '<div class="form-group row">'+
                       '<div class="offset-sm-2 col-sm-10">'+
-                        '<button type="submit" class="btn btn-success float-right">Update</button>'+
+                        '<button type="submit" class="btn btn-success float-right" id="update-details">Update</button>'+
                       '</div>'+
                     '</div>'+
                   '</form>'+
@@ -1817,29 +1817,76 @@ let profile =
 $(document).ready(function(){
   $('#editCompany').submit(function(e) {
   e.preventDefault();
+  $('#update-details').prop('disabled', true);
   var name = $('#inputName').val();
+  VAR address = $('#address').val();
+  var phone = $('#phone').val();
   var email = $('#inputEmail').val();
   var password = $('#password').val();
+  var postalcode = $('#code').val();
   var errors = [];
 
-  if (email.length < 1) {
-    swal('Invalid Email!','Email cannot be empty','error','Cool');
+  if(email.length < 1) {
+    $('#update-details').prop('disabled', false);
+    swal('Invalid Email!','Email field cannot be empty','error','Cool');
     errors.push('email_error');
     return;
-  } else {
-    if (!validEmail(email)) {
-        swal('Invalid Email!','Please enter a valid email!','error','Cool');
-        errors.push('email_error');
-        return;
-    }
+  }
+  if (!validEmail(email)) {
+    $('#update-details').prop('disabled', false);
+    swal('Invalid Email!','Please enter a valid email!','error','Cool');
+    errors.push('email_error');
+    return;
+  }
+  if(name.length > 50){
+    $('#update-details').prop('disabled', false);
+    swal('Invalid Name Length!','Recruiter Name field should not exceed 50 characters','error','Cool');
+    errors.push('Name');
+    return;
   }
   if (name.length < 1) {
-    swal('Invalid Name!','Name cannot be empty!','error','Cool');
+    $('#update-details').prop('disabled', false);
+    swal('Invalid Name!','Name field cannot be empty!','error','Cool');
     errors.push('name_error');
     return;
   }
+  if(address.length > 255){
+    $('#update-details').prop('disabled', false);
+    swal('Invalid Address Length!','Address field should not exceed 255 charaters','error','Cool');
+    errors.push('address');
+    return;
+  }
+  if(phone.length > 20){
+    $('#update-details').prop('disabled', false);
+    swal('Invalid phone Length!','Phone number field should not exceed 20 numbers','error','Cool');
+    errors.push('phone');
+    return;
+  }else{
+    var reg = /^\d+$/;
+    var validPhone = reg.test(phone);
+    if(!validPhone){
+      $('#update-details').prop('disabled', false);
+      swal('Invalid Phone!','Phone number field should only contain numbers','error','Cool');
+      return;
+    }
+  }
+  if(postalcode.length > 5){
+    $('#update-details').prop('disabled', false);
+    swal('Invalid Postal code!','Postal Code field should not exceed 5 numbers','error','Cool');
+    errors.push('Postalcode');
+    return;
+  }else{
+    var reg = /^\d+$/;
+    var validPostalCode = reg.test(postalcode);
+    if(!validPostalCode){
+      $('#update-details').prop('disabled', false);
+      swal('Invalid Postal code!','Postal Code field should only contain numbers','error','Cool');
+      return;
+    }
+  }
   if(password !== '' && password.length < 8){
-    swal('Invalid password!','password must at least be 8 characters!','error','Cool');
+    $('#update-details').prop('disabled', false);
+    swal('Invalid password!','password field must be at least 8 characters!','error','Cool');
     errors.push('password_error');
     return;
   }
@@ -1853,6 +1900,7 @@ $(document).ready(function(){
         processData: false,
         cache:false,
         success:function(response){
+          $('#update-details').prop('disabled', false);
           if(response == 200){
             swal('Update Successful!','Profile successfully updated','success','cool');
             settings();
@@ -1861,10 +1909,12 @@ $(document).ready(function(){
           }
         },
         error: function(err){
+          $('#update-details').prop('disabled', false);
           swalNotify(err.responseText,'error');
         } 
       });
     }else{
+        $('#update-details').prop('disabled', false);
         return;
     }
   //
