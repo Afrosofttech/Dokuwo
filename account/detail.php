@@ -142,7 +142,7 @@
     $(document).ready(function(){
       $('#companydetail').submit(function(e) {
       e.preventDefault();
-
+      $('#comp_submit').prop('disabled', true);
       var name = $('#name').val();
       var phone = $('#comp_phone').val();
       var address = $('#comp_address').val();
@@ -152,11 +152,13 @@
       $(".error").remove();
       
       if(name.length > 50){
+        $('#comp_submit').prop('disabled', false);
         swal('Invalid Name Length!','Recruiter Name field should not exceed 50 characters','error','Cool');
         errors.push('Name');
         return;
       }
       if(phone.length > 20){
+        $('#comp_submit').prop('disabled', false);
         swal('Invalid phone Length!','Phone number field should not exceed 20 numbers','error','Cool');
         errors.push('phone');
         return;
@@ -164,16 +166,19 @@
         var reg = /^\d+$/;
         var validPhone = reg.test(phone);
         if(!validPhone){
+          $('#comp_submit').prop('disabled', false);
           swal('Invalid Phone!','Phone number field should only contain numbers','error','Cool');
           return;
         }
       }
       if(address.length > 255){
+        $('#comp_submit').prop('disabled', false);
         swal('Invalid Address Length!','Address field should not exceed 255 charaters','error','Cool');
         errors.push('address');
         return;
       }
       if(postalcode.length > 5){
+        $('#comp_submit').prop('disabled', false);
         swal('Invalid Postal code!','Postal Code field should not exceed 5 numbers','error','Cool');
         errors.push('Postalcode');
         return;
@@ -181,20 +186,23 @@
         var reg = /^\d+$/;
         var validPostalCode = reg.test(postalcode);
         if(!validPostalCode){
+          $('#comp_submit').prop('disabled', false);
           swal('Invalid Postal code!','Postal Code field should only contain numbers','error','Cool');
           return;
         }
       }
       if (email.length < 1) {
-      swal('Invalid Email!','Email cannot be empty','error','Cool');
-      errors.push('email_error');
-      return;
+        $('#comp_submit').prop('disabled', false);
+        swal('Invalid Email!','Email cannot be empty','error','Cool');
+        errors.push('email_error');
+        return;
       } else {
       var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var validEmail = regEx.test(email);
       if (!validEmail) {
-      swal('Invalid Email!','Please enter a valid email','error','Cool');
-      return;
+        $('#comp_submit').prop('disabled', false);
+        swal('Invalid Email!','Please enter a valid email','error','Cool');
+        return;
         }
       }
 
@@ -208,6 +216,7 @@
             processData: false,
             data: new FormData(this),
             success:function(response){
+              $('#comp_submit').prop('disabled', false);
               if(response == 200){
                 window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
               }else if( response == "Invalid"){
@@ -217,11 +226,13 @@
               }
             },
             error: function(err){
+              $('#comp_submit').prop('disabled', false);
               swalNotify("Error in creating account","warn");
             }
           });    
       }
       else{
+        $('#comp_submit').prop('disabled', false);
         return;
       }
       });
@@ -320,7 +331,7 @@
                '</div>'+
               '</div>'+
               '<div class="text-center">'+
-                '<button class="btn btn-primary btn-user btn-block"  type="submit" id="submit">Submit</button>'+
+                '<button class="btn btn-primary btn-user btn-block job_submit"  type="submit" id="submit">Submit</button>'+
               '</div>'+
               '</form>'+
               '</div>'+
@@ -336,6 +347,7 @@ $(document).ready(function(){
   })
   $('#jobseeker').submit(function(e) {
     e.preventDefault();
+    $('.job_submit').prop('disabled', true);
     var fname = $('#firstname').val();
     var lname = $('#lastname').val();
     var phone = $('#phone').val();
@@ -349,26 +361,31 @@ $(document).ready(function(){
 
     $(".error").remove();
     if (fname.length < 1) {
+      $('.job_submit').prop('disabled', false);
       swal('Invalid First Name!','First name cannot be empty','error','Cool');
       errors.push('fname_error');
       return;
     }
     if(fname.length > 25){
+      $('.job_submit').prop('disabled', false);
       swal('Invalid First Name!','First name field should not exceed 25 characters','error','Cool');
       errors.push('fname_error');
       return;
     }
     if (lname.length < 1) {
+      $('.job_submit').prop('disabled', false);
       swal('Invalid Last Name!','Last name cannot be empty','error','Cool');
       errors.push('lname_error');
       return;
     }
     if(lname.length > 25){
+      $('.job_submit').prop('disabled', false);
       swal('Invalid Last Name!','Last name field should not exceed 25 characters','error','Cool');
       errors.push('lname');
       return;
     }
     if(phone.length > 20){
+        $('.job_submit').prop('disabled', false);
         swal('Invalid phone Length!','Phone number field should not exceed 20 numbers','error','Cool');
         errors.push('phone');
         return;
@@ -376,34 +393,41 @@ $(document).ready(function(){
         var reg = /^\d+$/;
         var validPhone = reg.test(phone);
         if(!validPhone){
+          $('.job_submit').prop('disabled', false);
           swal('Invalid Phone!','Phone number field should only contain numbers','error','Cool');
           return;
         }
       }
       if(address.length > 255){
+        $('.job_submit').prop('disabled', false);
         swal('Invalid Address Length!','Address field should not exceed 255 charaters','error','Cool');
         errors.push('address');
         return;
       }
     if(dob == ''){
+      $('.job_submit').prop('disabled', false);
       swal('Invalid date!','Date cannot be empty','error','Cool');
       errors.push('date_error');
       return;
     }
     if(category == 'Select your job category of interest'){
+      $('.job_submit').prop('disabled', false);
         swal('Invalid Job Category!','Please select a job category','error','Cool');
         return;
     }
     if(interest == 'What are you looking for?'){
+        $('.job_submit').prop('disabled', false);
         swal('Invalid interest!','Please indicate what interests you on Dokuwo','error','Cool');
         return;
     }
     if(tag_line == '' || tag_line == null){
-    swal('Invalid tag_line!','Please select a tag_line','error','Cool');
-    return;
+      $('.job_submit').prop('disabled', false);
+      swal('Invalid tag_line!','Please select a tag_line','error','Cool');
+      return;
     }
     if(tag_line.length >30){
-    swal('Invalid tag_line!','Tag_line cannot be more that 30 characters in length','error','Cool');
+      $('.job_submit').prop('disabled', false);
+      swal('Invalid tag_line!','Tag_line cannot be more that 30 characters in length','error','Cool');
     return;
     }
     if(interest == 'Job'){
@@ -419,6 +443,7 @@ $(document).ready(function(){
           processData: false,
           cache:false,
           success: response => {
+            $('.job_submit').prop('disabled', false);
             if(response == 200){
               window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
             }else if( response == "Invalid Image"){
@@ -430,10 +455,12 @@ $(document).ready(function(){
             }
           },
           error: err => {
+            $('.job_submit').prop('disabled', false);
             swalNotify(err.responseText,'error');
           } 
         });
       }else{
+          $('.job_submit').prop('disabled', false);
           return;
       }
     });

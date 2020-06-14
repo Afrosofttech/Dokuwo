@@ -1056,10 +1056,16 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
   //on submit
   $('#jComposeNewMsg').submit(function(e){
     e.preventDefault();
+    $('#newmessage').prop('disabled', true);
     if($('#thefullname').val() ===''){
-      swalNotify('Message receiver name cannot be empty','error');
+      $('#newmessage').prop('disabled', false);
+      swalNotify('Message receiver field name cannot be empty','error');
     }else if($('#theSubject').val() === ''){
+      $('#newmessage').prop('disabled', false);
       swalNotify('Subject field cannot be empty','error');
+    }else if($('#theSubject').val() > 100){
+      $('#newmessage').prop('disabled', false);
+      swalNotify('Subject field cannot exceed 100 characters','error');
     }else{
       var formData = new FormData(this);
       formData.append("creator_id", session_id);
@@ -1079,6 +1085,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
         processData: false,
         cache:false,
         success: data => {
+          $('#newmessage').prop('disabled', false);
           if(data.status == 'success'){
             swalNotify(data.message,'success'); 
             (divToClear == undefined)? jcontentMessage(): discardMsg(divToClear);
@@ -1089,6 +1096,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
 
         },
         error: err => {
+          $('#newmessage').prop('disabled', false);
           swalNotify(err.responseText,'error');
         }
       });
@@ -2689,6 +2697,7 @@ let temp='<div class="content-wrapper">'+
           } 
         });
       }else{
+          $('#update-details').prop('disabled', false);
           return;
       }
     //
