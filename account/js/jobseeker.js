@@ -2532,7 +2532,7 @@ let temp='<div class="content-wrapper">'+
                     '</div>'+
                     '<div class="form-group row">'+
                       '<div class="offset-sm-2 col-sm-10">'+
-                        '<button  type="submit" class="btn btn-success">Activate</button>'+
+                        '<button  type="submit" id="activate-pack" class="btn btn-success">Activate</button>'+
                       '</div>'+
                     '</div>'+
                     '<div class="form-group row">'+
@@ -2697,9 +2697,11 @@ let temp='<div class="content-wrapper">'+
     // subscribe to a package
     $('#selectPackage').submit(function(e) {
       e.preventDefault();
+      $('#activate-pack').prop('disabled', true);
       let package = $('#package').val();
       if(package == 'None'){
         swal('Invalid package!','You can\'t select none!','error','Cool');
+        $('#activate-pack').prop('disabled', false);
         return;
       }
       $.ajax({
@@ -2708,10 +2710,12 @@ let temp='<div class="content-wrapper">'+
         url: 'post.php/jobseeker/request_to_activate_package',
         data: {'login_id':session_id,'package':package},
         success:function(response){
+            $('#activate-pack').prop('disabled', false);
             swal('package!',response.message,'success','cool');
             jsettings();
         },
         error: function(err){
+          $('#activate-pack').prop('disabled', false);
           swalNotify(err.responseText,'error');
         } 
       });
