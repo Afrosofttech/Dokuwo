@@ -2503,7 +2503,7 @@ let temp='<div class="content-wrapper">'+
                   '</div>'+
                       '<div class="form-group row">'+
                         '<div class="offset-sm-2 col-sm-10">'+
-                          '<button type="submit" class="btn btn-success float-right">Update</button>'+
+                          '<button type="submit" id="update-details" class="btn btn-success float-right">Update</button>'+
                         '</div>'+
                       '</div>'+
                     '</form>'+
@@ -2532,7 +2532,7 @@ let temp='<div class="content-wrapper">'+
                     '</div>'+
                     '<div class="form-group row">'+
                       '<div class="offset-sm-2 col-sm-10">'+
-                        '<button  type="submit" class="btn btn-success">Activate</button>'+
+                        '<button  type="submit" id="activate-pack" class="btn btn-success">Activate</button>'+
                       '</div>'+
                     '</div>'+
                     '<div class="form-group row">'+
@@ -2622,6 +2622,7 @@ let temp='<div class="content-wrapper">'+
     })
     $('#editJobseeker').submit(function(e) {
     e.preventDefault();
+    $('#update-details').prop('disabled', true);
     var fName = $('#fName').val();
     var lName = $('#lName').val();
     var email = $('#inputEmail').val();
@@ -2630,27 +2631,32 @@ let temp='<div class="content-wrapper">'+
   
     if (email.length < 1) {
       swal('Invalid Email!','Email cannot be empty','error','Cool');
+      $('#update-details').prop('disabled', false);
       errors.push('email_error');
       return;
     } else {
       if (!validEmail(email)) {
           swal('Invalid Email!','Please enter a valid email!','error','Cool');
+          $('#update-details').prop('disabled', false);
           errors.push('email_error');
           return;
       }
     }
     if (fName.length < 1) {
       swal('Invalid Name!','First Name cannot be empty!','error','Cool');
+      $('#update-details').prop('disabled', false);
       errors.push('name_error');
       return;
     }
     if (lName.length < 1) {
       swal('Invalid Last Name!','Last Name cannot be empty!','error','Cool');
+      $('#update-details').prop('disabled', false);
       errors.push('name_error');
       return;
     }
     if(password !== '' && password.length < 8){
       swal('Invalid password!','password must at least be 8 characters!','error','Cool');
+      $('#update-details').prop('disabled', false);
       errors.push('password_error');
       return;
     }
@@ -2667,6 +2673,7 @@ let temp='<div class="content-wrapper">'+
           processData: false,
           cache:false,
           success:function(response){
+            $('#update-details').prop('disabled', false);
             if(response == 200){
               swal('Update Successful!','Profile successfully updated','success','cool');
               jsettings();
@@ -2677,6 +2684,7 @@ let temp='<div class="content-wrapper">'+
           }
           },
           error: function(err){
+            $('#update-details').prop('disabled', false);
             swalNotify(err.responseText,'error');
           } 
         });
@@ -2689,9 +2697,11 @@ let temp='<div class="content-wrapper">'+
     // subscribe to a package
     $('#selectPackage').submit(function(e) {
       e.preventDefault();
+      $('#activate-pack').prop('disabled', true);
       let package = $('#package').val();
       if(package == 'None'){
         swal('Invalid package!','You can\'t select none!','error','Cool');
+        $('#activate-pack').prop('disabled', false);
         return;
       }
       $.ajax({
@@ -2700,10 +2710,12 @@ let temp='<div class="content-wrapper">'+
         url: 'post.php/jobseeker/request_to_activate_package',
         data: {'login_id':session_id,'package':package},
         success:function(response){
+            $('#activate-pack').prop('disabled', false);
             swal('package!',response.message,'success','cool');
             jsettings();
         },
         error: function(err){
+          $('#activate-pack').prop('disabled', false);
           swalNotify(err.responseText,'error');
         } 
       });
