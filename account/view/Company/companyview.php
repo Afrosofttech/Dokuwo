@@ -18,7 +18,7 @@ class CompanyView extends Company{
                 $count += 1;
             }
         }
-       $result = floor(($count/10)*100);
+       $result = floor(($count/11)*100);
        $dbContentArray['isProfileComplete'] = $result;
        $noOfJobseekers = $this->get_no_of_job_seekers();
        if($noOfJobseekers == 400) $noOfJobseekers = 0; 
