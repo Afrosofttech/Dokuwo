@@ -1819,7 +1819,7 @@ $(document).ready(function(){
   e.preventDefault();
   $('#update-details').prop('disabled', true);
   var name = $('#inputName').val();
-  VAR address = $('#address').val();
+  var address = $('#address').val();
   var phone = $('#phone').val();
   var email = $('#inputEmail').val();
   var password = $('#password').val();
