@@ -411,7 +411,7 @@ function footer(){
           '<div class="row">'+
             '<div class="col-md-12">'+
               '<div class="site-info text-center">'+
-                   +'<p>&copy;2019. Powered by <a class="text-primary" href="http://afrosofttech.com">Afrika Software Technologies</a></p>'+
+                '<p>Proudly Powered By Afrika Software Technologies</p>'+
               '</div>'+     
             '</div>'+
           '</div>'+
