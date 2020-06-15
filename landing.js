@@ -47,11 +47,11 @@ function header(){
                 'Contact'+
               '</a>'+
             '</li>'+
-            '<li class="nav-item dropdown">'
-            '<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-             'Sign In/Up'
-            '</a>'
-            '<ul class="dropdown-menu">'
+            '<li class="nav-item dropdown">'+
+            '<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+             'Sign In/Up'+
+            '</a>'+
+            '<ul class="dropdown-menu">'+
               '<li><a class="dropdown-item active" href="index.html">Sign In</a></li>'+
               '<li><a class="dropdown-item" href="index-2.html">Home 2</a>Sign up as a Recruiter</li>'+
               '<li><a class="dropdown-item" href="index-2.html">Home 2</a>Sign up as a Jobseeker/Freelancer</li>'+
