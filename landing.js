@@ -2857,7 +2857,7 @@ else{
           success: function(data){
             if(data == 200){
               $('#hireModal').modal('hide');
-              swal('Request sucessfully sent',jobseeker_name +' has been contacted','success','Close');
+              swal('Request sucessfully sent',jobseeker_name +' has been notified','success','Close');
             }
           },
           error: function(err){
