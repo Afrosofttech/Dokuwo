@@ -404,8 +404,6 @@ class Company extends Dbh{
     }
     protected function create_this_job($login_id,$company_id,$jobName,$jobLocation,$jobType,$jobCategory,$requirements,$salary,$email,$phone){
         $res = $this->package_status($login_id);
-        
-        //$res = $this->have_already_posted_a_job($login_id);
         if($res['status'] == 400) return $res;
         if($res['status'] == 402) return $res;
         if($res['status'] == 406) return $res;
@@ -435,13 +433,7 @@ class Company extends Dbh{
             }
         }
     }
-    // public function has_package_expired($res){
-
-    // }
     public function have_already_posted_a_job($login_id,$validFrom,$validUntil){
-        // $res = $this->validity_period($login_id);
-        // if(!$res) return array('message' => 'You have no active package. please activate a package to post a job!','status' => 400);
-        // else{
         $sql = "SELECT * FROM job WHERE date_posted BETWEEN :validFrom AND :validUntil";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute(array(
@@ -456,7 +448,6 @@ class Company extends Dbh{
             return  array('message' => 'You have already posted a job. You can only post one job with your current package!','status' => 402);
             $stmt = null;
         }
-    //   }  
     }
     protected function validity_period($login_id){
         $sql = "SELECT validFrom, validUntil, type, package_id FROM package WHERE login_id=? AND status=?";
