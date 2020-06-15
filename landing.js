@@ -2861,6 +2861,7 @@ else{
             }
           },
           error: function(err){
+            $('#hireModal').modal('hide');
             swalNotify(err.responseText,'error');
           }
         });
