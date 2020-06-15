@@ -53,8 +53,8 @@ function header(){
             '</a>'+
             '<ul class="dropdown-menu">'+
               '<li><a class="dropdown-item" href="account/authentication.php?xp=sign-in">Sign In</a></li>'+
-              '<li><a class="dropdown-item" href="index-2.html">Sign up as a Recruiter</a></li>'+
-              '<li><a class="dropdown-item" href="index-2.html">Sign up as a Jobseeker/Freelancer</a></li>'+
+              '<li><a class="dropdown-item" href="account/authentication.php?xp=recruiter">Sign up ~ Recruiter</a></li>'+
+              '<li><a class="dropdown-item" href="account/authentication.php?xp=jf">Sign up ~ Jobseeker/Freelancer</a></li>'+
             '</ul>'+
           '</li>'+
             // '<li class="nav-item">'+

@@ -47,9 +47,11 @@
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
+
 					<div class="panel-heading">
-						<div class="row">
-							<div class="col-xs-4">
+						<div class="row" id="xp-link-header">
+
+							<!-- <div class="col-xs-4">
 								<a href="#" class="active" id="login-form-link">Login</a>
 							</div>
 							<div class="col-xs-4">
@@ -57,14 +59,17 @@
 							</div>
                             <div class="col-xs-4">
 								<a href="#" id="company-form-link">Recruiter</a>
-							</div>
+							</div> -->
+
 						</div>
 						<hr>
 					</div>
+
 					<div class="panel-body">
 						<div class="row">
-							<div class="col-lg-12">
-								<form id="login-form" role="form" style="display: block;" class="my-form" autocomplete="off">
+							<div class="col-lg-12" id="xp-body">
+
+								<!-- <form id="login-form" role="form" style="display: block;" class="my-form" autocomplete="off">
 									<div class="form-group">
 										<input type="email" name="email" id="login_email" tabindex="1" class="form-control email" placeholder="Enter Email">
 									</div>
@@ -97,6 +102,7 @@
 										</div>
 									</div>
 								</form>
+
 								<form id="jobseeker-form" role="form" style="display: none;" class="my-form" autocomplete="off">
 									<div class="form-group">
 										<input type="email" name="email" id="jobseeker_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
@@ -112,6 +118,7 @@
 										</div>
 									</div>
 								</form>
+
                                 <form id="company-form" role="form" style="display: none;" class="my-form" autocomplete="off">
 									<div class="form-group">
 										<input type="email" name="email" id="company_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
@@ -126,10 +133,12 @@
 											</div>
 										</div>
 									</div>
-								</form>
+								</form> -->
+
 							</div>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -137,6 +146,93 @@
     <script src="js/plugins/notify.min.js"></script>
     <script>
     $(function() {
+		let xp = '<?php if(isset($_REQUEST['xp'])){echo $_REQUEST['xp'];}else{ echo '';}  ?>';
+	if(xp == 'recruiter'){
+	$('#xp-link-header').html(
+		` <div class="col-xs-4">
+		<a href="#" id="company-form-link">Recruiter</a>
+		</div>`);
+	$('#xp-body').html(
+		`
+		<form id="company-form" role="form" style="display: none;" class="my-form" autocomplete="off">
+			<div class="form-group">
+				<input type="email" name="email" id="company_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
+			</div>
+			<div class="form-group">
+				<input type="password" name="password" id="company_pwd" tabindex="2" class="form-control password" placeholder="Password">
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-6 col-sm-offset-3">
+						<input type="submit" name="company-submit" id="company-submit" tabindex="4" class="form-control btn btn-register btn-submit-request" value="Register Now" placeholder="Register Now">
+					</div>
+				</div>
+			</div>
+		</form>`);
+	}else if(xp == 'jf'){
+		$('#xp-link-header').html(
+		`<div class="col-xs-4">
+			<a href="#" id="jobseeker-form-link">Jobseeker/Freelancer</a>
+		</div>`);
+		$('#xp-body').html(
+			`
+			<form id="jobseeker-form" role="form" style="display: none;" class="my-form" autocomplete="off">
+				<div class="form-group">
+					<input type="email" name="email" id="jobseeker_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
+				</div>
+				<div class="form-group">
+					<input type="password" name="password" id="jobseeker_pwd" tabindex="2" class="form-control password" placeholder="Enter Password">
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-3">
+							<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register btn-submit-request" value="Register Now" placeholder="Register Now">
+						</div>
+					</div>
+				</div>
+			</form>`);
+	}else{
+		$('#xp-link-header').html(
+		`<div class="col-xs-4">
+			<a href="#" id="company-form-link">Recruiter</a>
+		</div>`);
+		$('#xp-body').html(
+		`
+		<form id="login-form" role="form" style="display: block;" class="my-form" autocomplete="off">
+			<div class="form-group">
+				<input type="email" name="email" id="login_email" tabindex="1" class="form-control email" placeholder="Enter Email">
+			</div>
+			<div class="form-group">
+				<input type="password" name="password" id="login_pwd" tabindex="2" class="form-control password" placeholder="Enter Password">
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-6 col-sm-offset-3">
+						<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login btn-submit-request" value="Log In" placeholder="Log In">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="text-center">
+							<a href="forgot-pwd.php" tabindex="5" class="forgot-password">Forgot Password?</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="text-center">
+							<a href="../" tabindex="5" class="forgot-password">Back to homepage</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>`);
+	}
+	
 	let attempt = '<?php if(isset($_REQUEST['attempt'])){echo $_REQUEST['attempt'];}else{ echo '';}  ?>';
 	(attempt == 'success')? swal('Profile creation complete!','Please login to continue','success','Cool'):
 	(attempt == 'failed')?swal('Profile creation failed!','You need to create an account first','error','Cool'):
