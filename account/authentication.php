@@ -230,7 +230,7 @@ $(function() {
 					</div>
 				</div>
 			</div>
-		<div class="d-flex flex-wrap">
+		<div class="d-flex justify-content-around flex-wrap">
 
 			<div class="form-group">
 				<div class="row">
