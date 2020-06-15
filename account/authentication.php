@@ -145,9 +145,8 @@
 	</div>
     <script src="js/plugins/notify.min.js"></script>
     <script>
-    $(function() {
+$(function() {
 		let xp = '<?php if(isset($_REQUEST['xp'])){echo $_REQUEST['xp'];}else{ echo '';}  ?>';
-		console.log(xp);
 	if(xp == 'recruiter'){
 	$('#xp-link-header').html(
 		` <div class="col-xs-4">
@@ -155,7 +154,7 @@
 		</div>`);
 	$('#xp-body').html(
 		`
-		<form id="company-form" role="form" style="display: none;" class="my-form" autocomplete="off">
+		<form id="company-form" role="form" style="display: block;" class="my-form" autocomplete="off">
 			<div class="form-group">
 				<input type="email" name="email" id="company_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
 			</div>
@@ -177,7 +176,7 @@
 		</div>`);
 		$('#xp-body').html(
 			`
-			<form id="jobseeker-form" role="form" style="display: none;" class="my-form" autocomplete="off">
+			<form id="jobseeker-form" role="form" style="display: block;" class="my-form" autocomplete="off">
 				<div class="form-group">
 					<input type="email" name="email" id="jobseeker_email" tabindex="1" class="form-control email" placeholder="Enter Email Address" value="">
 				</div>
