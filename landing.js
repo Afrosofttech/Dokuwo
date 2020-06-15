@@ -3232,7 +3232,7 @@ else{
       
     }
 function faq(){
-  let temp = `<!-- Page Header Start -->
+  let temp = `    <!-- Page Header Start -->
   <div class="page-header">
     <div class="container">
       <div class="row">         
@@ -3257,7 +3257,7 @@ function faq(){
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                    How do I Sign up? 
+                    How do I sign Up? 
                   </a>
                 </h4>
               </div>
@@ -3266,12 +3266,27 @@ function faq(){
                   <p>You can either sign up as a <strong>Recruiter</strong> or as jobseeker/Freelancer. When you hover over the Sign In/Up link on the main menu and select the right option, You are to fill in your email and a password in the form fields and click <strong>REGISTER NOW</strong>.</p>
                   <br>
                   <p>
-                     If the email you provided is correct, you will receive an email with a link to activate your account. Head over to your email and click on the link to further complete the registration process. Once complete, you can then login to your account and use what Dokuwo has to offer.<strong>Note:<strong> if you do not see the Activation message in your <strong>primary<strong> emails, just check in your <strong>promotional<strong> emails or <strong>All<strong> mails. Your mail service might have flagged it as a promotional email.
+                    If the email you provided is correct, you will receive an email with a link to activate your account. Head over to your email and click on the link to further complete the registration process. Once complete, you can then login to your account and use what Dokuwo has to offer.<strong>Note:<strong> if you do not see the Activation message in your <strong>primary<strong> emails, just check in your <strong>promotional<strong> emails or <strong>All<strong> mails. Your mail service might have flagged it as a promotional email.
                   </p>
                 </div>
               </div>
             </div>
-
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                    How Long will it take to get my package?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseFive" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p>
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- accordion End -->    
         </div>   
@@ -3296,7 +3311,22 @@ function faq(){
                 </div>
               </div>
             </div>
-            
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive5">
+                    How Long will it take to get my package?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseFive5" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p>
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- accordion End -->    
         </div>      
