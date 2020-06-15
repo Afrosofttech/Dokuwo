@@ -147,6 +147,7 @@
     <script>
     $(function() {
 		let xp = '<?php if(isset($_REQUEST['xp'])){echo $_REQUEST['xp'];}else{ echo '';}  ?>';
+		console.log(xp);
 	if(xp == 'recruiter'){
 	$('#xp-link-header').html(
 		` <div class="col-xs-4">
