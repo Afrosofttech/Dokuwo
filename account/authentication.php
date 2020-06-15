@@ -234,7 +234,7 @@ $(function() {
 
 			<div class="form-group">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-6">
 						<div class="text-center">
 							<a href="forgot-pwd.php" tabindex="5" class="forgot-password">Forgot Password?</a>
 						</div>
@@ -243,7 +243,7 @@ $(function() {
 			</div>
 			<div class="form-group">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-6">
 						<div class="text-center">
 							<a href="../" tabindex="5" class="forgot-password">Back to homepage</a>
 						</div>
