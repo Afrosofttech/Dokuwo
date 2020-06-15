@@ -3282,7 +3282,7 @@ function faq(){
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a class="collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1">
-                    How do I place an ad? 
+                    How do I contact support? 
                   </a>
                 </h4>
               </div>
