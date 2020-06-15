@@ -2839,7 +2839,7 @@ else{
         if(!validPhone){
           swal('Invalid Phone number!','Please enter a valid phone number','error','Cool');
           return;
-        }else if(hirer_phone > 20){
+        }else if(hirer_phone.length > 20){
           swal('Invalid Phone number!','Phone field must be less than 20 characters','error','Cool');
           return;
         }
