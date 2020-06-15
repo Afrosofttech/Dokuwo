@@ -391,7 +391,7 @@ function footer(){
                 '<ul class="menu">'+
                   '<li><a href="javascript:void(0)">Terms & Conditions</a></li>'+
                   '<li><a href="javascript:void(0)">Privacy</a></li>'+
-                  '<li><a href="javascript:void(0)">Refferal Terms</a></li>'+
+                  '<li><a href="faq.html">FAQ</a></li>'+
                   '<li><a href="javascript:void(0)">Product License</a></li>'+
                 '</ul>'+
               '</div>'+
