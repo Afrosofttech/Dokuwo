@@ -62,9 +62,9 @@ function gotoHomepage(){
   var now = new Date();
   now.setTime(now.getTime() + (15 * 60 * 1000));
   var expires = "expires="+ now.toUTCString();
-  document.cookie ="cookie_usertype =" + session_usertype + ";" + expires + ";path=/Career/index.php";
-  document.cookie ="cookie_user_id =" + session_user_id + ";" + expires + ";path=/Career/index.php";
-  window.location.replace('../../Career/index.php');
+  document.cookie ="cookie_usertype =" + session_usertype + ";" + expires + ";path=/dokuwo.com/index.php";
+  document.cookie ="cookie_user_id =" + session_user_id + ";" + expires + ";path=/dokuwo.com/index.php";
+  window.location.replace('../../dokuwo.com/index.php');
 }
 
 function addNewAttachment(){
@@ -81,7 +81,7 @@ function hireFreelancer(freelancerName,freelancer_id){
     '<div class="modal-dialog modal-dialog-centered" role="document">'+
       '<div class="modal-content">'+
         '<div class="modal-header">'+
-          '<h5 class="modal-title" id="exampleModalLongTitle">Hire Freelancer</h5>'+
+          '<h5 class="modal-title" id="exampleModalLongTitle">Hire '+ freelancerName +'</h5>'+
           '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
             '<span aria-hidden="true">&times;</span>'+
           '</button>'+
@@ -89,7 +89,7 @@ function hireFreelancer(freelancerName,freelancer_id){
         '<div class="modal-body">'+
 
             '<div class="contact-block">'+
-              '<h2 class="text-center">'+ freelancerName +'</h2>'+
+              // '<h5 class="text-center">'+ freelancerName +'</h5>'+
               '<form id="contactForm1">'+
                 '<div class="row">'+
                   '<div class="col-md-6">'+
