@@ -81,7 +81,7 @@ function hireFreelancer(freelancerName,freelancer_id){
     '<div class="modal-dialog modal-dialog-centered" role="document">'+
       '<div class="modal-content">'+
         '<div class="modal-header">'+
-          '<h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 5px;">Hire '+ freelancerName +'</h5>'+
+          '<h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 25px;">Hire '+ freelancerName +'</h5>'+
           '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
             '<span aria-hidden="true">&times;</span>'+
           '</button>'+
