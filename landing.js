@@ -53,8 +53,8 @@ function header(){
             '</a>'+
             '<ul class="dropdown-menu">'+
               '<li><a class="dropdown-item active" href="index.html">Sign In</a></li>'+
-              '<li><a class="dropdown-item" href="index-2.html">Home 2</a>Sign up as a Recruiter</li>'+
-              '<li><a class="dropdown-item" href="index-2.html">Home 2</a>Sign up as a Jobseeker/Freelancer</li>'+
+              '<li><a class="dropdown-item" href="index-2.html">Sign up as a Recruiter</a></li>'+
+              '<li><a class="dropdown-item" href="index-2.html">Sign up as a Jobseeker/Freelancer</a></li>'+
             '</ul>'+
           '</li>'+
             // '<li class="nav-item">'+
