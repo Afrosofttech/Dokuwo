@@ -2814,17 +2814,20 @@ else{
       let task = $('#task').val();
 
       if (hirer_name == ''){
-        swal('Invalid Name!','Hirer Name cannot be empty','error','Cool');
+        swal('Invalid Name!','Hirer Name field cannot be empty','error','Cool');
         return;
       }
 
       if (hirer_email.length < 1) {
-        swal('Invalid Email!','Email cannot be empty','error','Cool');
+        swal('Invalid Email!','Email field cannot be empty','error','Cool');
         return;
        }else {
         if (!validEmail(hirer_email)) {
            swal('Invalid Email!','Please enter a valid email!','error','Cool');
            return;
+        }else if(hirer_email.length > 40){
+          swal('Invalid Email!','Email field must be less than 40 characters!','error','Cool');
+          return;
         }
        }
        if(hirer_phone.length < 1){
@@ -2835,6 +2838,9 @@ else{
         var validPhone = regEx.test(hirer_phone);
         if(!validPhone){
           swal('Invalid Phone number!','Please enter a valid phone number','error','Cool');
+          return;
+        }else if(hirer_phone > 20){
+          swal('Invalid Phone number!','Phone field must be less than 20 characters','error','Cool');
           return;
         }
        }
@@ -2850,6 +2856,7 @@ else{
           data :{'jobseeker_id':jobseeker_id,'name':hirer_name,'email':hirer_email,'phone':hirer_phone,'task': task},
           success: function(data){
             if(data == 200){
+              $('#hireModal').modal('dispose');
               swal('Request sucessfully sent',jobseeker_name +' has been contacted','success','Close');
             }
           },
