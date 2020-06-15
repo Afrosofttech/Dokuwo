@@ -3271,22 +3271,7 @@ function faq(){
                 </div>
               </div>
             </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                    How Long will it take to get my package?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseFive" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                  </p>
-                </div>
-              </div>
-            </div>
+
           </div>
           <!-- accordion End -->    
         </div>   
@@ -3311,22 +3296,7 @@ function faq(){
                 </div>
               </div>
             </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive5">
-                    How Long will it take to get my package?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseFive5" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                  </p>
-                </div>
-              </div>
-            </div>
+
           </div>
           <!-- accordion End -->    
         </div>      
