@@ -230,10 +230,10 @@ $(function() {
 					</div>
 				</div>
 			</div>
-		<div class="d-flex justify-content-around flex-wrap">
+		<div class="row d-flex justify-content-around flex-wrap">
 
 			<div class="form-group">
-				<div class="row">
+				<div class="">
 					<div class="col-lg-6">
 						<div class="text-center">
 							<a href="forgot-pwd.php" tabindex="5" class="forgot-password">Forgot Password?</a>
@@ -242,7 +242,7 @@ $(function() {
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="row">
+				<div class="">
 					<div class="col-lg-6">
 						<div class="text-center">
 							<a href="../" tabindex="5" class="forgot-password">Back to homepage</a>
