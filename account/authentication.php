@@ -168,6 +168,15 @@ $(function() {
 					</div>
 				</div>
 			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="text-center">
+							<a href="../" tabindex="5" class="forgot-password">Back to homepage</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</form>`);
 	}else if(xp == 'jf'){
 		$('#xp-link-header').html(
@@ -190,6 +199,15 @@ $(function() {
 						</div>
 					</div>
 				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="text-center">
+								<a href="../" tabindex="5" class="forgot-password">Back to homepage</a>
+							</div>
+						</div>
+					</div>
+			    </div>
 			</form>`);
 	}else{
 		$('#xp-link-header').html(
