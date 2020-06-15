@@ -13,7 +13,7 @@ function header(){
             '<span class="lni-menu"></span>'+
             '<span class="lni-menu"></span>'+
           '</button>'+
-          '<a href="index.php" class="navbar-brand"><img src="assets/img/logo-footer.png" alt="dokuwo"></a>'+
+          '<a href="index.php" class="navbar-brand"><img src="assets/img/logo-header.png" alt="dokuwo"></a>'+
         '</div>'+
         '<div class="collapse navbar-collapse" id="main-navbar">'+
           '<ul class="navbar-nav mr-auto w-100 justify-content-end main-navigation">'+
