@@ -230,6 +230,8 @@ $(function() {
 					</div>
 				</div>
 			</div>
+		<div class="d-flex flex-wrap">
+
 			<div class="form-group">
 				<div class="row">
 					<div class="col-lg-12">
@@ -248,6 +250,8 @@ $(function() {
 					</div>
 				</div>
 			</div>
+
+          </div>
 		</form>`);
 	}
 	
