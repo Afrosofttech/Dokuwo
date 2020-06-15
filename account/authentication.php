@@ -147,6 +147,7 @@
     <script>
     $(function() {
 		let xp = '<?php if(isset($_REQUEST['xp'])){echo $_REQUEST['xp'];}else{ echo '';}  ?>';
+		console.log(xp);
 	if(xp == 'recruiter'){
 	$('#xp-link-header').html(
 		` <div class="col-xs-4">
@@ -194,8 +195,8 @@
 	}else{
 		$('#xp-link-header').html(
 		`<div class="col-xs-4">
-			<a href="#" id="company-form-link">Recruiter</a>
-		</div>`);
+			<a href="#" class="active" id="login-form-link">Login</a>
+		 </div>`);
 		$('#xp-body').html(
 		`
 		<form id="login-form" role="form" style="display: block;" class="my-form" autocomplete="off">
