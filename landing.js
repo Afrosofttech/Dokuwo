@@ -3263,10 +3263,10 @@ function faq(){
               </div>
               <div id="collapseOne" class="panel-collapse collapse in">
                 <div class="panel-body">
-                  <p>You can either sign up as a <strong>Recruiter</strong> or as jobseeker/Freelancer. When you hover over the Sign In/Up link on the main menu and select the right option, You are to fill in your email and a password in the form fields and click <strong>REGISTER NOW</strong>.</p>
+                  <p>You can either sign up as a <strong>Recruiter</strong> or as <strong>jobseeker/Freelancer</strong>. When you hover over the Sign In/Up link on the main menu and select the right option, You are to fill in your email and a password in the form fields and click <strong>REGISTER NOW</strong>.</p>
                   <br>
                   <p>
-                    If the email you provided is correct, you will receive an email with a link to activate your account. Head over to your email and click on the link to further complete the registration process. Once complete, you can then login to your account and use what Dokuwo has to offer.<strong>Note:<strong> if you do not see the Activation message in your <strong>primary<strong> emails, just check in your <strong>promotional<strong> emails or <strong>All<strong> mails. Your mail service might have flagged it as a promotional email.
+                    If the email you provided is correct, you will receive an email with a link to activate your account. Head over to your email and click on the link to further complete the registration process. Once complete, you can then login to your account and use what Dokuwo has to offer.<strong>Note:</strong> if you do not see the Activation message in your <strong>primary</strong> emails, just check in your <strong>promotional</strong> emails or <strong>All</strong> mails. Your mail service might have flagged it as a promotional email.
                   </p>
                 </div>
               </div>
