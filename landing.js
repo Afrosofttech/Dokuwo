@@ -3257,90 +3257,91 @@ function faq(){
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                    How do I place an ad? 
+                    How do I Sign up? 
                   </a>
                 </h4>
               </div>
               <div id="collapseOne" class="panel-collapse collapse in">
                 <div class="panel-body">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur sit amet ante nec vulputate. Nulla aliquam, justo auctor consequat tincidunt, arcu erat mattis lorem, lacinia lacinia dui enim at eros. Pellentesque ut gravida augue. Duis ac dictum tellus </p>
+                  <p>You can either sign up as a <strong>Recruiter</strong> or as jobseeker/Freelancer. When you hover over the Sign In/Up link on the main menu and select the right option, You are to fill in your email and a password in the form fields and click <strong>REGISTER NOW</strong>.</p>
                   <br>
                   <p>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim ke ffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. 
+                     If the email you provided is correct, you will receive an email with a link to activate your account. Head over to your email and click on the link to further complete the registration process. Once complete, you can then login to your account and use what Dokuwo has to offer.<strong>Note:<strong> if you do not see the Activation message in your <strong>primary<strong> emails, just check in your <strong>promotional<strong> emails or <strong>All<strong> mails. Your mail service might have flagged it as a promotional email.
                   </p>
                 </div>
               </div>
             </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                    Who shouldi to contact if i Have any question?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseTwo" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim ke ffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. 
-                  </p>
-                  <br>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur sit amet ante nec vulputate. Nulla aliquam, justo auctor consequat tincidunt, arcu erat mattis lorem, lacinia lacinia dui enim at eros. Pellentesque ut gravida augue. Duis ac dictum tellus </p>                    
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                    How can i cancel or change my order?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseThree" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas expedita, repellendus est nemo cum quibusdam optio, voluptate hic a tempora facere, nihil non itaque alias similique quas quam odit consequatur.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                    How can i Return A Product?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseFour" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
-                  </p>
-                  <br>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident iure ab nisi, magnam vitae. Laboriosam laborum suscipit recusandae officia laudantium, consectetur adipisci voluptates doloremque quisquam. Id rerum iusto reprehenderit assumenda!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                    How Long will it take to get my package?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseFive" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                  </p>
-                </div>
-              </div>
-            </div>
+            // <div class="panel panel-default">
+            //   <div class="panel-heading">
+            //     <h4 class="panel-title">
+            //       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+            //         Who shouldi to contact if i Have any question?
+            //       </a>
+            //     </h4>
+            //   </div>
+            //   <div id="collapseTwo" class="panel-collapse collapse">
+            //     <div class="panel-body">
+            //       <p>
+            //         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim ke ffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. 
+            //       </p>
+            //       <br>
+            //       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur sit amet ante nec vulputate. Nulla aliquam, justo auctor consequat tincidunt, arcu erat mattis lorem, lacinia lacinia dui enim at eros. Pellentesque ut gravida augue. Duis ac dictum tellus </p>                    
+            //     </div>
+            //   </div>
+            // </div>
+            // <div class="panel panel-default">
+            //   <div class="panel-heading">
+            //     <h4 class="panel-title">
+            //       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+            //         How can i cancel or change my order?
+            //       </a>
+            //     </h4>
+            //   </div>
+            //   <div id="collapseThree" class="panel-collapse collapse">
+            //     <div class="panel-body">
+            //       <p>
+            //         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas expedita, repellendus est nemo cum quibusdam optio, voluptate hic a tempora facere, nihil non itaque alias similique quas quam odit consequatur.
+            //       </p>
+            //     </div>
+            //   </div>
+            // </div>
+            // <div class="panel panel-default">
+            //   <div class="panel-heading">
+            //     <h4 class="panel-title">
+            //       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+            //         How can i Return A Product?
+            //       </a>
+            //     </h4>
+            //   </div>
+            //   <div id="collapseFour" class="panel-collapse collapse">
+            //     <div class="panel-body">
+            //       <p>
+            //         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
+            //       </p>
+            //       <br>
+            //       <p>
+            //         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident iure ab nisi, magnam vitae. Laboriosam laborum suscipit recusandae officia laudantium, consectetur adipisci voluptates doloremque quisquam. Id rerum iusto reprehenderit assumenda!
+            //       </p>
+            //     </div>
+            //   </div>
+            // </div>
+            // <div class="panel panel-default">
+            //   <div class="panel-heading">
+            //     <h4 class="panel-title">
+            //       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+            //         How Long will it take to get my package?
+            //       </a>
+            //     </h4>
+            //   </div>
+            //   <div id="collapseFive" class="panel-collapse collapse">
+            //     <div class="panel-body">
+            //       <p>
+            //         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+            //       </p>
+            //     </div>
+            //   </div>
+            // </div>
+
           </div>
           <!-- accordion End -->    
         </div>   
@@ -3365,76 +3366,76 @@ function faq(){
                 </div>
               </div>
             </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo2">
-                    Who shouldi to contact if i Have any question?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseTwo2" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim ke ffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. 
-                  </p>
-                  <br>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur sit amet ante nec vulputate. Nulla aliquam, justo auctor consequat tincidunt, arcu erat mattis lorem, lacinia lacinia dui enim at eros. Pellentesque ut gravida augue. Duis ac dictum tellus </p>                    
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree3">
-                    How can i cancel or change my order?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseThree3" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas expedita, repellendus est nemo cum quibusdam optio, voluptate hic a tempora facere, nihil non itaque alias similique quas quam odit consequatur.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour4">
-                    How can i Return A Product?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseFour4" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
-                  </p>
-                  <br>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident iure ab nisi, magnam vitae. Laboriosam laborum suscipit recusandae officia laudantium, consectetur adipisci voluptates doloremque quisquam. Id rerum iusto reprehenderit assumenda!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive5">
-                    How Long will it take to get my package?
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseFive5" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                  </p>
-                </div>
-              </div>
-            </div>
+            // <div class="panel panel-default">
+            //   <div class="panel-heading">
+            //     <h4 class="panel-title">
+            //       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo2">
+            //         Who shouldi to contact if i Have any question?
+            //       </a>
+            //     </h4>
+            //   </div>
+            //   <div id="collapseTwo2" class="panel-collapse collapse">
+            //     <div class="panel-body">
+            //       <p>
+            //         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim ke ffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. 
+            //       </p>
+            //       <br>
+            //       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur sit amet ante nec vulputate. Nulla aliquam, justo auctor consequat tincidunt, arcu erat mattis lorem, lacinia lacinia dui enim at eros. Pellentesque ut gravida augue. Duis ac dictum tellus </p>                    
+            //     </div>
+            //   </div>
+            // </div>
+            // <div class="panel panel-default">
+            //   <div class="panel-heading">
+            //     <h4 class="panel-title">
+            //       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree3">
+            //         How can i cancel or change my order?
+            //       </a>
+            //     </h4>
+            //   </div>
+            //   <div id="collapseThree3" class="panel-collapse collapse">
+            //     <div class="panel-body">
+            //       <p>
+            //         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas expedita, repellendus est nemo cum quibusdam optio, voluptate hic a tempora facere, nihil non itaque alias similique quas quam odit consequatur.
+            //       </p>
+            //     </div>
+            //   </div>
+            // </div>
+            // <div class="panel panel-default">
+            //   <div class="panel-heading">
+            //     <h4 class="panel-title">
+            //       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour4">
+            //         How can i Return A Product?
+            //       </a>
+            //     </h4>
+            //   </div>
+            //   <div id="collapseFour4" class="panel-collapse collapse">
+            //     <div class="panel-body">
+            //       <p>
+            //         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
+            //       </p>
+            //       <br>
+            //       <p>
+            //         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident iure ab nisi, magnam vitae. Laboriosam laborum suscipit recusandae officia laudantium, consectetur adipisci voluptates doloremque quisquam. Id rerum iusto reprehenderit assumenda!
+            //       </p>
+            //     </div>
+            //   </div>
+            // </div>
+            // <div class="panel panel-default">
+            //   <div class="panel-heading">
+            //     <h4 class="panel-title">
+            //       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive5">
+            //         How Long will it take to get my package?
+            //       </a>
+            //     </h4>
+            //   </div>
+            //   <div id="collapseFive5" class="panel-collapse collapse">
+            //     <div class="panel-body">
+            //       <p>
+            //         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute. non cupidatat skateboard dolor brunch. Foosd truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt alqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+            //       </p>
+            //     </div>
+            //   </div>
+            // </div>
           </div>
           <!-- accordion End -->    
         </div>      
