@@ -2856,7 +2856,7 @@ else{
           data :{'jobseeker_id':jobseeker_id,'name':hirer_name,'email':hirer_email,'phone':hirer_phone,'task': task},
           success: function(data){
             if(data == 200){
-              $('#hireModal').modal('dispose');
+              $('#hireModal').modal('hide');
               swal('Request sucessfully sent',jobseeker_name +' has been contacted','success','Close');
             }
           },
