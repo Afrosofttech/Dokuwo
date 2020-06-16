@@ -96,20 +96,16 @@
               '<div class="message text-center" id="message"></div>'+
               '<div class="text-center">'+
                 '<h1 class="h4 text-gray-900 mb-4" id="header-title">Complete your profile details</h1>'+
-                '<p>All fields marked with * are required</p>'+
               '</div>'+
               '<div>'+
            '<form class="user" method="POST" id="companydetail" enctype="multipart/form-data" autocomplete="off">'+
                 '<div class="form-group">'+
-                  '<label for=”name" style="color:red;">*</label>'+
                   '<input type="text" class="form-control form-control-user" name="name" id="name" placeholder="Recruiter name">'+
                 '</div>'+
                 '<div class="form-group">'+
-                  '<label for="comp_email" style="color:red;">*</label>'+
                   '<input type="email" class="form-control form-control-user" name="email" id="comp_email" placeholder="Recruiter email">'+
                 '</div>'+
                 '<div class="form-group">'+
-                  '<label for="comp_phone" style="color:red;">*</label>'+
                   '<input type="text" class="form-control form-control-user" name="phone" id="comp_phone" placeholder="Phone number...">'+
                 '</div> '+
                 '<div class="form-group">'+
@@ -125,6 +121,9 @@
                   '<select class="form-control" name="currency" id="currency">'+
                   ''+countries.map((currency,index) =>  '<option value = "'+currency.value+'" id="'+currency.value+'">'+currency.name+'</option>')+''+
                   '</select>'+
+                '</div>'+
+                '<div class="form-group">'+
+                   '<p>The logo is optional and can be done later.</p>'+
                 '</div>'+
                 '<div class="form-group">'+
                 '<input type="file" class="form-control form-control-user" name="logo" id="logo">'+
@@ -258,27 +257,22 @@
               '<div class="message text-center" id="message"></div>'+
               '<div class="text-center">'+
                 '<h1 class="h4 text-gray-900 mb-4" id="header-title">Complete your profile details</h1>'+
-                '<p>All fields marked with * are required</p>'+
               '</div>'+
               '<div>'+
             '<form class="user" method="POST" id="jobseeker" enctype="multipart/form-data" autocomplete="off">'+
                 '<div class="form-group row">'+
                     '<div class="col-sm-6 mb-3 mb-sm-0">'+
-                        '<label for="firstname">Name:<span style="color:red;">First Name:*</span></</label>'+
                         '<input type="text" class="form-control form-control-user" name="firstname" id="firstname" placeholder="First name">'+
                     '</div>'+
                     '<div class="col-sm-6">'+
-                        '<label for="lastname">Last Name:<span style="color:red;">*</span></</label>'+
                         '<input type="text" class="form-control form-control-user" name="lastname" id="lastname" placeholder="Last name">'+
                     '</div>'+
                   '</div>'+
                 '<div class="form-group row">'+
                   '<div class="col-sm-6 mb-3 mb-sm-0">'+
-                    '<label for="phone">Phone:<span style="color:red;">*</span></</label>'+
                     '<input type="text" class="form-control form-control-user" name="phone" id="phone" placeholder="Phone">'+
                   '</div>'+
                   '<div class="col-sm-6">'+
-                    '<label for="dateofbirth">DOB:<span style="color:red;">*</span></</label>'+
                     '<input type="text" class="form-control form-control-user" name="dateofbirth" id="dateofbirth" placeholder="Date of Birth...">'+
                   '</div>'+
                 '</div>'+
@@ -294,7 +288,6 @@
                 '<input type="text" class="form-control form-control-user" id="skills" name="skills" value="java,python" placeholder="Enter your skills here">'+
                 '</div>'+
                 '<div class="form-group">'+
-                 '<label for="educationlevel">Edu. level:<span style="color:red;">*</span></</label>'+
                 '<select class="form-control" id="educationlevel" name="educationlevel">'+
                   '<option value="" selected hidden>Select your most recent education level</option>'+
                   '<option value="High school diploma or equivalent">High school diploma or equivalent</option>'+
@@ -305,7 +298,6 @@
                 '</select>'+
               '</div>'+
                 '<div class="form-group">'+
-                 '<label for="category">Category:<span style="color:red;">*</span></</label>'+
                 '<select class="form-control" id="category" name="category">'+
                   '<option value="" selected hidden>Select your job category of interest</option>'+
                   '<option value="Finance">Finance</option>'+
@@ -320,7 +312,6 @@
                 '</select>'+
               '</div>'+
               '<div class="form-group">'+
-               '<label for="interest" style="color:red;">Interest:<span style="color:red;">*</span></</label>'+
                 '<select class="form-control" id="interest" name="interest">'+
                   '<option value="" selected hidden>What are you looking for?</option>'+
                   '<option value="Job">Only job</option>'+
@@ -328,7 +319,6 @@
                 '</select>'+
               '</div>'+
               '<div class="form-group">'+
-                '<label for="tag_line">Tag_line:<span style="color:red;">*</span></</label>'+
                 '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" maxlength="30" placeholder="choose the tag to appear on your profile e.g graphic designer">'+
               '</div>'+
               '<div class="form-group">'+
@@ -336,6 +326,9 @@
               '</div>'+
               '<div class="form-group">'+
                 '<input type="hidden" class="form-control form-control-user" name="id" id="Jobseeker_id" value="'+entity.login_id+'" >'+
+              '</div>'+
+              '<div class="form-group">'+
+               '<p>The Image and CV are optional and can be done later.</p>'+
               '</div>'+
               '<div class="form-group">'+
                   '<div class="custom-file">'+
