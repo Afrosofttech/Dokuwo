@@ -2550,21 +2550,21 @@ let temp='<div class="content-wrapper">'+
                       '<div class="p-2 bd-highlight">'+
                         '<div class="card" style="width: 12rem;">'+
                           '<div class="card-body">'+
-                            '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                            '<p class="card-text">Pay to <strong>5943640</strong> and communicate with the Dokuwo team or wait for us to reach out. You will be required to provide prove of payment.</p>'+
                           '</div>'+
                         '</div>'+
                       '</div>'+
                       '<div class="p-2 bd-highlight">'+
                         '<div class="card" style="width: 12rem;">'+
                           '<div class="card-body">'+
-                            '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                            '<p class="card-text">Pay to <strong>2712206</strong> and communicate with the Dokuwo team or wait for us to reach out. You will be required to provide prove of payment.</p>'+
                           '</div>'+
                        '</div>'+
                       '</div>'+
                       '<div class="p-2 bd-highlight">'+
                         '<div class="card" style="width: 12rem;">'+
                           '<div class="card-body">'+
-                            '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                            '<p class="card-text">To be update......</p>'+
                           '</div>'+
                         '</div>'+
                       '</div>'+
