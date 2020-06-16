@@ -1388,7 +1388,7 @@ else{
             '<ul class="educationList">';
             $.each(reviews,function(i,val){
               if(val.review_content != null || val.review_content != "null" || val.review_content != ""){
-                temp +='<li>';
+                temp +='<li>'+
                  '<p>'+val.review_content +'</p>'+
                 '<small class="text-muted">Posted By '+ val.reviewer_name +'</small>'+
                   '<div class="clearfix"></div>'+
