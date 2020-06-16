@@ -96,17 +96,21 @@
               '<div class="message text-center" id="message"></div>'+
               '<div class="text-center">'+
                 '<h1 class="h4 text-gray-900 mb-4" id="header-title">Complete your profile details</h1>'+
+                '<p>All fields marked with * are required</p>'+
               '</div>'+
               '<div>'+
            '<form class="user" method="POST" id="companydetail" enctype="multipart/form-data" autocomplete="off">'+
                 '<div class="form-group">'+
+                  '<label for=”name" style="color:red;">*</label>'+
                   '<input type="text" class="form-control form-control-user" name="name" id="name" placeholder="Recruiter name">'+
                 '</div>'+
                 '<div class="form-group">'+
-                '<input type="email" class="form-control form-control-user" name="email" id="comp_email" placeholder="Recruiter email">'+
+                  '<label for="comp_email" style="color:red;">*</label>'+
+                  '<input type="email" class="form-control form-control-user" name="email" id="comp_email" placeholder="Recruiter email">'+
                 '</div>'+
                 '<div class="form-group">'+
-                '<input type="text" class="form-control form-control-user" name="phone" id="comp_phone" placeholder="Phone number...">'+
+                  '<label for="comp_phone" style="color:red;">*</label>'+
+                  '<input type="text" class="form-control form-control-user" name="phone" id="comp_phone" placeholder="Phone number...">'+
                 '</div> '+
                 '<div class="form-group">'+
                 '<input type="text" class="form-control form-control-user" name="address" id="comp_address" placeholder="Recruiter Address">'+
@@ -254,22 +258,27 @@
               '<div class="message text-center" id="message"></div>'+
               '<div class="text-center">'+
                 '<h1 class="h4 text-gray-900 mb-4" id="header-title">Complete your profile details</h1>'+
+                '<p>All fields marked with * are required</p>'+
               '</div>'+
               '<div>'+
             '<form class="user" method="POST" id="jobseeker" enctype="multipart/form-data" autocomplete="off">'+
                 '<div class="form-group row">'+
                     '<div class="col-sm-6 mb-3 mb-sm-0">'+
+                        '<label for="firstname" style="color:red;">*</label>'+
                         '<input type="text" class="form-control form-control-user" name="firstname" id="firstname" placeholder="First name">'+
                     '</div>'+
                     '<div class="col-sm-6">'+
+                        '<label for="lastname" style="color:red;">*</label>'+
                         '<input type="text" class="form-control form-control-user" name="lastname" id="lastname" placeholder="Last name">'+
                     '</div>'+
                   '</div>'+
                 '<div class="form-group row">'+
                   '<div class="col-sm-6 mb-3 mb-sm-0">'+
+                    '<label for="phone" style="color:red;">*</label>'+
                     '<input type="text" class="form-control form-control-user" name="phone" id="phone" placeholder="Phone">'+
                   '</div>'+
                   '<div class="col-sm-6">'+
+                    '<label for="dateofbirth" style="color:red;">*</label>'+
                     '<input type="text" class="form-control form-control-user" name="dateofbirth" id="dateofbirth" placeholder="Date of Birth...">'+
                   '</div>'+
                 '</div>'+
@@ -285,6 +294,7 @@
                 '<input type="text" class="form-control form-control-user" id="skills" name="skills" value="java,python" placeholder="Enter your skills here">'+
                 '</div>'+
                 '<div class="form-group">'+
+                 '<label for="educationlevel" style="color:red;">*</label>'+
                 '<select class="form-control" id="educationlevel" name="educationlevel">'+
                   '<option value="" selected hidden>Select your most recent education level</option>'+
                   '<option value="High school diploma or equivalent">High school diploma or equivalent</option>'+
@@ -295,6 +305,7 @@
                 '</select>'+
               '</div>'+
                 '<div class="form-group">'+
+                 '<label for="category" style="color:red;">*</label>'+
                 '<select class="form-control" id="category" name="category">'+
                   '<option value="" selected hidden>Select your job category of interest</option>'+
                   '<option value="Finance">Finance</option>'+
@@ -309,6 +320,7 @@
                 '</select>'+
               '</div>'+
               '<div class="form-group">'+
+               '<label for="interest" style="color:red;">*</label>'+
                 '<select class="form-control" id="interest" name="interest">'+
                   '<option value="" selected hidden>What are you looking for?</option>'+
                   '<option value="Job">Only job</option>'+
@@ -316,6 +328,7 @@
                 '</select>'+
               '</div>'+
               '<div class="form-group">'+
+                '<label for="tag_line" style="color:red;">*</label>'+
                 '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" maxlength="30" placeholder="choose the tag to appear on your profile e.g graphic designer">'+
               '</div>'+
               '<div class="form-group">'+
