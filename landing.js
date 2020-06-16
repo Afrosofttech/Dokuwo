@@ -1305,18 +1305,37 @@ else{
                           var errors = [];
                           
                           if (name == ''){
-                            swal('Invalid Title!','Blog title cannot be empty','error','Cool');
-                            errors.push('title_error');
+                            swal('Invalid Name!','Please Enter a Name','error','Cool');
+                            errors.push('name_error');
+                            return;
+                          }
+                          else if(isNaN(name)){
+                            swal('Invalid Name!','Name cannot be a number. Please Enter a valid name!','error','Cool');
+                            errors.push('name_is_number_error');
                             return;
                           }
                           if (email.length < 1) {
                             swal('Invalid Email!','Email cannot be empty','error','Cool');
+                            errors.push('email_error');
                             return;
                            }else {
                             if (!validEmail(email)) {
                                swal('Invalid Email!','Please enter a valid email!','error','Cool');
+                               errors.push('invalidEmail_error');
                                return;
                             }
+                           }
+
+                           if(rating == 0){
+                              swal('Invalid rating','Please Select a rating!','error','Cool');
+                              errors.push('rating_error');
+                              return;
+                           }
+
+                           if(reviewContent.length > 500){
+                            swal('Excess Review Content','Review Content cannot greater than 500 characters!','error','Cool');
+                            errors.push('reviewContent_error');
+                            return;
                            }
         
                           if(errors.length < 1){
@@ -1365,9 +1384,9 @@ else{
             '</div>'+
             '<ul class="educationList">';
             $.each(reviews,function(i,val){
-              temp +='<li>'+
-                '<p>'+val.review_content +'</p>'+
-                '<small class="text-muted">Posted By '+ val.reviewer_name +'</small>'+
+              temp +='<li>';
+              (val.review_content == null || val.review_content == "null" || val.review_content == "")? temp +="":temp +='<p>'+val.review_content +'</p>';
+              temp +='<small class="text-muted">Posted By '+ val.reviewer_name +'</small>'+
                 '<div class="clearfix"></div>'+
               '</li>';
             });
