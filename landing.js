@@ -42,21 +42,21 @@ function header(){
                'Pricing'+ 
              ' </a>'+
             '</li>'+
+            '<li class="nav-item dropdown">'+
+            '<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+             'Sign In/Up'+
+            '</a>'+
+            '<ul class="dropdown-menu">'+
+              '<li><a class="dropdown-item" href="account/authentication.php?xp=sign-in">Sign In</a></li>'+
+              '<li><a class="dropdown-item" href="account/authentication.php?xp=recruiter">Sign up ~ Recruiter</a></li>'+
+              '<li><a class="dropdown-item" href="account/authentication.php?xp=jf">Sign up ~ Jobseeker/Freelancer</a></li>'+
+            '</ul>'+
+            '</li>'+
             '<li class="nav-item">'+
               '<a class="nav-link" style="cursor: pointer;" onclick="contactPage();">'+
                 'Contact'+
               '</a>'+
             '</li>'+
-            '<li class="nav-item dropdown">'+
-            '<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-             'Sign In/Up'+
-            '</a>'+
-            '<ul class="dropdown-menu pb-5">'+
-              '<li><a class="dropdown-item" href="account/authentication.php?xp=sign-in">Sign In</a></li>'+
-              '<li><a class="dropdown-item" href="account/authentication.php?xp=recruiter">Sign up ~ Recruiter</a></li>'+
-              '<li><a class="dropdown-item" href="account/authentication.php?xp=jf">Sign up ~ Jobseeker/Freelancer</a></li>'+
-            '</ul>'+
-          '</li>'+
             // '<li class="nav-item">'+
             //   '<a class="nav-link" style="cursor: pointer;" href="account/authentication.php">Sign In/Up</a>'+
             // '</li>'+
