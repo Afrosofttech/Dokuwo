@@ -1,12 +1,18 @@
 <?php
 include_once 'model/adminmodel.php';
 require_once 'model/companymodel.php';
+require('/app/vendor/autoload.php');
 
+define('BUCKET', getenv('S3_BUCKET_UPLOADS'));
 class AdminController extends Admin{
 
     public function create_blog(){
+        $s3 = new Aws\S3\S3Client([
+            'version'  => 'latest',
+            'region'   => 'us-east-1',
+        ]);
         $valid_extensions = array('jpeg', 'jpg', 'png');
-        $path = 'uploads/';
+        // $path = 'uploads/';
         $img = $_FILES["blogImage"]["name"]; 
         $tmp = $_FILES["blogImage"]["tmp_name"]; 
         $errorimg = $_FILES["blogImage"]["error"];
@@ -16,8 +22,17 @@ class AdminController extends Admin{
         $final_image = strtolower(rand(1000,1000000).$img);
         $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
         if(in_array($ext, $valid_extensions)){
-            $path = $path.strtolower($final_image);
-            move_uploaded_file($tmp,$path);
+            // $path = $path.strtolower($final_image);
+            // move_uploaded_file($tmp,$path);
+            $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png');
+            $contentType = $this->content_type($ext,$valid_extensions,$content_map);
+            $upload = $s3->putObject([
+               'Bucket' => BUCKET,
+               'Key'    => $final_image,
+               'Body'   => fopen($_FILES["blogImage"]["tmp_name"], 'r'),
+               'ACL'    => 'public-read',
+               'ContentType' => $contentType
+           ]);
         }else{
             return 'Invalid Image';
         }
@@ -25,11 +40,19 @@ class AdminController extends Admin{
         $response = $this->create_new_blog($_POST['admin_id'],$_POST['blogTitle'],$_POST['publisher'],$_POST['blogCategory'],$_POST['tags'],$_POST['blog_content'],$final_image);
         return $response;
     }
-
+// get the image content-type -> to be made a static func
+public function content_type($ext,$valid_extensions,$content_map){
+    $key = array_keys($valid_extensions, $ext);
+    return $content_map[$valid_extensions[$key[0]]];
+ }
     public function update_blog(){
+        $s3 = new Aws\S3\S3Client([
+            'version'  => 'latest',
+            'region'   => 'us-east-1',
+        ]);
         $values = $_POST;
         $valid_extensions = array('jpeg', 'jpg', 'png');
-        $path = 'uploads/';
+        // $path = 'uploads/';
         $img = $_FILES["sblogImage"]["name"]; 
         $tmp = $_FILES["sblogImage"]["tmp_name"]; 
         $errorimg = $_FILES["sblogImage"]["error"];
@@ -41,11 +64,24 @@ class AdminController extends Admin{
         $final_image = strtolower(rand(1000,1000000).$img);
         $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
         if(in_array($ext, $valid_extensions)){
-             
-            if($Details[0]['blog_image'] !== null || $Details[0]['blog_image'] !=="")
-                unlink($path.$Details['blog_image']);
-            $path = $path.strtolower($final_image);
-            move_uploaded_file($tmp,$path);
+            $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png');
+            $contentType = $this->content_type($ext,$valid_extensions,$content_map);
+            if($Details[0]['blog_image'] !== null || $Details[0]['blog_image'] !==""){
+                //unlink($path.$Details['blog_image']);
+                $result = $s3->deleteObject([
+                    'Bucket' => BUCKET,
+                    'Key'    => $Details[0]['blog_image'],
+                ]);
+            }
+            // $path = $path.strtolower($final_image);
+            // move_uploaded_file($tmp,$path);
+            $upload = $s3->putObject([
+                'Bucket' => BUCKET,
+                'Key'    => $final_image,
+                'Body'   => fopen($_FILES["sblogImage"]["tmp_name"], 'r'),
+                'ACL'    => 'public-read',
+                'ContentType' => $contentType
+            ]);
         }else{
             return 'Invalid Image';
         }
