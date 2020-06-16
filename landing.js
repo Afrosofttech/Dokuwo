@@ -1367,7 +1367,7 @@ else{
             $.each(reviews,function(i,val){
               temp +='<li>'+
                 '<p>'+val.review_content +'</p>'+
-                '<small class="text-muted">Posted By '+ val.reviewer_name +'</small>'+
+                '<small class="text-muted">Posted by '+ val.reviewer_name +'</small>'+
                 '<div class="clearfix"></div>'+
               '</li>';
             });
