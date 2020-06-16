@@ -60,7 +60,7 @@ function footer(){
 
 function gotoHomepage(){
   var now = new Date();
-  var base_url = "https://master-dokuwo-1-0-7fvmkpjjxqau.herokuapp.com/";
+  var base_url = "https://master-dokuwo-1-0-b2ibmthwahkh.herokuapp.com/";
   now.setTime(now.getTime() + (15 * 60 * 1000));
   var expires = "expires="+ now.toUTCString();
   document.cookie ="cookie_usertype =" + session_usertype + ";" + expires + ";path=../"+base_url;
