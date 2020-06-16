@@ -2524,7 +2524,7 @@ let temp='<div class="content-wrapper">'+
                       '<div class="col-sm-10">'+
                       '<select class="custom-select" id="package" name="package">'+
                       '<option value="None">None</option>'+
-                      '<option value="Month">Monthly @D100</option>'+
+                      '<option value="Month">Monthly @D150</option>'+
                       '<option value="Year">Annual @D1000</option>'+
                       '</select>'+
                       '</div>'+
@@ -2548,21 +2548,21 @@ let temp='<div class="content-wrapper">'+
                     '<div class="form-group row">'+
                     '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
                       '<div class="p-2 bd-highlight">'+
-                        '<div class="card" style="width: 12rem;">'+
+                        '<div class="card">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Pay to <strong>5943640</strong> and communicate with the Dokuwo team or wait for us to reach out. You will be required to provide prove of payment.</p>'+
                           '</div>'+
                         '</div>'+
                       '</div>'+
                       '<div class="p-2 bd-highlight">'+
-                        '<div class="card" style="width: 12rem;">'+
+                        '<div class="card">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Pay to <strong>2712206</strong> and communicate with the Dokuwo team or wait for us to reach out. You will be required to provide prove of payment.</p>'+
                           '</div>'+
                        '</div>'+
                       '</div>'+
                       '<div class="p-2 bd-highlight">'+
-                        '<div class="card" style="width: 12rem;">'+
+                        '<div class="card">'+
                           '<div class="card-body">'+
                             '<p class="card-text">To be update......</p>'+
                           '</div>'+
