@@ -7,7 +7,7 @@ class Auth extends Dbh {
                             1 => 'Month',
                             2 => 'Year'
                         );
-    private $baseUrl = 'www.dokuwo.com'; // @ams => change this when we go live
+    private $baseUrl = 'https://www.dokuwo.com'; // @ams => change this when we go live
 //        private $sendgrid_key = $_ENV['SEND_GRID_API'];
     public function create_account($email,$passwd, $hash, $usertype, $status){
         $sql = " INSERT INTO login (email,password, user_type, hash, status) VALUES(?,?,?,?,?)";
