@@ -1394,9 +1394,7 @@ else{
                   '<div class="clearfix"></div>'+
                 '</li>';
               }
-              else{
-                continue;
-              }
+            
             });
             temp +='</ul>'+
           '</div>';
