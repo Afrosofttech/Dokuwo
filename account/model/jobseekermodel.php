@@ -446,7 +446,9 @@ class Jobseeker extends Dbh{
             return 400;
             $stmt = null; 
          }
-        $result['requirements'] = htmlspecialchars_decode($result['requirements']);
+         foreach($result as $req){
+            $req['requirements'] = htmlspecialchars_decode($result['requirements']);
+        }
         return $result;
         $stmt = null;
     }
@@ -475,7 +477,9 @@ class Jobseeker extends Dbh{
             return 400;
             $stmt = null; 
          }
-        $result['requirements'] = htmlspecialchars_decode($result['requirements']);
+         foreach($result as $req){
+            $req['requirements'] = htmlspecialchars_decode($result['requirements']);
+        }
         return $result;
         $stmt = null;
     }
@@ -609,7 +613,9 @@ class Jobseeker extends Dbh{
             return 400;
             $stmt = null;
         }else{
-            $result['requirements'] = htmlspecialchars_decode($result['requirements']);
+            foreach($result as $req){
+                $req['requirements'] = htmlspecialchars_decode($result['requirements']);
+            }
             $comp = new Company();
             if($start == 0) {return  array($result,$comp->get_totalrows($query)); $stmt = null;}
             else  return $result;
