@@ -1752,7 +1752,7 @@ let profile =
                    '</div>'+
                   '</div>'+
                   '<div class="form-group row">'+
-                  '<div class="col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
+                  '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
                     '<div class="p-2 bd-highlight">'+
                       '<div class="card" style="width: 12rem;">'+
                         '<div class="card-body">'+
