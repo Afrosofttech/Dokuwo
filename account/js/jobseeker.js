@@ -2546,22 +2546,22 @@ let temp='<div class="content-wrapper">'+
                      '</div>'+
                     '</div>'+
                     '<div class="form-group row">'+
-                    '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
-                      '<div class="bd-highlight">'+
+                    '<div class="col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
+                      '<div class="p-2 bd-highlight">'+
                         '<div class="card" style="width: 12rem;">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Pay to <strong>5943640</strong> and communicate with the Dokuwo team or wait for us to reach out. You will be required to provide prove of payment.</p>'+
                           '</div>'+
                         '</div>'+
                       '</div>'+
-                      '<div class="bd-highlight">'+
+                      '<div class="p-2 bd-highlight">'+
                         '<div class="card" style="width: 12rem;">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Pay to <strong>2712206</strong> and communicate with the Dokuwo team or wait for us to reach out. You will be required to provide prove of payment.</p>'+
                           '</div>'+
                        '</div>'+
                       '</div>'+
-                      '<div class="bd-highlight">'+
+                      '<div class="p-2 bd-highlight">'+
                         '<div class="card" style="width: 12rem;">'+
                           '<div class="card-body">'+
                             '<p class="card-text">To be update......</p>'+

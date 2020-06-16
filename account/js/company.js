@@ -1731,7 +1731,7 @@ let profile =
                     '<option value="None">None</option>'+
                     '<option value="One-time">post 1 job @D2500</option>'+
                     '<option value="Month">post unlimited jobs for 1 month @D12000</option>'+
-                    '<option value="Half-year">post unlimited jobs for 6 months @D35000</option>'+
+                    '<option value="Half-year">post unlimited jobs for 4 months @D35000</option>'+
                     '</select>'+
                     '</div>'+
                   '</div>'+
@@ -1752,7 +1752,7 @@ let profile =
                    '</div>'+
                   '</div>'+
                   '<div class="form-group row">'+
-                  '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
+                  '<div class="col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
                     '<div class="p-2 bd-highlight">'+
                       '<div class="card" style="width: 12rem;">'+
                         '<div class="card-body">'+
