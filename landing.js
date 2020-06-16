@@ -1309,10 +1309,13 @@ else{
                             errors.push('name_error');
                             return;
                           }
-                          else if(isNaN(name)){
-                            swal('Invalid Name!','Name cannot be a number. Please Enter a valid name!','error','Cool');
-                            errors.push('name_is_number_error');
-                            return;
+                          else {
+                            if(name.match(/^\d+$/)){
+
+                              swal('Invalid Name!','Name cannot be a number. Please Enter a valid name!','error','Cool');
+                              errors.push('name_is_number_error');
+                              return;
+                            }
                           }
                           if (email.length < 1) {
                             swal('Invalid Email!','Email cannot be empty','error','Cool');
