@@ -1263,7 +1263,7 @@ else{
                   $('.content-section').empty().append(temp);
                   (data.details[0].package != 400 && data.details[0].package == "Active")?$('.form_review').show():$('.form_review').remove();
                   show_featured_freelancers(caller,jobseeker_id,back);
-                  (data.details[0].package != 400 && data.details[0].package == "Active")?((data.reviews != 400))?display_review_rating(data.reviews):$('.reviews').append('<h3>No reviews.</h3>'):"No Active package";
+                  (data.details[0].package != 400 && data.details[0].package == "Active")?((data.reviews != 400))?display_review_rating(data.reviews):"":"No Active package";
                   var options = {
                     max_value: 5,
                     step_size: 1,
@@ -1387,11 +1387,16 @@ else{
             '</div>'+
             '<ul class="educationList">';
             $.each(reviews,function(i,val){
-              temp +='<li>';
-              (val.review_content == null || val.review_content == "null" || val.review_content == "")? temp +="":temp +='<p>'+val.review_content +'</p>';
-              temp +='<small class="text-muted">Posted By '+ val.reviewer_name +'</small>'+
-                '<div class="clearfix"></div>'+
-              '</li>';
+              if(val.review_content != null || val.review_content != "null" || val.review_content != ""){
+                temp +='<li>';
+                 '<p>'+val.review_content +'</p>'+
+                '<small class="text-muted">Posted By '+ val.reviewer_name +'</small>'+
+                  '<div class="clearfix"></div>'+
+                '</li>';
+              }
+              else{
+                continue;
+              }
             });
             temp +='</ul>'+
           '</div>';
