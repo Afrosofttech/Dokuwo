@@ -2544,11 +2544,17 @@ let temp='<div class="content-wrapper">'+
                       '</div>'+
                     '</div>'+
                     '<div class="form-group row">'+
+                    '<div class="offset-sm-2 col-sm-10">'+                      
+                      '<div class="card">'+
+                       '<img src="https://dokuwo-assets.s3.amazonaws.com/assets/img/payment.jpg" class="card-img-top" alt="...">'+
+                      '</div>'+
+                     '</div>'+
+                    '</div>'+
+                    '<div class="form-group row">'+
                     '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
                       '<div class="p-2 bd-highlight">'+
                       
                         '<div class="card" style="width: 12rem;">'+
-                          '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
                           '</div>'+
@@ -2558,7 +2564,6 @@ let temp='<div class="content-wrapper">'+
                       '<div class="p-2 bd-highlight">'+
 
                         '<div class="card" style="width: 12rem;">'+
-                          '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
                           '</div>'+
@@ -2568,7 +2573,6 @@ let temp='<div class="content-wrapper">'+
                       '<div class="p-2 bd-highlight">'+
 
                         '<div class="card" style="width: 12rem;">'+
-                          '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                           '<div class="card-body">'+
                             '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
                           '</div>'+
