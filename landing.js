@@ -1392,7 +1392,7 @@ else{
                  '<p>'+val.review_content +'</p>'+
                  '<div class="d-flex flex-wrap justify-content-between">'+
                     '<small class="text-muted">Posted by '+ val.reviewer_name +' </small>'+
-                    '<small class="text-muted"> '+ moment(val.created_at).fromNow()+'</small>'+
+                    '<small class="ml-auto"> '+ moment(val.created_at).fromNow()+'</small>'+
                   '<div class="clearfix"></div>'+
                   '</div>'
                 '</li>';
