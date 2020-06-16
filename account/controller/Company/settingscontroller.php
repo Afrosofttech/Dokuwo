@@ -1,5 +1,6 @@
 <?php
 require_once 'model/companymodel.php';
+require_once 'model/adminmodel.php';
 require('/app/vendor/autoload.php');
 
 define('BUCKET', getenv('S3_BUCKET_UPLOADS'));
@@ -54,8 +55,9 @@ class SettingsController extends Company{
       return $content_map[$valid_extensions[$key[0]]];
     }
     public function update_admin(){
+      $admin = new Admin();
       $v_data = self::validate_data();
-      $res = $this->updateAdmin($v_data['name'],$v_data['email'],$v_data['password'],$v_data['login_id']);
+      $res = $admin->updateAdmin($v_data['name'],$v_data['email'],$v_data['password'],$v_data['login_id']);
       return $res;
     }
     function validate_company(){
