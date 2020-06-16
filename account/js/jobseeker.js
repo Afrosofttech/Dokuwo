@@ -1718,7 +1718,7 @@ error: function(err){
       data: {"hire_id" : hire_id},
       success: function(response){
         swalNotify('Deleted','success');
-        hires();
+        doesFreelance();
       },
       error: function(err){
         swalNotify(err.responseText,'error');
