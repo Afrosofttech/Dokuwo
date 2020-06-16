@@ -798,7 +798,7 @@ class Company extends Dbh{
     }
 
     protected function getReviews($jobseeker_id){
-        $sql= "SELECT review_id,reviewer_name,(SELECT COUNT(rating) FROM review_link WHERE jobseeker_id = ?) AS num_rates,(SELECT SUM(rating) FROM review_link WHERE jobseeker_id = ?) AS total_rates,review_content FROM review_link WHERE jobseeker_id = ? GROUP BY review_id ORDER BY review_id DESC";
+        $sql= "SELECT review_id,reviewer_name,(SELECT COUNT(rating) FROM review_link WHERE jobseeker_id = ?) AS num_rates,(SELECT SUM(rating) FROM review_link WHERE jobseeker_id = ?) AS total_rates,review_content,created_at FROM review_link WHERE jobseeker_id = ? GROUP BY review_id ORDER BY review_id DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$jobseeker_id,$jobseeker_id,$jobseeker_id]);
         $result = $stmt->fetchAll();
