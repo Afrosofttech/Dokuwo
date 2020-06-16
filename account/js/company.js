@@ -1745,44 +1745,42 @@ let profile =
                     '</div>'+
                   '</div>'+
                   '<div class="form-group row">'+
-                    '<div class="offset-sm-2 col-sm-10">'+
-                      '<button type="submit" class="btn btn-success">Activate</button>'+
+                  '<div class="offset-sm-2 col-sm-10">'+                      
+                    '<div class="card">'+
+                     '<img src="https://dokuwo-assets.s3.amazonaws.com/assets/img/payment.jpg" class="card-img-top" alt="...">'+
                     '</div>'+
+                   '</div>'+
                   '</div>'+
                   '<div class="form-group row">'+
                   '<div class="offset-sm-2 col-sm-10 col-form-label d-flex justify-content-center flex-wrap">'+
                     '<div class="p-2 bd-highlight">'+
-                    
                       '<div class="card" style="width: 12rem;">'+
-                        '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                         '<div class="card-body">'+
-                          '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                          '<p class="card-text">Pay to <strong>5943640</strong> and communicate with the Dokuwo team or wait for us to reach out. You will be required to provide prove of payment.</p>'+
                         '</div>'+
                       '</div>'+
-
                     '</div>'+
                     '<div class="p-2 bd-highlight">'+
-
                       '<div class="card" style="width: 12rem;">'+
-                        '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                         '<div class="card-body">'+
-                          '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                          '<p class="card-text">Pay to <strong>2712206</strong> and communicate with the Dokuwo team or wait for us to reach out. You will be required to provide prove of payment.</p>'+
                         '</div>'+
                      '</div>'+
-                     
                     '</div>'+
                     '<div class="p-2 bd-highlight">'+
-
                       '<div class="card" style="width: 12rem;">'+
-                        '<img src="https://dokuwo-uploads.s3.amazonaws.com/default.jpg" class="card-img-top" alt="...">'+
                         '<div class="card-body">'+
-                          '<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat convallis magna.</p>'+
+                          '<p class="card-text">To be update......</p>'+
                         '</div>'+
                       '</div>'+
-
                     '</div>'+
                   '</div>'+
                 '</div>'+
+                  '<div class="form-group row">'+
+                    '<div class="offset-sm-2 col-sm-10">'+
+                      '<button type="submit" class="btn btn-success">Activate</button>'+
+                    '</div>'+
+                  '</div>'+
                 '</form>'+
               '</div>'+
               '<!-- /.tab-pane -->'+
