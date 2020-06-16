@@ -264,36 +264,37 @@
             '<form class="user" method="POST" id="jobseeker" enctype="multipart/form-data" autocomplete="off">'+
                 '<div class="form-group row">'+
                     '<div class="col-sm-6 mb-3 mb-sm-0">'+
-                      '<input type="text" class="form-control form-control-user" name="firstname" id="firstname" placeholder="First name">'+
-                      '<span style="color:red;">*</span>'+
+                        '<label for="firstname">Name:<span style="color:red;">First Name:*</span></</label>'+
+                        '<input type="text" class="form-control form-control-user" name="firstname" id="firstname" placeholder="First name">'+
                     '</div>'+
                     '<div class="col-sm-6">'+
-                      '<input type="text" class="form-control form-control-user" name="lastname" id="lastname" placeholder="Last name">'+
-                      '<span style="color:red;">*</span>'+
+                        '<label for="lastname">Last Name:<span style="color:red;">*</span></</label>'+
+                        '<input type="text" class="form-control form-control-user" name="lastname" id="lastname" placeholder="Last name">'+
                     '</div>'+
                   '</div>'+
                 '<div class="form-group row">'+
                   '<div class="col-sm-6 mb-3 mb-sm-0">'+
-                      '<input type="text" class="form-control form-control-user" name="phone" id="phone" placeholder="Phone">'+
-                      '<span for="phone" style="color:red;">*</span>'+
+                    '<label for="phone">Phone:<span style="color:red;">*</span></</label>'+
+                    '<input type="text" class="form-control form-control-user" name="phone" id="phone" placeholder="Phone">'+
                   '</div>'+
                   '<div class="col-sm-6">'+
-                      '<input type="text" class="form-control form-control-user" name="dateofbirth" id="dateofbirth" placeholder="Date of Birth...">'+
-                      '<span for="dateofbirth" style="color:red;">*</span>'+
+                    '<label for="dateofbirth">DOB:<span style="color:red;">*</span></</label>'+
+                    '<input type="text" class="form-control form-control-user" name="dateofbirth" id="dateofbirth" placeholder="Date of Birth...">'+
                   '</div>'+
                 '</div>'+
                 '<div class="form-group row">'+
                   '<div class="col-sm-6 mb-3 mb-sm-0">'+
-                   '<input type="text" class="form-control form-control-user" name="address" id="address" placeholder="Address">'+
+                  '<input type="text" class="form-control form-control-user" name="address" id="address" placeholder="Address">'+
                   '</div>'+
                   '<div class="col-sm-6">'+
-                   '<input type="text" class="form-control form-control-user" name="country" id="country">'+
+                  '<input type="text" class="form-control form-control-user" name="country" id="country">'+
                   '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
                 '<input type="text" class="form-control form-control-user" id="skills" name="skills" value="java,python" placeholder="Enter your skills here">'+
                 '</div>'+
                 '<div class="form-group">'+
+                 '<label for="educationlevel">Edu. level:<span style="color:red;">*</span></</label>'+
                 '<select class="form-control" id="educationlevel" name="educationlevel">'+
                   '<option value="" selected hidden>Select your most recent education level</option>'+
                   '<option value="High school diploma or equivalent">High school diploma or equivalent</option>'+
@@ -302,9 +303,9 @@
                   '<option value="Masters degree or equivalent">Master\'s degree or equivalent</option>'+
                   '<option value="Doctoral degree or equivalent">Doctoral degree or equivalent</option>'+
                 '</select>'+
-                '<span style="color:red;">*</span>'+
               '</div>'+
                 '<div class="form-group">'+
+                 '<label for="category">Category:<span style="color:red;">*</span></</label>'+
                 '<select class="form-control" id="category" name="category">'+
                   '<option value="" selected hidden>Select your job category of interest</option>'+
                   '<option value="Finance">Finance</option>'+
@@ -317,19 +318,18 @@
                   '<option value="Events,Catering & Entertainment">Events,Catering & Entertainment</option>'+
                   '<option value="Others">Others</option>'+
                 '</select>'+
-                '<span style="color:red;">*</span>'+
               '</div>'+
               '<div class="form-group">'+
+               '<label for="interest" style="color:red;">Interest:<span style="color:red;">*</span></</label>'+
                 '<select class="form-control" id="interest" name="interest">'+
                   '<option value="" selected hidden>What are you looking for?</option>'+
                   '<option value="Job">Only job</option>'+
                   '<option value="Freelance">Job and / or Freelance work</option>'+
                 '</select>'+
-                '<span style="color:red;">*</span>'+
               '</div>'+
               '<div class="form-group">'+
+                '<label for="tag_line">Tag_line:<span style="color:red;">*</span></</label>'+
                 '<input type="text" class="form-control form-control-user" name="tag_line" id="tag_line" value="" maxlength="30" placeholder="choose the tag to appear on your profile e.g graphic designer">'+
-                '<span style="color:red;">*</span>'+
               '</div>'+
               '<div class="form-group">'+
                 '<textarea name="description" id="description" placeholder="give a short description of 250 characters or less" class="form-control" style="width:100%;height:70px;resize:none;display:none;" maxlength="250"></textarea>'+
