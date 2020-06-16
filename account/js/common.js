@@ -65,7 +65,7 @@ function gotoHomepage(){
   var expires = "expires="+ now.toUTCString();
   document.cookie ="cookie_usertype =" + session_usertype + ";" + expires + ";path="+base_url;
   document.cookie ="cookie_user_id =" + session_user_id + ";" + expires + ";path="+base_url;
-  window.location.replace(`../../${base_url}`);
+  window.location.replace(`${base_url}`);
 }
 
 function addNewAttachment(){
