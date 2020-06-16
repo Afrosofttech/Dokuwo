@@ -9,13 +9,13 @@ class JobsController extends Company{
         * @param creator_id -> {is the login_id of the super_admin}
         */
         $message = array(
-            "creator_id" => 38,
+            "creator_id" => 64,
             "creator_name" => 'Admin',
             "recipient_id" => $jobseeker_login_id,
             "recipient_name" => $fullName,
             "parent_msg_id" => null,
             "Subject" => $job['job_name'],
-            "messageBody" =>"<p>Hello,</p><p>Congratulations! You have been accepted by ".$_SESSION['name']." for the position of ".$job['job_name'].". You will be contacted soon.</p><p>Regards,</p><p>Dokuwo.</p>"
+            "messageBody" =>"<p>Hello,</p><p>Congratulations! You have been accepted by ".$_SESSION['name']." for the position of ".$job['job_name'].". You will be contacted soon.</p><p>Regards,</p><p>Team Dokuwo.</p>"
             );
         $response = $this->accept_change_app_status_send_acceptance($jobseeker_id,$job_id,$message);
         return $response;

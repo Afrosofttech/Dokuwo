@@ -42,11 +42,6 @@ function header(){
                'Pricing'+ 
              ' </a>'+
             '</li>'+
-            '<li class="nav-item">'+
-              '<a class="nav-link" style="cursor: pointer;" onclick="contactPage();">'+
-                'Contact'+
-              '</a>'+
-            '</li>'+
             '<li class="nav-item dropdown">'+
             '<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
              'Sign In/Up'+
@@ -56,7 +51,12 @@ function header(){
               '<li><a class="dropdown-item" href="account/authentication.php?xp=recruiter">Sign up ~ Recruiter</a></li>'+
               '<li><a class="dropdown-item" href="account/authentication.php?xp=jf">Sign up ~ Jobseeker/Freelancer</a></li>'+
             '</ul>'+
-          '</li>'+
+            '</li>'+
+            '<li class="nav-item">'+
+              '<a class="nav-link" style="cursor: pointer;" onclick="contactPage();">'+
+                'Contact'+
+              '</a>'+
+            '</li>'+
             // '<li class="nav-item">'+
             //   '<a class="nav-link" style="cursor: pointer;" href="account/authentication.php">Sign In/Up</a>'+
             // '</li>'+
@@ -1263,7 +1263,7 @@ else{
                   $('.content-section').empty().append(temp);
                   (data.details[0].package != 400 && data.details[0].package == "Active")?$('.form_review').show():$('.form_review').remove();
                   show_featured_freelancers(caller,jobseeker_id,back);
-                  (data.details[0].package != 400 && data.details[0].package == "Active")?((data.reviews != 400))?display_review_rating(data.reviews):$('.reviews').append('<h3>No reviews.</h3>'):"No Active package";
+                  (data.details[0].package != 400 && data.details[0].package == "Active")?((data.reviews != 400))?display_review_rating(data.reviews):"":"No Active package";
                   var options = {
                     max_value: 5,
                     step_size: 1,
@@ -1305,18 +1305,40 @@ else{
                           var errors = [];
                           
                           if (name == ''){
-                            swal('Invalid Title!','Blog title cannot be empty','error','Cool');
-                            errors.push('title_error');
+                            swal('Invalid Name!','Please Enter a Name','error','Cool');
+                            errors.push('name_error');
                             return;
+                          }
+                          else {
+                            if(name.match(/^\d+$/)){
+
+                              swal('Invalid Name!','Name cannot be a number. Please Enter a valid name!','error','Cool');
+                              errors.push('name_is_number_error');
+                              return;
+                            }
                           }
                           if (email.length < 1) {
                             swal('Invalid Email!','Email cannot be empty','error','Cool');
+                            errors.push('email_error');
                             return;
                            }else {
                             if (!validEmail(email)) {
                                swal('Invalid Email!','Please enter a valid email!','error','Cool');
+                               errors.push('invalidEmail_error');
                                return;
                             }
+                           }
+
+                           if(rating == 0){
+                              swal('Invalid rating','Please Select a rating!','error','Cool');
+                              errors.push('rating_error');
+                              return;
+                           }
+
+                           if(reviewContent.length > 500){
+                            swal('Excess Review Content','Review Content cannot greater than 500 characters!','error','Cool');
+                            errors.push('reviewContent_error');
+                            return;
                            }
         
                           if(errors.length < 1){
@@ -1365,11 +1387,14 @@ else{
             '</div>'+
             '<ul class="educationList">';
             $.each(reviews,function(i,val){
-              temp +='<li>'+
-                '<p>'+val.review_content +'</p>'+
+              if(val.review_content != null && val.review_content != "null" && val.review_content != ""){
+                temp +='<li>'+
+                 '<p>'+val.review_content +'</p>'+
                 '<small class="text-muted">Posted By '+ val.reviewer_name +'</small>'+
-                '<div class="clearfix"></div>'+
-              '</li>';
+                  '<div class="clearfix"></div>'+
+                '</li>';
+              }
+            
             });
             temp +='</ul>'+
           '</div>';
@@ -3100,7 +3125,7 @@ else{
                 '<li>Message Jobseekers</li>'+
                 '<li>View Jobseekers Profiles</li>'+
                 '</ul>'+
-                '<div class="price"><span>GMD</span>35000<span>/6 Month</span></div>'+
+                '<div class="price"><span>GMD</span>35000<span>/4 Month</span></div>'+
               '</div>'+
               
             '</div>'+

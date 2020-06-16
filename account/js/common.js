@@ -60,11 +60,12 @@ function footer(){
 
 function gotoHomepage(){
   var now = new Date();
+  var base_url = "https://master-dokuwo-1-0-b2ibmthwahkh.herokuapp.com/";
   now.setTime(now.getTime() + (15 * 60 * 1000));
   var expires = "expires="+ now.toUTCString();
-  document.cookie ="cookie_usertype =" + session_usertype + ";" + expires + ";path=/dokuwo.com/index.php";
-  document.cookie ="cookie_user_id =" + session_user_id + ";" + expires + ";path=/dokuwo.com/index.php";
-  window.location.replace('../../dokuwo.com/index.php');
+  document.cookie ="cookie_usertype =" + session_usertype + ";" + expires + ";path=/";
+  document.cookie ="cookie_user_id =" + session_user_id + ";" + expires + ";path=/";
+  window.location.replace(`${base_url}`);
 }
 
 function addNewAttachment(){

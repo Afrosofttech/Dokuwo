@@ -103,10 +103,10 @@
                   '<input type="text" class="form-control form-control-user" name="name" id="name" placeholder="Recruiter name">'+
                 '</div>'+
                 '<div class="form-group">'+
-                '<input type="email" class="form-control form-control-user" name="email" id="comp_email" placeholder="Recruiter email">'+
+                  '<input type="email" class="form-control form-control-user" name="email" id="comp_email" placeholder="Recruiter email">'+
                 '</div>'+
                 '<div class="form-group">'+
-                '<input type="text" class="form-control form-control-user" name="phone" id="comp_phone" placeholder="Phone number...">'+
+                  '<input type="text" class="form-control form-control-user" name="phone" id="comp_phone" placeholder="Phone number...">'+
                 '</div> '+
                 '<div class="form-group">'+
                 '<input type="text" class="form-control form-control-user" name="address" id="comp_address" placeholder="Recruiter Address">'+
@@ -121,6 +121,9 @@
                   '<select class="form-control" name="currency" id="currency">'+
                   ''+countries.map((currency,index) =>  '<option value = "'+currency.value+'" id="'+currency.value+'">'+currency.name+'</option>')+''+
                   '</select>'+
+                '</div>'+
+                '<div class="form-group">'+
+                   '<p>The logo is optional and can be done later.</p>'+
                 '</div>'+
                 '<div class="form-group">'+
                 '<input type="file" class="form-control form-control-user" name="logo" id="logo">'+
@@ -226,6 +229,7 @@
               if(response == 200){
                 window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
               }else if( response == "Invalid"){
+                $('#logo').val('');
                 swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
               }else{
                window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');
@@ -323,6 +327,9 @@
               '</div>'+
               '<div class="form-group">'+
                 '<input type="hidden" class="form-control form-control-user" name="id" id="Jobseeker_id" value="'+entity.login_id+'" >'+
+              '</div>'+
+              '<div class="form-group">'+
+               '<p>Image and CV are optional and can be done later.</p>'+
               '</div>'+
               '<div class="form-group">'+
                   '<div class="custom-file">'+
@@ -453,8 +460,10 @@ $(document).ready(function(){
             if(response == 200){
               window.location.replace('authentication.php?attempt=<?php echo "success"; ?>');
             }else if( response == "Invalid Image"){
+                $('#image').val('');
                 swal('Invalid Image type!','You can only upload png, jpeg, or jpg','error','Cool');
             }else if(response == "Invalid CV"){
+              $('#CV').val('');
                swal('Invalid CV type!','You can only upload jpeg, jpg, png, pdf, doc, docx, txt, zip','error','Cool');
             }else if(response == 'duplicate'){
                window.location.replace('authentication.php?attempt=<?php echo "duplicate"; ?>');
