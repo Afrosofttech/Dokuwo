@@ -1390,8 +1390,11 @@ else{
               if(val.review_content != null && val.review_content != "null" && val.review_content != ""){
                 temp +='<li>'+
                  '<p>'+val.review_content +'</p>'+
-                '<small class="text-muted">Posted By '+ val.reviewer_name +'</small>'+
+                 '<div class="d-flex flex-wrap justify-content-start">'+
+                    '<small class="text-muted">Posted by '+ val.reviewer_name +'</small>'+
+                    '<small class="text-muted">On '+moment(val.created_at).fromNow()+'</small>'+
                   '<div class="clearfix"></div>'+
+                  '</div>'
                 '</li>';
               }
             
