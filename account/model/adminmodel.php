@@ -393,7 +393,7 @@ class Admin extends Dbh{
     }
 
     
-    protected function update_admin_login($email,$password,$login_id){
+    public function update_admin_login($email,$password,$login_id){
         if($password == ""){
             $sql = "UPDATE login SET email = ? WHERE login_id = ?";
             $stmt = $this->connect()->prepare($sql);
@@ -411,7 +411,7 @@ class Admin extends Dbh{
         }
     }
 
-    protected function updateAdmin($name,$email,$password,$login_id){
+    public function updateAdmin($name,$email,$password,$login_id){
         
             $sql = "UPDATE admin SET admin_name = ? WHERE login_id = ?";
             $stmt = $this->connect()->prepare($sql);
