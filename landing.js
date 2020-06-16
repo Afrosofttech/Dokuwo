@@ -3100,7 +3100,7 @@ else{
                 '<li>Message Jobseekers</li>'+
                 '<li>View Jobseekers Profiles</li>'+
                 '</ul>'+
-                '<div class="price"><span>GMD</span>35000<span>/6 Month</span></div>'+
+                '<div class="price"><span>GMD</span>35000<span>/4 Month</span></div>'+
               '</div>'+
               
             '</div>'+
