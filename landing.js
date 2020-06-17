@@ -407,7 +407,7 @@ function footer(){
                   '<li><a class="facebook" href="https://www.facebook.com/pg/Dokuwo-106334990997957" target="_blank"><i class="lni-facebook-filled"></i></a></li>'+
                   '<li><a class="twitter" href="https://twitter.com/Dokuwo1" target="_blank"><i class="lni-twitter-filled"></i></a></li>'+
                   '<li><a class="linkedin" href="https://www.linkedin.com/company/38126868/" target="_blank"><i class="lni-linkedin-fill"></i></a></li>'+
-                  '<li><a class="instagram" href="https://www.linkedin.com/company/38126868/" target="_blank"><i class="fas fa-instagram" aria-hidden="true"></i></a></li>'+
+                  '<li><a class="instagram" href="https://www.linkedin.com/company/38126868/" target="_blank"><i class="lni-instagram-filled"></i></a></li>'+
                 '</ul> '+       
               '</div>'+
             '</div>'+
