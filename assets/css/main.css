@@ -388,6 +388,11 @@ button:focus {
 
 .youtube a:hover {
   background: #DF2926; }
+.instagram a {
+  color: #DF2926; }
+  
+.instagram a:hover {
+  background: #DF2926; }
 
 .linkedin a {
   color: #007BB6; }
@@ -2812,6 +2817,9 @@ blockquote {
   color: #55acee;
   border-color: #55acee; }
 .social-link .google:hover {
+  color: #dd4b39;
+  border-color: #dd4b39; }
+.social-link .instagram:hover {
   color: #dd4b39;
   border-color: #dd4b39; }
 .social-link .linkedin:hover {
