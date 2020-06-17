@@ -27,8 +27,8 @@ class Auth extends Dbh {
                             <div style="padding: 2px 0px;">
                             <img alt="My Image" src="https://dokuwo-assets.s3.amazonaws.com/assets/img/b1.png" width="100%" height="250px"/>
                             </div>
-                            <p>Hello, Welcome to Dokuwo! Click 
-                            <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account! Or copy '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' and paste in into a url.</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>
+                            <p>Hello, Welcome to Dokuwo!<br><br>Click 
+                            <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b> Or copy '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' and paste in into a url.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>
                             Do connect with us on our social handles provided below. We are happy to have you on board.</p>
                             <div style="text-align: center;padding: 3px;background-color: Violet; color: white">
                             <a href="https://www.facebook.com/pg/Dokuwo-106334990997957">facebook</a>
@@ -43,8 +43,8 @@ class Auth extends Dbh {
                                     <div style="padding: 2px 0px;">
                                     <img src="https://dokuwo-assets.s3.amazonaws.com/assets/img/b1.png" width="100%" height="250px">
                                     </div>
-                                    <p>Hello, Welcome to Dokuwo! Click 
-                                    <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account! Or copy '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' and paste in into a url.</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>There is a <b>free 14 days trial</b> which you can activate to enjoy all the services we offer for free.<br><br>
+                                    <p>Hello, Welcome to Dokuwo!<br><br>Click 
+                                    <a href="'.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to activate your <b>account!</b> Or copy '.$this->baseUrl.'/account/detail.php?email='.$email.'&hash='.$hash.' and paste in into a url.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>There is a <b>free 14 days trial</b> which you can activate to enjoy all the services we offer for free.<br><br>
                                     Do connect with us on our social handles provided below. We are happy to have you on board.</p>
                                     <div style="text-align: center;padding: 3px;background-color: Violet; color: white">
                                     <a href="https://www.facebook.com/pg/Dokuwo-106334990997957">facebook</a>
@@ -296,8 +296,8 @@ class Auth extends Dbh {
                                     <div style="padding: 2px 0px;">
                                     <img src="https://dokuwo-assets.s3.amazonaws.com/assets/img/b1.png" width="100%" height="250px">
                                     </div>
-                                    <p>Hello, We get it, stuff happens. Just Click 
-                                    <a href="'.$this->baseUrl.'/account/pwd-reset.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to reset your <b>password! Or copy '.$this->baseUrl.'/account/pwd-reset.php?email='.$email.'&hash='.$hash.' and paste in into a url.</b>.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a 
+                                    <p>Hello, We get it, stuff happens.<br><br>Just Click 
+                                    <a href="'.$this->baseUrl.'/account/pwd-reset.php?email='.$email.'&hash='.$hash.'" target="_blank">here</a> to reset your <b>password!</b> Or copy '.$this->baseUrl.'/account/pwd-reset.php?email='.$email.'&hash='.$hash.' and paste in into a url.<br><br>Dokuwo is a platform which aims to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt. And as Such, we are currently working on improving the platform and also creating a 
                                     mobile app for the platform. We value your feedback and would love to know what improvements you would like to see on this platform.<br><br>
                                     Do connect with us on our social handles provided below. We are happy to have you on board.</p>
                                     <div style="text-align: center;padding: 3px;background-color: Violet; color: white">
