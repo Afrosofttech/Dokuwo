@@ -373,9 +373,8 @@ function footer(){
           '<div class="row">'+
             '<div class="col-lg-3 col-md-3 col-xs-12">'+
               '<div class="widget">'+
-                '<div class="footer-logo rotate-n-15"><img src="assets/img/logo-footer.png" class="rounded-circle" alt="dokuwo"></div>'+
+                '<div class="footer-logo rotate-n-15"><img src="assets/img/logo-footer.png" class="rounded-circle" alt="dokuwo" style="width: 50%;"></div>'+
                 '<div class="textwidget">'+
-                
                   '<p>Our mission is to digitalise the job hunt in the country and be the go to platform for anything that has to do with work and job hunt.</p>'+
                 '</div>'+
               '</div>'+
