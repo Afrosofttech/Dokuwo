@@ -64,7 +64,7 @@ function header(){
         '</div>'+
       '</div>'+
     '</div>'+
-    '<div class="mobile-menu" data-logo="assets/img/logo-header.png"></div>'+
+    '<div class="mobile-menu pt-2" data-logo="assets/img/logo-header2.png"></div>'+
  ' </nav>'+
   '<!-- Navbar End -->'+
       '<div class="container intro-landing">'+      
