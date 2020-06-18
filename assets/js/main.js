@@ -1,20 +1,3 @@
-/*
-Theme Name:       TheHunt - Bootstrap HTML5 Job Portal Template
-Author:           UIdeck
-Author URI:       http://uideck.com
-Text Domain:      UIdeck
-Domain Path:      /languages/
-
-JS INDEX
-================================================
-1. preloader js
-2. scroll to top js
-3. slick menu js
-4. sticky menu js
-5. counter js
-6. Testimonial owl carousel
-7. New Products owl carouse
-================================================*/
 
 (function($) {
 
