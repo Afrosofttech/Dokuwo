@@ -77,7 +77,7 @@
 .manager-resumes-item .manager-content{
 	height: 200px;
 }
-.manager-resumes-item .manager-content .content{
+.manager-resumes-item .manager-content .item-body .content{
 	height: 115px;
 }
 /* Ui optimization css */
