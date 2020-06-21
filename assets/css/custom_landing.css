@@ -74,6 +74,9 @@
 .back-button{
 	padding-right: 5px;
 }
+.manager-resumes-item .manager-content{
+	height: 200px;
+}
 /* Ui optimization css */
 
 .listpgWraper {
