@@ -571,7 +571,12 @@ class Company extends Dbh{
             $stmt = null;
         }else{
             $query = "SELECT COUNT(*) AS total_rows FROM blog ";
-            if($start == 0) {return  array($result,self::get_totalrows($query)); $stmt = null;}
+            foreach ($result as $key => $value) {
+                $result[$key]['blog_content'] = htmlspecialchars_decode($result[$key]['blog_content']);
+            }
+            if($start == 0) {
+                return  array($result,self::get_totalrows($query)); $stmt = null;
+            }
             else  return array($result);
             $stmt = null;
         }   
@@ -587,6 +592,9 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
+            foreach ($result as $key => $value) {
+                $result[$key]['blog_content'] = htmlspecialchars_decode($result[$key]['blog_content']);
+            }
             return  array($result);
             $stmt = null;
         }    
@@ -601,6 +609,7 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
+            $result['blog_content'] = htmlspecialchars_decode($result['blog_content']);
             return  $result ;
             $stmt = null;
         }    
@@ -643,6 +652,9 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
+            foreach ($result as $key => $value) {
+                $result[$key]['blog_content'] = htmlspecialchars_decode($result[$key]['blog_content']);
+            }
             return  array($result);
             $stmt = null;
         }    
