@@ -603,7 +603,7 @@ class Company extends Dbh{
         $sql = " SELECT * FROM blog WHERE blog_id=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$blog_id]);
-        $result = $stmt->fetch();
+        $result = $stmt->fetchAll();
 
         if(!$result ){
             return self::fail;
