@@ -135,7 +135,7 @@ if($view == 'company'){
         break;
         case "get_blog_details":
         $result = new CompanyView();
-        $blog_info = $result->blog_details($_POST['blog_id']);
+        $blog_info = $result->blog_details($_GET['blog_id']);
         echo json_encode($blog_info); 
         break;
         case "get_blog_categories":

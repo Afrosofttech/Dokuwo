@@ -510,7 +510,7 @@ function viewBlog(blog_id){
 function blog_details(blog_id){
 let temp = '';
 $.ajax({
-  method: "POST",
+  method: "GET",
   url: "get.php/company/get_blog_details",
   dataType: "json",
   data: {'blog_id':blog_id},
