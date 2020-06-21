@@ -236,7 +236,7 @@ class Admin extends Dbh{
     protected function updateBlog($title,$category,$tags,$content,$image,$blog_id){
         $sql = " UPDATE blog SET blog_title=?,category=?,tags=?,blog_content=?,blog_image=? WHERE blog_id=?;";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$title,$category,$tags,$content,$image,$blog_id]);
+        $stmt->execute([$title,$category,$tags,htmlspecialchars($content,ENT_QUOTES),$image,$blog_id]);
         return  self::success;
         $stmt = null;
     }
