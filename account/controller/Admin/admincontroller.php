@@ -59,7 +59,7 @@ public function content_type($ext,$valid_extensions,$content_map){
         $blog_img_details = new Company();
         $Details = $blog_img_details->get_blog_details($_POST['sblog_id']);
 
-        if($img=="") $final_image = $Details[0]['blog_image'];
+        if($img=="") $final_image = $Details['blog_image'];
         else{
         $final_image = strtolower(rand(1000,1000000).$img);
         $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
