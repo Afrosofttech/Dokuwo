@@ -2276,15 +2276,15 @@ else{
         success: function(data){
           $("#preloader").hide();
           if(data != 400){
-            let date_posted = new Date(data[0].date_posted);
-            var filteredContent = $("<div>").html(data[0].blog_content).text();
+            let date_posted = new Date(data.date_posted);
+            var filteredContent = $("<div>").html(data.blog_content).text();
             blog_details +=
             '<div class="page-header">'+
               '<div class="container">'+
                 '<div class="row">'+         
                   '<div class="col-lg-12">'+
                     '<div class="inner-header">'+
-                      '<h3>'+ data[0].category+'</h3>'+
+                      '<h3>'+ data.category+'</h3>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -2304,16 +2304,16 @@ else{
               '<!-- Blog List start -->'+
               '<div class="blogWraper">'+
                 '<div class="blogList blogdetailbox">'+
-                  '<div class="postimg"><img src="https://dokuwo-uploads.s3.amazonaws.com/'+((data[0].blog_image == "" || data[0].blog_image == null)?"default.jpg":data[0].blog_image)+'" alt="blog Title">'+
+                  '<div class="postimg"><img src="https://dokuwo-uploads.s3.amazonaws.com/'+((data.blog_image == "" || data.blog_image == null)?"default.jpg":data.blog_image)+'" alt="blog Title">'+
                     '<div class="date"> '+ date_posted.getDate() +' '+ formatMonth(date_posted.getMonth()) +'</div>'+
                   '</div>'+
                   '<div class="post-header margin-top30">'+
                     '<div class="d-flex align-items-center">'+
-                    '<h4 class="mr-auto"><a href="#">'+ data[0].blog_title +'</a></h4>';
+                    '<h4 class="mr-auto"><a href="#">'+ data.blog_title +'</a></h4>';
                     (back == "blogposts")?blog_details +=`<div class="jobButtons"><a href="#" class="btn report" onclick='show_blog_posts();'><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a> </div>`:
                     (back == "searchblog")?blog_details +=`<div class="jobButtons"><a href="#" class="btn report" onclick='searchBlogs(${undefined},${undefined},"${callbackdata}");'><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a> </div>`:blog_details +=`<div class="jobButtons"><a href="index.php" class="btn report"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a> </div>`;
                     blog_details +='</div>'+
-                    '<div class="postmeta">By : <span>'+ data[0].blog_publisher+' </span> Category : <a href="#">'+ data[0].category+'</a></div>'+
+                    '<div class="postmeta">By : <span>'+ data.blog_publisher+' </span> Category : <a href="#">'+ data.category+'</a></div>'+
                   '</div>'+
                   filteredContent +
                 '</div>'+
