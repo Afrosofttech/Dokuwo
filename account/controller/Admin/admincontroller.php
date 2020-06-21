@@ -66,7 +66,7 @@ public function content_type($ext,$valid_extensions,$content_map){
         if(in_array($ext, $valid_extensions)){
             $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png');
             $contentType = $this->content_type($ext,$valid_extensions,$content_map);
-            if($Details[0]['blog_image'] !== null || $Details[0]['blog_image'] !==""){
+            if($Details[0]['blog_image'] !== null || $Details['blog_image'] !==""){
                 //unlink($path.$Details['blog_image']);
                 $result = $s3->deleteObject([
                     'Bucket' => BUCKET,
