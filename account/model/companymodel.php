@@ -604,14 +604,14 @@ class Company extends Dbh{
         $sql = " SELECT * FROM blog WHERE blog_id=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$blog_id]);
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetch();
 
         if(!$result ){
             return self::fail;
             $stmt = null;
         }else{
-            $result[0]['blog_content'] = htmlspecialchars_decode($result[0]['blog_content'],ENT_QUOTES);
-            return  $result[0] ;
+            $result['blog_content'] = htmlspecialchars_decode($result['blog_content']);
+            return  $result;
             $stmt = null;
         }    
     }
