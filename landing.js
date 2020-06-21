@@ -464,7 +464,11 @@ function displayJobs(start,finish){
     url: "account/get.php/jobseeker/retreive_jobs",
     data: {'beg':beg,'end':end},
     dataType: "json",
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: function(data){
+      $("#preloader").hide();
       if(beg == 0){
         jobs = data[0];
         if(localStorage.getItem('totaljobs') == null || localStorage.getItem('totaljobs') == undefined || localStorage.getItem('totaljobs') == '')
@@ -580,6 +584,7 @@ function displayJobs(start,finish){
   
     },
     error: function(err){
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
    });
@@ -615,7 +620,11 @@ else{
       url:"account/get.php/jobseeker/search_jobs",
       dataType: "json",
       data: {'job':filterData.job_name,'location':filterData.job_location,'beg':beg,'end':end},
+      beforeSend: function () {
+        $("#preloader").show();
+      },
       success: function(data){
+        $("#preloader").hide();
         if(beg == 0){
           jobs = data[0];
           localStorage.setItem('totalfilteredjobs',parseInt(data[1]));
@@ -734,6 +743,7 @@ else{
         // end document load ready function
       },
       error: function(err){
+        $("#preloader").hide();
         swalNotify(err.responseText,'error');
       }
      });
@@ -2259,7 +2269,11 @@ else{
         url: "account/get.php/company/get_blog_details",
         dataType: "json",
         data: {'blog_id':blog_id},
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success: function(data){
+          $("#preloader").hide();
           if(data != 400){
             let date_posted = new Date(data[0].date_posted);
             blog_details +=
@@ -2341,6 +2355,7 @@ else{
           });
         },
         error: function(err){
+          $("#preloader").hide();
           swalNotify(err.responseText,'error');
         }
       });
@@ -2368,7 +2383,11 @@ else{
         url: "account/get.php/company/retrieve_all_blogs",
         data:{'beg':beg,'end':end},
         dataType: "json",
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success: function(data){
+          $("#preloader").hide();
           if(beg == 0){
             blogs = data[0];
             localStorage.setItem('totalBlogs',parseInt(data[1]));
@@ -2466,6 +2485,7 @@ else{
             
           },
           error: function(err){
+            $("#preloader").hide();
             swalNotify(err.responseText,'error');  
           } 
 
