@@ -523,7 +523,7 @@ $.ajax({
           '<div class="blog-post">'+
           '<!-- Post thumb -->'+
           '<div class="post-thumb">'+
-            '<a href="#"><img class="img-fulid" src="https://dokuwo-uploads.s3.amazonaws.com/'+((data[0].blog_image == "" || data[0].blog_image == null)?"default.jpg":data[0].blog_image)+'" alt="" style="width: 400px; height: 344px;"></a>'+
+            '<a href="#"><img class="img-fulid" src="https://dokuwo-uploads.s3.amazonaws.com/'+((data.blog_image == "" || data.blog_image == null)?"default.jpg":data.blog_image)+'" alt="" style="width: 400px; height: 344px;"></a>'+
             '<div class="hover-wrap">'+
             '</div>'+
           '</div>'+
@@ -552,13 +552,13 @@ $.ajax({
                   '<form class="form-horizontal" method="POST" id="editBlog" enctype="multipart/form-data" autocomplete="off">'+
                   '<div class="form-group row">'+
                     '<div class="col-sm-10">'+
-                      '<input type="hidden" class="form-control" name="sblog_id" id="sblog_id" value="'+data[0].blog_id+'">'+
+                      '<input type="hidden" class="form-control" name="sblog_id" id="sblog_id" value="'+data.blog_id+'">'+
                     '</div>'+
                   '</div>'+
                   '<div class="form-group row">'+
                       '<label for="sblogTitle" class="col-sm-2 col-form-label">Title</label>'+
                       '<div class="col-sm-10">'+
-                        '<input type="text" class="form-control" name="sblogTitle" id="sblogTitle" value="'+data[0].blog_title+'">'+
+                        '<input type="text" class="form-control" name="sblogTitle" id="sblogTitle" value="'+data.blog_title+'">'+
                       '</div>'+
                     '</div>'+
                     '<div class="form-group row">'+
@@ -574,13 +574,13 @@ $.ajax({
                   '<div class="form-group row">'+
                   '<label for="sTags" class="col-sm-2 col-form-label">Tags</label>'+
                   '<div class="col-sm-10">'+
-                    '<input type="text" class="form-control" name="sTags" id="sTags" value="'+data[0].tags+'">'+
+                    '<input type="text" class="form-control" name="sTags" id="sTags" value="'+data.tags+'">'+
                   '</div>'+
                   '</div>'+
                   
                   '<div class="form-group">'+
                   '<label class="input-group-text" for="summernote">Blog Content</label>'+
-                  '<div id="summernote" class="message_body_info">'+ data[0].blog_content+'</div>'+
+                  '<div id="summernote" class="message_body_info">'+ data.blog_content+'</div>'+
                  '</div>'+
                 
                 ' <div class="form-group row">'+
@@ -610,7 +610,7 @@ $.ajax({
     }
     $('.manageBlog').append(temp);
     $(document).ready(function(){
-    $("#sblogCategory option[value='"+data[0].category+"']").attr('selected', 'selected');
+    $("#sblogCategory option[value='"+data.category+"']").attr('selected', 'selected');
     $('#summernote').summernote({
       height: 200,
       lineHeight: 1,
