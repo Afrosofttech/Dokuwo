@@ -762,7 +762,11 @@ else{
       url: "account/get.php/company/retrieve_all_freelancers",
       data:{'beg':beg,'end':end},
       dataType: "json",
+      beforeSend: function () {
+        $("#preloader").show();
+      },
       success: function(data){
+        $("#preloader").hide();
         if(beg == 0){
           freelancers = data[0];
           localStorage.setItem('totalfreelancers',parseInt(data[1]));
@@ -880,6 +884,7 @@ else{
 
       },
       error: function(err){
+        $("#preloader").hide();
         swalNotify(err.responseText,'error');
       }
     });
