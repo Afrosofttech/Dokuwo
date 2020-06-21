@@ -1088,7 +1088,7 @@ else{
                     '<h5>Category</h5>'+
                     '<p>'+ data.job_cat +'</p>'+
                      '<h5>Job Requirements</h5>'+
-                    '<p>'+ requirements +'</p>'+
+                      requirements +
                     '<h5>Job Type</h5>'+
                     '<p>'+ data.job_type +'</p>'+
                     '<h5>Contact Email</h5>'+
@@ -2265,7 +2265,7 @@ else{
                 '<div class="row">'+         
                   '<div class="col-lg-12">'+
                     '<div class="inner-header">'+
-                      '<h3>Single Post</h3>'+
+                      '<h3>'+ data[0].category+'</h3>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -2296,7 +2296,7 @@ else{
                     blog_details +='</div>'+
                     '<div class="postmeta">By : <span>'+ data[0].blog_publisher+' </span> Category : <a href="#">'+ data[0].category+'</a></div>'+
                   '</div>'+
-                  '<p> '+ filteredContent +'</p>'+
+                  filteredContent +
                 '</div>'+
 
                 '<div id="disqus_thread"></div>'+
