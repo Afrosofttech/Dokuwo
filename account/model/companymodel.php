@@ -609,8 +609,8 @@ class Company extends Dbh{
             return self::fail;
             $stmt = null;
         }else{
-            $result['blog_content'] = htmlspecialchars_decode($result['blog_content']);
-            return  $result ;
+            $result[0]['blog_content'] = htmlspecialchars_decode($result[0]['blog_content']);
+            return  $result[0] ;
             $stmt = null;
         }    
     }
