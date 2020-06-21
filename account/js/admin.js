@@ -238,7 +238,7 @@ function manageBlog(data){
       '<div class="row">'+
         '<div class="col-lg-4 col-md-4 col-xs-12">'+
           '<div class="job-company-logo">'+
-            '<img class="rounded-circle img-thumbnail" src="'+((val.blog_image == null)?"https://ui-avatars.com/api/?name="+val.blog_title.replace(/ /g, '+'):'uploads/'+val.blog_image)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
+            '<img class="rounded-circle img-thumbnail" src="'+((val.blog_image == null)?"https://ui-avatars.com/api/?name="+val.blog_title.replace(/ /g, '+'):'https://dokuwo-uploads.s3.amazonaws.com/'+val.blog_image)+'" style="height: 5rem;width: 5rem;" alt="'+val.company_name+'">'+
           '</div>'+
           '<div class="job-details">'+
             '<h3>'+val.blog_title+'</h3>'+
