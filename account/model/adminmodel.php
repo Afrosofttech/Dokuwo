@@ -227,7 +227,7 @@ class Admin extends Dbh{
             $date = date('Y-m-d');$date = date('Y-m-d');
             $sql = " INSERT INTO blog(admin_id,blog_title,date_posted,blog_publisher,category,tags,blog_content,blog_image) VALUES(?,?,?,?,?,?,?,?)";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$admin_id,$title,$date,$publisher,$category,$tags,$content,$image]);
+            $stmt->execute([$admin_id,$title,$date,$publisher,$category,$tags,htmlspecialchars($content,ENT_QUOTES),$image]);
             return  self::success;
             $stmt = null;
         }
