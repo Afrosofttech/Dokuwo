@@ -303,6 +303,12 @@
 .blogList {
 	list-style: none;
 }
+/* .blogList .blogdetailbox li {
+	background: #fff;
+	padding: 20px;
+	margin-bottom: 30px;
+	border: 1px solid #e4e4e4;
+}
 .blogList li {
 	background: #fff;
 	padding: 20px;
@@ -312,7 +318,7 @@
 .blogList li:hover {
 	box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	border-color: #263bd6;
-}
+} */
 .postimg {
 	position: relative;
 	display: inline-block;
