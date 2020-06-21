@@ -1,4 +1,5 @@
 <?php
+header('content-type: Text/html; charset=utf-8');
 include_once 'dbhmodel.php';
 include_once 'adminmodel.php';
 
