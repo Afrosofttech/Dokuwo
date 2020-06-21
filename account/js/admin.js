@@ -523,7 +523,7 @@ $.ajax({
           '<div class="blog-post">'+
           '<!-- Post thumb -->'+
           '<div class="post-thumb">'+
-            '<a href="#"><img class="img-fulid" src="uploads/'+((data[0].blog_image == "" || data[0].blog_image == null)?"default.jpg":data[0].blog_image)+'" alt="" style="width: 400px; height: 344px;"></a>'+
+            '<a href="#"><img class="img-fulid" src="https://dokuwo-uploads.s3.amazonaws.com/'+((data[0].blog_image == "" || data[0].blog_image == null)?"default.jpg":data[0].blog_image)+'" alt="" style="width: 400px; height: 344px;"></a>'+
             '<div class="hover-wrap">'+
             '</div>'+
           '</div>'+
