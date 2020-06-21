@@ -560,7 +560,7 @@ class Company extends Dbh{
     protected function get_all_blogs($beg,$end){
         $start = (int) $beg;
         $finish = (int) $end;
-        $sql = "SELECT * FROM blog ORDER BY date_posted DESC LIMIT ?,?";
+        $sql = "SELECT * FROM blog ORDER BY created_at DESC LIMIT ?,?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(1,$start,PDO::PARAM_INT);
         $stmt->bindParam(2,$finish,PDO::PARAM_INT);
@@ -584,7 +584,7 @@ class Company extends Dbh{
     }
 
     protected function get_all_blogs_admin(){
-        $sql = "SELECT * FROM blog ORDER BY date_posted DESC";
+        $sql = "SELECT * FROM blog ORDER BY created_at DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -644,7 +644,7 @@ class Company extends Dbh{
         }    
     }
     protected function get_posts_by_category($category){
-        $sql = " SELECT * FROM blog WHERE category = ? ORDER BY date_posted DESC";
+        $sql = " SELECT * FROM blog WHERE category = ? ORDER BY created_at DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$category]);
         $result = $stmt->fetchAll();
