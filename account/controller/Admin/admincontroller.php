@@ -70,7 +70,7 @@ public function content_type($ext,$valid_extensions,$content_map){
                 //unlink($path.$Details['blog_image']);
                 $result = $s3->deleteObject([
                     'Bucket' => BUCKET,
-                    'Key'    => $Details[0]['blog_image'],
+                    'Key'    => $Details['blog_image'],
                 ]);
             }
             // $path = $path.strtolower($final_image);
