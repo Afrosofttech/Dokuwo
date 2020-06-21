@@ -2257,6 +2257,7 @@ else{
         success: function(data){
           if(data != 400){
             let date_posted = new Date(data[0].date_posted);
+            var filteredContent = $("<div>").html(data[0].blog_content).text();
             blog_details +=
             '<div class="page-header">'+
               '<div class="container">'+
@@ -2294,7 +2295,7 @@ else{
                     blog_details +='</div>'+
                     '<div class="postmeta">By : <span>'+ data[0].blog_publisher+' </span> Category : <a href="#">'+ data[0].category+'</a></div>'+
                   '</div>'+
-                  '<p> '+ data[0].blog_content +'</p>'+
+                  '<p> '+ filteredContent +'</p>'+
                 '</div>'+
 
                 '<div id="disqus_thread"></div>'+
