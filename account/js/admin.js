@@ -188,7 +188,7 @@ $.ajax({
   data:{'admin_id':session_user_id},
   dataType: "json",
   success: function(data){
-      manageBlog(data[0]);
+      manageBlog(data);
     },
   error: function(err){
      swalNotify(err.responseText,'error');
