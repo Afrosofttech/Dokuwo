@@ -2419,6 +2419,7 @@ else{
                   '<div class="col-lg-8 col-md-12 col-xs-12 post-section">';
                     $.each(blogs, function(i,val){
                       let date_posted = new Date(val.date_posted);
+                      var filteredContent = $("<div>").html(val.blog_content).text();
                       posts +='<!-- Start Post -->'+
                       `<div class="blog-post" onclick='show_blog_details("${val.blog_id}","${back}");' style="cursor: pointer;">`+
                         '<!-- Post thumb -->'+
@@ -2437,12 +2438,12 @@ else{
                       `<span class="meta-part"><i class="lni-calendar"></i><a>${formatMonth(date_posted.getMonth())} ${date_posted.getDate()}, ${date_posted.getFullYear()}</a></span>`+                   
                     '</div>';
                     if($.trim(val.blog_content).length > 100){
-                      let subcontent = val.blog_content.substring(0,100);
+                      let subcontent = filteredContent.substring(0,100);
                       posts +='<p>'+subcontent+'...</p>'+
                       `<a class="btn btn-common" href="#">Read More</a>`;
                     }
                     else{
-                      posts +='<p>'+val.blog_content+'......</p>';
+                      posts += filteredContent;
                     }
                      posts +='</div>'+
                   '<!-- Post Content -->'+

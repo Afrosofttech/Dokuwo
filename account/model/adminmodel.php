@@ -194,7 +194,7 @@ class Admin extends Dbh{
                 return self::fail;
                 $stmt = null;
             }else{
-                return  $result ;
+                return  array($result);
                 $stmt = null;
             }    
         }
