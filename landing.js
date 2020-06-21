@@ -1047,7 +1047,8 @@ else{
         dataType: "json",
         data:{'job_id':job_id},
         success: function(data){
-          let datePosted = new Date(data.date_posted)
+          let datePosted = new Date(data.date_posted);
+          requirements = $("<div>").html(data.requirements).text();
           temp +=' <!-- Page Header Start -->'+
           '<div class="page-header">'+
             '<div class="container">'+
@@ -1087,7 +1088,7 @@ else{
                     '<h5>Category</h5>'+
                     '<p>'+ data.job_cat +'</p>'+
                      '<h5>Job Requirements</h5>'+
-                    '<p>'+ data.requirements +'</p>'+
+                    '<p>'+ requirements +'</p>'+
                     '<h5>Job Type</h5>'+
                     '<p>'+ data.job_type +'</p>'+
                     '<h5>Contact Email</h5>'+
