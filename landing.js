@@ -2251,7 +2251,7 @@ else{
      
       let blog_details = '';
       $.ajax({
-        method: "POST",
+        method: "GET",
         url: "account/get.php/company/get_blog_details",
         dataType: "json",
         data: {'blog_id':blog_id},
