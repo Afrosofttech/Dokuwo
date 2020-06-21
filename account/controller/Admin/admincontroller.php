@@ -59,18 +59,18 @@ public function content_type($ext,$valid_extensions,$content_map){
         $blog_img_details = new Company();
         $Details = $blog_img_details->get_blog_details($_POST['sblog_id']);
 
-        if($img=="") $final_image = $Details[0]['blog_image'];
+        if($img=="") $final_image = $Details['blog_image'];
         else{
         $final_image = strtolower(rand(1000,1000000).$img);
         $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
         if(in_array($ext, $valid_extensions)){
             $content_map = array('jpeg' => 'image/jpeg','jpg' => 'image/jpeg','png' => 'image/png');
             $contentType = $this->content_type($ext,$valid_extensions,$content_map);
-            if($Details[0]['blog_image'] !== null || $Details[0]['blog_image'] !==""){
+            if($Details[0]['blog_image'] !== null || $Details['blog_image'] !==""){
                 //unlink($path.$Details['blog_image']);
                 $result = $s3->deleteObject([
                     'Bucket' => BUCKET,
-                    'Key'    => $Details[0]['blog_image'],
+                    'Key'    => $Details['blog_image'],
                 ]);
             }
             // $path = $path.strtolower($final_image);
