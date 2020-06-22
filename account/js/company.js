@@ -1422,7 +1422,7 @@ $.ajax({
         let sub = row.category;
        let  profileImage = '';
   (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education or Training')?subcat=Education:(sub=='Art or Design')?subcat=Art:(sub=='Sale or Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:(sub=='Events, Catering & Entertainment')?subcat=ECE:subcat=Others; 
-   (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education or Training')?profileImage=EducationImage:(sub=='Art or Design')?profileImage=ArtImage:(sub=='Sale or Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:(sub=='Events, Catering & Entertainment')?profileImage=ECEImage:profileImage=OthersImage;
+   (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education or Training')?profileImage=EducationImage:(sub=='Art or Design')?profileImage=ArtImage:(sub=='Sale or Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:(sub=='Events,Catering & Entertainment')?profileImage=ECEImage:profileImage=OthersImage;
         innertemp += '<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch pb-5">'+
           '<div class="card bg-light" style="border-top: 3px solid #007bff;">'+
            '<div class="card-header text-muted border-bottom-0">'+
@@ -2453,7 +2453,7 @@ function show_posted_jobs(){
         '<option value="Sale or Markting">Sale/Markting</option>'+
         '<option value="Healthcare">Healthcare</option>'+
         '<option value="Science">Science</option>'+
-        '<option value="Food Services">Food Services</option>'+
+        '<option value="Events,Catering & Entertainment">Events,Catering & Entertainment</option>'+
         '<option value="Others">Others</option>'+
         '</select>'+
        '</div>'+
