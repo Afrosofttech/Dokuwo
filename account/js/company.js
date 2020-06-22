@@ -564,7 +564,11 @@ function viewMessage(msg_id,jobseeker_name,jobseeker_id){
   dataType: 'json',
   url: "get.php/company/get_message",
   data: {"msg_id" : msg_id},
+  beforeSend: function () {
+    $("#preloader").show();
+  },
   success: function(data){
+    $("#preloader").hide();
     let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
       '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
         '<h3 class="card-title">Read Message</h3>'+
@@ -693,6 +697,7 @@ if(jobseeker_id === undefined){
 
   },
   error: function(err){
+    $("#preloader").hide();
     swalNotify(err.responseText,'error');
    }
   });
@@ -1008,7 +1013,11 @@ $('#ComposeNewMsg').submit(function(e){
     contentType: false,
     processData: false,
     cache:false,
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: data => {
+      $("#preloader").hide();
       if(data.status == 'success'){
         swalNotify(data.message,'success');
         jcontentMessage();
@@ -1018,6 +1027,7 @@ $('#ComposeNewMsg').submit(function(e){
       }
     },
     error: err => {
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
   });
@@ -1216,7 +1226,11 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
         contentType: false,
         processData: false,
         cache:false,
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success: data => {
+          $("#preloader").hide();
           if(data.status == 'success'){
             swalNotify(data.message,'success'); 
             (divToClear == undefined)? contentMessage(): discardMsg(divToClear);
@@ -1226,6 +1240,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
           }
         },
         error: err => {
+          $("#preloader").hide();
           swalNotify(err.responseText,'error');
         }
       });
@@ -1246,8 +1261,12 @@ function sentMessages(){
     method: "GET",
     dataType: 'json',
     url: "get.php/company/all_sent_messages",
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     data: {"login_id" : session_id},
     success: function(data){
+      $("#preloader").hide();
       temp +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
       '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
         '<h4 class="card-title">Sent Messages</h4>'+
@@ -1314,6 +1333,7 @@ function sentMessages(){
           });
       },
       error: function(err){
+        $("#preloader").hide();
         swalNotify(err.responseText,'error');
       }
       });
@@ -1324,7 +1344,11 @@ function DeleteMessage(msg_id,jobseeker_id){
     dataType: 'json',
     url: (jobseeker_id === 'undefined')? "post.php/company/delete_message":"post.php/company/delete_sent_message",
     data: {"message_id" : msg_id},
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: function(data){
+      $("#preloader").hide();
       if(data == 200){
         swalNotify('message successfully deleted','success');
         (jobseeker_id === 'undefined')?contentMessage():sentMessages();
@@ -1333,6 +1357,7 @@ function DeleteMessage(msg_id,jobseeker_id){
       }
     },
     error: function(err){
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
   });
@@ -1387,7 +1412,11 @@ $.ajax({
   method: "GET",
   dataType: 'json',
   url: "get.php/company/categories_of_jobseekers",
+  beforeSend: function () {
+    $("#preloader").show();
+  },
   success: function(response){
+    $("#preloader").hide();
     if(response != false){
       $.each(response, function(index,row){
         let sub = row.category;
@@ -1426,6 +1455,7 @@ $.ajax({
     $('.comp_jobseekers').append(innertemp);
   },
   error: function(err){
+    $("#preloader").hide();
     swalNotify(err.responseText,'error');
   }
 });
@@ -1467,7 +1497,11 @@ $.ajax({
   dataType: "json",
   url: "get.php/company/jobseekers_of_this_category",
   data:{ 'category': category},
+  beforeSend: function () {
+    $("#preloader").show();
+  },
   success: function(response){
+    $("#preloader").hide();
      numberOfItems = response.length;
      limitPerPage = 9;
      totalPages = Math.round(numberOfItems/limitPerPage);
@@ -1528,6 +1562,7 @@ $.ajax({
 
   },
   error: function(err){
+    $("#preloader").hide();
     swalNotify(err.responseText,'error');
   }
 });
@@ -1603,13 +1638,17 @@ let profile =
 '<section class="content">'+
 
 '  <div class="container-fluid">'+
-    ' <div class="row">';
-    $.ajax({
-    method: "GET",
-    dataType: 'json',
-    url: "get.php/company/company_profile",
-    data: {"login_id" : session_id},
-    success: function(data){
+  ' <div class="row">';
+  $.ajax({
+  method: "GET",
+  dataType: 'json',
+  url: "get.php/company/company_profile",
+  data: {"login_id" : session_id},
+  beforeSend: function () {
+    $("#preloader").show();
+  },
+  success: function(data){
+    $("#preloader").hide();
     if(data !== 400 ){
       temp += ' <div class="col-md-4">'+
       ' <!-- Profile Image -->'+
@@ -1897,7 +1936,11 @@ $(document).ready(function(){
         contentType: false,
         processData: false,
         cache:false,
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success:function(response){
+          $("#preloader").hide();
           $('#update-details').prop('disabled', false);
           if(response == 200){
             swal('Update Successful!','Profile successfully updated','success','cool');
@@ -1907,6 +1950,7 @@ $(document).ready(function(){
           }
         },
         error: function(err){
+          $("#preloader").hide();
           $('#update-details').prop('disabled', false);
           swalNotify(err.responseText,'error');
         } 
@@ -1930,11 +1974,16 @@ $(document).ready(function(){
       dataType:'json',
       url: 'post.php/company/request_to_activate_package',
       data: {'login_id':session_id,'package':package},
+      beforeSend: function () {
+        $("#preloader").show();
+      },
       success:function(response){
+        $("#preloader").hide();
           swal('package!',response.message,'success','cool');
           settings();
       },
       error: function(err){
+        $("#preloader").hide();
         swalNotify(err.responseText,'error');
       } 
     });
@@ -1948,6 +1997,7 @@ $('#content').empty().append('<div>ERROR: This account doesn\'t exist. You shoul
 
 },
 error: function(err){
+  $("#preloader").hide();
   swalNotify(err.responseText,'error');
 }
 });
@@ -2324,13 +2374,18 @@ function show_posted_jobs(){
         data: {'login_id':session_id,'company_id':session_user_id,'jobName': $('#jobName').val(),'jobLocation':$('#jobLocation').val(),'jobType':$('#jobType').val(),
         'jobCategory':$('#jobCategory').val(),'requirements':$('#summernote').summernote('code'),'salary':$('#salary').val(),
         'email':$('#contactEmail').val(),'phone':$('#contactPhone').val()},
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success: function(response){
+          $("#preloader").hide();
           if(response.status == 200) swal('Done!',response.message,'success','Cool');
           else if(response.status == 402) swal('Sorry!',response.message,'error','Cool');
           else  swal('Sorry!',response.message,'error','Cool');
           ShowJobsInfo();
         },
         error: function(err){
+          $("#preloader").hide();
           swalNotify(err.responseText,'error');
         }
       });
@@ -2343,13 +2398,17 @@ function show_posted_jobs(){
   }
 }
 
-    function viewJob(job_id){
-      $.ajax({
-        url: 'get.php/company/job_info',
-        method: 'GET',
-        data: {'job_id':job_id},
-        dataType: 'json',
-        success: function(data){
+  function viewJob(job_id){
+    $.ajax({
+      url: 'get.php/company/job_info',
+      method: 'GET',
+      data: {'job_id':job_id},
+      dataType: 'json',
+      beforeSend: function () {
+        $("#preloader").show();
+      },
+      success: function(data){
+      $("#preloader").hide();
       let temp = '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
       '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
         '<h4 class="card-title">Job detail</h4>'+
@@ -2560,13 +2619,18 @@ function show_posted_jobs(){
           data: {'job_id':job_id,'jobName': $('#jobName').val(),'jobLocation':$('#jobLocation').val(),'jobType':$('#jobType').val(),
           'jobCategory':$('#jobCategory').val(),'requirements':$('#summernote').summernote('code'),'salary':$('#salary').val(),
           'email':$('#contactEmail').val(),'phone':$('#contactPhone').val()},
+          beforeSend: function () {
+            $("#preloader").show();
+          },
           success: function(response){
+            $("#preloader").hide();
             if(response == 200){
               swalNotify('Job successfully updated!','success');
               ShowJobsInfo();
             }
           },
           error: function(err){
+            $("#preloader").hide();
             swalNotify(err.responseText,'error');
           }
         });
@@ -2574,6 +2638,7 @@ function show_posted_jobs(){
         })
       },
       error: function(err){
+        $("#preloader").hide();
         swalNotify(err.responseText,'error');
       }
     });
@@ -2720,7 +2785,11 @@ let applicant = '<div class="card shadow mb-4" style="border-top: 3px solid #007
       method: 'GET',
       data: {'login_id':login_id},
       dataType: 'json',
+      beforeSend: function () {
+        $("#preloader").show();
+      },
       success: function(data){
+        $("#preloader").hide();
         if(data !== 400){
       // (data.CV == null || data.CV == '')?profile_cv = 'javascript:void();': profile_cv = 'uploads/'+data.CV;
 applicant += '<div class="col col-lg-4">'+
@@ -2764,6 +2833,7 @@ applicant += '<div class="col col-lg-4">'+
     $('.singleApplicant').empty().append(applicant);
     },
     error: function(err){
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
   });
@@ -2777,7 +2847,11 @@ function acceptApplication(jobseeker_id,fullName,job_id,login_id){
     method: 'POST',
     dataType: 'json',
     data: {'jobseeker_id':jobseeker_id,'jobseeker_login_id':login_id,'fullName':fullName,'job_id':job_id},
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: function(response){
+      $("#preloader").hide();
       if(response.status == 'success'){
         swalNotify(response.message,'success');
         jobApplicants(job_id);
@@ -2785,6 +2859,7 @@ function acceptApplication(jobseeker_id,fullName,job_id,login_id){
       }
     },
     error: function(err){
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
   });
