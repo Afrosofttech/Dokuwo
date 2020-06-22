@@ -1084,7 +1084,11 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
         contentType: false,
         processData: false,
         cache:false,
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success: data => {
+          $("#preloader").hide();
           $('#newmessage').prop('disabled', false);
           if(data.status == 'success'){
             swalNotify(data.message,'success'); 
@@ -1096,6 +1100,7 @@ let temp =' <div class="card card-primary card-outline shadow mb-4" style="borde
 
         },
         error: err => {
+          $("#preloader").hide();
           $('#newmessage').prop('disabled', false);
           swalNotify(err.responseText,'error');
         }
@@ -1117,7 +1122,11 @@ $.ajax({
   dataType: 'json',
   url: "get.php/jobseeker/get_message",
   data: {"msg_id" : msg_id},
+  beforeSend: function () {
+    $("#preloader").show();
+  },
   success: function(data){
+    $("#preloader").hide();
   let temp = '<div class="card card-primary shadow mb-4" style="border-top: 3px solid #007bff;">'+
     '<div class="card-header  py-1 d-flex flex-row align-items-center justify-content-between">'+
       '<h3 class="card-title">Read Message</h3>'+
@@ -1243,6 +1252,7 @@ if(company_id === undefined){
   })
   },
   error: function(err){
+    $("#preloader").hide();
     swalNotify(err.responseText,'error');
   }
   });
@@ -1253,7 +1263,11 @@ function jDeleteMessage(msg_id,company_id){
     dataType: 'json',
     url: (company_id === 'undefined')?"post.php/jobseeker/delete_message":"post.php/jobseeker/delete_sent_message",
     data: {"message_id" : msg_id},
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: function(data){
+      $("#preloader").hide();
       if(data == 200){
         swalNotify('message successfully deleted','success');
         (company_id === 'undefined')?jcontentMessage():jsentMessages();
@@ -1262,6 +1276,7 @@ function jDeleteMessage(msg_id,company_id){
       }
     },
     error: function(err){
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
   });
@@ -1376,7 +1391,11 @@ $('#jComposeNewMsg').submit(function(e){
     contentType: false,
     processData: false,
     cache:false,
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: data => {
+      $("#preloader").hide();
       if(data.status == 'success'){
         swalNotify(data.message,'success');
         jcontentMessage();
@@ -1386,6 +1405,7 @@ $('#jComposeNewMsg').submit(function(e){
       }
     },
     error: err => {
+        $("#preloader").hide();
         swalNotify(err.responseText,'error');
     }
   });
@@ -1400,7 +1420,11 @@ $.ajax({
   method: "GET",
   dataType: 'json',
   url: "get.php/jobseeker/retreive_all_companies",
+  beforeSend: function () {
+    $("#preloader").show();
+  },
   success: function(data){
+    $("#preloader").hide();
   conMessage +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
       '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
         '<h4 class="card-title">Select a recipient</h4>'+
@@ -1465,6 +1489,7 @@ $.ajax({
 
     },
     error: function(err){
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
     });
@@ -1475,11 +1500,16 @@ $.ajax({
   dataType: 'json',
   url: "post.php/jobseeker/forward_msg_to_company",
   data: {"creator_id" : session_id, "cName": session_fullname, "company_login_id" : login_id, "Name" : company_name,"message_id": msg_id},
+  beforeSend: function () {
+    $("#preloader").show();
+  },
   success: function(data){
+      $("#preloader").hide();
       swalNotify(data.message,'success'); 
       jcontentMessage();
   },
   error: function(err){
+    $("#preloader").hide();
     swalNotify(err.responseText,'error');
   }
 });
@@ -1532,7 +1562,11 @@ $.ajax({
   dataType: 'json',
   url: "get.php/jobseeker/all_sent_messages",
   data: {"login_id" : session_id},
+  beforeSend: function () {
+    $("#preloader").show();
+  },
   success: function(data){
+    $("#preloader").hide();
     temp +=  '<div class="card card-primary card-outline shadow mb-4" style="border-top: 3px solid #007bff;">'+
     '<div class="card-header py-1 d-flex flex-row align-items-center justify-content-between">'+
       '<h4 class="card-title">Sent Messages</h4>'+
@@ -1598,6 +1632,7 @@ $.ajax({
     });
 },
 error: function(err){
+  $("#preloader").hide();
   swalNotify(err.responseText,'error');
 }
 });
@@ -1951,11 +1986,16 @@ function addService(){
         dataType: 'json',
         url: "post.php/jobseeker/add_service",
         data: {"jobseeker_id": session_user_id,"price" : Price,"name": serviceName},
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success: function(response){
+          $("#preloader").hide();
           swal('Success!',response.message,'success','Cool');
           portfolio();
         },
         error: function(err){
+          $("#preloader").hide();
           swalNotify(err.responseText,'error');
         }
       })
@@ -1976,7 +2016,11 @@ function editService(service_id){
     dataType: 'json',
     url: "get.php/jobseeker/get_service",
     data: {"service_id": service_id,},
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: function(response){
+      $("#preloader").hide();
       if(response != 400){
          temp +=   '<form method="POST" id="createService" autocomplete="off">'+
          '<div class="row p-3">'+
@@ -2050,11 +2094,16 @@ function editService(service_id){
         dataType: 'json',
         url: "post.php/jobseeker/update_service",
         data: {"service_id": service_id,"price" : Price,"name": serviceName},
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success: function(response){
+          $("#preloader").hide();
           swal('Success!',response.message,'success','Cool');
           portfolio();
         },
         error: function(err){
+          $("#preloader").hide();
           swalNotify(err.responseText,'error');
         }
       })
@@ -2062,6 +2111,7 @@ function editService(service_id){
   });
 },
 error: function(err){
+  $("#preloader").hide();
   swalNotify(err.responseText,'error');
 }
 })
@@ -2073,11 +2123,16 @@ function deleteService(service_id){
     dataType: 'json',
     url: "post.php/jobseeker/delete_service",
     data: {"service_id" : service_id},
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: function(response){
+      $("#preloader").hide();
       swal('Success!',response.message,'success','Cool');
       portfolio();
     },
     error: function(err){
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
   })
@@ -2164,11 +2219,16 @@ function addPortfolio(){
         dataType: 'json',
         url: "post.php/jobseeker/add_portfolio",
         data: {"jobseeker_id": session_user_id,"url_link" : url,"description": description,"type": Type},
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success: function(response){
+          $("#preloader").hide();
           swal('Success!',response.message,'success','Cool');
           portfolio();
         },
         error: function(err){
+          $("#preloader").hide();
           swalNotify(err.responseText,'error');
         }
       })
@@ -2189,7 +2249,11 @@ function editPortfolio(portfolio_id){
     dataType: 'json',
     url: "get.php/jobseeker/get_portfolio",
     data: {"portfolio_id": portfolio_id,},
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: function(response){
+      $("#preloader").hide();
       if(response != 400){
          temp += '<form method="POST" id="formPortfolio" autocomplete="off">'+
          '<div class="row p-3">'+
@@ -2267,11 +2331,16 @@ function editPortfolio(portfolio_id){
         dataType: 'json',
         url: "post.php/jobseeker/update_portfolio",
         data: {"portfolio_id": portfolio_id,"url_link" : url,"description": description,"type": Type},
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success: function(response){
+          $("#preloader").hide();
           swal('Success!',response.message,'success','Cool');
           portfolio();
         },
         error: function(err){
+          $("#preloader").hide();
           swalNotify(err.responseText,'error');
         }
       })
@@ -2279,6 +2348,7 @@ function editPortfolio(portfolio_id){
   });
 },
 error: function(err){
+  $("#preloader").hide();
   swalNotify(err.responseText,'error');
 }
 })
@@ -2290,11 +2360,16 @@ function deletePortfolio(portfolio_id){
     dataType: 'json',
     url: "post.php/jobseeker/delete_portfolio",
     data: {"portfolio_id" : portfolio_id},
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: function(response){
+      $("#preloader").hide();
       swal('Success!',response.message,'success','Cool');
       portfolio();
     },
     error: function(err){
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
   })
@@ -2315,7 +2390,11 @@ let temp='<div class="content-wrapper">'+
       dataType: "json",
       url: "get.php/jobseeker/jobseeker_profile",
       data: {"login_id" : session_id},
+      beforeSend: function () {
+        $("#preloader").show();
+      },
       success: function(data){
+        $("#preloader").hide();
       if(data !== 400 ){
         temp += ' <div class="col-md-4">'+
         ' <!-- Profile Image -->'+
@@ -2684,7 +2763,11 @@ let temp='<div class="content-wrapper">'+
           contentType: false,
           processData: false,
           cache:false,
+          beforeSend: function () {
+            $("#preloader").show();
+          },
           success:function(response){
+            $("#preloader").hide();
             $('#update-details').prop('disabled', false);
             if(response == 200){
               swal('Update Successful!','Profile successfully updated','success','cool');
@@ -2696,6 +2779,7 @@ let temp='<div class="content-wrapper">'+
           }
           },
           error: function(err){
+            $("#preloader").hide();
             $('#update-details').prop('disabled', false);
             swalNotify(err.responseText,'error');
           } 
@@ -2722,12 +2806,17 @@ let temp='<div class="content-wrapper">'+
         dataType:'json',
         url: 'post.php/jobseeker/request_to_activate_package',
         data: {'login_id':session_id,'package':package},
+        beforeSend: function () {
+          $("#preloader").show();
+        },
         success:function(response){
+            $("#preloader").hide();
             $('#activate-pack').prop('disabled', false);
             swal('package!',response.message,'success','cool');
             jsettings();
         },
         error: function(err){
+          $("#preloader").hide();
           $('#activate-pack').prop('disabled', false);
           swalNotify(err.responseText,'error');
         } 
@@ -2742,6 +2831,7 @@ let temp='<div class="content-wrapper">'+
 
   },
   error: function(err){
+    $("#preloader").hide();
     swalNotify(err.responseText,'error');
   }
 });
