@@ -1419,14 +1419,14 @@ $.ajax({
     $("#preloader").hide();
     if(response != false){
       $.each(response, function(index,row){
-        let sub = row[index].category;
+        let sub = row.category;
        let  profileImage = '';
   (sub=='Finance')?subcat=Finance:(sub=='IT & Engineering')?subcat=SE:(sub=='Healthcare')?subcat=Healthcare:(sub=='Education or Training')?subcat=Education:(sub=='Art or Design')?subcat=Art:(sub=='Sale or Markting')?subcat=Sale:(sub=='Science')?subcat=Science:(sub=='Food Services')?subcat=Food:(sub=='Events, Catering & Entertainment')?subcat=ECE:subcat=Others; 
    (sub=='Finance')?profileImage=FinanceImage:(sub=='IT & Engineering')?profileImage=SEImage:(sub=='Healthcare')?profileImage=HealthcareImage:(sub=='Education or Training')?profileImage=EducationImage:(sub=='Art or Design')?profileImage=ArtImage:(sub=='Sale or Markting')?profileImage=SaleImage:(sub=='Science')?profileImage=ScienceImage:(sub=='Food Services')?profileImage=FoodImage:(sub=='Events, Catering & Entertainment')?profileImage=ECEImage:profileImage=OthersImage;
         innertemp += '<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch pb-5">'+
           '<div class="card bg-light" style="border-top: 3px solid #007bff;">'+
            '<div class="card-header text-muted border-bottom-0">'+
-             '<h6 class="text-primary">'+row[index].category+"("+row[index].count+")"+'</h6>'+
+             '<h6 class="text-primary">'+row.category+"("+row.count+")"+'</h6>'+
            '</div>'+
            '<div class="card-body pt-0">'+
              '<div class="row">'+
@@ -1443,7 +1443,7 @@ $.ajax({
            '</div>'+
            '<div class="card-footer">'+
            '<div class="text-right">'+
-             '<a href="#" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View" onclick="viewpeople(\''+row[index].category+'\')">'+
+             '<a href="#" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View" onclick="viewpeople(\''+row.category+'\')">'+
                '<i class="fas fa-users"></i> View people'+
              '</a>'+
            '</div>'+
