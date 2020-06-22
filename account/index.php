@@ -70,6 +70,7 @@ if(!isset($_SESSION['email'])){
 <link rel="stylesheet" type="text/css" href="css/bootstrap-tokenfield.min.css">
 <link rel="stylesheet" type="text/css" href="css/tokenfield-typeahead.min.css">
 <link rel="stylesheet" type="text/css" href="css/jobseeker_jobs.css">
+<link rel="stylesheet" type="text/css" href="css/loader.css">
 </head>
 
 <body id="page-top">
@@ -95,7 +96,12 @@ if(!isset($_SESSION['email'])){
     </div>
   </div>
 
-  
+  <!-- Preloader -->
+  <div id="preloader">
+     <div class="loader" id="loader-1"></div>
+  </div>
+  <!-- End Preloader -->
+
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>

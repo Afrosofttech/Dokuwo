@@ -1,0 +1,36 @@
+/* AMS: This is the loader added by amadou on 21/06/2020 */
+/* Preloader */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 9999999; }
+  
+  .loader {
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    position: relative;
+    margin: 0 auto; }
+  
+  #loader-1:before, #loader-1:after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border: 7px solid transparent;
+    border-top-color: #00b7f4; }
+  
+  #loader-1:before {
+    z-index: 100;
+    animation: spin 2s infinite; }
+  
+  #loader-1:after {
+    border: 7px solid #fafafa; }

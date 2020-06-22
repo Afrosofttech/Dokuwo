@@ -1702,10 +1702,15 @@ error: function(err){
     dataType: 'json',
     url: "get.php/jobseeker/doing_freelance",
     data: {"jobseeker_id" : session_user_id},
+    beforeSend: function () {
+      $("#preloader").show();
+    },
     success: function(response){
+      $("#preloader").hide();
       hires(response);
     },
     error: function(err){
+      $("#preloader").hide();
       swalNotify(err.responseText,'error');
     }
   })
