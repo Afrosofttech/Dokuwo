@@ -126,6 +126,8 @@ if(!isset($_SESSION['email'])){
   <script src="js/plugins/countrySelect.min.js"></script>
   <!--Custom scripts-->
   <script src="js/core/jobseeker_categories.js"></script>
+  <!--Custom scripts-->
+  <script src="js/core/loader.js"></script>
   <!--Momentjs script-->
   <script src="js/plugins/moment.min.js"></script>
   <script src="js/career.js"></script>
