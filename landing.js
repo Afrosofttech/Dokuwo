@@ -3338,7 +3338,7 @@ function faq(){
           <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                     Why I didn't receive activation email? 
                   </a>
                 </h4>
@@ -3348,7 +3348,7 @@ function faq(){
                   <p>If you are using a <strong>utg.edu.gm</strong> email domain, you will not receive emails from us because the <strong>utg.edu.gm servers</strong> has <strong>blocked</strong> all emails coming from our servers.</p>
                   <br>
                   <p>
-                     The solution is to use a different email server until.
+                     The solution is to use a different email server.
                   </p>
                 </div>
               </div>
